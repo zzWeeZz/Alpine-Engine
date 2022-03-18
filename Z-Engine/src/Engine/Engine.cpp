@@ -1,5 +1,6 @@
 #include "Engine.h"
 #include "d3d11shader.h"
+#include <d3dcompiler.h>
 
 
 void Engine::InitD3D(HWND aHWND)
@@ -60,6 +61,7 @@ void Engine::InitD3D(HWND aHWND)
 
 void Engine::InitPipeline()
 {
+	
 }
 
 void Engine::RenderFrame()
