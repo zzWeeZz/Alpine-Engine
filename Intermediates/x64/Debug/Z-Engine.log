@@ -1,0 +1,4 @@
+﻿  Engine.cpp
+C:\Users\zzWee\source\repos\Z-Engine\Z-Engine\src\Engine\Engine.cpp(80,20): warning C4244: '=': conversion from 'int' to 'FLOAT', possible loss of data
+C:\Users\zzWee\source\repos\Z-Engine\Z-Engine\src\Engine\Engine.cpp(81,19): warning C4244: '=': conversion from 'int' to 'FLOAT', possible loss of data
+  Z-Engine.vcxproj -> C:\Users\zzWee\source\repos\Z-Engine\Export\Z-Engine.exe

@@ -21,7 +21,7 @@ int main(void)
 	}
 	/* Make the window's context current */
 	glfwMakeContextCurrent(window);
-	myEngine.InitD3D(glfwGetWin32Window(window));
+	myEngine.InitD3D(glfwGetWin32Window(window), 1280, 720);
 
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
