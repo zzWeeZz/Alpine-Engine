@@ -27,6 +27,7 @@ int main(void)
 	while (!glfwWindowShouldClose(window))
 	{
 		/* Render here */
+		myEngine.Update();
 		myEngine.RenderFrame();
 
 		/* Poll for and process events */
