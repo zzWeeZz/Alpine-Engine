@@ -1,4 +1,10 @@
 ﻿  Engine.cpp
+<<<<<<< HEAD
+C:\Users\zzWee\source\repos\Z-Engine\Source\Z-Engine\src\Engine\Engine.cpp(13,2): error C2146: syntax error: missing ';' before identifier 'myScreenHeight'
+C:\Users\zzWee\source\repos\Z-Engine\Source\Z-Engine\src\Engine\Engine.cpp(83,20): warning C4244: '=': conversion from 'int' to 'FLOAT', possible loss of data
+C:\Users\zzWee\source\repos\Z-Engine\Source\Z-Engine\src\Engine\Engine.cpp(84,19): warning C4244: '=': conversion from 'int' to 'FLOAT', possible loss of data
+=======
 C:\Users\zzWee\source\repos\Z-Engine\Z-Engine\src\Engine\Engine.cpp(80,20): warning C4244: '=': conversion from 'int' to 'FLOAT', possible loss of data
 C:\Users\zzWee\source\repos\Z-Engine\Z-Engine\src\Engine\Engine.cpp(81,19): warning C4244: '=': conversion from 'int' to 'FLOAT', possible loss of data
   Z-Engine.vcxproj -> C:\Users\zzWee\source\repos\Z-Engine\Export\Z-Engine.exe
+>>>>>>> parent of c8f61cc (assimp not working)

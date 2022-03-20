@@ -4,6 +4,11 @@
 #include <d3d11.h>
 #include <d3dcompiler.h>
 #include <DirectXTK/WICTextureLoader.h>
+<<<<<<< HEAD:Source/Z-Engine/src/Engine/Engine.cpp
+#include <assimp/aabb.h>
+
+=======
+>>>>>>> parent of c8f61cc (assimp not working):Z-Engine/src/Engine/Engine.cpp
 
 void Engine::InitD3D(HWND aHWND, int aScreenWidth, int aScreenHight)
 {
