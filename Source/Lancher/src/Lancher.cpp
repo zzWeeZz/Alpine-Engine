@@ -35,6 +35,6 @@ int main()
 	}
 
 	glfwTerminate();
-	//myEngine.CleanD3D();
+	myEngine.CleanD3D();
 	return 0;
 }

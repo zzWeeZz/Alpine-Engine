@@ -1,0 +1,7 @@
+﻿  compilation object save succeeded; see C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Export\Shaders\PixelShader.cso
+  compilation object save succeeded; see C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Export\Shaders\VertexShader.cso
+  Engine.cpp
+C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Source\Z-Engine\src\Engine\Engine.cpp(84,21): warning C4244: '=': conversion from 'int' to 'FLOAT', possible loss of data
+C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Source\Z-Engine\src\Engine\Engine.cpp(85,20): warning C4244: '=': conversion from 'int' to 'FLOAT', possible loss of data
+C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Source\Z-Engine\src\Engine\Engine.cpp(117,15): warning C4101: 'errorMessages': unreferenced local variable
+  Z-Engine.vcxproj -> C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Dependencies\lib\Engine.lib

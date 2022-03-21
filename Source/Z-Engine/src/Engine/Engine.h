@@ -1,10 +1,12 @@
 #pragma once
 #include <d3d11.h>
 #include "DirectXMath.h"
+#include "Graphics/Shaders.h"
+#include <wrl.h>
 
 namespace Engine
 {
-
+	using namespace Microsoft::WRL;
 	struct Vertex    //Overloaded Vertex Structure
 	{
 		Vertex() {}
@@ -53,18 +55,16 @@ namespace Engine
 		DirectX::XMMATRIX myScale;
 		DirectX::XMMATRIX myTranslation;
 		float myRot = 0.01f;
-
-		IDXGISwapChain* mySwapchain;
-		ID3D11Device* myDevice;
+		ComPtr<IDXGISwapChain> mySwapchain;
+		ComPtr<ID3D11Device> myDevice;
 		ID3D11DeviceContext* myContext;
 		ID3D11RenderTargetView* myRenderTargetView;
 		ID3D11Buffer* mySquareIndexBuffer;
 		ID3D11Buffer* mySquareVertBuffer;
 		ID3D11DepthStencilView* myDepthStencilView;
 		ID3D11Texture2D* myDepthStencilBuffer;
-		ID3D11VertexShader* myVS;
+		VertexShader myVertexShader;
 		ID3D11PixelShader* myPS;
-		ID3D10Blob* myVS_Buffer;
 		ID3D10Blob* myPS_Buffer;
 		ID3D11InputLayout* myVertLayout;
 		ID3D11Buffer* myConstBufferObjectBuffer;

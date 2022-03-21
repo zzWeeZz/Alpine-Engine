@@ -1,6 +1,20 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(514,5): warning MSB8028: The intermediate directory (C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Intermediates\x64\Debug\) contains files shared from another project (Lancher.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  Scanning sources for module dependencies...
+  Shaders.h
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winbase.h(9531,5): warning C5105: macro expansion producing 'defined' has undefined behavior
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\winrt\wrl\module.h(1275,517): warning C5104: found 'L#serverName' in macro replacement list, did you mean 'L""#serverName'?
+  Compiling...
+  Shaders.h
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winbase.h(9531,5): warning C5105: macro expansion producing 'defined' has undefined behavior
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\winrt\wrl\module.h(1275,10): warning C5104: found 'L#serverName' in macro replacement list, did you mean 'L""#serverName'?
   Engine.cpp
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winbase.h(9531,5): warning C5105: macro expansion producing 'defined' has undefined behavior
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\winrt\wrl\module.h(1275,10): warning C5104: found 'L#serverName' in macro replacement list, did you mean 'L""#serverName'?
 C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Source\Z-Engine\src\Engine\Engine.cpp(84,21): warning C4244: '=': conversion from 'int' to 'FLOAT', possible loss of data
 C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Source\Z-Engine\src\Engine\Engine.cpp(85,20): warning C4244: '=': conversion from 'int' to 'FLOAT', possible loss of data
-C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Source\Z-Engine\src\Engine\Engine.cpp(117,15): warning C4101: 'errorMessages': unreferenced local variable
-  Z-Engine.vcxproj -> C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Dependencies\lib\Engine.lib
+C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Source\Z-Engine\src\Engine\Engine.cpp(118,66): error C2660: 'VertexShader::Initialize': function does not take 2 arguments
+C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Source\Z-Engine\src\Engine\Graphics\ShaderClasses\VertexShader.h(10,7): message : see declaration of 'VertexShader::Initialize'
+  VertexShader.cpp
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winbase.h(9531,5): warning C5105: macro expansion producing 'defined' has undefined behavior
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\winrt\wrl\module.h(1275,10): warning C5104: found 'L#serverName' in macro replacement list, did you mean 'L""#serverName'?
+  Generating Code...

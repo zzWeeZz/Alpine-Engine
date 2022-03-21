@@ -43,7 +43,7 @@ namespace Engine
 
 		// ---------- 
 
-		DirectX::CreateWICTextureFromFile(myDevice, L"Textures/sus.png", nullptr, &myCubesTexture);
+		DirectX::CreateWICTextureFromFile(myDevice.Get(), L"Textures/sus.png", nullptr, &myCubesTexture);
 
 
 		// Set Render Target
@@ -115,13 +115,12 @@ namespace Engine
 	{
 
 		ID3D10Blob* errorMessages;
-		auto hr = D3DReadFileToBlob(L"Shaders/VertexShader.cso", &myVS_Buffer);
-		hr = D3DReadFileToBlob(L"Shaders/PixelShader.cso", &myPS_Buffer);
+		myVertexShader.Initialize(myDevice, L"Shaders/VertexShader.cso");
+		D3DReadFileToBlob(L"Shaders/PixelShader.cso", &myPS_Buffer);
 		//Create the Shader Objects
-		hr = myDevice->CreateVertexShader(myVS_Buffer->GetBufferPointer(), myVS_Buffer->GetBufferSize(), NULL, &myVS);
-		hr = myDevice->CreatePixelShader(myPS_Buffer->GetBufferPointer(), myPS_Buffer->GetBufferSize(), NULL, &myPS);
+		auto hr = myDevice->CreatePixelShader(myPS_Buffer->GetBufferPointer(), myPS_Buffer->GetBufferSize(), NULL, &myPS);
 
-		myContext->VSSetShader(myVS, 0, 0);
+		myContext->VSSetShader(myVertexShader.GetShader(), 0, 0);
 		myContext->PSSetShader(myPS, 0, 0);
 
 		Vertex v[] =
@@ -273,7 +272,7 @@ namespace Engine
 		UINT stride = sizeof(Vertex);
 		UINT offset = 0;
 		myContext->IASetVertexBuffers(0, 1, &mySquareVertBuffer, &stride, &offset);
-		hr = myDevice->CreateInputLayout(layout, numElement, myVS_Buffer->GetBufferPointer(), myVS_Buffer->GetBufferSize(), &myVertLayout);
+		hr = myDevice->CreateInputLayout(layout, numElement, myVertexShader.GetBuffer()->GetBufferPointer(), myVertexShader.GetBuffer()->GetBufferSize(), &myVertLayout);
 
 		myContext->IASetInputLayout(myVertLayout);
 		auto topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
@@ -328,8 +327,6 @@ namespace Engine
 	{
 		mySwapchain->Release();
 		myVertLayout->Release();
-		myVS->Release();
-		myVS_Buffer->Release();
 		mySquareIndexBuffer->Release();
 		mySquareVertBuffer->Release();
 		myDepthStencilBuffer->Release();

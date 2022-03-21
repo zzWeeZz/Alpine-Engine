@@ -11,6 +11,6 @@ float4 main(VS_OUTPUT input) : SV_TARGET
 {
     float4 diffuse = ObjTexture.Sample(ObjSamplerState, input.TexCoord);
     clip(diffuse.a - .25f);
-    diffuse.a = 0.5f;
+    diffuse.a = 0.1f;
     return diffuse;
 }
