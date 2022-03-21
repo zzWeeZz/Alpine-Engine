@@ -1,5 +1,6 @@
-﻿  Engine.cpp
-C:\Users\zzWee\source\repos\Z-Engine\Source\Z-Engine\src\Engine\Engine.cpp(81,20): warning C4244: '=': conversion from 'int' to 'FLOAT', possible loss of data
-C:\Users\zzWee\source\repos\Z-Engine\Source\Z-Engine\src\Engine\Engine.cpp(82,19): warning C4244: '=': conversion from 'int' to 'FLOAT', possible loss of data
-LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
-  Z-Engine.vcxproj -> C:\Users\zzWee\source\repos\Z-Engine\Export\Z-Engine.exe
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(514,5): warning MSB8028: The intermediate directory (C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Intermediates\x64\Debug\) contains files shared from another project (Lancher.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  Engine.cpp
+C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Source\Z-Engine\src\Engine\Engine.cpp(84,21): warning C4244: '=': conversion from 'int' to 'FLOAT', possible loss of data
+C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Source\Z-Engine\src\Engine\Engine.cpp(85,20): warning C4244: '=': conversion from 'int' to 'FLOAT', possible loss of data
+C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Source\Z-Engine\src\Engine\Engine.cpp(117,15): warning C4101: 'errorMessages': unreferenced local variable
+  Z-Engine.vcxproj -> C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Dependencies\lib\Engine.lib

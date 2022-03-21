@@ -14,9 +14,11 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LocalDebuggerWorkingDirectory>$(SolutionDir)Export\</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+    <RemoteDebuggerWorkingDirectory>$(SolutionDir)Export\</RemoteDebuggerWorkingDirectory>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LocalDebuggerWorkingDirectory>$(SolutionDir)Export\</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+    <RemoteDebuggerWorkingDirectory>$(SolutionDir)Export\</RemoteDebuggerWorkingDirectory>
   </PropertyGroup>
 </Project>
