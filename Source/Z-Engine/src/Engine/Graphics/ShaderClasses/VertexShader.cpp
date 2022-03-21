@@ -14,7 +14,8 @@ bool VertexShader::Initialize(Microsoft::WRL::ComPtr<ID3D11Device>& aDevice, std
 		return false;
 	}
 
-	
+	hr = aDevice->CreateInputLayout(aDesc, aElements, myBuffer->GetBufferPointer(), myBuffer->GetBufferSize(), &myInputLayout);
+
 	return true;
 }
 

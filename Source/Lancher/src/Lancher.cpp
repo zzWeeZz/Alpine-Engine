@@ -6,14 +6,13 @@
 #include "Engine/Engine.h"
 int main()
 {
-	GLFWwindow* window;
 	Engine::Engine myEngine;
 	/* Initialize the library */
 	if (!glfwInit())
 		return -1;
 
 	/* Create a windowed mode window and its OpenGL context */
-	window = glfwCreateWindow(1280, 720, "Z-Engine", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(1920, 1080, "Z-Engine", NULL, NULL);
 	if (!window)
 	{
 		glfwTerminate();
@@ -21,7 +20,7 @@ int main()
 	}
 	/* Make the window's context current */
 	glfwMakeContextCurrent(window);
-	myEngine.InitD3D(glfwGetWin32Window(window), 1280, 720);
+	myEngine.InitD3D(glfwGetWin32Window(window), 1920, 1080);
 
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))

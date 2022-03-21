@@ -6,13 +6,12 @@
 
 namespace Engine
 {
-	using namespace Microsoft::WRL;
+	
 	struct Vertex    //Overloaded Vertex Structure
 	{
 		Vertex() {}
 		Vertex(float x, float y, float z, float u, float v)
-			: pos(x, y, z), texCoord(u, v) {}
-
+			: pos(x, y, z), texCoord(u, v){}
 		DirectX::XMFLOAT3 pos;
 		DirectX::XMFLOAT2 texCoord;
 	};
@@ -55,15 +54,19 @@ namespace Engine
 		DirectX::XMMATRIX myScale;
 		DirectX::XMMATRIX myTranslation;
 		float myRot = 0.01f;
-		ComPtr<IDXGISwapChain> mySwapchain;
-		ComPtr<ID3D11Device> myDevice;
+
+
+		VertexShader myVertexShader;
+		PixelShader myPixelShader;
+
+		Microsoft::WRL::ComPtr<IDXGISwapChain> mySwapchain;
+		Microsoft::WRL::ComPtr<ID3D11Device> myDevice;
 		ID3D11DeviceContext* myContext;
 		ID3D11RenderTargetView* myRenderTargetView;
 		ID3D11Buffer* mySquareIndexBuffer;
 		ID3D11Buffer* mySquareVertBuffer;
 		ID3D11DepthStencilView* myDepthStencilView;
 		ID3D11Texture2D* myDepthStencilBuffer;
-		VertexShader myVertexShader;
 		ID3D11PixelShader* myPS;
 		ID3D10Blob* myPS_Buffer;
 		ID3D11InputLayout* myVertLayout;

@@ -8,7 +8,6 @@
 
 namespace Engine
 {
-
 	void Engine::InitD3D(HWND aHWND, int aScreenWidth, int aScreenHight)
 	{
 		myScreenHeight = aScreenHight;
@@ -113,15 +112,17 @@ namespace Engine
 
 	void Engine::InitPipeline()
 	{
+		D3D11_INPUT_ELEMENT_DESC layout[] =
+		{
+			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		};
+		myVertexShader.Initialize(myDevice, L"Shaders/VertexShader.cso", layout, ARRAYSIZE(layout));
+		myPixelShader.Initialize(myDevice, L"Shaders/PixelShader.cso");
 
-		ID3D10Blob* errorMessages;
-		myVertexShader.Initialize(myDevice, L"Shaders/VertexShader.cso");
-		D3DReadFileToBlob(L"Shaders/PixelShader.cso", &myPS_Buffer);
-		//Create the Shader Objects
-		auto hr = myDevice->CreatePixelShader(myPS_Buffer->GetBufferPointer(), myPS_Buffer->GetBufferSize(), NULL, &myPS);
 
 		myContext->VSSetShader(myVertexShader.GetShader(), 0, 0);
-		myContext->PSSetShader(myPS, 0, 0);
+		myContext->PSSetShader(myPixelShader.GetShader(), 0, 0);
 
 		Vertex v[] =
 		{
@@ -161,7 +162,6 @@ namespace Engine
 			Vertex(1.0f,  1.0f,  1.0f, 1.0f, 0.0f),
 			Vertex(1.0f, -1.0f,  1.0f, 1.0f, 1.0f),
 		};
-
 		DWORD index[] =
 		{
 			// Front Face
@@ -200,16 +200,12 @@ namespace Engine
 
 		myDevice->CreateSamplerState(&samplerDesc, &myCubesTexSamplerState);
 		//The input-layout description
-		D3D11_INPUT_ELEMENT_DESC layout[] =
-		{
-			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-			{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		};
+		
 		UINT numElement = ARRAYSIZE(layout);
 
 		D3D11_BUFFER_DESC indexBufferDesc = {};
 		indexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
-		indexBufferDesc.ByteWidth = sizeof(DWORD) * 12 * 3;
+		indexBufferDesc.ByteWidth = sizeof(DWORD) * ARRAYSIZE(index);
 		indexBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
 		indexBufferDesc.CPUAccessFlags = 0;
 		indexBufferDesc.MiscFlags = 0;
@@ -222,7 +218,7 @@ namespace Engine
 
 		D3D11_BUFFER_DESC vertexBufferDesc = {};
 		vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
-		vertexBufferDesc.ByteWidth = sizeof(Vertex) * 24;
+		vertexBufferDesc.ByteWidth = sizeof(Vertex) * ARRAYSIZE(v);
 		vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 		vertexBufferDesc.CPUAccessFlags = 0;
 		vertexBufferDesc.MiscFlags = 0;
@@ -267,14 +263,13 @@ namespace Engine
 
 		ZeroMemory(&vertexBufferData, sizeof(vertexBufferData));
 		vertexBufferData.pSysMem = v;
-		hr = myDevice->CreateBuffer(&vertexBufferDesc, &vertexBufferData, &mySquareVertBuffer);
+		auto hr = myDevice->CreateBuffer(&vertexBufferDesc, &vertexBufferData, &mySquareVertBuffer);
 
 		UINT stride = sizeof(Vertex);
 		UINT offset = 0;
 		myContext->IASetVertexBuffers(0, 1, &mySquareVertBuffer, &stride, &offset);
-		hr = myDevice->CreateInputLayout(layout, numElement, myVertexShader.GetBuffer()->GetBufferPointer(), myVertexShader.GetBuffer()->GetBufferSize(), &myVertLayout);
 
-		myContext->IASetInputLayout(myVertLayout);
+		myContext->IASetInputLayout(myVertexShader.GetInputLayout());
 		auto topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
 		myContext->IAGetPrimitiveTopology(&topology);
 	}
@@ -306,8 +301,6 @@ namespace Engine
 
 		myContext->OMSetBlendState(myTransparency, blendFactor, 0xffffffff);
 
-		DirectX::XMVECTOR cubePos = DirectX::XMVectorZero();
-
 		myWVP = myCubeWorld * myCameraView * myCameraProjection;
 		myConstantBufferObject.worldViewPosition = DirectX::XMMatrixTranspose(myWVP);
 		myContext->UpdateSubresource(myConstBufferObjectBuffer, 0, NULL, &myConstantBufferObject, 0, 0);
@@ -326,7 +319,6 @@ namespace Engine
 	void Engine::CleanD3D() const
 	{
 		mySwapchain->Release();
-		myVertLayout->Release();
 		mySquareIndexBuffer->Release();
 		mySquareVertBuffer->Release();
 		myDepthStencilBuffer->Release();

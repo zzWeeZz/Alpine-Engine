@@ -10,7 +10,7 @@ struct VS_OUTPUT
 };
 
 
-VS_OUTPUT main(float4 inPos : POSITION, float2 inTexCoord : TEXCOORD)
+VS_OUTPUT main(float4 inPos : POSITION,float2 inTexCoord : TEXCOORD)
 {
     VS_OUTPUT output;
 
