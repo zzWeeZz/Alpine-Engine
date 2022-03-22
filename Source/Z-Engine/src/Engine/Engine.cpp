@@ -42,7 +42,7 @@ namespace Engine
 
 		// ---------- 
 
-		DirectX::CreateWICTextureFromFile(myDevice.Get(), L"Textures/sus.png", nullptr, &myCubesTexture);
+		DirectX::CreateWICTextureFromFile(myDevice.Get(), L"Textures/Tommie.png", nullptr, &myCubesTexture);
 
 
 		// Set Render Target
