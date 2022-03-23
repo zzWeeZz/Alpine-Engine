@@ -1,7 +1,0 @@
-﻿  Lancher.cpp
-DirectXTK.lib(WICTextureLoader.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '2' doesn't match value '0' in Lancher.obj
-DirectXTK.lib(WICTextureLoader.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MDd_DynamicDebug' doesn't match value 'MD_DynamicRelease' in Lancher.obj
-DirectXTK.lib(pch.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '2' doesn't match value '0' in Lancher.obj
-DirectXTK.lib(pch.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MDd_DynamicDebug' doesn't match value 'MD_DynamicRelease' in Lancher.obj
-MSVCRT.lib(initializers.obj) : warning LNK4098: defaultlib 'msvcrtd.lib' conflicts with use of other libs; use /NODEFAULTLIB:library
-C:\Users\niklas.jakobsen\Documents\Z-Engine-new\x64\Release\Lancher.exe : fatal error LNK1319: 4 mismatches detected

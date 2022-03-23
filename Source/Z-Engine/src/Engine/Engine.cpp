@@ -42,9 +42,6 @@ namespace Engine
 
 		// ---------- 
 
-	
-
-
 		// Set Render Target
 		ID3D11Texture2D* backBufferPtr;
 		mySwapchain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<LPVOID*>(&backBufferPtr));
@@ -98,14 +95,7 @@ namespace Engine
 
 		myDevice->CreateBuffer(&constBufferDesc, NULL, &myConstBufferObjectBuffer);
 
-		myCameraPosition = { 0.0f, 0.0f ,-10.f, 0.0f };
-		myCameraTarget = { 1.0f, 0.0f ,0.0f, 0.0f };
-		myCameraUp = { 0.0f, 1.0f ,0.0f, 0.0f };
-
-		myCameraView = DirectX::XMMatrixLookAtLH(myCameraPosition, myCameraTarget, myCameraUp);
-
-		myCameraProjection = DirectX::XMMatrixPerspectiveFovLH(0.4f * 3.14f, static_cast<float>(myScreenWidth) / static_cast<float>(myScreenHeight), 0.1f, 1000);
-		myWorld = DirectX::XMMatrixIdentity();
+	
 		InitPipeline();
 
 
@@ -113,6 +103,7 @@ namespace Engine
 
 	void Engine::InitPipeline()
 	{
+		myCamera.Init({ 0,0, -10 });
 		D3D11_INPUT_ELEMENT_DESC layout[] =
 		{
 			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
@@ -178,13 +169,8 @@ namespace Engine
 		{
 			myRot = 0.0;
 		}
-
-		myCubeWorld = DirectX::XMMatrixIdentity();
-		DirectX::XMVECTOR rotaxis = { 1,1,1,0 };
-		myRotation = DirectX::XMMatrixRotationAxis(rotaxis, myRot);
-		myTranslation = DirectX::XMMatrixTranslation(0, 0, 0.0f);
-		myScale = DirectX::XMMatrixScaling(2, 2, 2);
-		myCubeWorld = myTranslation * myRotation * myScale;
+		myModel.GetTransform().SetPosition({ 0, 0, 10 });
+		myModel.GetTransform().SetRotation({0, myRot * 3.14f, 0});
 	}
 
 
@@ -197,9 +183,9 @@ namespace Engine
 		float blendFactor[] = { 0.75f, 0.75f,0.75f, 1.f };
 
 		myContext->OMSetBlendState(myTransparency, blendFactor, 0xffffffff);
-
-		myWVP = myCubeWorld * myCameraView * myCameraProjection;
-		myConstantBufferObject.worldViewPosition = DirectX::XMMatrixTranspose(myWVP);
+		auto ps = myModel.GetTransform().GetMatrix() * myCamera.GetTransform().GetMatrix();
+		myWVP = ps * myCamera.GetProjectionMatrix();
+		myConstantBufferObject.worldViewPosition = Matrix4x4f::Transpose(myWVP);
 		myContext->UpdateSubresource(myConstBufferObjectBuffer, 0, NULL, &myConstantBufferObject, 0, 0);
 		myContext->VSSetConstantBuffers(0, 1, &myConstBufferObjectBuffer);
 		

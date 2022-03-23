@@ -1,7 +1,25 @@
-﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(514,5): warning MSB8028: The intermediate directory (C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Intermediates\x64\Debug\) contains files shared from another project (Lancher.vcxproj, Z-Engine.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(510,5): warning MSB8028: The intermediate directory (C:\Users\zzWee\source\repos\Z-Engine\Intermediates\x64\Debug\) contains files shared from another project (Lancher.vcxproj, Z-Engine.vcxproj).  This can lead to incorrect clean and rebuild behavior.
   Scanning sources for module dependencies...
-  Matrix.h
-  Compiling...
-  Matrix.h
-  Timer.cpp
-  ToolBox.vcxproj -> C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Dependencies\lib\ToolBox.lib
+  Transform.cpp
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winbase.h(9531,5): warning C5105: macro expansion producing 'defined' has undefined behavior
+C:\Users\zzWee\source\repos\Z-Engine\Source\ToolBox\src\ToolBox\Math\Vector\Vector3.hpp(56,15): warning C4244: 'return': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\zzWee\source\repos\Z-Engine\Source\ToolBox\src\ToolBox\Math\Vector\Vector3.hpp(55): message : while compiling class template member function 'T ToolBox::Math::Vector3<T>::Length(void) const'
+          with
+          [
+              T=float
+          ]
+C:\Users\zzWee\source\repos\Z-Engine\Source\ToolBox\src\ToolBox\Math\Transform.cpp(13): message : see reference to function template instantiation 'T ToolBox::Math::Vector3<T>::Length(void) const' being compiled
+          with
+          [
+              T=float
+          ]
+C:\Users\zzWee\source\repos\Z-Engine\Source\ToolBox\src\ToolBox\Math\Transform.h(23): message : see reference to class template instantiation 'ToolBox::Math::Vector3<T>' being compiled
+          with
+          [
+              T=float
+          ]
+  ToolBox.vcxproj -> C:\Users\zzWee\source\repos\Z-Engine\Dependencies\lib\ToolBox.lib

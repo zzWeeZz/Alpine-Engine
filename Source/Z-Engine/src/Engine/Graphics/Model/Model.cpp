@@ -120,3 +120,8 @@ void Model::Draw()
 	myContext->DrawIndexed(myIndexBuffer.BufferSize(), 0, 0);
 
 }
+
+ToolBox::Math::Transform& Model::GetTransform()
+{
+	return myTransform;
+}

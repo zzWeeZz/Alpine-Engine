@@ -1,12 +1,10 @@
+#pragma once
 #include <cassert>
 #include <Windows.h>
 #include <random>
 #include <iostream>
-#include <type_traits>
-#define PI 3.14159f
-#define RAD_TO_DEG(a) ((180/PI) * a)
-#define DEG_TO_RAD(a) ((PI/180) * a)
 
+#define PI 3.14159f
 
 namespace ToolBox
 {
@@ -94,14 +92,13 @@ namespace ToolBox
 			aSecondValue = tempFirst;
 		}
 
-		float GetRandomValue(int aMinimalValue, int aMaxValue)
+		inline float RadToDeg(float aDeg)
 		{
-			std::random_device seed;
-			std::mt19937 rndEngine(seed());
-
-			std::uniform_int_distribution<int> rndDist(aMinimalValue, aMaxValue);
-
-			return rndDist(rndEngine);
+			return aDeg * (PI / 180);
+		}
+		inline float DegToRad(float aRad)
+		{
+			return PI * aRad;
 		}
 	}
 }

@@ -3,11 +3,12 @@
 #include <wrl.h>
 #include <DirectXTK/WICTextureLoader.h>
 #include <string>
-
+#include "../../ToolBox/src/ToolBox/Math/Transform.h"
 #include "../Buffers/IndexBuffer.h"
 #include "../Buffers/VertexBuffer.h"
 
 #include "ModelData.hpp"
+
 
 class Model
 {
@@ -16,9 +17,13 @@ public:
 	void SetModel(std::wstring aPath, std::wstring aTexturePath = L"Textures/Default.png");
 	void Draw();
 
+	ToolBox::Math::Transform& GetTransform();
+
 private:
 	void PrepareForRender();
 	DWORD myIndex[36];
+
+	ToolBox::Math::Transform myTransform;
 
 	VertexBuffer<Vertex> myVertexBuffer;
 	IndexBuffer myIndexBuffer;

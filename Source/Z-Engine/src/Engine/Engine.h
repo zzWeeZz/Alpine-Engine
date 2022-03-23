@@ -5,11 +5,13 @@
 #include "Graphics/Model/Model.h"
 #include <wrl.h>
 
+#include "Graphics/Camera.h"
+
 namespace Engine
 {
 	struct ConstantBufferObject
 	{
-		DirectX::XMMATRIX worldViewPosition;
+		Matrix4x4f worldViewPosition;
 	};
 
 	class Engine
@@ -29,20 +31,9 @@ namespace Engine
 
 		ConstantBufferObject myConstantBufferObject;
 
-		DirectX::XMMATRIX myWVP;
-		DirectX::XMMATRIX myCubeWorld;
+		Matrix4x4f myWVP;
+		Camera myCamera;
 
-		DirectX::XMMATRIX myWorld;
-		DirectX::XMMATRIX myCameraView;
-		DirectX::XMMATRIX myCameraProjection;
-
-		DirectX::XMVECTOR myCameraPosition;
-		DirectX::XMVECTOR myCameraTarget;
-		DirectX::XMVECTOR myCameraUp;
-
-		DirectX::XMMATRIX myRotation;
-		DirectX::XMMATRIX myScale;
-		DirectX::XMMATRIX myTranslation;
 		float myRot = 0.01f;
 
 		Model myModel;

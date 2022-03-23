@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClInclude Include="src\ToolBox\Math\Matrix\Matrix3x3.hpp" />
     <ClInclude Include="src\ToolBox\Math\Matrix\Matrix4x4.hpp" />
+    <ClInclude Include="src\ToolBox\Math\Transform.h" />
     <ClInclude Include="src\ToolBox\Math\Vector\Vector.h" />
     <ClInclude Include="src\ToolBox\Math\Vector\Vector2.hpp" />
     <ClInclude Include="src\ToolBox\Math\Vector\Vector3.hpp" />
@@ -158,6 +159,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ToolBox\Math\Matrix\Matrix.h" />
+    <ClCompile Include="src\ToolBox\Math\Transform.cpp" />
     <ClCompile Include="src\ToolBox\Utility\Timer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

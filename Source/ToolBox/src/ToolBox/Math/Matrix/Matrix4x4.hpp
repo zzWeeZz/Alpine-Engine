@@ -1,11 +1,19 @@
 #pragma once
 #include "../Vector/Vector4.hpp"
+#include "../Vector/Vector3.hpp"
+#include "../../Utility/UtilityFunctions.hpp"
 #include <array>
 
 namespace ToolBox
 {
 	namespace Math
 	{
+		enum class Rotation
+		{
+			X,
+			Y,
+			Z
+		};
 		template<class T>
 		class Matrix4x4
 		{
@@ -20,6 +28,15 @@ namespace ToolBox
 			static Matrix4x4<T> CreateRotationAroundX(T aAngleInRadians);
 			static Matrix4x4<T> CreateRotationAroundY(T aAngleInRadians);
 			static Matrix4x4<T> CreateRotationAroundZ(T aAngleInRadians);
+			static Matrix4x4<T> CreateRotationInLocalSpace(Matrix4x4<T> aTransform, const float aAngle, Vector3<T> aAxis);
+
+			static Matrix4x4<T> CreateTranslation(const Vector4<T>& aPosition);
+			static Matrix4x4<T> CreateTranslation(const Vector3<T>& aPosition);
+
+			static Matrix4x4<T> CreateScaleMatrix(const Vector3<T>& aScale);
+
+			static Matrix4x4<T> CreateLeftHandLookAtMatrix(const Vector3<T>& aPosition, const Vector3<T>& aDirection, const Vector3<T>& aUp);
+			static Matrix4x4<T> CreateLeftHandPerspectiveMatrix(float aFOV, float aNearPlane, float aFarPlane);
 			static Matrix4x4<T> Transpose(const Matrix4x4<T>& aMatrixToTranspose);
 			static Matrix4x4<T> GetFastInverse(const Matrix4x4<T>& aTransform);
 		private:
@@ -213,6 +230,98 @@ namespace ToolBox
 			tempMatrix4x4(4, 4) = 1;
 
 			return tempMatrix4x4;
+		}
+
+		template <class T>
+		Matrix4x4<T> Matrix4x4<T>::CreateRotationInLocalSpace(Matrix4x4<T> aTransform, const float aAngle, Vector3<T> aAxis)
+		{
+			Vector4<float> axis = { aAxis.x, aAxis.y ,aAxis.z , 1 };
+
+			axis = axis * aTransform;
+			Matrix4x4<T> tempMatrix;
+
+			tempMatrix(1, 1) = cos(aAngle) + (axis.x * axis.x) * (1 - cos(aAngle));
+			tempMatrix(1, 2) = axis.x * axis.y * (1 - cos(aAngle)) - axis.z * sin(aAngle);
+			tempMatrix(1, 3) = axis.x * axis.z * (1 - cos(aAngle)) + axis.y * sin(aAngle);
+
+			tempMatrix(2, 1) = axis.y * axis.x * (1 - cos(aAngle)) + axis.z * sin(aAngle);
+			tempMatrix(2, 2) = cos(aAngle) + (axis.y * axis.y) * (1 - cos(aAngle));
+			tempMatrix(2, 3) = axis.y * axis.z * (1 - cos(aAngle)) - axis.x * sin(aAngle);
+
+			tempMatrix(3, 1) = axis.z * axis.x * (1 - cos(aAngle)) - axis.y * sin(aAngle);
+			tempMatrix(3, 2) = axis.z * axis.y * (1 - cos(aAngle)) + axis.x * sin(aAngle);
+			tempMatrix(3, 3) = cos(aAngle) + (axis.z * axis.z) * (1 - cos(aAngle));
+
+			return tempMatrix;
+		}
+
+		template <class T>
+		Matrix4x4<T> Matrix4x4<T>::CreateTranslation(const Vector4<T>& aPosition)
+		{
+			Matrix4x4<T> returnMatrix;
+			returnMatrix(1, 4) = aPosition.x;
+			returnMatrix(2, 4) = aPosition.y;
+			returnMatrix(3, 4) = aPosition.z;
+			returnMatrix(4, 4) = aPosition.w;
+			return returnMatrix;
+		}
+
+		template <class T>
+		Matrix4x4<T> Matrix4x4<T>::CreateTranslation(const Vector3<T>& aPosition)
+		{
+			Matrix4x4<T> returnMatrix;
+			returnMatrix(1, 4) = aPosition.x;
+			returnMatrix(2, 4) = aPosition.y;
+			returnMatrix(3, 4) = aPosition.z;
+			return returnMatrix;
+		}
+
+		template <class T>
+		Matrix4x4<T> Matrix4x4<T>::CreateScaleMatrix(const Vector3<T>& aScale)
+		{
+			Matrix4x4<T> matrix;
+			matrix(1, 1) = aScale.x;
+			matrix(2, 2) = aScale.y;
+			matrix(3, 3) = aScale.z;
+			return matrix;
+		}
+
+		template <class T>
+		Matrix4x4<T> Matrix4x4<T>::CreateLeftHandLookAtMatrix(const Vector3<T>& aPosition, const Vector3<T>& aDirection, const Vector3<T>& aUp)
+		{
+			Vector3<T> R2 = aDirection.GetNormalized();
+
+			Vector3<T> R0 = aUp.Cross(R2);
+			R0.Normalize();
+
+			Vector3<T> R1 = R2.Cross(R0);
+
+
+			Matrix4x4<T> M;
+			M(4, 1) = R0.x;
+			M(4, 2) = R1.y;
+			M(4, 3) = R2.z;
+			M(4, 4) = 1;
+
+			M = Matrix4x4<float>::Transpose(M);
+
+			return M;
+		}
+
+		template <class T>
+		Matrix4x4<T> Matrix4x4<T>::CreateLeftHandPerspectiveMatrix(float aFOV, float aNearPlane, float aFarPlane)
+		{
+			Matrix4x4<T> ProjectionMatrix;
+			float tanClac = tanf(Utility::RadToDeg(aFOV / 2.f));
+			ProjectionMatrix(1, 1) = (1.f / tanClac);
+			ProjectionMatrix(2, 2) = (16.f / 9.f) * (1.f / tanClac);
+
+			ProjectionMatrix(3, 3) = aFarPlane / (aFarPlane - aNearPlane);
+			ProjectionMatrix(4, 3) = (-aNearPlane * aFarPlane) / (aFarPlane - aNearPlane);
+			ProjectionMatrix(3, 4) = 1;
+			ProjectionMatrix(4, 4) = 0;
+
+			return ProjectionMatrix;
 		}
 
 		template <class T>

@@ -169,16 +169,17 @@
   <ItemGroup>
     <ClCompile Include="src\Engine\Engine.cpp" />
     <ClCompile Include="src\Engine\Graphics\Buffers\IndexBuffer.cpp" />
+    <ClCompile Include="src\Engine\Graphics\Camera.cpp" />
     <ClCompile Include="src\Engine\Graphics\Model\Model.cpp" />
     <ClCompile Include="src\Engine\Graphics\ShaderClasses\PixelShader.cpp" />
     <ClCompile Include="src\Engine\Graphics\Shaders.h" />
     <ClCompile Include="src\Engine\Graphics\ShaderClasses\VertexShader.cpp" />
-    <ClCompile Include="src\Engine\Math\MathAdapter.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Engine\Engine.h" />
     <ClInclude Include="src\Engine\Graphics\Buffers\IndexBuffer.h" />
     <ClInclude Include="src\Engine\Graphics\Buffers\VertexBuffer.h" />
+    <ClInclude Include="src\Engine\Graphics\Camera.h" />
     <ClInclude Include="src\Engine\Graphics\Model\Model.h" />
     <ClInclude Include="src\Engine\Graphics\Model\ModelData.hpp" />
     <ClInclude Include="src\Engine\Graphics\ShaderClasses\PixelShader.h" />
