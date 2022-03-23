@@ -1,4 +1,6 @@
-﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(514,5): warning MSB8028: The intermediate directory (C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Intermediates\x64\Debug\) contains files shared from another project (Lancher.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(514,5): warning MSB8028: The intermediate directory (C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Intermediates\x64\Debug\) contains files shared from another project (Lancher.vcxproj, ToolBox.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(514,5): warning MSB8028: The intermediate directory (C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Intermediates\x64\Debug\) contains files shared from another project (Lancher.vcxproj, Z-Engine.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  Scanning sources for module dependencies...
   Scanning sources for module dependencies...
   Engine.cpp
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winbase.h(9531,5): warning C5105: macro expansion producing 'defined' has undefined behavior
