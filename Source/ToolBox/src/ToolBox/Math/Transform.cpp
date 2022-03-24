@@ -14,7 +14,7 @@ void ToolBox::Math::Transform::SetRotation(Vector3f aRotation)
 {
 	myRotation = aRotation;
 	Vector4f quatVec = { 1 ,aRotation.x,aRotation.y ,aRotation.z };
-	myTransform *= Matrix4x4f::CreateRotationInLocalSpace(myTransform, 0.001f, { 1, 0, 0 });
+	myTransform *= Matrix4x4f::CreateRotationInLocalSpace(myTransform, 0.001f, aRotation);
 }
 
 void ToolBox::Math::Transform::SetSize(const Vector3f& aSize)

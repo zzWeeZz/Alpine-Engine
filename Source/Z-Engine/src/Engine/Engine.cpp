@@ -13,7 +13,7 @@ namespace Engine
 		myScreenHeight = aScreenHight;
 		myScreenWidth = aScreenWidth;
 		// Inits Direct X
-		DXGI_SWAP_CHAIN_DESC swapChainDesc;
+		DXGI_SWAP_CHAIN_DESC swapChainDesc = {};
 
 		ZeroMemory(&swapChainDesc, sizeof(DXGI_SWAP_CHAIN_DESC));
 
@@ -47,9 +47,8 @@ namespace Engine
 		mySwapchain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<LPVOID*>(&backBufferPtr));
 
 		myDevice->CreateRenderTargetView(backBufferPtr, NULL, &myRenderTargetView);
-		backBufferPtr->Release();
 
-		D3D11_TEXTURE2D_DESC depthStencilDesc;
+		D3D11_TEXTURE2D_DESC depthStencilDesc = {};
 		depthStencilDesc.Width = myScreenWidth;
 		depthStencilDesc.Height = myScreenHeight;
 		depthStencilDesc.MipLevels = 1;
@@ -58,18 +57,11 @@ namespace Engine
 		depthStencilDesc.SampleDesc.Count = 1;
 		depthStencilDesc.SampleDesc.Quality = 0;
 		depthStencilDesc.Usage = D3D11_USAGE_DEFAULT;
-		depthStencilDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
-		depthStencilDesc.CPUAccessFlags = 0;
+		depthStencilDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL | D3D11_BIND_RENDER_TARGET;
 		depthStencilDesc.MiscFlags = 0;
 
-		D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc = {};
-		depthStencilViewDesc.Format = DXGI_FORMAT_D32_FLOAT;
-		depthStencilViewDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2DMS;
-		depthStencilViewDesc.Texture2D.MipSlice = 0;
-		depthStencilViewDesc.Flags = 0;
-
 		myDevice->CreateTexture2D(&depthStencilDesc, NULL, &myDepthStencilBuffer);
-		myDevice->CreateDepthStencilView(myDepthStencilBuffer, &depthStencilViewDesc, &myDepthStencilView);
+		myDevice->CreateDepthStencilView(myDepthStencilBuffer, 0, &myDepthStencilView);
 		myContext->OMSetRenderTargets(1, &myRenderTargetView, myDepthStencilView);
 		// ----
 
@@ -91,7 +83,7 @@ namespace Engine
 		constBufferDesc.MiscFlags = 0;
 
 		myModel.Initialize(myContext, myDevice);
-		myModel.SetModel(L"haha", L"slkdjfs");
+		myModel.SetModel(L"haha");
 
 		myDevice->CreateBuffer(&constBufferDesc, NULL, &myConstBufferObjectBuffer);
 
@@ -132,6 +124,7 @@ namespace Engine
 		cmDesc.FillMode = D3D11_FILL_SOLID;
 		cmDesc.CullMode = D3D11_CULL_BACK;
 		cmDesc.FrontCounterClockwise = true;
+		cmDesc.DepthClipEnable = true;
 		myDevice->CreateRasterizerState(&cmDesc, &myCCWcullMode);
 		cmDesc.FrontCounterClockwise = false;
 		myDevice->CreateRasterizerState(&cmDesc, &myCWcullMode);
@@ -155,8 +148,6 @@ namespace Engine
 		blendDesc.RenderTarget[0] = renderTargetBlendDesc;
 
 		myDevice->CreateBlendState(&blendDesc, &myTransparency);
-
-
 		myContext->IASetInputLayout(myVertexShader.GetInputLayout());
 		auto topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
 		myContext->IAGetPrimitiveTopology(&topology);
@@ -197,7 +188,15 @@ namespace Engine
 		{
 			myMoveDir = { 0, 0, 0 };
 		}
-		myCamera.GetTransform().SetPosition(myCamera.GetTransform().GetPosition() + myMoveDir * 0.0006f);
+		if(KeyInput::GetInstance().GetKeyDown(Keys::Q))
+		{
+			myCamera.GetTransform().SetRotation({ 0, 1, 0 });
+		}
+		if (KeyInput::GetInstance().GetKeyDown(Keys::E))
+		{
+			myCamera.GetTransform().SetRotation({ 0, -1, 0 });
+		}
+		myCamera.GetTransform().SetPosition(myCamera.GetTransform().GetPosition() + myMoveDir * 10.f * 0.0006f);
 	}
 
 
@@ -215,8 +214,8 @@ namespace Engine
 		myConstantBufferObject.worldViewPosition = Matrix4x4f::Transpose(myWVP);
 		myContext->UpdateSubresource(myConstBufferObjectBuffer, 0, NULL, &myConstantBufferObject, 0, 0);
 		myContext->VSSetConstantBuffers(0, 1, &myConstBufferObjectBuffer);
-		
-		myModel.Draw();
+		myContext->RSSetState(myCWcullMode);
+		myModel.Draw(myCWcullMode);
 
 		mySwapchain->Present(0, 0);
 	}
@@ -224,7 +223,7 @@ namespace Engine
 	void Engine::CleanD3D() const
 	{
 		mySwapchain->Release();
-		myDepthStencilBuffer->Release();
+		/*myDepthStencilBuffer->Release();*/
 		myConstBufferObjectBuffer->Release();
 		myDevice->Release();
 		myRenderTargetView->Release();

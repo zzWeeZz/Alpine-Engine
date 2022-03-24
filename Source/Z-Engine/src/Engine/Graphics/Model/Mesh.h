@@ -16,7 +16,7 @@ class Mesh
 public:
 	Mesh(ID3D11Device* aDevice, ID3D11DeviceContext* aDeviceContext, std::vector<Vertex>& aVertices, std::vector<DWORD>& aIndices);
 	Mesh(const Mesh& aMesh);
-	void Draw();
+	void Draw(ID3D11RasterizerState* state);
 private:
 	VertexBuffer<Vertex> myVertexBuffer;
 	IndexBuffer myIndexBuffer;

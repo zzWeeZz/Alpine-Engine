@@ -6,7 +6,7 @@ void Model::Initialize(const Microsoft::WRL::ComPtr<ID3D11DeviceContext>& aConte
 {
 	myContext = aContext;
 	myDevice = aDevice;
-	myTransform.SetSize({ 5, 2, 5 });
+	myTransform.SetSize({ 1, 1, 1 });
 }
 
 void Model::SetModel(std::wstring aPath, std::wstring aTexturePath)
@@ -23,7 +23,7 @@ void Model::SetModel(std::wstring aPath, std::wstring aTexturePath)
 	}
 	else
 	{
-		LoadModel("Model/FabianTest.fbx");
+		LoadModel("Model/helicopter.fbx");
 	}
 
 	PrepareForRender();
@@ -41,9 +41,6 @@ void Model::PrepareForRender()
 	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
 
 	myDevice->CreateSamplerState(&samplerDesc, &myTextureSamplerState);
-	UINT offset = 0;
-
-
 }
 
 bool Model::LoadModel(const std::string& aFilePath)
@@ -107,14 +104,13 @@ Mesh Model::ProcessMesh(aiMesh* aMesh, const aiScene* aScene)
 	return Mesh(myDevice.Get(), myContext.Get(), vertices, indices);
 }
 
-void Model::Draw()
+void Model::Draw(ID3D11RasterizerState* state) 
 {
 	myContext->PSSetShaderResources(0, 1, myTexture.GetAddressOf());
 	myContext->PSSetSamplers(0, 1, myTextureSamplerState.GetAddressOf());
-
 	for (int i = 0; i < myMeshes.size(); i++)
 	{
-		myMeshes[i].Draw();
+		myMeshes[i].Draw(state);
 	}
 }
 
