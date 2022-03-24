@@ -2,38 +2,8 @@
   Lancher.cpp
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winbase.h(9531,5): warning C5105: macro expansion producing 'defined' has undefined behavior
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\winrt\wrl\module.h(1275,10): warning C5104: found 'L#serverName' in macro replacement list, did you mean 'L""#serverName'?
-C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Dependencies\include\assimp\material.inl(101,47): error C2589: '(': illegal token on right side of '::'
-C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Dependencies\include\assimp\material.h(725,14): message : This diagnostic occurred in the compiler generated function 'aiReturn aiMaterial::Get(const char *,unsigned int,unsigned int,Type *,unsigned int *) const'
-C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Dependencies\include\assimp\material.inl(101,47): error C2760: syntax error: '(' was unexpected here; expected ')'
-C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Dependencies\include\assimp\material.h(725,14): message : This diagnostic occurred in the compiler generated function 'aiReturn aiMaterial::Get(const char *,unsigned int,unsigned int,Type *,unsigned int *) const'
-C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Dependencies\include\assimp\material.inl(101,47): error C3878: syntax error: unexpected token '(' following 'expression'
-C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Dependencies\include\assimp\material.h(725,14): message : This diagnostic occurred in the compiler generated function 'aiReturn aiMaterial::Get(const char *,unsigned int,unsigned int,Type *,unsigned int *) const'
-C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Dependencies\include\assimp\material.inl(101,47): message : error recovery skipped: '( static_cast <  . . . identifier'
-C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Dependencies\include\assimp\material.h(725,14): message : This diagnostic occurred in the compiler generated function 'aiReturn aiMaterial::Get(const char *,unsigned int,unsigned int,Type *,unsigned int *) const'
-C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Dependencies\include\assimp\material.inl(101,47): error C2760: syntax error: ')' was unexpected here; expected ';'
-C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Dependencies\include\assimp\material.h(725,14): message : This diagnostic occurred in the compiler generated function 'aiReturn aiMaterial::Get(const char *,unsigned int,unsigned int,Type *,unsigned int *) const'
-C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Dependencies\include\assimp\material.inl(101,47): error C3878: syntax error: unexpected token ')' following 'expression_statement'
-C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Dependencies\include\assimp\material.h(725,14): message : This diagnostic occurred in the compiler generated function 'aiReturn aiMaterial::Get(const char *,unsigned int,unsigned int,Type *,unsigned int *) const'
-C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Dependencies\include\assimp\material.inl(101,47): error C3878: syntax error: unexpected token ')' following 'statement'
-C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Dependencies\include\assimp\material.h(725,14): message : This diagnostic occurred in the compiler generated function 'aiReturn aiMaterial::Get(const char *,unsigned int,unsigned int,Type *,unsigned int *) const'
-C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Dependencies\include\assimp\material.inl(101,47): error C3878: syntax error: unexpected token ')' following 'statement_seq'
-C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Dependencies\include\assimp\material.inl(101,47): message : missing one of:  '}' ?
-C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Dependencies\include\assimp\material.h(725,14): message : This diagnostic occurred in the compiler generated function 'aiReturn aiMaterial::Get(const char *,unsigned int,unsigned int,Type *,unsigned int *) const'
-C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Dependencies\include\assimp\material.inl(101,47): error C2760: syntax error: ')' was unexpected here; expected '}'
-C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Dependencies\include\assimp\material.h(725,14): message : This diagnostic occurred in the compiler generated function 'aiReturn aiMaterial::Get(const char *,unsigned int,unsigned int,Type *,unsigned int *) const'
-C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Dependencies\include\assimp\material.inl(101,47): error C3878: syntax error: unexpected token ')' following 'compound_statement'
-C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Dependencies\include\assimp\material.h(725,14): message : This diagnostic occurred in the compiler generated function 'aiReturn aiMaterial::Get(const char *,unsigned int,unsigned int,Type *,unsigned int *) const'
-C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Dependencies\include\assimp\material.inl(101,47): error C3878: syntax error: unexpected token ')' following 'selection_statement'
-C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Dependencies\include\assimp\material.h(725,14): message : This diagnostic occurred in the compiler generated function 'aiReturn aiMaterial::Get(const char *,unsigned int,unsigned int,Type *,unsigned int *) const'
-C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Dependencies\include\assimp\material.inl(101,47): message : error recovery skipped: ') ) <'
-C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Dependencies\include\assimp\material.h(725,14): message : This diagnostic occurred in the compiler generated function 'aiReturn aiMaterial::Get(const char *,unsigned int,unsigned int,Type *,unsigned int *) const'
-C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Dependencies\include\assimp\material.inl(101,47): message : error recovery skipped: ') ?'
-C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Dependencies\include\assimp\material.h(725,14): message : This diagnostic occurred in the compiler generated function 'aiReturn aiMaterial::Get(const char *,unsigned int,unsigned int,Type *,unsigned int *) const'
-C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Dependencies\include\assimp\material.inl(101,47): error C2760: syntax error: ':' was unexpected here; expected ';'
-C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Dependencies\include\assimp\material.h(725,14): message : This diagnostic occurred in the compiler generated function 'aiReturn aiMaterial::Get(const char *,unsigned int,unsigned int,Type *,unsigned int *) const'
-C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Dependencies\include\assimp\material.inl(101,47): error C3878: syntax error: unexpected token ':' following 'expression_statement'
-C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Dependencies\include\assimp\material.h(725,14): message : This diagnostic occurred in the compiler generated function 'aiReturn aiMaterial::Get(const char *,unsigned int,unsigned int,Type *,unsigned int *) const'
-C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Dependencies\include\assimp\material.inl(101,47): message : error recovery skipped: ':'
-C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Dependencies\include\assimp\material.h(725,14): message : This diagnostic occurred in the compiler generated function 'aiReturn aiMaterial::Get(const char *,unsigned int,unsigned int,Type *,unsigned int *) const'
-C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Dependencies\include\assimp\material.inl(101,47): message : error recovery skipped: ') )'
-C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Dependencies\include\assimp\material.h(725,14): message : This diagnostic occurred in the compiler generated function 'aiReturn aiMaterial::Get(const char *,unsigned int,unsigned int,Type *,unsigned int *) const'
+C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Source\Lancher\src\Lancher.cpp(11,11): warning C4930: 'KeyInput myKeyInput(void)': prototyped function not called (was a variable definition intended?)
+DirectXTK.lib(WICTextureLoader.obj) : warning LNK4099: PDB 'DirectXTK.pdb' was not found with 'DirectXTK.lib(WICTextureLoader.obj)' or at 'C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Export\DirectXTK.pdb'; linking object as if no debug info
+DirectXTK.lib(pch.obj) : warning LNK4099: PDB 'DirectXTK.pdb' was not found with 'DirectXTK.lib(pch.obj)' or at 'C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Export\DirectXTK.pdb'; linking object as if no debug info
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+  Lancher.vcxproj -> C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Export\Engine_Debug.exe
