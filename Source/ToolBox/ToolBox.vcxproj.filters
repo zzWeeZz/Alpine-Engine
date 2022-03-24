@@ -42,6 +42,9 @@
     <ClInclude Include="src\ToolBox\Math\Transform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\ToolBox\Input\KeyInput.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ToolBox\Utility\Timer.cpp">
@@ -51,6 +54,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\ToolBox\Math\Transform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ToolBox\Input\KeyInput.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

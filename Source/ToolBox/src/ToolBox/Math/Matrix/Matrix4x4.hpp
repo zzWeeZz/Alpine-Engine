@@ -8,12 +8,6 @@ namespace ToolBox
 {
 	namespace Math
 	{
-		enum class Rotation
-		{
-			X,
-			Y,
-			Z
-		};
 		template<class T>
 		class Matrix4x4
 		{
@@ -29,6 +23,7 @@ namespace ToolBox
 			static Matrix4x4<T> CreateRotationAroundY(T aAngleInRadians);
 			static Matrix4x4<T> CreateRotationAroundZ(T aAngleInRadians);
 			static Matrix4x4<T> CreateRotationInLocalSpace(Matrix4x4<T> aTransform, const float aAngle, Vector3<T> aAxis);
+			static Matrix4x4<T> CreateRotationMatrixFromQuaternionVectorWXYZ(Vector4<T> aVector);
 
 			static Matrix4x4<T> CreateTranslation(const Vector4<T>& aPosition);
 			static Matrix4x4<T> CreateTranslation(const Vector3<T>& aPosition);
@@ -255,13 +250,47 @@ namespace ToolBox
 			return tempMatrix;
 		}
 
+		template<class T>
+		inline Matrix4x4<T> Matrix4x4<T>::CreateRotationMatrixFromQuaternionVectorWXYZ(Vector4<T> aVector)
+		{
+			Matrix4x4<T> result;
+
+			T qxx(aVector.y * aVector.y);
+			T qyy(aVector.z * aVector.z);
+			T qzz(aVector.w * aVector.w);
+
+			T qxz(aVector.y * aVector.w);
+			T qxy(aVector.y * aVector.z);
+			T qyz(aVector.z * aVector.w);
+
+			T qwx(aVector.x * aVector.y);
+			T qwy(aVector.x * aVector.z);
+			T qwz(aVector.x * aVector.w);
+
+			result(1, 1) = T(1) - T(2) * (qyy + qzz);
+			result(1, 2) = T(2) * (qxy + qwz);
+			result(1, 3) = T(2) * (qxz - qwy);
+
+			result(2, 1) = T(2) * (qxy - qwz);
+			result(2, 2) = T(1) - T(2) * (qxx + qzz);
+			result(2, 3) = T(2) * (qyz + qwx);
+
+			result(3, 1) = T(2) * (qxz + qwy);
+			result(3, 2) = T(2) * (qyz - qwx);
+			result(3, 3) = T(1) - T(2) * (qxx + qyy);
+
+			result(4, 1) = result(4, 2) = result(4, 3) = 0;
+			result(4, 4) = 1;
+			return result;
+		}
+
 		template <class T>
 		Matrix4x4<T> Matrix4x4<T>::CreateTranslation(const Vector4<T>& aPosition)
 		{
 			Matrix4x4<T> returnMatrix;
-			returnMatrix(1, 4) = aPosition.x;
-			returnMatrix(2, 4) = aPosition.y;
-			returnMatrix(3, 4) = aPosition.z;
+			returnMatrix(4, 1) = aPosition.x;
+			returnMatrix(4, 2) = aPosition.y;
+			returnMatrix(4, 3) = aPosition.z;
 			returnMatrix(4, 4) = aPosition.w;
 			return returnMatrix;
 		}
@@ -270,9 +299,9 @@ namespace ToolBox
 		Matrix4x4<T> Matrix4x4<T>::CreateTranslation(const Vector3<T>& aPosition)
 		{
 			Matrix4x4<T> returnMatrix;
-			returnMatrix(1, 4) = aPosition.x;
-			returnMatrix(2, 4) = aPosition.y;
-			returnMatrix(3, 4) = aPosition.z;
+			returnMatrix(4, 1) = aPosition.x;
+			returnMatrix(4, 2) = aPosition.y;
+			returnMatrix(4, 3) = aPosition.z;
 			return returnMatrix;
 		}
 
@@ -289,23 +318,15 @@ namespace ToolBox
 		template <class T>
 		Matrix4x4<T> Matrix4x4<T>::CreateLeftHandLookAtMatrix(const Vector3<T>& aPosition, const Vector3<T>& aDirection, const Vector3<T>& aUp)
 		{
-			Vector3<T> R2 = aDirection.GetNormalized();
-
-			Vector3<T> R0 = aUp.Cross(R2);
-			R0.Normalize();
-
-			Vector3<T> R1 = R2.Cross(R0);
-
-
-			Matrix4x4<T> M;
-			M(4, 1) = R0.x;
-			M(4, 2) = R1.y;
-			M(4, 3) = R2.z;
-			M(4, 4) = 1;
-
-			M = Matrix4x4<float>::Transpose(M);
-
-			return M;
+			Vector3<T> xaxis = aUp.Cross(aDirection).GetNormalized();
+			Vector3<T> yaxis = aDirection.Cross(xaxis);
+			return Matrix4x4<T>();
+			/*	return {
+				xaxis.y, yaxis.x, aDirection.x, T(0),
+				xaxis.y, yaxis.y, aDirection.y, T(0),
+				xaxis.z, yaxis.z, aDirection.z, T(0),
+				-xaxis.Dot(aPosition), -yaxis.Dot(aPosition), -aDirection.Dot(aPosition), T(1)
+			};*/
 		}
 
 		template <class T>

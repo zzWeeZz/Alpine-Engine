@@ -3,7 +3,7 @@
 #include <windows.h>
 #include <d3d11.h>
 #include <d3dcompiler.h>
-
+#include "ToolBox/Input/KeyInput.h"
 #include <assimp/Importer.hpp>
 
 namespace Engine
@@ -91,7 +91,7 @@ namespace Engine
 		constBufferDesc.MiscFlags = 0;
 
 		myModel.Initialize(myContext, myDevice);
-		myModel.SetModel(L"Cube", L"Textures/Jack Daniel.png");
+		myModel.SetModel(L"haha", L"slkdjfs");
 
 		myDevice->CreateBuffer(&constBufferDesc, NULL, &myConstBufferObjectBuffer);
 
@@ -169,21 +169,48 @@ namespace Engine
 		{
 			myRot = 0.0;
 		}
-		myModel.GetTransform().SetPosition({ 0, 0, 10 });
-		myModel.GetTransform().SetRotation({0, myRot * 3.14f, 0});
+		if (KeyInput::GetInstance().GetKeyDown(Keys::A))
+		{
+			myMoveDir = { -1, 0, 0 };
+		}
+		else if (KeyInput::GetInstance().GetKeyDown(Keys::D))
+		{
+			myMoveDir = { 1, 0, 0 };
+		}
+		else if (KeyInput::GetInstance().GetKeyDown(Keys::W))
+		{
+			myMoveDir = { 0, 0, 1 };
+		}
+		else if (KeyInput::GetInstance().GetKeyDown(Keys::S))
+		{
+			myMoveDir = { 0, 0, -1 };
+		}
+		else if (KeyInput::GetInstance().GetKeyDown(Keys::Space))
+		{
+			myMoveDir = { 0, 1, 0 };
+		}
+		else if (KeyInput::GetInstance().GetKeyDown(Keys::Z))
+		{
+			myMoveDir = { 0, -1, 0 };
+		}
+		else
+		{
+			myMoveDir = { 0, 0, 0 };
+		}
+		myCamera.GetTransform().SetPosition(myCamera.GetTransform().GetPosition() + myMoveDir * 0.0006f);
 	}
 
 
 	void Engine::RenderFrame()
 	{
-		float color[4] = { 0.5,0.5f, 0.5f, 0.f };
+		float color[4] = { 1.f,1.f, 1.f, 0.f };
 		myContext->ClearRenderTargetView(myRenderTargetView, color);
 		myContext->ClearDepthStencilView(myDepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
 		float blendFactor[] = { 0.75f, 0.75f,0.75f, 1.f };
 
 		myContext->OMSetBlendState(myTransparency, blendFactor, 0xffffffff);
-		auto ps = myModel.GetTransform().GetMatrix() * myCamera.GetTransform().GetMatrix();
+		auto ps = myModel.GetTransform().GetMatrix() * Matrix4x4f::GetFastInverse(myCamera.GetTransform().GetMatrix());
 		myWVP = ps * myCamera.GetProjectionMatrix();
 		myConstantBufferObject.worldViewPosition = Matrix4x4f::Transpose(myWVP);
 		myContext->UpdateSubresource(myConstBufferObjectBuffer, 0, NULL, &myConstantBufferObject, 0, 0);

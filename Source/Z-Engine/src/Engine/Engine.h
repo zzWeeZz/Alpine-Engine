@@ -34,8 +34,9 @@ namespace Engine
 		Matrix4x4f myWVP;
 		Camera myCamera;
 
-		float myRot = 0.01f;
+		Vector3f myMoveDir;
 
+		float myRot = 0.01f;
 		Model myModel;
 		VertexShader myVertexShader;
 		PixelShader myPixelShader;

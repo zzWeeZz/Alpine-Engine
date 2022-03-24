@@ -122,6 +122,8 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\include\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -138,6 +140,8 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\include\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -147,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\ToolBox\Input\KeyInput.h" />
     <ClInclude Include="src\ToolBox\Math\Matrix\Matrix3x3.hpp" />
     <ClInclude Include="src\ToolBox\Math\Matrix\Matrix4x4.hpp" />
     <ClInclude Include="src\ToolBox\Math\Transform.h" />
@@ -158,6 +163,7 @@
     <ClInclude Include="src\ToolBox\Utility\UtilityFunctions.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\ToolBox\Input\KeyInput.cpp" />
     <ClCompile Include="src\ToolBox\Math\Matrix\Matrix.h" />
     <ClCompile Include="src\ToolBox\Math\Transform.cpp" />
     <ClCompile Include="src\ToolBox\Utility\Timer.cpp" />

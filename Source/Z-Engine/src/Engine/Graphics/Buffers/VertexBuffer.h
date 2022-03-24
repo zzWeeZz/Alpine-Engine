@@ -9,6 +9,21 @@ class VertexBuffer
 public:
 	VertexBuffer(){};
 
+	VertexBuffer(const VertexBuffer<T>& aBuffer)
+	{
+		myBuffer = aBuffer.myBuffer;
+		myBufferSize = aBuffer.myBufferSize;
+		myStride = aBuffer.myStride;
+	}
+
+	VertexBuffer<T>& operator=(const VertexBuffer<T>& a)
+	{
+		this->myBuffer = a.myBuffer;
+		this->myBufferSize = a.myBufferSize;
+		this->myStride = a.myStride;
+		return *this;
+	}
+
 	ID3D11Buffer* Get() const
 	{
 		return myBuffer.Get();
@@ -37,7 +52,7 @@ public:
 	HRESULT Initialize(ID3D11Device* aDevice, T* aData, UINT aVertexCount)
 	{
 		myBufferSize = aVertexCount;
-		myStride = std::make_unique<UINT>(sizeof(T));
+		myStride = std::make_shared<UINT>(sizeof(T));
 
 		D3D11_BUFFER_DESC vertexBufferDesc = {};
 		vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
@@ -53,9 +68,8 @@ public:
 	}
 
 private:
-	VertexBuffer(const VertexBuffer<T>&);
 
 	Microsoft::WRL::ComPtr<ID3D11Buffer> myBuffer;
-	std::unique_ptr<UINT> myStride;
+	std::shared_ptr<UINT> myStride;
 	UINT myBufferSize = 0;
 };

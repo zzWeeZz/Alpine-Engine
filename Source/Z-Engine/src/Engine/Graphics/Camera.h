@@ -1,5 +1,5 @@
 #pragma once
-#include "../../ToolBox/src/ToolBox/Math/Transform.h"
+#include "ToolBox/Math/Transform.h"
 
 
 class Camera
