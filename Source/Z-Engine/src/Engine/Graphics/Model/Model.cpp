@@ -6,7 +6,9 @@ void Model::Initialize(const Microsoft::WRL::ComPtr<ID3D11DeviceContext>& aConte
 {
 	myContext = aContext;
 	myDevice = aDevice;
-	myTransform.SetSize({ 1, 1, 1 });
+	myTransform.SetSize({ 0.5, 0.5, 0.5 });
+	myTransform.SetPosition({ 0, 0, 60 });
+	myTransform.SetRotation({90, 0, 0});
 }
 
 void Model::SetModel(std::wstring aPath, std::wstring aTexturePath)
@@ -104,13 +106,13 @@ Mesh Model::ProcessMesh(aiMesh* aMesh, const aiScene* aScene)
 	return Mesh(myDevice.Get(), myContext.Get(), vertices, indices);
 }
 
-void Model::Draw(ID3D11RasterizerState* state) 
+void Model::Draw() 
 {
 	myContext->PSSetShaderResources(0, 1, myTexture.GetAddressOf());
 	myContext->PSSetSamplers(0, 1, myTextureSamplerState.GetAddressOf());
 	for (int i = 0; i < myMeshes.size(); i++)
 	{
-		myMeshes[i].Draw(state);
+		myMeshes[i].Draw();
 	}
 }
 

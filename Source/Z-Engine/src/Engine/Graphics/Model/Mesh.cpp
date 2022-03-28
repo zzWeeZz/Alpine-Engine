@@ -14,11 +14,10 @@ Mesh::Mesh(const Mesh& aMesh)
 	myVertexBuffer = aMesh.myVertexBuffer;
 }
 
-void Mesh::Draw(ID3D11RasterizerState* state)
+void Mesh::Draw()
 {
 	UINT offset = 0;
 	myDeviceContext->IASetVertexBuffers(0, 1, myVertexBuffer.GetAddressOf(), myVertexBuffer.StridePtr(), &offset);
 	myDeviceContext->IASetIndexBuffer(myIndexBuffer.Get(), DXGI_FORMAT::DXGI_FORMAT_R32_UINT, 0);
-	myDeviceContext->RSSetState(state);
 	myDeviceContext->DrawIndexed(myIndexBuffer.BufferSize(), 0, 0);
 }

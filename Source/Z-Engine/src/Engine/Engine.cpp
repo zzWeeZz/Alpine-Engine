@@ -54,16 +54,17 @@ namespace Engine
 		depthStencilDesc.MipLevels = 1;
 		depthStencilDesc.ArraySize = 1;
 		depthStencilDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
-		depthStencilDesc.SampleDesc.Count = 1;
+		depthStencilDesc.SampleDesc.Count = 4;
 		depthStencilDesc.SampleDesc.Quality = 0;
 		depthStencilDesc.Usage = D3D11_USAGE_DEFAULT;
-		depthStencilDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL | D3D11_BIND_RENDER_TARGET;
+		depthStencilDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
 		depthStencilDesc.MiscFlags = 0;
 
+
 		myDevice->CreateTexture2D(&depthStencilDesc, NULL, &myDepthStencilBuffer);
-		myDevice->CreateDepthStencilView(myDepthStencilBuffer, 0, &myDepthStencilView);
-		myContext->OMSetRenderTargets(1, &myRenderTargetView, myDepthStencilView);
+		myDevice->CreateDepthStencilView(myDepthStencilBuffer, NULL, &myDepthStencilView);
 		// ----
+		
 
 		D3D11_VIEWPORT viewport;
 		ZeroMemory(&viewport, sizeof(D3D11_VIEWPORT));
@@ -124,7 +125,7 @@ namespace Engine
 		cmDesc.FillMode = D3D11_FILL_SOLID;
 		cmDesc.CullMode = D3D11_CULL_BACK;
 		cmDesc.FrontCounterClockwise = true;
-		cmDesc.DepthClipEnable = true;
+		cmDesc.DepthClipEnable = false;
 		myDevice->CreateRasterizerState(&cmDesc, &myCCWcullMode);
 		cmDesc.FrontCounterClockwise = false;
 		myDevice->CreateRasterizerState(&cmDesc, &myCWcullMode);
@@ -147,19 +148,14 @@ namespace Engine
 
 		blendDesc.RenderTarget[0] = renderTargetBlendDesc;
 
-		myDevice->CreateBlendState(&blendDesc, &myTransparency);
 		myContext->IASetInputLayout(myVertexShader.GetInputLayout());
 		auto topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
 		myContext->IAGetPrimitiveTopology(&topology);
+		
 	}
 
 	void Engine::Update()
 	{
-		myRot += 0.0006f;
-		if (myRot >= 6.26f)
-		{
-			myRot = 0.0;
-		}
 		if (KeyInput::GetInstance().GetKeyDown(Keys::A))
 		{
 			myMoveDir = { -1, 0, 0 };
@@ -190,11 +186,11 @@ namespace Engine
 		}
 		if(KeyInput::GetInstance().GetKeyDown(Keys::Q))
 		{
-			myCamera.GetTransform().SetRotation({ 0, 1, 0 });
+			myCamera.GetTransform().SetRotation({ 0, -0.001, 0 });
 		}
 		if (KeyInput::GetInstance().GetKeyDown(Keys::E))
 		{
-			myCamera.GetTransform().SetRotation({ 0, -1, 0 });
+			myCamera.GetTransform().SetRotation({0 , 0.001, 0 });
 		}
 		myCamera.GetTransform().SetPosition(myCamera.GetTransform().GetPosition() + myMoveDir * 10.f * 0.0006f);
 	}
@@ -202,20 +198,20 @@ namespace Engine
 
 	void Engine::RenderFrame()
 	{
-		float color[4] = { 1.f,1.f, 1.f, 0.f };
+		float color[4] = { 0.3f,0.f, 3.f, 1.f };
 		myContext->ClearRenderTargetView(myRenderTargetView, color);
-		myContext->ClearDepthStencilView(myDepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
-
-		float blendFactor[] = { 0.75f, 0.75f,0.75f, 1.f };
-
-		myContext->OMSetBlendState(myTransparency, blendFactor, 0xffffffff);
+		myContext->ClearDepthStencilView(myDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
+		myContext->OMSetRenderTargets(1, &myRenderTargetView, myDepthStencilView);
+		
 		auto ps = myModel.GetTransform().GetMatrix() * Matrix4x4f::GetFastInverse(myCamera.GetTransform().GetMatrix());
 		myWVP = ps * myCamera.GetProjectionMatrix();
 		myConstantBufferObject.worldViewPosition = Matrix4x4f::Transpose(myWVP);
 		myContext->UpdateSubresource(myConstBufferObjectBuffer, 0, NULL, &myConstantBufferObject, 0, 0);
 		myContext->VSSetConstantBuffers(0, 1, &myConstBufferObjectBuffer);
 		myContext->RSSetState(myCWcullMode);
-		myModel.Draw(myCWcullMode);
+
+		myModel.Draw();
+
 
 		mySwapchain->Present(0, 0);
 	}

@@ -13,6 +13,8 @@ namespace ToolBox
 			void SetRotation(Vector3f aRotation);
 			void SetSize(const Vector3f& aSize);
 
+			void SetLocalPosition(const Vector3f& aPosition);
+
 			const Vector3f& GetPosition() const;
 			const Vector3f& GetRotation() const;
 			const Vector3f& GetSize() const;

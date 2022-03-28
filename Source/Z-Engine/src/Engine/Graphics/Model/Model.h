@@ -7,7 +7,7 @@ class Model
 public:
 	void Initialize(const Microsoft::WRL::ComPtr<ID3D11DeviceContext>& aContext, const Microsoft::WRL::ComPtr<ID3D11Device>& aDevice);
 	void SetModel(std::wstring aPath, std::wstring aTexturePath = L"Textures/Default.png");
-	void Draw(ID3D11RasterizerState* state);
+	void Draw();
 
 	ToolBox::Math::Transform& GetTransform();
 
