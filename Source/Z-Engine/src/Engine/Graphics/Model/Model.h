@@ -1,19 +1,18 @@
 #pragma once
 #include "Mesh.h"
-
+#include <string>
 
 class Model
 {
 public:
 	void Initialize(const Microsoft::WRL::ComPtr<ID3D11DeviceContext>& aContext, const Microsoft::WRL::ComPtr<ID3D11Device>& aDevice);
-	void SetModel(std::wstring aPath, std::wstring aTexturePath = L"Textures/Default.png");
+	void SetModel(std::string aPath, std::wstring aTexturePath = L"Textures/Default.png");
 	void Draw();
 
 	ToolBox::Math::Transform& GetTransform();
 
 private:
 	void PrepareForRender();
-	DWORD myIndex[36];
 	bool LoadModel(const std::string& aFilePath);
 	void ProcessNode(aiNode* aNode, const aiScene* aScene);
 	Mesh ProcessMesh(aiMesh* aMesh, const aiScene* aScene);

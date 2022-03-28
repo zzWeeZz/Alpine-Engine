@@ -84,7 +84,7 @@ namespace Engine
 		constBufferDesc.MiscFlags = 0;
 
 		myModel.Initialize(myContext, myDevice);
-		myModel.SetModel(L"haha");
+		myModel.SetModel("Model/helicopter.fbx");
 
 		myDevice->CreateBuffer(&constBufferDesc, NULL, &myConstBufferObjectBuffer);
 

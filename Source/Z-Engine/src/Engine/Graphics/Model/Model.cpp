@@ -8,10 +8,9 @@ void Model::Initialize(const Microsoft::WRL::ComPtr<ID3D11DeviceContext>& aConte
 	myDevice = aDevice;
 	myTransform.SetSize({ 0.5, 0.5, 0.5 });
 	myTransform.SetPosition({ 0, 0, 60 });
-	myTransform.SetRotation({90, 0, 0});
 }
 
-void Model::SetModel(std::wstring aPath, std::wstring aTexturePath)
+void Model::SetModel(std::string aPath, std::wstring aTexturePath)
 {
 	auto hr = DirectX::CreateWICTextureFromFile(myDevice.Get(), aTexturePath.c_str(), nullptr, &myTexture);
 	if (FAILED(hr))
@@ -19,13 +18,16 @@ void Model::SetModel(std::wstring aPath, std::wstring aTexturePath)
 		std::cout << "ERROR TEXTURE DIDNT LOAD" << std::endl;
 		DirectX::CreateWICTextureFromFile(myDevice.Get(), L"Textures/MissingTexture.png", nullptr, &myTexture);
 	}
-	if (aPath == L"Cube")
+	if (aPath == "Cube")
 	{
 		
 	}
 	else
 	{
-		LoadModel("Model/helicopter.fbx");
+		if(LoadModel(aPath))
+		{
+			std::cout << "ERROR MODEL DIDNT LOAD!\n";
+		}
 	}
 
 	PrepareForRender();
