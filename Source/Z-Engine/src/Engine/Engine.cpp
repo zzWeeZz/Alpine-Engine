@@ -84,7 +84,7 @@ namespace Engine
 		constBufferDesc.MiscFlags = 0;
 
 		myModel.Initialize(myContext, myDevice);
-		myModel.SetModel("Model/helicopter.fbx");
+		myModel.SetModel("Model/HipHopeGazeBundle.obj", L"Textures/body.png");
 
 		myDevice->CreateBuffer(&constBufferDesc, NULL, &myConstBufferObjectBuffer);
 

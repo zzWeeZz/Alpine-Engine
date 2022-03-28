@@ -72,6 +72,7 @@ void Model::ProcessNode(aiNode* aNode, const aiScene* aScene)
 	for (int i = 0; i < aNode->mNumChildren; i++)
 	{
 		ProcessNode(aNode->mChildren[i], aScene);
+		
 	}
 }
 
