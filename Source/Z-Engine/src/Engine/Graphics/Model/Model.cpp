@@ -24,7 +24,7 @@ void Model::SetModel(std::string aPath, std::wstring aTexturePath)
 	}
 	else
 	{
-		if(LoadModel(aPath))
+		if(!LoadModel(aPath))
 		{
 			std::cout << "ERROR MODEL DIDNT LOAD!\n";
 		}
