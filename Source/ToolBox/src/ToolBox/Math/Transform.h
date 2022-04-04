@@ -1,6 +1,4 @@
 #pragma once
-#include "Matrix/Matrix.h"
-#include "Vector/Vector.h"
 
 namespace ToolBox
 {
@@ -9,22 +7,26 @@ namespace ToolBox
 		class Transform
 		{
 		public:
-			void SetPosition(const Vector3f& aPosition);
-			void SetRotation(Vector3f aRotation);
-			void SetSize(const Vector3f& aSize);
+			/*void SetPosition(const Vector3& aPosition);
+			void SetRotation(Vector3 aRotation);
+			void SetSize(const Vector3& aSize);
 
-			void SetLocalPosition(const Vector3f& aPosition);
+			void SetLocalPosition(const Vector3& aPosition);
 
-			const Vector3f& GetPosition() const;
-			const Vector3f& GetRotation() const;
-			const Vector3f& GetSize() const;
+			const Vector3& GetPosition() const;
+			const Vector3& GetRotation() const;
+			const Vector3& GetSize() const;
 
-			Matrix4x4f& GetMatrix();
+			const Vector3& GetForward() const;
+			const Vector3& GetUp() const;
+			const Vector3& GetRight() const;
+
+			Matrix& GetMatrix();*/
 		private:
-			Matrix4x4f myTransform;
-			Vector3f myPosition;
-			Vector3f myRotation;
-			Vector3f mySize;
+		/*	Matrix myTransform;
+			Vector3 myPosition;
+			Vector3 myRotation;
+			Vector3 mySize;*/
 		};
 	}
 }

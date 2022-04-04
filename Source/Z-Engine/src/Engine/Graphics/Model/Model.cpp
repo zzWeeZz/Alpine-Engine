@@ -6,8 +6,7 @@ void Model::Initialize(const Microsoft::WRL::ComPtr<ID3D11DeviceContext>& aConte
 {
 	myContext = aContext;
 	myDevice = aDevice;
-	myTransform.SetSize({ 0.5, 0.5, 0.5 });
-	myTransform.SetPosition({ 0, 0, 60 });
+	myTransform = Matrix::CreateTranslation({0,0, -70});
 }
 
 void Model::SetModel(std::string aPath, std::wstring aTexturePath)
@@ -51,7 +50,7 @@ bool Model::LoadModel(const std::string& aFilePath)
 {
 	Assimp::Importer importer;
 	
-	const aiScene* pScene = importer.ReadFile(aFilePath, aiProcess_Triangulate | aiProcess_ConvertToLeftHanded);
+	const aiScene* pScene = importer.ReadFile(aFilePath, aiProcess_Triangulate);
 
 	if (pScene == nullptr)
 	{
@@ -79,7 +78,7 @@ void Model::ProcessNode(aiNode* aNode, const aiScene* aScene)
 Mesh Model::ProcessMesh(aiMesh* aMesh, const aiScene* aScene)
 {
 	std::vector<Vertex> vertices;
-	std::vector <DWORD> indices;
+	std::vector<DWORD> indices;
 
 	for (int i = 0; i < aMesh->mNumVertices; i++)
 	{
@@ -119,7 +118,7 @@ void Model::Draw()
 	}
 }
 
-ToolBox::Math::Transform& Model::GetTransform()
+Matrix& Model::GetTransform()
 {
 	return myTransform;
 }

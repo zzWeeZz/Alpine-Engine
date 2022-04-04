@@ -76,17 +76,10 @@ namespace Engine
 		viewport.MaxDepth = 1.0f;
 		myContext->RSSetViewports(1, &viewport);
 
-		D3D11_BUFFER_DESC constBufferDesc;
-		constBufferDesc.Usage = D3D11_USAGE_DEFAULT;
-		constBufferDesc.ByteWidth = sizeof(ConstantBufferObject);
-		constBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-		constBufferDesc.CPUAccessFlags = 0;
-		constBufferDesc.MiscFlags = 0;
-
 		myModel.Initialize(myContext, myDevice);
-		myModel.SetModel("Model/HipHopeGazeBundle.obj", L"Textures/body.png");
+		myModel.SetModel("Model/helicopter.fbx");
 
-		myDevice->CreateBuffer(&constBufferDesc, NULL, &myConstBufferObjectBuffer);
+		myConstantBuffer.CreateBuffer(myDevice.Get(), myContext);
 
 	
 		InitPipeline();
@@ -156,7 +149,7 @@ namespace Engine
 
 	void Engine::Update()
 	{
-		if (KeyInput::GetInstance().GetKeyDown(Keys::A))
+		/*if (KeyInput::GetInstance().GetKeyDown(Keys::A))
 		{
 			myMoveDir = { -1, 0, 0 };
 		}
@@ -186,13 +179,13 @@ namespace Engine
 		}
 		if(KeyInput::GetInstance().GetKeyDown(Keys::Q))
 		{
-			myCamera.GetTransform().SetRotation({ 0, -0.001, 0 });
+			myCamera.GetTransform().Rotate
 		}
 		if (KeyInput::GetInstance().GetKeyDown(Keys::E))
 		{
 			myCamera.GetTransform().SetRotation({0 , 0.001, 0 });
 		}
-		myCamera.GetTransform().SetPosition(myCamera.GetTransform().GetPosition() + myMoveDir * 10.f * 0.0006f);
+		myCamera.GetTransform().SetPosition(myCamera.GetTransform().GetPosition() + myMoveDir * 10.f * 0.0006f);*/
 	}
 
 
@@ -203,12 +196,12 @@ namespace Engine
 		myContext->ClearDepthStencilView(myDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 		myContext->OMSetRenderTargets(1, &myRenderTargetView, myDepthStencilView);
 		
-		auto ps = myModel.GetTransform().GetMatrix() * Matrix4x4f::GetFastInverse(myCamera.GetTransform().GetMatrix());
-		myWVP = ps * myCamera.GetProjectionMatrix();
-		myConstantBufferObject.worldViewPosition = Matrix4x4f::Transpose(myWVP);
-		myContext->UpdateSubresource(myConstBufferObjectBuffer, 0, NULL, &myConstantBufferObject, 0, 0);
-		myContext->VSSetConstantBuffers(0, 1, &myConstBufferObjectBuffer);
-		myContext->RSSetState(myCWcullMode);
+		myConstantBufferObject.modelSpace =  myModel.GetTransform();
+		myConstantBufferObject.toCameraSpace = myCamera.GetViewMatrix();
+		myConstantBufferObject.toProjectionSpace = myCamera.GetProjectionMatrix();
+		myConstantBuffer.UpdateBuffer(&myConstantBufferObject);
+		myConstantBuffer.Bind();
+		myContext->RSSetState(myCCWcullMode);
 
 		myModel.Draw();
 
@@ -220,7 +213,6 @@ namespace Engine
 	{
 		mySwapchain->Release();
 		/*myDepthStencilBuffer->Release();*/
-		myConstBufferObjectBuffer->Release();
 		myDevice->Release();
 		myRenderTargetView->Release();
 		myContext->Release();

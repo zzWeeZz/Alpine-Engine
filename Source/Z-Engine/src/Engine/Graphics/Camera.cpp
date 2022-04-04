@@ -1,23 +1,23 @@
 #include "Camera.h"
 
-void Camera::Init(const Vector3f& aPosition)
+void Camera::Init(const Vector3& aPosition)
 {
-	myTransform.SetPosition(aPosition);
-	myProjectionMatrix = Matrix4x4f::CreateLeftHandPerspectiveMatrix(100, 0.1f, 1000.f);
-	myViewMatrix = Matrix4x4f::CreateLeftHandLookAtMatrix(myTransform.GetPosition(), {1, 0, 0}, {0, 1, 0});
+	myTransform.CreateTranslation(aPosition);
+	myProjectionMatrix = Matrix::CreatePerspectiveFieldOfView(3.14f/2.f, 16.f / 9.f, 0.1f, 1000.f);
+	myViewMatrix = Matrix::CreateLookAt(myTransform.Translation(), myTransform.Translation() + myTransform.Forward(),myTransform.Up());
 }
 
-ToolBox::Math::Transform& Camera::GetTransform()
+Matrix& Camera::GetTransform()
 {
 	return myTransform;
 }
 
-Matrix4x4f& Camera::GetProjectionMatrix()
+Matrix& Camera::GetProjectionMatrix()
 {
 	return myProjectionMatrix;
 }
 
-Matrix4x4f& Camera::GetViewMatrix()
+Matrix& Camera::GetViewMatrix()
 {
 	return myViewMatrix;
 }

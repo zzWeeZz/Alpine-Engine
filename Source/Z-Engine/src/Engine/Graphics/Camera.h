@@ -1,17 +1,16 @@
 #pragma once
-#include "ToolBox/Math/Transform.h"
-
-
+#include <DirectXTK/SimpleMath.h>
+using namespace DirectX::SimpleMath;
 class Camera
 {
 public:
-	void Init(const Vector3f& aPosition);
-	ToolBox::Math::Transform& GetTransform();
-	Matrix4x4f& GetProjectionMatrix();
-	Matrix4x4f& GetViewMatrix();
+	void Init(const Vector3& aPosition);
+	Matrix& GetTransform();
+	Matrix& GetProjectionMatrix();
+	Matrix& GetViewMatrix();
 private:
-	ToolBox::Math::Transform myTransform;
-	Matrix4x4f myProjectionMatrix;
-	Matrix4x4f myViewMatrix;
+	Matrix myTransform;
+	Matrix myProjectionMatrix;
+	Matrix myViewMatrix;
 
 };

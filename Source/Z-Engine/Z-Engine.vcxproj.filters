@@ -68,6 +68,9 @@
     <ClInclude Include="src\Engine\Graphics\Model\Mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Engine\Graphics\Buffers\ConstantBuffer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="src\Engine\Shaders\VertexShader.hlsl" />

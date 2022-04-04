@@ -1,17 +1,20 @@
 #pragma once
 #include <d3d11.h>
-#include "DirectXMath.h"
 #include "Graphics/Shaders.h"
 #include "Graphics/Model/Model.h"
+#include "Graphics/Buffers/ConstantBuffer.hpp"
 #include <wrl.h>
-
+#include <DirectXTK/SimpleMath.h>
+using namespace DirectX::SimpleMath;
 #include "Graphics/Camera.h"
 
 namespace Engine
 {
 	struct ConstantBufferObject
 	{
-		Matrix4x4f worldViewPosition;
+		Matrix modelSpace;
+		Matrix toCameraSpace;
+		Matrix toProjectionSpace;
 	};
 
 	class Engine
@@ -30,17 +33,12 @@ namespace Engine
 		int myScreenHeight;
 
 		ConstantBufferObject myConstantBufferObject;
-
-		Matrix4x4f myWVP;
 		Camera myCamera;
-
-		Vector3f myMoveDir;
-
 		float myRot = 0.01f;
 		Model myModel;
 		VertexShader myVertexShader;
 		PixelShader myPixelShader;
-
+		ConstantBuffer<ConstantBufferObject> myConstantBuffer;
 		Microsoft::WRL::ComPtr<IDXGISwapChain> mySwapchain;
 		Microsoft::WRL::ComPtr<ID3D11Device> myDevice;
 		ID3D11DeviceContext* myContext;

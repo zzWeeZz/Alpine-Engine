@@ -18,7 +18,7 @@
 #include <cstddef>
 #include <cstring>
 #include <functional>
-
+#include <wrl.h>
 #include <DirectXMath.h>
 #include <DirectXPackedVector.h>
 #include <DirectXCollision.h>

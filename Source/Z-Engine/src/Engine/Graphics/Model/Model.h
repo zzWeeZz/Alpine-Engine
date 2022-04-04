@@ -1,6 +1,8 @@
 #pragma once
 #include "Mesh.h"
 #include <string>
+#include <DirectXTK/SimpleMath.h>
+using namespace DirectX::SimpleMath;
 
 class Model
 {
@@ -9,7 +11,7 @@ public:
 	void SetModel(std::string aPath, std::wstring aTexturePath = L"Textures/Default.png");
 	void Draw();
 
-	ToolBox::Math::Transform& GetTransform();
+	Matrix& GetTransform();
 
 private:
 	void PrepareForRender();
@@ -19,7 +21,7 @@ private:
 
 	std::vector<Mesh> myMeshes;
 
-	ToolBox::Math::Transform myTransform;
+	Matrix myTransform;
 
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> myContext;
 	Microsoft::WRL::ComPtr<ID3D11Device> myDevice;

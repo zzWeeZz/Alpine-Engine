@@ -14,6 +14,7 @@ int main()
 		return -1;
 	void KeyCallBack(GLFWwindow * window, int key, int scancode, int action, int mods);
 	/* Create a windowed mode window and its OpenGL context */
+	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 	GLFWwindow* window = glfwCreateWindow(1920, 1080, "Z-Engine", NULL, NULL);
 	if (!window)
 	{
@@ -25,7 +26,9 @@ int main()
 
 	/* Make the window's context current */
 	glfwMakeContextCurrent(window);
-	myEngine.InitD3D(glfwGetWin32Window(window), 1920, 1080);
+	int width, height;
+	glfwGetWindowSize(window, &width, &height);
+	myEngine.InitD3D(glfwGetWin32Window(window), width, height);
 
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))

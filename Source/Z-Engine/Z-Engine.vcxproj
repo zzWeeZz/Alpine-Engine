@@ -180,6 +180,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Engine\Engine.h" />
+    <ClInclude Include="src\Engine\Graphics\Buffers\ConstantBuffer.hpp" />
     <ClInclude Include="src\Engine\Graphics\Buffers\IndexBuffer.h" />
     <ClInclude Include="src\Engine\Graphics\Buffers\VertexBuffer.h" />
     <ClInclude Include="src\Engine\Graphics\Camera.h" />
