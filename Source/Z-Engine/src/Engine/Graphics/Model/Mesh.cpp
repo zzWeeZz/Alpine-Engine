@@ -19,5 +19,6 @@ void Mesh::Draw()
 	UINT offset = 0;
 	myDeviceContext->IASetVertexBuffers(0, 1, myVertexBuffer.GetAddressOf(), myVertexBuffer.StridePtr(), &offset);
 	myDeviceContext->IASetIndexBuffer(myIndexBuffer.Get(), DXGI_FORMAT::DXGI_FORMAT_R32_UINT, 0);
+	myDeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	myDeviceContext->DrawIndexed(myIndexBuffer.BufferSize(), 0, 0);
 }

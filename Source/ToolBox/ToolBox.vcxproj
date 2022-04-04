@@ -151,7 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\ToolBox\Input\KeyInput.h" />
+    <ClInclude Include="src\ToolBox\Input\Input.h" />
     <ClInclude Include="src\ToolBox\Math\Matrix\Matrix3x3.hpp" />
     <ClInclude Include="src\ToolBox\Math\Matrix\Matrix4x4.hpp" />
     <ClInclude Include="src\ToolBox\Math\Transform.h" />
@@ -163,7 +163,7 @@
     <ClInclude Include="src\ToolBox\Utility\UtilityFunctions.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\ToolBox\Input\KeyInput.cpp" />
+    <ClCompile Include="src\ToolBox\Input\Input.cpp" />
     <ClCompile Include="src\ToolBox\Math\Matrix\Matrix.h" />
     <ClCompile Include="src\ToolBox\Math\Transform.cpp" />
     <ClCompile Include="src\ToolBox\Utility\Timer.cpp" />

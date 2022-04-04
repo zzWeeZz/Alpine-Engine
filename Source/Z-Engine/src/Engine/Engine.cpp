@@ -3,7 +3,7 @@
 #include <windows.h>
 #include <d3d11.h>
 #include <d3dcompiler.h>
-#include "ToolBox/Input/KeyInput.h"
+#include "ToolBox/Input/Input.h"
 #include <assimp/Importer.hpp>
 
 namespace Engine
@@ -77,7 +77,7 @@ namespace Engine
 		myContext->RSSetViewports(1, &viewport);
 
 		myModel.Initialize(myContext, myDevice);
-		myModel.SetModel("Model/helicopter.fbx");
+		myModel.SetModel("Model/helicopter.fbx", L"jadlsfjaslkdf");
 
 		myConstantBuffer.CreateBuffer(myDevice.Get(), myContext);
 
@@ -89,7 +89,7 @@ namespace Engine
 
 	void Engine::InitPipeline()
 	{
-		myCamera.Init({ 0,0, -10 });
+		myCamera.Init({ 0,0, 20 });
 		D3D11_INPUT_ELEMENT_DESC layout[] =
 		{
 			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
@@ -147,45 +147,9 @@ namespace Engine
 		
 	}
 
-	void Engine::Update()
+	void Engine::Update(float aDeltaTime)
 	{
-		/*if (KeyInput::GetInstance().GetKeyDown(Keys::A))
-		{
-			myMoveDir = { -1, 0, 0 };
-		}
-		else if (KeyInput::GetInstance().GetKeyDown(Keys::D))
-		{
-			myMoveDir = { 1, 0, 0 };
-		}
-		else if (KeyInput::GetInstance().GetKeyDown(Keys::W))
-		{
-			myMoveDir = { 0, 0, 1 };
-		}
-		else if (KeyInput::GetInstance().GetKeyDown(Keys::S))
-		{
-			myMoveDir = { 0, 0, -1 };
-		}
-		else if (KeyInput::GetInstance().GetKeyDown(Keys::Space))
-		{
-			myMoveDir = { 0, 1, 0 };
-		}
-		else if (KeyInput::GetInstance().GetKeyDown(Keys::Z))
-		{
-			myMoveDir = { 0, -1, 0 };
-		}
-		else
-		{
-			myMoveDir = { 0, 0, 0 };
-		}
-		if(KeyInput::GetInstance().GetKeyDown(Keys::Q))
-		{
-			myCamera.GetTransform().Rotate
-		}
-		if (KeyInput::GetInstance().GetKeyDown(Keys::E))
-		{
-			myCamera.GetTransform().SetRotation({0 , 0.001, 0 });
-		}
-		myCamera.GetTransform().SetPosition(myCamera.GetTransform().GetPosition() + myMoveDir * 10.f * 0.0006f);*/
+		myCamera.Update(aDeltaTime);
 	}
 
 
@@ -193,12 +157,13 @@ namespace Engine
 	{
 		float color[4] = { 0.3f,0.f, 3.f, 1.f };
 		myContext->ClearRenderTargetView(myRenderTargetView, color);
-		myContext->ClearDepthStencilView(myDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
+		myContext->ClearDepthStencilView(myDepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 		myContext->OMSetRenderTargets(1, &myRenderTargetView, myDepthStencilView);
-		
-		myConstantBufferObject.modelSpace =  myModel.GetTransform();
+
+		myConstantBufferObject.modelSpace = myModel.GetTransform();
 		myConstantBufferObject.toCameraSpace = myCamera.GetViewMatrix();
 		myConstantBufferObject.toProjectionSpace = myCamera.GetProjectionMatrix();
+		myConstantBuffer.SetData(&myConstantBufferObject, sizeof(ConstantBufferValues));
 		myConstantBuffer.UpdateBuffer(&myConstantBufferObject);
 		myConstantBuffer.Bind();
 		myContext->RSSetState(myCCWcullMode);

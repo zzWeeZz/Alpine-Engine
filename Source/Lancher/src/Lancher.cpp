@@ -4,11 +4,13 @@
 #define GLFW_EXPOSE_NATIVE_WIN32 
 #include <GLFW/glfw3native.h>
 #include "Engine/Engine.h"
-#include "ToolBox/Input/KeyInput.h"
+#include "ToolBox/Input/Input.h"
+#include "ToolBox/Utility/Timer.h"
 int main()
 {
 	Engine::Engine myEngine;
-	KeyInput myKeyInput();
+	Input myKeyInput();
+	ToolBox::Utility::Timer myTimer;
 	/* Initialize the library */
 	if (!glfwInit())
 		return -1;
@@ -22,24 +24,24 @@ int main()
 		return -1;
 	}
 
-	KeyInput::GetInstance().SetupKeyInputs(window);
+	Input::GetInstance().SetupKeyInputs(window);
 
 	/* Make the window's context current */
 	glfwMakeContextCurrent(window);
 	int width, height;
 	glfwGetWindowSize(window, &width, &height);
 	myEngine.InitD3D(glfwGetWin32Window(window), width, height);
-
+	myTimer.Update();
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
 	{
 		/* Render here */
 		
 		myEngine.RenderFrame();
-	
+		myTimer.Update();
 		/* Poll for and process events */
 		glfwPollEvents();
-		myEngine.Update();
+		myEngine.Update(myTimer.GetDeltaTime());
 		
 	}
 

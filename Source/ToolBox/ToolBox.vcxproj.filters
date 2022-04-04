@@ -42,7 +42,7 @@
     <ClInclude Include="src\ToolBox\Math\Transform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ToolBox\Input\KeyInput.h">
+    <ClInclude Include="src\ToolBox\Input\Input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -56,7 +56,7 @@
     <ClCompile Include="src\ToolBox\Math\Transform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ToolBox\Input\KeyInput.cpp">
+    <ClCompile Include="src\ToolBox\Input\Input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

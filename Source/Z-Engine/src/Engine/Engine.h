@@ -10,7 +10,7 @@ using namespace DirectX::SimpleMath;
 
 namespace Engine
 {
-	struct ConstantBufferObject
+	struct ConstantBufferValues
 	{
 		Matrix modelSpace;
 		Matrix toCameraSpace;
@@ -22,7 +22,7 @@ namespace Engine
 	public:
 		void InitD3D(HWND aHWND, int aScreenWidth, int aScreenHight);
 		void InitPipeline();
-		void Update();
+		void Update(float aDeltaTime);
 		void RenderFrame();
 		void CleanD3D() const;
 	private:
@@ -32,13 +32,13 @@ namespace Engine
 		int myScreenWidth;
 		int myScreenHeight;
 
-		ConstantBufferObject myConstantBufferObject;
+		ConstantBufferValues myConstantBufferObject;
 		Camera myCamera;
 		float myRot = 0.01f;
 		Model myModel;
 		VertexShader myVertexShader;
 		PixelShader myPixelShader;
-		ConstantBuffer<ConstantBufferObject> myConstantBuffer;
+		ConstantBuffer<ConstantBufferValues> myConstantBuffer;
 		Microsoft::WRL::ComPtr<IDXGISwapChain> mySwapchain;
 		Microsoft::WRL::ComPtr<ID3D11Device> myDevice;
 		ID3D11DeviceContext* myContext;
