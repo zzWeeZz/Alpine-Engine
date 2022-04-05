@@ -22,5 +22,6 @@ private:
 	Vector3 myRight;
 	Vector3 myRotation;
 	Vector2 myLastMousePosition;
+	bool myGiveControll;
 	float myMouseSensitivity;
 };

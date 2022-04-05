@@ -77,14 +77,12 @@ namespace Engine
 		myContext->RSSetViewports(1, &viewport);
 
 		myModel.Initialize(myContext, myDevice);
-		myModel.SetModel("Model/helicopter.fbx", L"jadlsfjaslkdf");
+		myModel.SetModel("Model/helicopter.fbx", L"Textures/snow07_ao_4k.jpg");
 
 		myConstantBuffer.CreateBuffer(myDevice.Get(), myContext);
 
 	
 		InitPipeline();
-
-
 	}
 
 	void Engine::InitPipeline()

@@ -10,45 +10,52 @@ void Camera::Init(const Vector3& aPosition)
 	myForward = Vector3(0.f, 0.f, -1.f);
 	myRight = Vector3(-1.f, 0.f, 0.f);
 	myUp = Vector3(0.f, 1.f, 0.f);
-	myRotation = Vector3(0.f, 180.f, 0.f);
+	myRotation = Vector3(0.f, 0.f, 0.f);
 	myMouseSensitivity = 0.001f;
 	UpdateViewMatrix();
 }
 
 void Camera::Update(float aDeltaTime)
 {
+	if (Input::GetMouseButtonDown(GLFW_MOUSE_BUTTON_RIGHT))
+	{
 
-	if (Input::GetInstance().GetKeyDown(Keys::A))
-	{
-		myPosition -= myRight * 100 * aDeltaTime;
-		UpdateViewMatrix();
+		if (Input::GetInstance().GetKeyDown(Keys::A))
+		{
+			myPosition -= myRight * 100 * aDeltaTime;
+			UpdateViewMatrix();
+		}
+		if (Input::GetInstance().GetKeyDown(Keys::D))
+		{
+			myPosition += myRight * 100 * aDeltaTime;
+			UpdateViewMatrix();
+		}
+		if (Input::GetInstance().GetKeyDown(Keys::W))
+		{
+			myPosition += myForward * 100 * aDeltaTime;
+			UpdateViewMatrix();
+		}
+		if (Input::GetInstance().GetKeyDown(Keys::S))
+		{
+			myPosition -= myForward * 100 * aDeltaTime;
+			UpdateViewMatrix();
+		}
+		if (Input::GetInstance().GetKeyDown(Keys::Space))
+		{
+			myPosition += myUp * 100 * aDeltaTime;
+			UpdateViewMatrix();
+		}
+		if (Input::GetInstance().GetKeyDown(Keys::Z))
+		{
+			myPosition -= myUp * 100 * aDeltaTime;
+			UpdateViewMatrix();
+		}
+		CalcMouseMovement();
 	}
-	if (Input::GetInstance().GetKeyDown(Keys::D))
+	else
 	{
-		myPosition += myRight * 100 * aDeltaTime;
-		UpdateViewMatrix();
+		myGiveControll = false;
 	}
-	if (Input::GetInstance().GetKeyDown(Keys::W))
-	{
-		myPosition += myForward * 100 * aDeltaTime;
-		UpdateViewMatrix();
-	}
-	if (Input::GetInstance().GetKeyDown(Keys::S))
-	{
-		myPosition -= myForward * 100 * aDeltaTime;
-		UpdateViewMatrix();
-	}
-	if (Input::GetInstance().GetKeyDown(Keys::Space))
-	{
-		myPosition += myUp * 100 * aDeltaTime;
-		UpdateViewMatrix();
-	}
-	if (Input::GetInstance().GetKeyDown(Keys::Z))
-	{
-		myPosition -= myUp * 100 * aDeltaTime;
-		UpdateViewMatrix();
-	}
-	CalcMouseMovement();
 }
 
 Matrix& Camera::GetTransform()
@@ -68,6 +75,12 @@ Matrix& Camera::GetViewMatrix()
 
 void Camera::CalcMouseMovement()
 {
+	if(!myGiveControll)
+	{
+		myLastMousePosition.x = Input::GetInstance().myMousePosition.first;
+		myLastMousePosition.y = Input::GetInstance().myMousePosition.second;
+		myGiveControll = true;
+	}
 	float xOffset = Input::GetInstance().myMousePosition.first - myLastMousePosition.x;
 	float yOffset = myLastMousePosition.y - Input::GetInstance().myMousePosition.second;
 	myLastMousePosition.x = Input::GetInstance().myMousePosition.first;
@@ -77,7 +90,7 @@ void Camera::CalcMouseMovement()
 	yOffset *= myMouseSensitivity;
 	myRotation = myRotation + Vector3(yOffset, -xOffset, 0);
 
-	if(myRotation.x > 89.f)
+	if (myRotation.x > 89.f)
 	{
 		myRotation.x = 89.f;
 	}
@@ -85,22 +98,21 @@ void Camera::CalcMouseMovement()
 	{
 		myRotation.x = -89.f;
 	}
-
+	myRotation.z = 0;
 	UpdateVectors();
 
 }
 
 void Camera::UpdateVectors()
 {
-	myForward.x = sin(ToolBox::Utility::DegToRad(myRotation.y)) * cos(ToolBox::Utility::DegToRad(myRotation.x));
-	myForward.y = sin(ToolBox::Utility::DegToRad(myRotation.x));
-	myForward.z = cos(ToolBox::Utility::DegToRad(myRotation.x)) * cos(ToolBox::Utility::DegToRad(myRotation.y));
+	auto rotMatrix = Matrix::CreateFromYawPitchRoll(myRotation);
+	myForward = rotMatrix.Forward();
 	myForward.Normalize();
 
-	myRight = myForward.Cross(myUp);
+	myRight = rotMatrix.Right();
 	myRight.Normalize();
 
-	myUp = myRight.Cross(myForward);
+	myUp = rotMatrix.Up();
 	myUp.Normalize();
 
 	UpdateViewMatrix();

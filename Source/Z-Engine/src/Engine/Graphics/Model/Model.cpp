@@ -7,6 +7,7 @@ void Model::Initialize(const Microsoft::WRL::ComPtr<ID3D11DeviceContext>& aConte
 	myContext = aContext;
 	myDevice = aDevice;
 	myTransform = Matrix::CreateTranslation({0,0, -70});
+	myTransform *= Matrix::CreateRotationX(-3.141f / 2);
 }
 
 void Model::SetModel(std::string aPath, std::wstring aTexturePath)

@@ -264,18 +264,19 @@ public:
 	static Input& GetInstance();
 	bool GetKeyDown(Keys aKey);
 	bool IsEnabled() { return myIsEnabled; };
-	void SetIsEnabled(bool aValue) { myIsEnabled = aValue; };
-
+	void SetIsEnabled(bool aValue) { myIsEnabled = aValue; }
 	static void SetupKeyInputs(GLFWwindow* aWindow);
 	bool OnMouseMove();
+	static bool GetMouseButtonDown(int aButton);
 	~Input();
 	static std::pair<double, double> myMousePosition;
+	static GLFWwindow* myWindow;
+
 private:
 	void SetIsKeyDown(int aKey, bool aIsDown);
 	std::map<int, bool> myKeys;
 	bool myIsEnabled;
 	static void MouseCallback(GLFWwindow* aWindow, double aXpos, double aYpos);
 	static void CallBack(GLFWwindow* aWindow, int aKey, int aScanCode, int aAction, int aMods);
-
 	static Input myInstance;
 };

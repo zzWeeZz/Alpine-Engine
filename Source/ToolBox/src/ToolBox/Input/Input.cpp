@@ -2,6 +2,7 @@
 
 Input Input::myInstance;
 std::pair<double, double> Input::myMousePosition;
+GLFWwindow* Input::myWindow;
 Input::Input()
 {
 	for (int i = 0; i < 512; ++i)
@@ -11,7 +12,7 @@ Input::Input()
 }
 Input& Input::GetInstance()
 {
-	
+
 	return myInstance;
 }
 
@@ -31,10 +32,20 @@ void Input::SetupKeyInputs(GLFWwindow* aWindow)
 {
 	glfwSetKeyCallback(aWindow, Input::CallBack);
 	glfwSetCursorPosCallback(aWindow, Input::MouseCallback);
+	myWindow = aWindow;
 }
 
 bool Input::OnMouseMove()
 {
+	return false;
+} 
+
+bool Input::GetMouseButtonDown(int aButton)
+{
+	if (glfwGetMouseButton(myWindow, aButton) == GLFW_PRESS)
+	{
+		return true;
+	}
 	return false;
 }
 

@@ -2,27 +2,12 @@
 C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(514,5): warning MSB8028: The intermediate directory (C:\Users\zzWee\source\repos\Z-Engine\Intermediates\x64\Debug\) contains files shared from another project (Lancher.vcxproj, Z-Engine.vcxproj).  This can lead to incorrect clean and rebuild behavior.
   Scanning sources for module dependencies...
   Scanning sources for module dependencies...
-  Camera.cpp
+  Model.cpp
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winbase.h(9531,5): warning C5105: macro expansion producing 'defined' has undefined behavior
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\winrt\wrl\module.h(1275,10): warning C5104: found 'L#serverName' in macro replacement list, did you mean 'L""#serverName'?
-C:\Users\zzWee\source\repos\Z-Engine\Source\Z-Engine\src\Engine\Graphics\Camera.cpp(71,16): warning C4244: 'initializing': conversion from '_Ty1' to 'float', possible loss of data
-          with
-          [
-              _Ty1=double
-          ]
-C:\Users\zzWee\source\repos\Z-Engine\Source\Z-Engine\src\Engine\Graphics\Camera.cpp(72,16): warning C4244: 'initializing': conversion from '_Ty2' to 'float', possible loss of data
-          with
-          [
-              _Ty2=double
-          ]
-C:\Users\zzWee\source\repos\Z-Engine\Source\Z-Engine\src\Engine\Graphics\Camera.cpp(73,62): warning C4244: '=': conversion from '_Ty1' to 'float', possible loss of data
-          with
-          [
-              _Ty1=double
-          ]
-C:\Users\zzWee\source\repos\Z-Engine\Source\Z-Engine\src\Engine\Graphics\Camera.cpp(74,62): warning C4244: '=': conversion from '_Ty2' to 'float', possible loss of data
-          with
-          [
-              _Ty2=double
-          ]
+C:\Users\zzWee\source\repos\Z-Engine\Source\Z-Engine\src\Engine\Graphics\Model\Model.cpp(66,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\zzWee\source\repos\Z-Engine\Source\Z-Engine\src\Engine\Graphics\Model\Model.cpp(72,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\zzWee\source\repos\Z-Engine\Source\Z-Engine\src\Engine\Graphics\Model\Model.cpp(84,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\zzWee\source\repos\Z-Engine\Source\Z-Engine\src\Engine\Graphics\Model\Model.cpp(100,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\zzWee\source\repos\Z-Engine\Source\Z-Engine\src\Engine\Graphics\Model\Model.cpp(104,21): warning C4018: '<': signed/unsigned mismatch
   Z-Engine.vcxproj -> C:\Users\zzWee\source\repos\Z-Engine\Dependencies\lib\Engine.lib
