@@ -68,15 +68,14 @@ float4 main(VS_OUTPUT input, float3 normal : NORMAL) : SV_TARGET
     float4 dir = -DirLights[0].LightDirection;
     float4 l = normalize(dir);
     float4 n = normalize(float4(input.Normal, 1.0f));
-    float4 dotp = max(dot(l, n), 0.1f);
-    float4 color = (textureColor * DirLights[0].LightColor);
-    float4 diffuse = color * dotp;
-    float4 cameraPos = mul(inverse(toCameraSpace), float4(1.0f, 1.0f, 1.0f, 1.0f));
+    float4 dotp = max(dot(l, n), 0.0f);
+    float4 diffuse = DirLights[0].LightColor * dotp;
+    float4 cameraPos = mul(inverse(toCameraSpace), float4(0.f, 0.f, 0.f, 1000.f));
     float4 CameraDir = cameraPos - input.WorldPosition;
     float4 normalizeCameraDir = normalize(CameraDir);
     float4 reflection = reflect(l, n);
-    float4 spec = DirLights[0].LightColor * pow(max(dot(l, reflection), 0.0f), 2.f);
+    float4 spec = DirLights[0].LightColor * pow(saturate(dot(reflection, normalizeCameraDir)), 1.f);
 
-    float4 final = spec + diffuse + ambientColor;
+    float4 final = ambientColor + (spec + diffuse) * textureColor;
     return saturate(final);
 }
