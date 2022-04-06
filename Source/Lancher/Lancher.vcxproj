@@ -123,7 +123,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\include\;$(SolutionDir)Source\ToolBox\src\;$(SolutionDir)Source\Alpine\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\include\;$(SolutionDir)Source\ToolBox\src\;$(SolutionDir)Source\Alpine\src\;$(SolutionDir)Dependencies\include\imgui\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -142,7 +142,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\include\;$(SolutionDir)Source\ToolBox\src\;$(SolutionDir)Source\Alpine\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\include\;$(SolutionDir)Source\ToolBox\src\;$(SolutionDir)Source\Alpine\src\;$(SolutionDir)Dependencies\include\imgui\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -160,6 +160,9 @@
     <ClCompile Include="src\Lancher.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Imgui\Imgui.vcxproj">
+      <Project>{4e037445-1ffd-42bd-8b3d-b673ef9cd12a}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\Alpine\Alpine.vcxproj">
       <Project>{1ab6a294-7355-451c-aff1-064260204497}</Project>
     </ProjectReference>

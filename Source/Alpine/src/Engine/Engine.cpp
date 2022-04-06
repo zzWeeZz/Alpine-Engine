@@ -6,7 +6,8 @@
 #include "ToolBox/Input/Input.h"
 #include <assimp/Importer.hpp>
 #include "DX11/DX11.h"
-
+#include "imgui/imgui.h"
+#include "imgui/imgui_impl_dx11.h"
 namespace Alpine
 {
 	Engine::Engine() : myModelBuffer(1), myConstantBuffer(0), myLightBuffer(2)
@@ -162,8 +163,7 @@ namespace Alpine
 		auto topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
 		DX11::GetDeviceContext()->IAGetPrimitiveTopology(&topology);
 		DX11::GetDeviceContext()->RSSetState(myCCWcullMode);
-		myLightConstantBufferObject.ambientColor = Vector4(1, 1, 1., 1);
-		myLightConstantBufferObject.lights[0] = { Vector4(1, 1, 1, 1), Vector4(0, -1, 0, 0)};
+
 	}
 
 	void Engine::Update(float aDeltaTime)
@@ -183,7 +183,15 @@ namespace Alpine
 		myConstantBufferObject.toProjectionSpace = myCamera.GetProjectionMatrix();
 		myConstantBuffer.SetData(&myConstantBufferObject, sizeof(CameraConstBuffer));
 		myConstantBuffer.Bind();
-		
+
+		float lightCol[3] = { myAmbientLight.GetLightColor().x, myAmbientLight.GetLightColor().y, myAmbientLight.GetLightColor().z };
+		ImGui::ShowDemoWindow();
+		ImGui::ColorEdit3("Color", lightCol);
+		myAmbientLight.SetLightColor({ lightCol[0], lightCol[1] , lightCol[2] , 1.f });
+
+		myLightConstantBufferObject.ambientColor = Vector4(myAmbientLight.GetLightColor().x, myAmbientLight.GetLightColor().y, myAmbientLight.GetLightColor().z, 1);
+		myLightConstantBufferObject.lights[0] = { Vector4(1, 1, 1, 1), Vector4(-1, -1, -1, 0) };
+
 		myLightBuffer.SetData(&myLightConstantBufferObject, sizeof(LightConstBuffer));
 		myLightBuffer.Bind();
 
@@ -198,6 +206,9 @@ namespace Alpine
 		myModelBuffer.SetData(&myGround.GetTransform(), sizeof(Matrix));
 		myModelBuffer.Bind();
 		myGround.Draw();
+
+		ImGui::Render();
+		ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 
 		DX11::GetSwapChain()->Present(0, 0);
 	}

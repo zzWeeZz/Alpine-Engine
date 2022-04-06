@@ -7,6 +7,7 @@
 #include <DirectXTK/SimpleMath.h>
 using namespace DirectX::SimpleMath;
 #include "Graphics/Camera.h"
+#include "Lights/AmbientLight.h"
 
 namespace Alpine
 {
@@ -42,6 +43,7 @@ namespace Alpine
 		VertexShader myVertexShader;
 		PixelShader myPixelShader;
 
+		AmbientLight myAmbientLight;
 		Camera myCamera;		
 		Model myModel;
 		Model myLambo;
