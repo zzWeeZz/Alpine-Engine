@@ -8,7 +8,7 @@
 #include "ToolBox/Utility/Timer.h"
 int main()
 {
-	Engine::Engine myEngine;
+	Alpine::Engine myEngine;
 	Input myKeyInput();
 	ToolBox::Utility::Timer myTimer;
 	/* Initialize the library */
