@@ -1,2 +1,2 @@
-﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(514,5): warning MSB8028: The intermediate directory (C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Intermediates\x64\Debug\) contains files shared from another project (Apline.vcxproj, Imgui.vcxproj, ToolBox.vcxproj, Z-Engine.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  Lancher.vcxproj -> C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Export\Engine_Debug.exe
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(514,5): warning MSB8028: The intermediate directory (C:\Users\zzWee\source\repos\Z-Engine\Intermediates\x64\Debug\) contains files shared from another project (Apline.vcxproj, Imgui.vcxproj, ToolBox.vcxproj, Z-Engine.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  Lancher.vcxproj -> C:\Users\zzWee\source\repos\Z-Engine\Export\Engine_Debug.exe

@@ -1,10 +1,10 @@
 {
     "Version": "1.1",
     "Data": {
-        "Source": "c:\\users\\niklas.jakobsen\\documents\\z-engine-new\\source\\alpine\\src\\engine\\graphics\\shaders.h",
+        "Source": "c:\\users\\zzwee\\source\\repos\\z-engine\\source\\alpine\\src\\engine\\graphics\\shaders.h",
         "ProvidedModule": "",
         "Includes": [
-            "c:\\users\\niklas.jakobsen\\documents\\z-engine-new\\source\\alpine\\src\\engine\\graphics\\shaderclasses\\pixelshader.h",
+            "c:\\users\\zzwee\\source\\repos\\z-engine\\source\\alpine\\src\\engine\\graphics\\shaderclasses\\pixelshader.h",
             "c:\\program files (x86)\\windows kits\\10\\include\\10.0.19041.0\\um\\d3d11.h",
             "c:\\program files (x86)\\windows kits\\10\\include\\10.0.19041.0\\shared\\rpc.h",
             "c:\\program files (x86)\\windows kits\\10\\include\\10.0.19041.0\\um\\windows.h",
@@ -351,8 +351,8 @@
             "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.31.31103\\include\\tuple",
             "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.31.31103\\include\\xpolymorphic_allocator.h",
             "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.31.31103\\include\\cctype",
-            "c:\\users\\niklas.jakobsen\\documents\\z-engine-new\\source\\alpine\\src\\engine\\dx11\\dx11.h",
-            "c:\\users\\niklas.jakobsen\\documents\\z-engine-new\\source\\alpine\\src\\engine\\graphics\\shaderclasses\\vertexshader.h"
+            "c:\\users\\zzwee\\source\\repos\\z-engine\\source\\alpine\\src\\engine\\dx11\\dx11.h",
+            "c:\\users\\zzwee\\source\\repos\\z-engine\\source\\alpine\\src\\engine\\graphics\\shaderclasses\\vertexshader.h"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []

@@ -71,7 +71,6 @@ void Alpine::DX11::Resize(int width, int height)
 {
 	if (width == 0 || height == 0)
 	{
-		
 		return;
 	}
 
@@ -79,16 +78,15 @@ void Alpine::DX11::Resize(int width, int height)
 	assert(myDevice);
 	assert(mySwapchain);
 
-
-	myRenderTargetView.ReleaseAndGetAddressOf();
-	myDepthStencilView.ReleaseAndGetAddressOf();
-	myDepthStencilBuffer.ReleaseAndGetAddressOf();
+	myRenderTargetView.Reset();
+	myDepthStencilView.Reset();
+	myDepthStencilBuffer.Reset();
 	//Resize swap chain
-	mySwapchain->ResizeBuffers(1, width, height, DXGI_FORMAT_R8G8B8A8_UNORM, 0);
+	mySwapchain->ResizeBuffers(0, width, height, DXGI_FORMAT_R8G8B8A8_UNORM, 0);
 
 	//Create new views
 	ID3D11Texture2D* backBuffer;
-	mySwapchain->GetBuffer(0, IID_PPV_ARGS(&backBuffer));
+	mySwapchain->GetBuffer(0, __uuidof(ID3D11Texture2D),reinterpret_cast<void**>(&backBuffer));
 	myDevice->CreateRenderTargetView(backBuffer, 0, myRenderTargetView.GetAddressOf());
 	backBuffer->Release();
 	//Create depth stencil buffer
@@ -98,11 +96,12 @@ void Alpine::DX11::Resize(int width, int height)
 	depthStencilDesc.MipLevels = 1;
 	depthStencilDesc.ArraySize = 1;
 	depthStencilDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
-	depthStencilDesc.SampleDesc.Count = 4;
+	depthStencilDesc.SampleDesc.Count = 1;
 	depthStencilDesc.SampleDesc.Quality = 0;
 	depthStencilDesc.Usage = D3D11_USAGE_DEFAULT;
 	depthStencilDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
 	depthStencilDesc.MiscFlags = 0;
+
 
 	myDevice->CreateTexture2D(&depthStencilDesc, 0, myDepthStencilBuffer.GetAddressOf());
 	myDevice->CreateDepthStencilView(myDepthStencilBuffer.Get(), 0, myDepthStencilView.GetAddressOf());

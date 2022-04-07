@@ -8,6 +8,7 @@
 using namespace DirectX::SimpleMath;
 #include "Graphics/Camera.h"
 #include "Lights/AmbientLight.h"
+#include "imGui/ImGuiLayer.h"
 
 namespace Alpine
 {
@@ -35,7 +36,7 @@ namespace Alpine
 		void InitPipeline();
 		void Update(float aDeltaTime);
 		void RenderFrame();
-		void CleanD3D() const;
+		void CleanD3D();
 	private:
 		int myScreenWidth;
 		int myScreenHeight;
@@ -53,6 +54,8 @@ namespace Alpine
 		ConstantBuffer<CameraConstBuffer> myConstantBuffer;
 		ConstantBuffer<Matrix> myModelBuffer;
 		ConstantBuffer<LightConstBuffer> myLightBuffer;
+
+		ImGuiLayer myImguiLayer;
 
 		ID3D11Texture2D* myDepthStencilBuffer;
 		ID3D11Buffer* myConstBufferObjectBuffer;

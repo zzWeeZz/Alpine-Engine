@@ -34,22 +34,19 @@ int main()
 	glfwGetWindowSize(window, &width, &height);
 	myEngine.InitD3D(glfwGetWin32Window(window), width, height);
 	myTimer.Update();
-	imguiLayer.OnAttach();
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
 	{
+		glfwPollEvents();
 		/* Render here */
-		imguiLayer.Begin();
-		imguiLayer.RenderImGui();
-		imguiLayer.End();
+		
 		myTimer.Update();
 		myEngine.RenderFrame();
 		/* Poll for and process events */
-		glfwPollEvents();
+		
 		myEngine.Update(myTimer.GetDeltaTime());
 		
 	}
-	imguiLayer.OnDetach();
 	glfwTerminate();
 	myEngine.CleanD3D();
 	return 0;

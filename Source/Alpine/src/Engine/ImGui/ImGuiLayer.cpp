@@ -2,6 +2,7 @@
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_dx11.h"
+#include "imgui/imgui_impl_win32.h"
 #include "Application.h"
 #include "DX11/DX11.h"
 void Alpine::ImGuiLayer::OnAttach()
@@ -22,7 +23,7 @@ void Alpine::ImGuiLayer::OnAttach()
 		style.WindowRounding = 0.f;
 	}
 
-	ImGui_ImplGlfw_InitForOther(Application::GetWindow(), true);
+	ImGui_ImplGlfw_InitForVulkan(Application::GetWindow(), true);
 	ImGui_ImplDX11_Init(DX11::GetDevice(), DX11::GetDeviceContext());
 }
 void Alpine::ImGuiLayer::OnDetach()
@@ -41,7 +42,9 @@ void Alpine::ImGuiLayer::Begin()
 
 void Alpine::ImGuiLayer::RenderImGui()
 {
+	ImGui::Begin("Debug");
 	ImGui::ShowDemoWindow();
+	ImGui::End();
 }
 
 void Alpine::ImGuiLayer::End()
@@ -60,10 +63,6 @@ void Alpine::ImGuiLayer::End()
 		ImGui::UpdatePlatformWindows();
 		ImGui::RenderPlatformWindowsDefault();
 
-		auto context = DX11::GetDeviceContext();
-		auto swapchainRenderTarget = DX11::GetRenderTargetView();
-		auto swapchainDepthTarget = DX11::GetDepthStencilView();
-
-		context->OMSetRenderTargets(1, &swapchainRenderTarget, swapchainDepthTarget);
+		DX11::GetDeviceContext()->OMSetRenderTargets(1, DX11::GetAdressOfRenderTargetView(), DX11::GetDepthStencilView());
 	}
 }
