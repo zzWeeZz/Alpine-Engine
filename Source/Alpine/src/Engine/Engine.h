@@ -54,8 +54,6 @@ namespace Alpine
 		ConstantBuffer<Matrix> myModelBuffer;
 		ConstantBuffer<LightConstBuffer> myLightBuffer;
 
-		ID3D11RenderTargetView* myRenderTargetView;
-		ID3D11DepthStencilView* myDepthStencilView;
 		ID3D11Texture2D* myDepthStencilBuffer;
 		ID3D11Buffer* myConstBufferObjectBuffer;
 		ID3D11RasterizerState* myWireFrame;

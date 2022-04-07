@@ -170,6 +170,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Engine\Application.cpp" />
+    <ClCompile Include="src\Engine\ImGui\ImGuiLayer.cpp" />
+    <ClCompile Include="src\Engine\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Engine\Lights\AmbientLight.cpp" />
     <ClCompile Include="src\Engine\Lights\DirectionalLight.cpp" />
     <ClCompile Include="src\Engine\DX11\DX11.cpp" />
@@ -184,6 +187,8 @@
     <ClCompile Include="src\Engine\Graphics\ShaderClasses\VertexShader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Engine\Application.h" />
+    <ClInclude Include="src\Engine\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Engine\Lights\AmbientLight.h" />
     <ClInclude Include="src\Engine\Lights\DirectionalLight.h" />
     <ClInclude Include="src\Engine\DX11\DX11.h" />
@@ -215,6 +220,9 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Imgui\Imgui.vcxproj">
+      <Project>{4e037445-1ffd-42bd-8b3d-b673ef9cd12a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Imgui\Imgui.vcxproj">
       <Project>{4e037445-1ffd-42bd-8b3d-b673ef9cd12a}</Project>
     </ProjectReference>
     <ProjectReference Include="..\ToolBox\ToolBox.vcxproj">

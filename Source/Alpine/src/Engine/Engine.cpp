@@ -6,6 +6,7 @@
 #include "ToolBox/Input/Input.h"
 #include <assimp/Importer.hpp>
 #include "DX11/DX11.h"
+#include "Application.h"
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_dx11.h"
 namespace Alpine
@@ -60,7 +61,7 @@ namespace Alpine
 		ID3D11Texture2D* backBufferPtr;
 		DX11::GetSwapChain()->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<LPVOID*>(&backBufferPtr));
 
-		DX11::GetDevice()->CreateRenderTargetView(backBufferPtr, NULL, &myRenderTargetView);
+		DX11::GetDevice()->CreateRenderTargetView(backBufferPtr, NULL, DX11::GetAdressOfRenderTargetView());
 
 		D3D11_TEXTURE2D_DESC depthStencilDesc = {};
 		depthStencilDesc.Width = myScreenWidth;
@@ -76,7 +77,7 @@ namespace Alpine
 
 
 		DX11::GetDevice()->CreateTexture2D(&depthStencilDesc, NULL, &myDepthStencilBuffer);
-		DX11::GetDevice()->CreateDepthStencilView(myDepthStencilBuffer, NULL, &myDepthStencilView);
+		DX11::GetDevice()->CreateDepthStencilView(myDepthStencilBuffer, NULL, DX11::GetAdressOfDepthStencilView());
 
 		myModel.SetModel("Model/helicopter.fbx", L"alfk");
 		myModel.GetTransform() *= Matrix::CreateRotationX(-3.141f / 2);
@@ -175,19 +176,16 @@ namespace Alpine
 	void Engine::RenderFrame()
 	{
 		float color[4] = { 0.3f,0.f, 3.f, 1.f };
-		DX11::GetDeviceContext()->ClearRenderTargetView(myRenderTargetView, color);
-		DX11::GetDeviceContext()->ClearDepthStencilView(myDepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
-		DX11::GetDeviceContext()->OMSetRenderTargets(1, &myRenderTargetView, myDepthStencilView);
+		DX11::GetDeviceContext()->ClearRenderTargetView(DX11::GetRenderTargetView(), color);
+		DX11::GetDeviceContext()->ClearDepthStencilView(DX11::GetDepthStencilView(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+		DX11::GetDeviceContext()->OMSetRenderTargets(1, DX11::GetAdressOfRenderTargetView(), DX11::GetDepthStencilView());
 
 		myConstantBufferObject.toCameraSpace = myCamera.GetViewMatrix();
 		myConstantBufferObject.toProjectionSpace = myCamera.GetProjectionMatrix();
 		myConstantBuffer.SetData(&myConstantBufferObject, sizeof(CameraConstBuffer));
 		myConstantBuffer.Bind();
 
-		float lightCol[3] = { myAmbientLight.GetLightColor().x, myAmbientLight.GetLightColor().y, myAmbientLight.GetLightColor().z };
-		ImGui::ShowDemoWindow();
-		ImGui::ColorEdit3("Color", lightCol);
-		myAmbientLight.SetLightColor({ lightCol[0], lightCol[1] , lightCol[2] , 1.f });
+		//myCamera.SetAspectRatio(Application::GetAspectRatio());
 
 		myLightConstantBufferObject.ambientColor = Vector4(myAmbientLight.GetLightColor().x, myAmbientLight.GetLightColor().y, myAmbientLight.GetLightColor().z, 1);
 		myLightConstantBufferObject.lights[0] = { Vector4(1, 1, 1, 1), Vector4(-1, -1, -1, 0) };
@@ -199,35 +197,22 @@ namespace Alpine
 		myModelBuffer.Bind();
 		myModel.Draw();
 
-		myLightConstantBufferObject.ambientColor = Vector4(myAmbientLight.GetLightColor().x, myAmbientLight.GetLightColor().y, myAmbientLight.GetLightColor().z, 1);
-		myLightConstantBufferObject.lights[0] = { Vector4(1, 1, 1, 1), Vector4(-1, -1, -1, 0) };
-
-		myLightBuffer.SetData(&myLightConstantBufferObject, sizeof(LightConstBuffer));
-		myLightBuffer.Bind();
 		myModelBuffer.SetData(&myLambo.GetTransform(), sizeof(Matrix));
 		myModelBuffer.Bind();
 		myLambo.Draw();
 
-		myLightConstantBufferObject.ambientColor = Vector4(myAmbientLight.GetLightColor().x, myAmbientLight.GetLightColor().y, myAmbientLight.GetLightColor().z, 1);
-		myLightConstantBufferObject.lights[0] = { Vector4(1, 1, 1, 1), Vector4(-1, -1, -1, 0) };
-
-		myLightBuffer.SetData(&myLightConstantBufferObject, sizeof(LightConstBuffer));
-		myLightBuffer.Bind();
 		myModelBuffer.SetData(&myGround.GetTransform(), sizeof(Matrix));
 		myModelBuffer.Bind();
 		myGround.Draw();
 
 		ImGui::Render();
 		ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
-
+		
 		DX11::GetSwapChain()->Present(0, 0);
 	}
 
 	void Engine::CleanD3D() const
 	{
-
-		myRenderTargetView->Release();
 		DX11::CleanUpDX11();
 	}
-
 }

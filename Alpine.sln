@@ -5,6 +5,7 @@ VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lancher", "Source\Lancher\Lancher.vcxproj", "{140E6255-AAB2-4469-BF0C-02A5DD3C1703}"
 	ProjectSection(ProjectDependencies) = postProject
+		{F6BAEE1E-C812-47FF-A606-F44A7AE6CD3B} = {F6BAEE1E-C812-47FF-A606-F44A7AE6CD3B}
 		{1AB6A294-7355-451C-AFF1-064260204497} = {1AB6A294-7355-451C-AFF1-064260204497}
 	EndProjectSection
 EndProject
@@ -14,7 +15,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Apline", "Source\Alpine\Alp
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SandBox", "Source\SandBox\SandBox.vcxproj", "{F6BAEE1E-C812-47FF-A606-F44A7AE6CD3B}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Imgui", "Imgui\Imgui.vcxproj", "{4E037445-1FFD-42BD-8B3D-B673EF9CD12A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Imgui", "Source\Imgui\Imgui.vcxproj", "{4E037445-1FFD-42BD-8B3D-B673EF9CD12A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

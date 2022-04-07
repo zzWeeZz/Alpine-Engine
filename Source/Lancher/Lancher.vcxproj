@@ -160,11 +160,11 @@
     <ClCompile Include="src\Lancher.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Imgui\Imgui.vcxproj">
-      <Project>{4e037445-1ffd-42bd-8b3d-b673ef9cd12a}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\Alpine\Alpine.vcxproj">
       <Project>{1ab6a294-7355-451c-aff1-064260204497}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Imgui\Imgui.vcxproj">
+      <Project>{4e037445-1ffd-42bd-8b3d-b673ef9cd12a}</Project>
     </ProjectReference>
     <ProjectReference Include="..\ToolBox\ToolBox.vcxproj">
       <Project>{236d69d4-0504-41c1-964a-8ff9005123a7}</Project>

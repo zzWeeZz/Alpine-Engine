@@ -6,6 +6,7 @@ class Camera
 public:
 	void Init(const Vector3& aPosition);
 	void Update(float aDeltaTime);
+	void SetAspectRatio(float ratio);
 	Matrix& GetTransform();
 	Matrix& GetProjectionMatrix();
 	Matrix& GetViewMatrix();

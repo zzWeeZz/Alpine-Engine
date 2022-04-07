@@ -58,6 +58,11 @@ void Camera::Update(float aDeltaTime)
 	}
 }
 
+void Camera::SetAspectRatio(float ratio)
+{
+	myProjectionMatrix = Matrix::CreatePerspectiveFieldOfView(3.14f / 2.f, ratio, 0.1f, 1000.f);
+}
+
 Matrix& Camera::GetTransform()
 {
 	return myTransform;
