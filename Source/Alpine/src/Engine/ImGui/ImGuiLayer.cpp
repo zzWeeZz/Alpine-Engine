@@ -38,6 +38,7 @@ void Alpine::ImGuiLayer::Begin()
 	ImGui_ImplDX11_NewFrame();
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
+	ImGui::DockSpace(ImGui::GetID("DockSpace"), ImVec2(0, 0), ImGuiDockNodeFlags_None);
 }
 
 void Alpine::ImGuiLayer::RenderImGui()

@@ -1,4 +1,5 @@
 #pragma once
+#include <cstdint>
 #include <d3d11.h>
 #include <wrl/client.h>
 
@@ -8,6 +9,9 @@ namespace Alpine
 	{
 	public:
 		DX11();
+
+		static void Initialize(int32_t width, int32_t height, bool fullscreen);
+
 		static IDXGISwapChain* GetSwapChain();
 		static IDXGISwapChain** GetAdressOfSwapChain();
 
