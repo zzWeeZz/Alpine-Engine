@@ -20,7 +20,7 @@ int main()
 		return -1;
 	void KeyCallBack(GLFWwindow * window, int key, int scancode, int action, int mods);
 	/* Create a windowed mode window and its OpenGL context */
-	if (!Application::CreateNewWindow(507, 204))
+	if (!Application::CreateNewWindow(1280, 720))
 	{
 		return -1;
 	}

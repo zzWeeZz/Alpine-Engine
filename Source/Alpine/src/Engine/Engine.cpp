@@ -190,7 +190,7 @@ namespace Alpine
 		
 
 		myLightConstantBufferObject.ambientColor = Vector4(myAmbientLight.GetLightColor().x, myAmbientLight.GetLightColor().y, myAmbientLight.GetLightColor().z, 1);
-		myLightConstantBufferObject.lights[0] = { Vector4(1, 1, 1, 1), Vector4(-1, -1, -1, 1) };
+		myLightConstantBufferObject.lights[0] = { Vector4(1, 1, 1, 1), Vector4(-1, -1, -1, 0) };
 
 		myLightBuffer.SetData(&myLightConstantBufferObject, sizeof(LightConstBuffer));
 		myLightBuffer.Bind();
