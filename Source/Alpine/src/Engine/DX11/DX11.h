@@ -7,6 +7,7 @@ namespace Alpine
 	class DX11
 	{
 	public:
+		DX11();
 		static IDXGISwapChain* GetSwapChain();
 		static IDXGISwapChain** GetAdressOfSwapChain();
 
@@ -29,11 +30,12 @@ namespace Alpine
 
 		static void CleanUpDX11();
 	private:
-		static Microsoft::WRL::ComPtr<IDXGISwapChain> mySwapchain;
-		static Microsoft::WRL::ComPtr<ID3D11Device> myDevice;
-		static Microsoft::WRL::ComPtr<ID3D11DeviceContext> myDeviceContext;
-		static Microsoft::WRL::ComPtr<ID3D11RenderTargetView> myRenderTargetView;
-		static Microsoft::WRL::ComPtr<ID3D11DepthStencilView> myDepthStencilView;
-		static Microsoft::WRL::ComPtr<ID3D11Texture2D> myDepthStencilBuffer;
+		static DX11 myInstance;
+		Microsoft::WRL::ComPtr<IDXGISwapChain> mySwapchain;
+		Microsoft::WRL::ComPtr<ID3D11Device> myDevice;
+		Microsoft::WRL::ComPtr<ID3D11DeviceContext> myDeviceContext;
+		Microsoft::WRL::ComPtr<ID3D11RenderTargetView> myRenderTargetView;
+		Microsoft::WRL::ComPtr<ID3D11DepthStencilView> myDepthStencilView;
+		Microsoft::WRL::ComPtr<ID3D11Texture2D> myDepthStencilBuffer;
 	};
 }

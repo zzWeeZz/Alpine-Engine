@@ -1,21 +1,7 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\amd64\Microsoft.Common.CurrentVersion.targets(2065,5): warning : The referenced project '..\..\Imgui\Imgui.vcxproj' does not exist.
-C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(514,5): warning MSB8028: The intermediate directory (C:\Users\zzWee\source\repos\Z-Engine\Intermediates\x64\Debug\) contains files shared from another project (Imgui.vcxproj, Lancher.vcxproj, ToolBox.vcxproj, Z-Engine.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(514,5): warning MSB8028: The intermediate directory (C:\Users\zzWee\source\repos\Z-Engine\Intermediates\x64\Debug\) contains files shared from another project (Apline.vcxproj, Imgui.vcxproj, Lancher.vcxproj, Z-Engine.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(514,5): warning MSB8028: The intermediate directory (C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Intermediates\x64\Debug\) contains files shared from another project (Imgui.vcxproj, Lancher.vcxproj, ToolBox.vcxproj, Z-Engine.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(514,5): warning MSB8028: The intermediate directory (C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Intermediates\x64\Debug\) contains files shared from another project (Apline.vcxproj, Lancher.vcxproj, ToolBox.vcxproj, Z-Engine.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(514,5): warning MSB8028: The intermediate directory (C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Intermediates\x64\Debug\) contains files shared from another project (Apline.vcxproj, Imgui.vcxproj, Lancher.vcxproj, Z-Engine.vcxproj).  This can lead to incorrect clean and rebuild behavior.
   Scanning sources for module dependencies...
   Scanning sources for module dependencies...
-  Engine.cpp
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winbase.h(9531,5): warning C5105: macro expansion producing 'defined' has undefined behavior
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\winrt\wrl\module.h(1275,10): warning C5104: found 'L#serverName' in macro replacement list, did you mean 'L""#serverName'?
-C:\Users\zzWee\source\repos\Z-Engine\Source\Alpine\src\Engine\Engine.cpp(53,49): warning C4244: '=': conversion from '_Ty2' to 'FLOAT', possible loss of data
-          with
-          [
-              _Ty2=int
-          ]
-C:\Users\zzWee\source\repos\Z-Engine\Source\Alpine\src\Engine\Engine.cpp(54,48): warning C4244: '=': conversion from '_Ty1' to 'FLOAT', possible loss of data
-          with
-          [
-              _Ty1=int
-          ]
-C:\Users\zzWee\source\repos\Z-Engine\Source\Alpine\src\Engine\Engine.cpp(88,63): warning C4305: 'argument': truncation from 'double' to 'float'
-C:\Users\zzWee\source\repos\Z-Engine\Source\Alpine\src\Engine\Engine.cpp(89,52): warning C4305: 'argument': truncation from 'double' to 'float'
-  Alpine.vcxproj -> C:\Users\zzWee\source\repos\Z-Engine\Dependencies\lib\Engine.lib
+  Alpine.vcxproj -> C:\Users\niklas.jakobsen\Documents\Z-Engine-new\Dependencies\lib\Engine.lib

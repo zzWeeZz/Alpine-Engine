@@ -1,70 +1,71 @@
 #include "DX11.h"
 #include <cassert>
 
-Microsoft::WRL::ComPtr<IDXGISwapChain> Alpine::DX11::mySwapchain;
-Microsoft::WRL::ComPtr<ID3D11Device> Alpine::DX11::myDevice;
-Microsoft::WRL::ComPtr<ID3D11DeviceContext> Alpine::DX11::myDeviceContext;
-Microsoft::WRL::ComPtr<ID3D11RenderTargetView> Alpine::DX11::myRenderTargetView;
-Microsoft::WRL::ComPtr<ID3D11DepthStencilView> Alpine::DX11::myDepthStencilView;
-Microsoft::WRL::ComPtr<ID3D11Texture2D> Alpine::DX11::myDepthStencilBuffer;
+Alpine::DX11 Alpine::DX11::myInstance;
+
+Alpine::DX11::DX11()
+{
+	myInstance = *this;
+}
+
 IDXGISwapChain* Alpine::DX11::GetSwapChain()
 {
-	return mySwapchain.Get();
+	return myInstance.mySwapchain.Get();
 }
 
 IDXGISwapChain** Alpine::DX11::GetAdressOfSwapChain()
 {
-	return mySwapchain.GetAddressOf();
+	return myInstance.mySwapchain.GetAddressOf();
 }
 
 ID3D11Device* Alpine::DX11::GetDevice()
 {
-	return myDevice.Get();
+	return myInstance.myDevice.Get();
 }
 
 ID3D11Device** Alpine::DX11::GetAdressOfDevice()
 {
-	return myDevice.GetAddressOf();
+	return myInstance.myDevice.GetAddressOf();
 }
 
 ID3D11DeviceContext* Alpine::DX11::GetDeviceContext()
 {
-	return myDeviceContext.Get();
+	return myInstance.myDeviceContext.Get();
 }
 
 ID3D11DeviceContext** Alpine::DX11::GetAdressOfDeviceContext()
 {
-	return myDeviceContext.GetAddressOf();
+	return myInstance.myDeviceContext.GetAddressOf();
 }
 
 ID3D11RenderTargetView* Alpine::DX11::GetRenderTargetView()
 {
-	return myRenderTargetView.Get();
+	return myInstance.myRenderTargetView.Get();
 }
 
 ID3D11RenderTargetView** Alpine::DX11::GetAdressOfRenderTargetView()
 {
-	return myRenderTargetView.GetAddressOf();
+	return myInstance.myRenderTargetView.GetAddressOf();
 }
 
 ID3D11DepthStencilView* Alpine::DX11::GetDepthStencilView()
 {
-	return myDepthStencilView.Get();
+	return myInstance.myDepthStencilView.Get();
 }
 
 ID3D11DepthStencilView** Alpine::DX11::GetAdressOfDepthStencilView()
 {
-	return myDepthStencilView.GetAddressOf();
+	return myInstance.myDepthStencilView.GetAddressOf();
 }
 
 ID3D11Texture2D* Alpine::DX11::GetDepthStencilBuffer()
 {
-	return myDepthStencilBuffer.Get();
+	return myInstance.myDepthStencilBuffer.Get();
 }
 
 ID3D11Texture2D** Alpine::DX11::GetAdressOfDepthStencilBuffer()
 {
-	return myDepthStencilBuffer.GetAddressOf();
+	return myInstance.myDepthStencilBuffer.GetAddressOf();
 }
 
 void Alpine::DX11::Resize(int width, int height)
@@ -74,20 +75,20 @@ void Alpine::DX11::Resize(int width, int height)
 		return;
 	}
 
-	assert(myDeviceContext);
-	assert(myDevice);
-	assert(mySwapchain);
+	assert(myInstance.myDeviceContext);
+	assert(myInstance.myDevice);
+	assert(myInstance.mySwapchain);
 
-	myRenderTargetView.Reset();
-	myDepthStencilView.Reset();
-	myDepthStencilBuffer.Reset();
+	myInstance.myRenderTargetView.Reset();
+	myInstance.myDepthStencilView.Reset();
+	myInstance.myDepthStencilBuffer.Reset();
 	//Resize swap chain
-	mySwapchain->ResizeBuffers(0, width, height, DXGI_FORMAT_R8G8B8A8_UNORM, 0);
+	myInstance.mySwapchain->ResizeBuffers(0, width, height, DXGI_FORMAT_R8G8B8A8_UNORM, 0);
 
 	//Create new views
 	ID3D11Texture2D* backBuffer;
-	mySwapchain->GetBuffer(0, __uuidof(ID3D11Texture2D),reinterpret_cast<void**>(&backBuffer));
-	myDevice->CreateRenderTargetView(backBuffer, 0, myRenderTargetView.GetAddressOf());
+	myInstance.mySwapchain->GetBuffer(0, __uuidof(ID3D11Texture2D),reinterpret_cast<void**>(&backBuffer));
+	myInstance.myDevice->CreateRenderTargetView(backBuffer, 0, myInstance.myRenderTargetView.GetAddressOf());
 	backBuffer->Release();
 	//Create depth stencil buffer
 	D3D11_TEXTURE2D_DESC depthStencilDesc = {};
@@ -103,10 +104,10 @@ void Alpine::DX11::Resize(int width, int height)
 	depthStencilDesc.MiscFlags = 0;
 
 
-	myDevice->CreateTexture2D(&depthStencilDesc, 0, myDepthStencilBuffer.GetAddressOf());
-	myDevice->CreateDepthStencilView(myDepthStencilBuffer.Get(), 0, myDepthStencilView.GetAddressOf());
+	myInstance.myDevice->CreateTexture2D(&depthStencilDesc, 0, myInstance.myDepthStencilBuffer.GetAddressOf());
+	myInstance.myDevice->CreateDepthStencilView(myInstance.myDepthStencilBuffer.Get(), 0, myInstance.myDepthStencilView.GetAddressOf());
 
-	myDeviceContext->OMSetRenderTargets(1, myRenderTargetView.GetAddressOf(), myDepthStencilView.Get());
+	myInstance.myDeviceContext->OMSetRenderTargets(1, myInstance.myRenderTargetView.GetAddressOf(), myInstance.myDepthStencilView.Get());
 	//Bind to output merger
 
 	//Set viewport
@@ -118,15 +119,15 @@ void Alpine::DX11::Resize(int width, int height)
 	viewportDesc.MinDepth = 0.f;
 	viewportDesc.MaxDepth = 1.f;
 
-	myDeviceContext->RSSetViewports(1, &viewportDesc);
+	myInstance.myDeviceContext->RSSetViewports(1, &viewportDesc);
 }
 
 
 void Alpine::DX11::CleanUpDX11()
 {
-	myRenderTargetView.Reset();
-	myDepthStencilView.Reset();
-	mySwapchain.Reset();
-	myDevice.Reset();
-	myDeviceContext.Reset();
+	myInstance.myRenderTargetView.Reset();
+	myInstance.myDepthStencilView.Reset();
+	myInstance.mySwapchain.Reset();
+	myInstance.myDevice.Reset();
+	myInstance.myDeviceContext.Reset();
 }
