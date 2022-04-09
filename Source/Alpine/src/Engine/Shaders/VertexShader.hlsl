@@ -1,5 +1,6 @@
 cbuffer Camera : register(b0)
 {
+    float4 cameraPosition;
     float4x4 toCameraSpace;
     float4x4 toProjectionSpace;
 };

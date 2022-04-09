@@ -6,59 +6,39 @@
 #include <wrl.h>
 #include <DirectXTK/SimpleMath.h>
 using namespace DirectX::SimpleMath;
-#include "Graphics/Camera.h"
+#include "Camera/PerspectiveCamera.h"
 #include "Lights/AmbientLight.h"
 #include "imGui/ImGuiLayer.h"
+#include "Graphics/Buffers/BufferData.h"
 
 namespace Alpine
 {
-	struct CameraConstBuffer
-	{
-		Matrix toCameraSpace;
-		Matrix toProjectionSpace;
-	};
-	struct DynamicLightBuffer
-	{
-		Vector4 lightDirection;
-		Vector4 lightColor;
-	};
-	struct LightConstBuffer
-	{
-		DynamicLightBuffer lights[16];
-		Vector4 ambientColor;
-	};
-
 	class Engine
 	{
 	public:
 		Engine();
 		void InitD3D(HWND aHWND, int aScreenWidth, int aScreenHight);
-		void InitPipeline();
+		void InitObjects();
 		void Update(float aDeltaTime);
 		void RenderFrame();
 		void CleanD3D();
 	private:
-		int myScreenWidth;
-		int myScreenHeight;
-
 		VertexShader myVertexShader;
 		PixelShader myPixelShader;
 
 		AmbientLight myAmbientLight;
-		Camera myCamera;		
-		Model myModel;
-		Model myLambo;
+		PerspectiveCamera myCamera;		
+		Model myHeli;
+		Model mySphere;
 		Model myGround;
-		CameraConstBuffer myConstantBufferObject;
-		LightConstBuffer myLightConstantBufferObject;
-		ConstantBuffer<CameraConstBuffer> myConstantBuffer;
+		CameraBuffer myCameraBufferObject;
+		LightBuffer myLightBufferObject;
+		ConstantBuffer<CameraBuffer> myCameraBuffer;
 		ConstantBuffer<Matrix> myModelBuffer;
-		ConstantBuffer<LightConstBuffer> myLightBuffer;
+		ConstantBuffer<LightBuffer> myLightBuffer;
 
 		ImGuiLayer myImguiLayer;
 
-		ID3D11Texture2D* myDepthStencilBuffer;
-		ID3D11Buffer* myConstBufferObjectBuffer;
 		ID3D11RasterizerState* myWireFrame;
 		ID3D11RasterizerState* myNoCull;
 		ID3D11BlendState* myTransparency;

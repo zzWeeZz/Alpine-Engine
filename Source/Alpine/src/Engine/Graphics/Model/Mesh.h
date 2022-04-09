@@ -1,27 +1,26 @@
 #pragma once
-#include <d3d11.h>
-#include <wrl.h>
-#include <DirectXTK/WICTextureLoader.h>
+#include <future>
 #include <string>
-#include "../Buffers/IndexBuffer.h"
-#include "../Buffers/VertexBuffer.h"
-#include "ModelData.hpp"
-#include <assimp/Importer.hpp>
-#include <assimp/postprocess.h>
-#include <assimp/scene.h>
-#include <vector>
-#include "DX11/DX11.h"
+#include "SubMesh.h"
 
 namespace Alpine
 {
 	class Mesh
 	{
 	public:
-		Mesh(std::vector<Vertex>& aVertices, std::vector<DWORD>& aIndices);
-		Mesh(const Mesh& aMesh);
-		void Draw();
+		void SetMesh(std::string aPath, std::wstring aTexturePath);
+		void SubmitMesh();
+
 	private:
-		VertexBuffer<Vertex> myVertexBuffer;
-		IndexBuffer myIndexBuffer;
+		void PrepareForRender();
+		bool LoadModel(const std::string& aFilePath);
+		void ProcessNode(aiNode* aNode, const aiScene* aScene);
+		SubMesh ProcessSubMesh(aiMesh* aMesh, const aiScene* aScene);
+
+	private:
+		std::vector<SubMesh> mySubMeshes;
+		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> myTexture;
+		Microsoft::WRL::ComPtr< ID3D11SamplerState> myTextureSamplerState;
+		static std::vector<std::future<bool>> myFutures;
 	};
 }

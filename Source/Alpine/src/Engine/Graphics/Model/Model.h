@@ -1,8 +1,11 @@
 #pragma once
-#include "Mesh.h"
+#include "SubMesh.h"
+
 #include <string>
 #include <DirectXTK/SimpleMath.h>
-#include "DX11/DX11.h"
+#include "Mesh.h"
+#include "Materials/Material.h"
+
 using namespace DirectX::SimpleMath;
 
 namespace Alpine
@@ -10,22 +13,25 @@ namespace Alpine
 	class Model
 	{
 	public:
-		void SetModel(std::string aPath, std::wstring aTexturePath = L"Textures/Default.png");
+		void LoadModel(std::string aPath, std::wstring aTexturePath = L"Textures/Default.png");
 		void Draw();
 
 		Matrix& GetTransform();
+		void SetPosition(const Vector3& aPosition);
+		void SetRotation(const Vector3& aRotation);
+		void Rotate(const Vector3& aRotation);
+		void SetScale(const Vector3& aScale);
 
 	private:
-		void PrepareForRender();
-		bool LoadModel(const std::string& aFilePath);
-		void ProcessNode(aiNode* aNode, const aiScene* aScene);
-		Mesh ProcessMesh(aiMesh* aMesh, const aiScene* aScene);
+		void CalculateTransform();
 
-		std::vector<Mesh> myMeshes;
+		Vector3 myPosition;
+		Vector3 myRotation;
+		Vector3 mySize;
 
+		std::shared_ptr<Material> myMaterial;
+
+		Mesh myMesh;
 		Matrix myTransform;
-
-		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> myTexture;
-		Microsoft::WRL::ComPtr< ID3D11SamplerState> myTextureSamplerState;
 	};
 }

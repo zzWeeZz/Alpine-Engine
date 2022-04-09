@@ -10,7 +10,6 @@ namespace Alpine
 	public:
 		DX11();
 
-		static void Initialize(int32_t width, int32_t height, bool fullscreen);
 
 		static IDXGISwapChain* GetSwapChain();
 		static IDXGISwapChain** GetAdressOfSwapChain();
@@ -30,16 +29,26 @@ namespace Alpine
 		static ID3D11Texture2D* GetDepthStencilBuffer();
 		static ID3D11Texture2D** GetAdressOfDepthStencilBuffer();
 
+		static Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> GetRenderTexture();
+
+		static void Initialize(int32_t width, int32_t height, bool fullscreen);
+
 		static void Resize(int width, int height);
+
+		static void ClearView();
+
+		static void Present(const bool& vsync);
 
 		static void CleanUpDX11();
 	private:
 		static DX11 myInstance;
+
 		Microsoft::WRL::ComPtr<IDXGISwapChain> mySwapchain;
 		Microsoft::WRL::ComPtr<ID3D11Device> myDevice;
 		Microsoft::WRL::ComPtr<ID3D11DeviceContext> myDeviceContext;
 		Microsoft::WRL::ComPtr<ID3D11RenderTargetView> myRenderTargetView;
 		Microsoft::WRL::ComPtr<ID3D11DepthStencilView> myDepthStencilView;
 		Microsoft::WRL::ComPtr<ID3D11Texture2D> myDepthStencilBuffer;
+		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> myRenderTexture;
 	};
 }

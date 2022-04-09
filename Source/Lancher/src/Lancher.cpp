@@ -7,7 +7,7 @@
 #include "ToolBox/Input/Input.h"
 #include "ToolBox/Utility/Timer.h"
 
-#include "Engine/Application.h"
+#include "Application/Application.h"
 #include "Engine/ImGui/ImGuiLayer.h"
 
 int main()
@@ -18,13 +18,12 @@ int main()
 	/* Initialize the library */
 	if (!glfwInit())
 		return -1;
-	void KeyCallBack(GLFWwindow * window, int key, int scancode, int action, int mods);
 	/* Create a windowed mode window and its OpenGL context */
-	if (!Application::CreateNewWindow(1280, 720))
+	if (!Alpine::Application::CreateNewWindow("Alpine", 1280, 720))
 	{
 		return -1;
 	}
-	auto window = Application::GetWindow();
+	auto window = static_cast<GLFWwindow*>(Alpine::Application::GetWindow()->GetWindow());
 	Alpine::ImGuiLayer imguiLayer;
 	Input::GetInstance().SetupKeyInputs(window);
 
@@ -43,7 +42,7 @@ int main()
 		myTimer.Update();
 		myEngine.RenderFrame();
 		/* Poll for and process events */
-		
+		Alpine::DX11::Present(false);
 		myEngine.Update(myTimer.GetDeltaTime());
 		
 	}

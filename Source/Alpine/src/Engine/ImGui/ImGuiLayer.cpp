@@ -1,9 +1,12 @@
 #include "ImGuiLayer.h"
+
+#include <imgui_internal.h>
+
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_dx11.h"
 #include "imgui/imgui_impl_win32.h"
-#include "Application.h"
+#include "Application/Application.h"
 #include "DX11/DX11.h"
 void Alpine::ImGuiLayer::OnAttach()
 {
@@ -23,7 +26,7 @@ void Alpine::ImGuiLayer::OnAttach()
 		style.WindowRounding = 0.f;
 	}
 
-	ImGui_ImplGlfw_InitForVulkan(Application::GetWindow(), true);
+	ImGui_ImplGlfw_InitForVulkan(static_cast<GLFWwindow*>(Alpine::Application::GetWindow()->GetWindow()), true);
 	ImGui_ImplDX11_Init(DX11::GetDevice(), DX11::GetDeviceContext());
 }
 void Alpine::ImGuiLayer::OnDetach()
@@ -38,14 +41,13 @@ void Alpine::ImGuiLayer::Begin()
 	ImGui_ImplDX11_NewFrame();
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
-	ImGui::DockSpace(ImGui::GetID("DockSpace"), ImVec2(0, 0), ImGuiDockNodeFlags_None);
+	ImGuiViewport* viewport = ImGui::GetMainViewport();
+	ImGui::DockSpaceOverViewport(viewport, ImGuiDockNodeFlags_PassthruCentralNode);
+	
 }
 
 void Alpine::ImGuiLayer::RenderImGui()
-{
-	ImGui::Begin("Debug");
-	ImGui::ShowDemoWindow();
-	ImGui::End();
+{					 
 }
 
 void Alpine::ImGuiLayer::End()
@@ -53,7 +55,7 @@ void Alpine::ImGuiLayer::End()
 	ImGuiIO& io = ImGui::GetIO();
 	
 
-	io.DisplaySize = ImVec2((float)Application::GetWindowSize().first, (float)Application::GetWindowSize().second);
+	io.DisplaySize = ImVec2((float)Application::GetWindow()->GetWidth(), (float)Application::GetWindow()->GetHeight());
 
 	//Rendering
 	ImGui::Render();

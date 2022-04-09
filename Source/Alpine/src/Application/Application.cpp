@@ -1,42 +1,32 @@
 #include "Application.h"
 #include "DX11/DX11.h"
 
-Application Application::myInstance;
-Application::Application()
+Alpine::Application Alpine::Application::myInstance;
+Alpine::Application::Application()
 {
 	myInstance = *this;
 }
 
-bool Application::CreateNewWindow(int width, int height)
+bool Alpine::Application::CreateNewWindow(const std::string& name, int width, int height)
 {
-	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-	myInstance.myWindow.window = glfwCreateWindow(width, height, "Alpine", NULL, NULL);
-	if (!myInstance.myWindow.window)
-	{
-		glfwTerminate();
-		return false;
-	}
-	glfwSetWindowSizeCallback(myInstance.myWindow.window, ResizeCallBack);
+	myInstance.myWindow.InitWindow(name, width, height);
+	glfwSetWindowSizeCallback(static_cast<GLFWwindow*>(myInstance.myWindow.GetWindow()), ResizeCallBack);
 
 	return true;
 }
-GLFWwindow* Application::GetWindow()
+Alpine::GlfwWindow* Alpine::Application::GetWindow()
 {
-	return myInstance.myWindow.window;
+	return &myInstance.myWindow;
 }
 
-float Application::GetAspectRatio()
+
+DirectX::SimpleMath::Vector2 Alpine::Application::GetWindowSize()
 {
-	glfwGetWindowSize(myInstance.myWindow.window, &myInstance.myWindow.screenWidth, &myInstance.myWindow.screenHeight);
-	return static_cast<float>(myInstance.myWindow.screenWidth) / static_cast<float>(myInstance.myWindow.screenHeight);
+	return DirectX::SimpleMath::Vector2(myInstance.myWindow.GetWidth(), myInstance.myWindow.GetHeight());
 }
 
-DirectX::SimpleMath::Vector2 Application::GetWindowSize()
+void Alpine::Application::ResizeCallBack(GLFWwindow* window, int width, int height)
 {
-	return DirectX::SimpleMath::Vector2(myInstance.myWindow.screenWidth, myInstance.myWindow.screenHeight);
-}
-
-void Application::ResizeCallBack(GLFWwindow* window, int width, int height)
-{
+	myInstance.myWindow.SetWindowSize(width, height);
 	Alpine::DX11::Resize(width, height);
 }

@@ -170,6 +170,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Engine\Graphics\Model\Mesh.cpp" />
     <ClCompile Include="src\Application\Application.cpp" />
     <ClCompile Include="src\Application\Window\GlfwWindow.cpp" />
     <ClCompile Include="src\Engine\ImGui\ImGuiLayer.cpp" />
@@ -180,14 +181,18 @@
     <ClCompile Include="src\Engine\Engine.cpp" />
     <ClCompile Include="src\Engine\Graphics\Buffers\IndexBuffer.cpp" />
     <ClCompile Include="src\Engine\Graphics\Buffers\VertexBuffer.cpp" />
-    <ClCompile Include="src\Engine\Graphics\Camera.cpp" />
-    <ClCompile Include="src\Engine\Graphics\Model\Mesh.cpp" />
+    <ClCompile Include="src\Engine\Camera\PerspectiveCamera.cpp" />
+    <ClCompile Include="src\Engine\Graphics\Model\SubMesh.cpp" />
     <ClCompile Include="src\Engine\Graphics\Model\Model.cpp" />
     <ClCompile Include="src\Engine\Graphics\ShaderClasses\PixelShader.cpp" />
     <ClCompile Include="src\Engine\Graphics\Shaders.h" />
     <ClCompile Include="src\Engine\Graphics\ShaderClasses\VertexShader.cpp" />
+    <ClCompile Include="src\Engine\Materials\Material.cpp" />
+    <ClCompile Include="src\Engine\Textures\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Engine\Graphics\Buffers\BufferData.h" />
+    <ClInclude Include="src\Engine\Graphics\Model\Mesh.h" />
     <ClInclude Include="src\Application\Application.h" />
     <ClInclude Include="src\Application\Window\GlfwWindow.h" />
     <ClInclude Include="src\Application\Window\IWindow.h" />
@@ -199,13 +204,15 @@
     <ClInclude Include="src\Engine\Graphics\Buffers\ConstantBuffer.hpp" />
     <ClInclude Include="src\Engine\Graphics\Buffers\IndexBuffer.h" />
     <ClInclude Include="src\Engine\Graphics\Buffers\VertexBuffer.h" />
-    <ClInclude Include="src\Engine\Graphics\Camera.h" />
-    <ClInclude Include="src\Engine\Graphics\Model\Mesh.h" />
+    <ClInclude Include="src\Engine\Camera\PerspectiveCamera.h" />
+    <ClInclude Include="src\Engine\Graphics\Model\SubMesh.h" />
     <ClInclude Include="src\Engine\Graphics\Model\Model.h" />
     <ClInclude Include="src\Engine\Graphics\Model\ModelData.hpp" />
     <ClInclude Include="src\Engine\Graphics\ShaderClasses\PixelShader.h" />
     <ClInclude Include="src\Engine\Graphics\ShaderClasses\VertexShader.h" />
     <ClInclude Include="src\Engine\Lights\Light.h" />
+    <ClInclude Include="src\Engine\Materials\Material.h" />
+    <ClInclude Include="src\Engine\Textures\Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="src\Engine\Shaders\PixelShader.hlsl">

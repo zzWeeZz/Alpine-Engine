@@ -3,108 +3,23 @@
 #include <windows.h>
 #include <d3d11.h>
 #include <d3dcompiler.h>
+#include <imgui.h>
+
 #include "ToolBox/Input/Input.h"
 #include <assimp/Importer.hpp>
 #include "DX11/DX11.h"
-#include "Application.h"
+#include "Application/Application.h"
 
 namespace Alpine
 {
-	Engine::Engine() : myModelBuffer(1), myConstantBuffer(0), myLightBuffer(2)
+	Engine::Engine() : myModelBuffer(1), myCameraBuffer(0), myLightBuffer(2)
 	{
 
 	}
 	void Engine::InitD3D(HWND aHWND, int aScreenWidth, int aScreenHight)
 	{
-		myScreenHeight = aScreenHight;
-		myScreenWidth = aScreenWidth;
-		// Inits Direct X
-		DXGI_SWAP_CHAIN_DESC swapChainDesc = {};
+		DX11::Initialize(aScreenWidth, aScreenHight, aHWND);
 
-		ZeroMemory(&swapChainDesc, sizeof(DXGI_SWAP_CHAIN_DESC));
-
-		swapChainDesc.BufferCount = 1;
-		swapChainDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-		swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-		swapChainDesc.OutputWindow = aHWND;
-		swapChainDesc.SampleDesc.Count = 1;
-		swapChainDesc.Windowed = TRUE;
-		swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
-
-		D3D11CreateDeviceAndSwapChain(NULL,
-			D3D_DRIVER_TYPE_HARDWARE,
-			NULL,
-			NULL,
-			NULL,
-			NULL,
-			D3D11_SDK_VERSION,
-			&swapChainDesc,
-			DX11::GetAdressOfSwapChain(),
-			DX11::GetAdressOfDevice(),
-			NULL,
-			DX11::GetAdressOfDeviceContext());
-
-
-
-		D3D11_VIEWPORT viewport;
-		ZeroMemory(&viewport, sizeof(D3D11_VIEWPORT));
-		viewport.TopLeftX = 0;
-		viewport.TopLeftY = 0;
-		viewport.Height = Application::GetWindowSize().second;
-		viewport.Width = Application::GetWindowSize().first;
-		viewport.MinDepth = 0.0f;
-		viewport.MaxDepth = 1.0f;
-		DX11::GetDeviceContext()->RSSetViewports(1, &viewport);
-
-
-		ID3D11Texture2D* backBufferPtr;
-		DX11::GetSwapChain()->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<LPVOID*>(&backBufferPtr));
-
-		DX11::GetDevice()->CreateRenderTargetView(backBufferPtr, NULL, DX11::GetAdressOfRenderTargetView());
-
-		D3D11_TEXTURE2D_DESC depthStencilDesc = {};
-		depthStencilDesc.Width = Application::GetWindowSize().first;
-		depthStencilDesc.Height = Application::GetWindowSize().second;
-		depthStencilDesc.MipLevels = 1;
-		depthStencilDesc.ArraySize = 1;
-		depthStencilDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
-		depthStencilDesc.SampleDesc.Count = 1;
-		depthStencilDesc.SampleDesc.Quality = 0;
-		depthStencilDesc.Usage = D3D11_USAGE_DEFAULT;
-		depthStencilDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
-		depthStencilDesc.MiscFlags = 0;
-
-
-		DX11::GetDevice()->CreateTexture2D(&depthStencilDesc, NULL, DX11::GetAdressOfDepthStencilBuffer());
-		DX11::GetDevice()->CreateDepthStencilView(DX11::GetDepthStencilBuffer(), NULL, DX11::GetAdressOfDepthStencilView());
-
-		myModel.SetModel("Model/helicopter.fbx", L"alfk");
-		myModel.GetTransform() *= Matrix::CreateRotationX(-3.141f / 2);
-		myModel.GetTransform() *= Matrix::CreateRotationY(-3.141f / 2);
-		myModel.GetTransform() *= Matrix::CreateScale({ 1.f, 1.0f, 1.f });
-		myModel.GetTransform() *= Matrix::CreateTranslation({ 0,-2.5, -70 });
-
-		myLambo.SetModel("Model/Lamborghini_Aventador.fbx", L"Textures/Lamborginhi Aventador_diffuse.jpeg");
-		myLambo.GetTransform() *= Matrix::CreateRotationY(3.14 / 4.f);
-		myLambo.GetTransform() *= Matrix::CreateScale(0.1);
-		myLambo.GetTransform() *= Matrix::CreateTranslation(Vector3(10, 0, 0));
-
-		myGround.SetModel("Cube", L"Textures/Ground.png");
-		myGround.GetTransform() *= Matrix::CreateRotationX(0);
-		myGround.GetTransform() *= Matrix::CreateScale({ 200, 10, 200 });
-		myGround.GetTransform() *= Matrix::CreateTranslation(Vector3(25, -5, -50));
-
-		myConstantBuffer.Create();
-		myLightBuffer.Create();
-		myModelBuffer.Create();
-
-
-		InitPipeline();
-	}
-
-	void Engine::InitPipeline()
-	{
-		myCamera.Init({ 0,0, 20 });
 		D3D11_INPUT_ELEMENT_DESC layout[] =
 		{
 			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
@@ -164,44 +79,80 @@ namespace Alpine
 		DX11::GetDeviceContext()->IAGetPrimitiveTopology(&topology);
 		DX11::GetDeviceContext()->RSSetState(myCCWcullMode);
 		DX11::GetDeviceContext()->OMSetRenderTargets(1, DX11::GetAdressOfRenderTargetView(), DX11::GetDepthStencilView());
+
+		myCameraBuffer.Create();
+		myLightBuffer.Create();
+		myModelBuffer.Create();
+
+
+		InitObjects();
+	}
+
+	void Engine::InitObjects()
+	{
+		myCamera.Init({ 0,50, 100 });
+
+		myHeli.LoadModel("Model/helicopter.fbx", L"ada");
+		myHeli.SetRotation({ -90, -90, 0 });
+		myHeli.SetPosition({ 0,5.f, -50 });
+		myHeli.SetScale({ 0.5f, 0.5f, 0.5f });
+
+		mySphere.LoadModel("Model/M_MED_Gumshoe_Export.fbx", L"dfasdf");
+		mySphere.SetScale({ 0.1f, 0.1f, 0.1f });
+		mySphere.SetPosition({ 0, 10, 0 });
+
+		myGround.LoadModel("Cube", L"Textures/Ground.png");
+		myGround.SetScale({ 200, 10, 200 });
 		myImguiLayer.OnAttach();
 	}
 
 	void Engine::Update(float aDeltaTime)
 	{
 		myCamera.Update(aDeltaTime);
+		static float rotation = 0;
+		rotation += aDeltaTime * 100.f;
+		mySphere.SetRotation({ 0, -rotation, 0 });
+		myHeli.SetRotation({ -90, rotation / 2, 0 });
 	}
 
 
 	void Engine::RenderFrame()
 	{
 		myImguiLayer.Begin();
-		float color[4] = { 0.3f,0.f, 3.f, 1.f };
-		DX11::GetDeviceContext()->ClearRenderTargetView(DX11::GetRenderTargetView(), color);
-		DX11::GetDeviceContext()->ClearDepthStencilView(DX11::GetDepthStencilView(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
-		
-		auto ratio = Application::GetAspectRatio();
+		DX11::ClearView();
+		auto ratio = Application::GetWindow()->GetAspectRatio();
 		myCamera.SetAspectRatio(ratio);
-		myConstantBufferObject.toCameraSpace = myCamera.GetViewMatrix();
-		myConstantBufferObject.toProjectionSpace = myCamera.GetProjectionMatrix();
-		myConstantBuffer.SetData(&myConstantBufferObject, sizeof(CameraConstBuffer));
-		myConstantBuffer.Bind();
-
+		myCameraBufferObject.position = Vector4(myCamera.GetPosition().x, myCamera.GetPosition().y, myCamera.GetPosition().z, 1);
+		myCameraBufferObject.toCameraSpace = myCamera.GetViewMatrix();
+		myCameraBufferObject.toProjectionSpace = myCamera.GetProjectionMatrix();
+		myCameraBuffer.SetData(&myCameraBufferObject, sizeof(CameraBuffer));
+		myCameraBuffer.Bind();
+		ImGui::BeginMainMenuBar();
+		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+		ImGui::EndMainMenuBar();
+		ImGui::Begin("Light");
 		
+		static float dir[] = { -1, -1, -1 };
+		ImGui::SliderFloat3("Light Direction", dir, -1.f, 1.f);
+		static float intensity = 5.f;
+		ImGui::SliderFloat("Light Intensity", &intensity, 1.f, 30.f);
+		ImGui::End();
+		ImGui::Begin("Viewport");
+		ImGui::Image((void*)DX11::GetRenderTexture().Get(), ImVec2(ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y), {0,0}, {1,1});
+		ImGui::End();
+		myLightBufferObject.ambientColor = Vector4(myAmbientLight.GetLightColor().x, myAmbientLight.GetLightColor().y, myAmbientLight.GetLightColor().z, 1);
+		myLightBufferObject.lights[0] = { Vector4(1, 1, 1, intensity), Vector4(dir[0], dir[1], dir[2], 0)};
 
-		myLightConstantBufferObject.ambientColor = Vector4(myAmbientLight.GetLightColor().x, myAmbientLight.GetLightColor().y, myAmbientLight.GetLightColor().z, 1);
-		myLightConstantBufferObject.lights[0] = { Vector4(1, 1, 1, 1), Vector4(-1, -1, -1, 0) };
-
-		myLightBuffer.SetData(&myLightConstantBufferObject, sizeof(LightConstBuffer));
+		myLightBuffer.SetData(&myLightBufferObject, sizeof(LightBuffer));
 		myLightBuffer.Bind();
 
-		myModelBuffer.SetData(&myModel.GetTransform(), sizeof(Matrix));
+		myModelBuffer.SetData(&myHeli.GetTransform(), sizeof(Matrix));
 		myModelBuffer.Bind();
-		myModel.Draw();
+		myHeli.Draw();
 
-		myModelBuffer.SetData(&myLambo.GetTransform(), sizeof(Matrix));
+		myModelBuffer.SetData(&mySphere.GetTransform(), sizeof(Matrix));
 		myModelBuffer.Bind();
-		myLambo.Draw();
+		mySphere.Draw();
 
 		myModelBuffer.SetData(&myGround.GetTransform(), sizeof(Matrix));
 		myModelBuffer.Bind();
@@ -209,7 +160,7 @@ namespace Alpine
 
 		myImguiLayer.RenderImGui();
 		myImguiLayer.End();
-		DX11::GetSwapChain()->Present(0, 0);
+		
 	}
 
 	void Engine::CleanD3D()
