@@ -137,9 +137,6 @@ namespace Alpine
 		static float intensity = 5.f;
 		ImGui::SliderFloat("Light Intensity", &intensity, 1.f, 30.f);
 		ImGui::End();
-		ImGui::Begin("Viewport");
-		ImGui::Image((void*)DX11::GetRenderTexture().Get(), ImVec2(ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y), {0,0}, {1,1});
-		ImGui::End();
 		myLightBufferObject.ambientColor = Vector4(myAmbientLight.GetLightColor().x, myAmbientLight.GetLightColor().y, myAmbientLight.GetLightColor().z, 1);
 		myLightBufferObject.lights[0] = { Vector4(1, 1, 1, intensity), Vector4(dir[0], dir[1], dir[2], 0)};
 

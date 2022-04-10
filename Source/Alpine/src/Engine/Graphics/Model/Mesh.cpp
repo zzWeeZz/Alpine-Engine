@@ -4,17 +4,20 @@
 #include <iostream>
 #include <DirectXTK/GeometricPrimitive.h>
 #include <spdlog/spdlog.h>
+
+#include "Materials/Material.h"
 std::vector<std::future<bool>> Alpine::Mesh::myFutures;
-void Alpine::Mesh::SetMesh(std::string aPath, std::wstring aTexturePath)
+void Alpine::Mesh::SetMesh(std::string aPath,std::shared_ptr<Material>& material)
 {
 	auto device = DX11::GetDevice();
 	auto context = DX11::GetDeviceContext();
-	auto hr = DirectX::CreateWICTextureFromFile(device, aTexturePath.c_str(), nullptr, &myTexture);
-	if (FAILED(hr))
-	{
-		spdlog::error("Failed to load texture: {}; Loading missing texture.", std::string(aTexturePath.begin(), aTexturePath.end()));
-		DirectX::CreateWICTextureFromFile(device, L"Textures/MissingTexture.png", nullptr, &myTexture);
-	}
+	myMaterial = material;
+	//auto hr = DirectX::CreateWICTextureFromFile(device, aTexturePath.c_str(), nullptr, &myTexture);
+	//if (FAILED(hr))
+	//{
+	//	spdlog::error("Failed to load texture: {}; Loading missing texture.", std::string(aTexturePath.begin(), aTexturePath.end()));
+	//	DirectX::CreateWICTextureFromFile(device, L"Textures/MissingTexture.png", nullptr, &myTexture);
+	//}
 	if (aPath == "Cube")
 	{
 		DirectX::GeometricPrimitive::VertexCollection verts;
@@ -100,13 +103,16 @@ bool Alpine::Mesh::LoadModel(const std::string& aFilePath)
 		aiProcess_GenNormals |
 		aiProcess_GenUVCoords |
 		aiProcess_OptimizeMeshes |
+		aiProcess_GenSmoothNormals |
 		aiProcess_JoinIdenticalVertices |
 		aiProcess_ValidateDataStructure |
 		aiProcess_FlipUVs);
-	if (pScene->mMaterials[0]->GetTextureCount(aiTextureType_DIFFUSE) > 0)
-	{
 
-		spdlog::log(spdlog::level::info, "Diffuse path: {}");
+	if(pScene->mMaterials[0]->GetTextureCount(aiTextureType_DIFFUSE_ROUGHNESS) > 0)
+	{
+		aiString path;
+		pScene->mMaterials[0]->GetTexture(aiTextureType_DIFFUSE_ROUGHNESS, 0, &path);
+		myMaterial->PushTexture(Texture(path.data));
 	}
 	if (pScene == nullptr)
 	{

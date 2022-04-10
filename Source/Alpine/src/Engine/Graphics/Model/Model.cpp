@@ -8,7 +8,7 @@
 void Alpine::Model::LoadModel(std::string aPath, std::wstring aTexturePath)
 {
 	myMaterial = Material::Create("Default");
-	myMesh.SetMesh(aPath, aTexturePath);
+	myMesh.SetMesh(aPath, myMaterial);
 	myPosition = DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f);
 	myRotation = DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f);
 	mySize = DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f);
