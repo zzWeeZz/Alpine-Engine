@@ -9,7 +9,7 @@ Alpine::Material::Material(std::string name)
 	myMaterialName = name;
 }
 
-void Alpine::Material::PushTexture(const Texture& texture)
+void Alpine::Material::AddTexture(std::shared_ptr<Texture> texture)
 {
 	if (myTextures.size() < 6)
 	{
@@ -21,12 +21,11 @@ void Alpine::Material::PushTexture(const Texture& texture)
 		assert(false);
 	}
 }
-
 void Alpine::Material::Bind()
 {
 	for (size_t i = 0; i < myTextures.size(); i++)
 	{
-		myTextures[i].Bind(static_cast<int>(i));
+		myTextures[i]->Bind(static_cast<int>(i));
 	}
 }
 

@@ -13,7 +13,7 @@ namespace Alpine
 	class Model
 	{
 	public:
-		void LoadModel(std::string aPath, std::wstring aTexturePath = L"Textures/Default.png");
+		void LoadModel(std::string aPath, std::shared_ptr<Material> material);
 		void Draw();
 
 		Matrix& GetTransform();

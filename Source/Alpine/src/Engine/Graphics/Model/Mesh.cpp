@@ -7,11 +7,10 @@
 
 #include "Materials/Material.h"
 std::vector<std::future<bool>> Alpine::Mesh::myFutures;
-void Alpine::Mesh::SetMesh(std::string aPath,std::shared_ptr<Material>& material)
+void Alpine::Mesh::SetMesh(std::string aPath)
 {
 	auto device = DX11::GetDevice();
 	auto context = DX11::GetDeviceContext();
-	myMaterial = material;
 	//auto hr = DirectX::CreateWICTextureFromFile(device, aTexturePath.c_str(), nullptr, &myTexture);
 	//if (FAILED(hr))
 	//{
@@ -70,8 +69,6 @@ void Alpine::Mesh::SetMesh(std::string aPath,std::shared_ptr<Material>& material
 
 void Alpine::Mesh::SubmitMesh()
 {
-	DX11::GetDeviceContext()->PSSetShaderResources(0, 1, myTexture.GetAddressOf());
-	DX11::GetDeviceContext()->PSSetSamplers(0, 1, myTextureSamplerState.GetAddressOf());
 	for (auto& subMesh : mySubMeshes)
 	{
 		subMesh.Draw();
@@ -112,7 +109,7 @@ bool Alpine::Mesh::LoadModel(const std::string& aFilePath)
 	{
 		aiString path;
 		pScene->mMaterials[0]->GetTexture(aiTextureType_DIFFUSE_ROUGHNESS, 0, &path);
-		myMaterial->PushTexture(Texture(path.data));
+		
 	}
 	if (pScene == nullptr)
 	{

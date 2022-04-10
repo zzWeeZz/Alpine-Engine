@@ -15,10 +15,11 @@ struct VS_OUTPUT
     float4 WorldPosition : POSITION;
     float3 Normal : NORMAL;
     float2 TexCoord : TEXCOORD;
+    float3x3 tangentBasis : TBASIS;
 };
 
 
-VS_OUTPUT main(float4 inPos : POSITION,float2 inTexCoord : TEXCOORD, float3 inNormal : NORMAL)
+VS_OUTPUT main(float4 inPos : POSITION, float2 inTexCoord : TEXCOORD, float3 inNormal : NORMAL, float3 inTangent : TANGENT, float3 inBitangent : BITANGENT)
 {
     VS_OUTPUT output;
     inPos.w = 1.0f;
@@ -26,7 +27,9 @@ VS_OUTPUT main(float4 inPos : POSITION,float2 inTexCoord : TEXCOORD, float3 inNo
     output.Position = mul(worldViewPorj, inPos);
     output.WorldPosition = mul(modelSpace, inPos);
     output.Normal = mul((float3x3) modelSpace, inNormal);
-    output.TexCoord = inTexCoord;
+    float3x3 tangentBasis = float3x3(inTangent, inBitangent, cross(inTangent, inBitangent));
+    output.tangentBasis = mul(transpose(tangentBasis),modelSpace);
+    output.TexCoord = float2(inTexCoord.x, 1.0 - inTexCoord.y);
 
     return output;
 }

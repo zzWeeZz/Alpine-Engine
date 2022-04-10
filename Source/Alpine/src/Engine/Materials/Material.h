@@ -10,14 +10,14 @@ namespace Alpine
 	{
 	public:
 		Material(std::string name);
-		void PushTexture(const Texture& texture);
+		void AddTexture(std::shared_ptr<Texture> texture);
 
 		void Bind();
 
 		static std::shared_ptr<Material> Create(std::string name);
 	private:
 		std::string myMaterialName;
-		std::vector<Texture> myTextures;
+		std::vector<std::shared_ptr<Texture>> myTextures;
 	};
 
 }

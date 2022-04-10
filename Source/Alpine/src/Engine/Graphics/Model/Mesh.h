@@ -9,7 +9,7 @@ namespace Alpine
 	class Mesh
 	{
 	public:
-		void SetMesh(std::string aPath, std::shared_ptr<Material>& material);
+		void SetMesh(std::string aPath);
 		void SubmitMesh();
 
 	private:
@@ -20,7 +20,6 @@ namespace Alpine
 
 	private:
 		std::vector<SubMesh> mySubMeshes;
-		std::shared_ptr<Material> myMaterial;
 		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> myTexture;
 		Microsoft::WRL::ComPtr< ID3D11SamplerState> myTextureSamplerState;
 		static std::vector<std::future<bool>> myFutures;

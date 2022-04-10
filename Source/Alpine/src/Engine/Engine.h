@@ -27,7 +27,8 @@ namespace Alpine
 		PixelShader myPixelShader;
 
 		AmbientLight myAmbientLight;
-		PerspectiveCamera myCamera;		
+		PerspectiveCamera myCamera;
+		std::shared_ptr<Material> myMetalicMaterial;
 		Model myHeli;
 		Model mySphere;
 		Model myGround;

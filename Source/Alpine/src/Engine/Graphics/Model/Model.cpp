@@ -5,10 +5,10 @@
 #include "DX11/DX11.h"
 #include "ToolBox/Utility/UtilityFunctions.hpp"
 
-void Alpine::Model::LoadModel(std::string aPath, std::wstring aTexturePath)
+void Alpine::Model::LoadModel(std::string aPath, std::shared_ptr<Material> material)
 {
-	myMaterial = Material::Create("Default");
-	myMesh.SetMesh(aPath, myMaterial);
+	myMaterial = material;
+	myMesh.SetMesh(aPath);
 	myPosition = DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f);
 	myRotation = DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f);
 	mySize = DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f);

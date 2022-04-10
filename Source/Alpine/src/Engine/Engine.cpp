@@ -26,7 +26,8 @@ namespace Alpine
 			{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 			{"NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 20, D3D11_INPUT_PER_VERTEX_DATA, 0},
 			{"TANGENT", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 32, D3D11_INPUT_PER_VERTEX_DATA, 0},
-			{"BITANGENT", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 44, D3D11_INPUT_PER_VERTEX_DATA, 0}
+			{"BITANGENT", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 44, D3D11_INPUT_PER_VERTEX_DATA, 0},
+			{"TBASIS" , 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 56, D3D11_INPUT_PER_VERTEX_DATA, 0}
 		};
 		myVertexShader.Initialize(L"Shaders/VertexShader.cso", layout, ARRAYSIZE(layout));
 		myPixelShader.Initialize(L"Shaders/PixelShader.cso");
@@ -91,17 +92,23 @@ namespace Alpine
 	void Engine::InitObjects()
 	{
 		myCamera.Init({ 0,50, 100 });
-
-		myHeli.LoadModel("Model/helicopter.fbx", L"ada");
+		myMetalicMaterial = Material::Create("Metalic");
+		myMetalicMaterial->AddTexture(Texture::Create("Textures/mesh-covered-metal1-albedo.png"));
+		myMetalicMaterial->AddTexture(Texture::Create("Textures/mesh-covered-metal1-roughness.png"));
+		myMetalicMaterial->AddTexture(Texture::Create("Textures/mesh-covered-metal1-normal-dx.png"));
+		myMetalicMaterial->AddTexture(Texture::Create("Textures/mesh-covered-metal1-ao.png"));
+		myMetalicMaterial->AddTexture(Texture::Create("Textures/mesh-covered-metal1-metallic.png"));
+		myMetalicMaterial->AddTexture(Texture::Create("Textures/mesh-covered-metal1-height.png"));
+		myHeli.LoadModel("Model/helicopter.fbx", myMetalicMaterial);
 		myHeli.SetRotation({ -90, -90, 0 });
 		myHeli.SetPosition({ 0,5.f, -50 });
 		myHeli.SetScale({ 0.5f, 0.5f, 0.5f });
 
-		mySphere.LoadModel("Model/M_MED_Gumshoe_Export.fbx", L"dfasdf");
+		mySphere.LoadModel("Model/M_MED_Gumshoe_Export.fbx", myMetalicMaterial);
 		mySphere.SetScale({ 0.1f, 0.1f, 0.1f });
 		mySphere.SetPosition({ 0, 10, 0 });
 
-		myGround.LoadModel("Cube", L"Textures/Ground.png");
+		myGround.LoadModel("Cube", myMetalicMaterial);
 		myGround.SetScale({ 200, 10, 200 });
 		myImguiLayer.OnAttach();
 	}
