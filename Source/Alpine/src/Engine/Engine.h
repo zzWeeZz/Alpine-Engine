@@ -5,6 +5,8 @@
 #include "Graphics/Buffers/ConstantBuffer.hpp"
 #include <wrl.h>
 #include <DirectXTK/SimpleMath.h>
+
+#include "Textures/TextureCube.h"
 using namespace DirectX::SimpleMath;
 #include "Camera/PerspectiveCamera.h"
 #include "Lights/AmbientLight.h"
@@ -29,6 +31,9 @@ namespace Alpine
 		AmbientLight myAmbientLight;
 		PerspectiveCamera myCamera;
 		std::shared_ptr<Material> myMetalicMaterial;
+		std::shared_ptr<Material> myGroundMaterial;
+		std::shared_ptr<Texture> myTexture;
+		std::shared_ptr<TextureCube> myCubeMap;
 		Model myHeli;
 		Model mySphere;
 		Model myGround;

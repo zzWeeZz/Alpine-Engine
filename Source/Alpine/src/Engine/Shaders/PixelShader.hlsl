@@ -28,7 +28,13 @@ Texture2D normalTexture : register(t2);
 Texture2D aoTexture : register(t3);
 Texture2D metallicTexture : register(t4);
 Texture2D emissionTexture : register(t5);
-SamplerState defaultSampler;
+
+TextureCube specularTexture : register(t10);
+TextureCube irradianceTexture : register(t11);
+
+Texture2D specularBRDF_LUT : register(t6);
+SamplerState defaultSampler : register(s0);
+SamplerState spBRDF_Sampler : register(s1);
 
 
 static float PI = 3.1415926535897932384626433832795f;
@@ -72,7 +78,6 @@ uint querySpecularTextureLevels()
     return levels;
 }
 
-// Pixel shader
 float4 main(VS_OUTPUT pin) : SV_Target
 {
 	// Sample input textures to get shading model params.
@@ -124,7 +129,6 @@ float4 main(VS_OUTPUT pin) : SV_Target
 
 		// Lambert diffuse BRDF.
 		// We don't scale by 1/PI for lighting & material units to be more convenient.
-		// See: https://seblagarde.wordpress.com/2012/01/08/pi-or-not-to-pi-in-game-lighting-equation/
         float3 diffuseBRDF = kd * albedo;
 
 		// Cook-Torrance specular microfacet BRDF.
@@ -138,7 +142,7 @@ float4 main(VS_OUTPUT pin) : SV_Target
     float3 ambientLighting;
 	{
 		// Sample diffuse irradiance at normal direction.
-        float3 irradiance = emissionTexture.Sample(defaultSampler, N).rgb;
+        float3 irradiance = irradianceTexture.Sample(defaultSampler, N).rgb;
 
 		// Calculate Fresnel term for ambient lighting.
 		// Since we use pre-filtered cubemap(s) and irradiance is coming from many directions
@@ -154,10 +158,10 @@ float4 main(VS_OUTPUT pin) : SV_Target
 
 		// Sample pre-filtered specular reflection environment at correct mipmap level.
         uint specularTextureLevels = querySpecularTextureLevels();
-        float3 specularIrradiance = emissionTexture.SampleLevel(defaultSampler, Lr, roughness * specularTextureLevels).rgb;
+        float3 specularIrradiance = specularTexture.SampleLevel(defaultSampler, Lr, roughness * specularTextureLevels).rgb;
 
 		// Split-sum approximation factors for Cook-Torrance specular BRDF.
-        float2 specularBRDF = aoTexture.Sample(defaultSampler, float2(cosLo, roughness)).rg;
+        float2 specularBRDF = specularBRDF_LUT.Sample(spBRDF_Sampler, float2(cosLo, roughness)).rg;
 
 		// Total specular IBL contribution.
         float3 specularIBL = (F0 * specularBRDF.x + specularBRDF.y) * specularIrradiance;
@@ -167,5 +171,5 @@ float4 main(VS_OUTPUT pin) : SV_Target
     }
 
 	// Final fragment color.
-    return float4(directLighting + ambientLighting, 1.0);
+    return float4(directLighting + albedo.xyz, 1.0);
 }

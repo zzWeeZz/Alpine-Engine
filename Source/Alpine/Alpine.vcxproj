@@ -189,6 +189,7 @@
     <ClCompile Include="src\Engine\Graphics\ShaderClasses\VertexShader.cpp" />
     <ClCompile Include="src\Engine\Materials\Material.cpp" />
     <ClCompile Include="src\Engine\Textures\Texture.cpp" />
+    <ClCompile Include="src\Engine\Textures\TextureCube.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Engine\Graphics\Buffers\BufferData.h" />
@@ -213,6 +214,7 @@
     <ClInclude Include="src\Engine\Lights\Light.h" />
     <ClInclude Include="src\Engine\Materials\Material.h" />
     <ClInclude Include="src\Engine\Textures\Texture.h" />
+    <ClInclude Include="src\Engine\Textures\TextureCube.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="src\Engine\Shaders\PixelShader.hlsl">

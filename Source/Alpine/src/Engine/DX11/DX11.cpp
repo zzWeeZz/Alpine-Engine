@@ -90,7 +90,7 @@ void Alpine::DX11::Initialize(int32_t width, int32_t height, bool fullscreen)
 	swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 	swapChainDesc.OutputWindow = Application::GetWindow()->GetHwnd();
 	swapChainDesc.SampleDesc.Count = 1;
-	swapChainDesc.Windowed = fullscreen;
+	swapChainDesc.Windowed = !fullscreen;
 	swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
 
 	D3D11CreateDeviceAndSwapChain(NULL,

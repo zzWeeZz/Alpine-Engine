@@ -18,7 +18,7 @@ namespace Alpine
 	}
 	void Engine::InitD3D(HWND aHWND, int aScreenWidth, int aScreenHight)
 	{
-		DX11::Initialize(aScreenWidth, aScreenHight, aHWND);
+		DX11::Initialize(aScreenWidth, aScreenHight, false);
 
 		D3D11_INPUT_ELEMENT_DESC layout[] =
 		{
@@ -92,6 +92,8 @@ namespace Alpine
 	void Engine::InitObjects()
 	{
 		myCamera.Init({ 0,50, 100 });
+		myTexture = Texture::Create("Textures/BRDF LUT.png");
+		myCubeMap = TextureCube::Create("Textures/cubemap-faces.jpg");
 		myMetalicMaterial = Material::Create("Metalic");
 		myMetalicMaterial->AddTexture(Texture::Create("Textures/mesh-covered-metal1-albedo.png"));
 		myMetalicMaterial->AddTexture(Texture::Create("Textures/mesh-covered-metal1-roughness.png"));
@@ -99,18 +101,26 @@ namespace Alpine
 		myMetalicMaterial->AddTexture(Texture::Create("Textures/mesh-covered-metal1-ao.png"));
 		myMetalicMaterial->AddTexture(Texture::Create("Textures/mesh-covered-metal1-metallic.png"));
 		myMetalicMaterial->AddTexture(Texture::Create("Textures/mesh-covered-metal1-height.png"));
-		myHeli.LoadModel("Model/helicopter.fbx", myMetalicMaterial);
+		myHeli.LoadModel("Sphere", myMetalicMaterial);
 		myHeli.SetRotation({ -90, -90, 0 });
-		myHeli.SetPosition({ 0,5.f, -50 });
-		myHeli.SetScale({ 0.5f, 0.5f, 0.5f });
+		myHeli.SetPosition({ 0,0.f, 0 });
+		myHeli.SetScale({ 1000.f, 1000.f, 1000.f });
 
+		myGroundMaterial = Material::Create("Ground");
+		myGroundMaterial->AddTexture(Texture::Create("Textures/wet-stones-with-sand1-albedo.png"));
+		myGroundMaterial->AddTexture(Texture::Create("Textures/wet-stones-with-sand1-roughness.png"));
+		myGroundMaterial->AddTexture(Texture::Create("Textures/wet-stones-with-sand1-normal-dx.png"));
+		myGroundMaterial->AddTexture(Texture::Create("Textures/wet-stones-with-sand1-ao.png"));
+		myGroundMaterial->AddTexture(Texture::Create("Textures/wet-stones-with-sand1-metallic.png"));
+		myGroundMaterial->AddTexture(Texture::Create("Textures/wet-stones-with-sand1-height.png"));
 		mySphere.LoadModel("Model/M_MED_Gumshoe_Export.fbx", myMetalicMaterial);
 		mySphere.SetScale({ 0.1f, 0.1f, 0.1f });
 		mySphere.SetPosition({ 0, 10, 0 });
 
-		myGround.LoadModel("Cube", myMetalicMaterial);
+		myGround.LoadModel("Cube", myGroundMaterial);
 		myGround.SetScale({ 200, 10, 200 });
 		myImguiLayer.OnAttach();
+		myTexture->Bind(6);
 	}
 
 	void Engine::Update(float aDeltaTime)
@@ -118,8 +128,7 @@ namespace Alpine
 		myCamera.Update(aDeltaTime);
 		static float rotation = 0;
 		rotation += aDeltaTime * 100.f;
-		mySphere.SetRotation({ 0, -rotation, 0 });
-		myHeli.SetRotation({ -90, rotation / 2, 0 });
+		mySphere.SetRotation({ 0, -rotation / 2, 0 });
 	}
 
 
@@ -134,6 +143,8 @@ namespace Alpine
 		myCameraBufferObject.toProjectionSpace = myCamera.GetProjectionMatrix();
 		myCameraBuffer.SetData(&myCameraBufferObject, sizeof(CameraBuffer));
 		myCameraBuffer.Bind();
+		myCubeMap->Bind(11);
+
 		ImGui::BeginMainMenuBar();
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 		ImGui::EndMainMenuBar();

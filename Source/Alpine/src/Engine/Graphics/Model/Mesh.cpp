@@ -42,7 +42,7 @@ void Alpine::Mesh::SetMesh(std::string aPath)
 	{
 		DirectX::GeometricPrimitive::VertexCollection verts;
 		DirectX::GeometricPrimitive::IndexCollection indences;
-		DirectX::GeometricPrimitive::CreateGeoSphere(verts, indences, 1, 3, false);
+		DirectX::GeometricPrimitive::CreateGeoSphere(verts, indences, 1, 3, true);
 		std::vector<Vertex> vertices;
 		std::vector<DWORD> indices;
 		for (size_t i = 0; i < verts.size(); i++)
@@ -105,12 +105,6 @@ bool Alpine::Mesh::LoadModel(const std::string& aFilePath)
 		aiProcess_ValidateDataStructure |
 		aiProcess_FlipUVs);
 
-	if(pScene->mMaterials[0]->GetTextureCount(aiTextureType_DIFFUSE_ROUGHNESS) > 0)
-	{
-		aiString path;
-		pScene->mMaterials[0]->GetTexture(aiTextureType_DIFFUSE_ROUGHNESS, 0, &path);
-		
-	}
 	if (pScene == nullptr)
 	{
 		spdlog::error("Failed to load model: {}", aFilePath);
