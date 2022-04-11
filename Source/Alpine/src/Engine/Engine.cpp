@@ -9,6 +9,7 @@
 #include <assimp/Importer.hpp>
 #include "DX11/DX11.h"
 #include "Application/Application.h"
+#include <Effects.h>
 
 namespace Alpine
 {
@@ -84,8 +85,6 @@ namespace Alpine
 		myCameraBuffer.Create();
 		myLightBuffer.Create();
 		myModelBuffer.Create();
-
-
 		InitObjects();
 	}
 
@@ -93,7 +92,7 @@ namespace Alpine
 	{
 		myCamera.Init({ 0,50, 100 });
 		myTexture = Texture::Create("Textures/BRDF LUT.png");
-		myCubeMap = TextureCube::Create("Textures/cubemap-faces.jpg");
+		myCubeMap = TextureCube::Create("Textures/Storforsen4");
 		myMetalicMaterial = Material::Create("Metalic");
 		myMetalicMaterial->AddTexture(Texture::Create("Textures/mesh-covered-metal1-albedo.png"));
 		myMetalicMaterial->AddTexture(Texture::Create("Textures/mesh-covered-metal1-roughness.png"));
@@ -101,10 +100,10 @@ namespace Alpine
 		myMetalicMaterial->AddTexture(Texture::Create("Textures/mesh-covered-metal1-ao.png"));
 		myMetalicMaterial->AddTexture(Texture::Create("Textures/mesh-covered-metal1-metallic.png"));
 		myMetalicMaterial->AddTexture(Texture::Create("Textures/mesh-covered-metal1-height.png"));
-		myHeli.LoadModel("Sphere", myMetalicMaterial);
+		myHeli.LoadModel("Model/helicopter.fbx", myMetalicMaterial);
 		myHeli.SetRotation({ -90, -90, 0 });
 		myHeli.SetPosition({ 0,0.f, 0 });
-		myHeli.SetScale({ 1000.f, 1000.f, 1000.f });
+		myHeli.SetScale({ 0.5f, 0.5f, 0.5f });
 
 		myGroundMaterial = Material::Create("Ground");
 		myGroundMaterial->AddTexture(Texture::Create("Textures/wet-stones-with-sand1-albedo.png"));
@@ -143,7 +142,7 @@ namespace Alpine
 		myCameraBufferObject.toProjectionSpace = myCamera.GetProjectionMatrix();
 		myCameraBuffer.SetData(&myCameraBufferObject, sizeof(CameraBuffer));
 		myCameraBuffer.Bind();
-		myCubeMap->Bind(11);
+		myCubeMap->Bind(10);
 
 		ImGui::BeginMainMenuBar();
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);

@@ -100,7 +100,6 @@ bool Alpine::Mesh::LoadModel(const std::string& aFilePath)
 		aiProcess_GenNormals |
 		aiProcess_GenUVCoords |
 		aiProcess_OptimizeMeshes |
-		aiProcess_GenSmoothNormals |
 		aiProcess_JoinIdenticalVertices |
 		aiProcess_ValidateDataStructure |
 		aiProcess_FlipUVs);

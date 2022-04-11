@@ -19,6 +19,8 @@ namespace Alpine
 		static std::shared_ptr<TextureCube> Create(const std::filesystem::path& filePath);
 	private:
 		std::vector<std::filesystem::path> myFilePaths;
+		ComPtr<ID3D11SamplerState> mySamplerState;
+		ComPtr<ID3D11Texture2D> myTexture;
 		ComPtr<ID3D11ShaderResourceView> myShaderResourceView;
 	};
 }

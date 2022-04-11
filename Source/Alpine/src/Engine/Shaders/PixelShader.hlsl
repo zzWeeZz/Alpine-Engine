@@ -34,7 +34,7 @@ TextureCube irradianceTexture : register(t11);
 
 Texture2D specularBRDF_LUT : register(t6);
 SamplerState defaultSampler : register(s0);
-SamplerState spBRDF_Sampler : register(s1);
+SamplerState spBRDF_Sampler : register(s10);
 
 
 static float PI = 3.1415926535897932384626433832795f;
@@ -171,5 +171,5 @@ float4 main(VS_OUTPUT pin) : SV_Target
     }
 
 	// Final fragment color.
-    return float4(directLighting + albedo.xyz, 1.0);
+    return float4(directLighting + ambientLighting, 1.0);
 }
