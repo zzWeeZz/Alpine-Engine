@@ -72,7 +72,7 @@ namespace Alpine
 		renderTargetBlendDesc.SrcBlendAlpha = D3D11_BLEND_ONE;
 		renderTargetBlendDesc.DestBlendAlpha = D3D11_BLEND_ZERO;
 		renderTargetBlendDesc.BlendOpAlpha = D3D11_BLEND_OP_ADD;
-		renderTargetBlendDesc.RenderTargetWriteMask = D3D10_COLOR_WRITE_ENABLE_ALL;
+		renderTargetBlendDesc.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
 		blendDesc.RenderTarget[0] = renderTargetBlendDesc;
 
@@ -114,7 +114,7 @@ namespace Alpine
 		myGroundMaterial->AddTexture(Texture::Create("Textures/wet-stones-with-sand1-height.png"));
 		mySphere.LoadModel("Model/M_MED_Gumshoe_Export.fbx", myMetalicMaterial);
 		mySphere.SetScale({ 0.1f, 0.1f, 0.1f });
-		mySphere.SetPosition({ 0, 10, 0 });
+		mySphere.SetPosition({ 0, 10, 30 });
 
 		myGround.LoadModel("Cube", myGroundMaterial);
 		myGround.SetScale({ 200, 10, 200 });
@@ -142,7 +142,7 @@ namespace Alpine
 		myCameraBufferObject.toProjectionSpace = myCamera.GetProjectionMatrix();
 		myCameraBuffer.SetData(&myCameraBufferObject, sizeof(CameraBuffer));
 		myCameraBuffer.Bind();
-		myCubeMap->Bind(10);
+		myCubeMap->Bind(11);
 
 		ImGui::BeginMainMenuBar();
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);

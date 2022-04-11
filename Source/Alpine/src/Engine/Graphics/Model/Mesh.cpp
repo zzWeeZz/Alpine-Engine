@@ -93,16 +93,14 @@ bool Alpine::Mesh::LoadModel(const std::string& aFilePath)
 {
 	Assimp::Importer importer;
 	spdlog::log(spdlog::level::info, "Loading: {}", aFilePath);
-	const aiScene* pScene = importer.ReadFile(aFilePath,
+	const aiScene* pScene = importer.ReadFile(aFilePath, aiProcess_Triangulate | 
 		aiProcess_CalcTangentSpace |
-		aiProcess_Triangulate |
 		aiProcess_SortByPType |
 		aiProcess_GenNormals |
 		aiProcess_GenUVCoords |
 		aiProcess_OptimizeMeshes |
 		aiProcess_JoinIdenticalVertices |
-		aiProcess_ValidateDataStructure |
-		aiProcess_FlipUVs);
+		aiProcess_ValidateDataStructure | aiProcess_FlipUVs);
 
 	if (pScene == nullptr)
 	{
