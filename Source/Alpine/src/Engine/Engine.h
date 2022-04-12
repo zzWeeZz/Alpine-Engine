@@ -27,6 +27,7 @@ namespace Alpine
 	private:
 		VertexShader myVertexShader;
 		PixelShader myPixelShader;
+		ComputeShader myComputeShader;
 
 		AmbientLight myAmbientLight;
 		PerspectiveCamera myCamera;

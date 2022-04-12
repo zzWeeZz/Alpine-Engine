@@ -32,13 +32,11 @@ namespace Alpine
 		};
 		myVertexShader.Initialize(L"Shaders/VertexShader.cso", layout, ARRAYSIZE(layout));
 		myPixelShader.Initialize(L"Shaders/PixelShader.cso");
-
+		myComputeShader.Initialize("Shaders/ComputeShader.cso");
 
 		DX11::GetDeviceContext()->VSSetShader(myVertexShader.GetShader(), 0, 0);
 		DX11::GetDeviceContext()->PSSetShader(myPixelShader.GetShader(), 0, 0);
-
-
-
+		
 		//D3D11_RASTERIZER_DESC wireFrameDesc = {};
 		//wireFrameDesc.FillMode = D3D11_FILL_SOLID;
 		//wireFrameDesc.CullMode = D3D11_CULL_BACK;
@@ -120,6 +118,24 @@ namespace Alpine
 		myGround.SetScale({ 200, 10, 200 });
 		myImguiLayer.OnAttach();
 		myTexture->Bind(6);
+		myCubeMap->Bind(9);
+		ID3D11UnorderedAccessView* myUAV;
+		D3D11_UNORDERED_ACCESS_VIEW_DESC uavDesc = {};
+		uavDesc.Buffer.FirstElement = 0;
+		uavDesc.Buffer.Flags = 0;
+		uavDesc.Buffer.NumElements = 6;
+		uavDesc.Format = DXGI_FORMAT_UNKNOWN;
+		uavDesc.ViewDimension = D3D11_UAV_DIMENSION_TEXTURE2DARRAY;
+		uavDesc.Texture2DArray.ArraySize = 6;
+		uavDesc.Texture2DArray.FirstArraySlice = 0;
+		uavDesc.Texture2DArray.MipSlice = 0;
+		auto hr = DX11::GetDevice()->CreateUnorderedAccessView(myTexture->GetResource().Get(), &uavDesc, &myUAV);
+		assert(hr == S_OK && "Failed to create UAV");
+		DX11::GetDeviceContext()->CSSetShader(myComputeShader.GetShader(), 0, 0);
+		DX11::GetDeviceContext()->CSSetUnorderedAccessViews(0, 1, &myUAV, 0);
+		DX11::GetDeviceContext()->Dispatch(32, 32, 1);
+
+		DX11::GetDeviceContext()->CSSetShader(0, 0, 0);
 	}
 
 	void Engine::Update(float aDeltaTime)
@@ -142,7 +158,7 @@ namespace Alpine
 		myCameraBufferObject.toProjectionSpace = myCamera.GetProjectionMatrix();
 		myCameraBuffer.SetData(&myCameraBufferObject, sizeof(CameraBuffer));
 		myCameraBuffer.Bind();
-		myCubeMap->Bind(11);
+
 
 		ImGui::BeginMainMenuBar();
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);

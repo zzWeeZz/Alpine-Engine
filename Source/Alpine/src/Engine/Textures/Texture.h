@@ -10,9 +10,11 @@ namespace Alpine
 	public:
 		Texture(const std::filesystem::path& aPath);
 		void Bind(unsigned int slot);
+		ComPtr< ID3D11Resource> GetResource();
 		static std::shared_ptr<Texture> Create(const std::filesystem::path& aPath);
 	private:
 		ComPtr<ID3D11Texture2D> myTexture;
+		ComPtr< ID3D11Resource> myResource;
 		ComPtr<ID3D11ShaderResourceView> myShaderResourceView;
 	};
 }

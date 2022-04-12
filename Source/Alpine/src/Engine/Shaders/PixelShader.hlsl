@@ -18,6 +18,7 @@ cbuffer LightBuffer : register(b2)
     {
         float4 LightColor;
         float4 LightDirection;
+        
     } DirLights[4];
     float4 ambientColor;
 };
