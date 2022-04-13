@@ -81,6 +81,9 @@
     <ClCompile Include="src\Engine\Graphics\ShaderClasses\ComputeShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Engine\RenderSystem\RenderSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Engine\Engine.h">
@@ -158,10 +161,16 @@
     <ClInclude Include="src\Engine\Graphics\ShaderClasses\Shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Engine\RenderSystem\RenderSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\RenderSystem\RenderCommands.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="src\Engine\Shaders\VertexShader.hlsl" />
     <FxCompile Include="src\Engine\Shaders\PixelShader.hlsl" />
-    <FxCompile Include="src\Engine\Shaders\ComputeShader.hlsl" />
+    <FxCompile Include="src\Engine\Shaders\IrradianceMap_cs.hlsl" />
   </ItemGroup>
 </Project>

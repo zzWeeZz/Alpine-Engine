@@ -172,5 +172,5 @@ float4 main(VS_OUTPUT pin) : SV_Target
     }
 
 	// Final fragment color.
-    return float4(directLighting + ambientLighting, 1.0);
+    return float4(directLighting + ambientLighting + albedo.xyz, 1.0);
 }

@@ -35,6 +35,7 @@ namespace Alpine
 		std::shared_ptr<Material> myGroundMaterial;
 		std::shared_ptr<Texture> myTexture;
 		std::shared_ptr<TextureCube> myCubeMap;
+		ID3D11UnorderedAccessView* myUAV;
 		Model myHeli;
 		Model mySphere;
 		Model myGround;
