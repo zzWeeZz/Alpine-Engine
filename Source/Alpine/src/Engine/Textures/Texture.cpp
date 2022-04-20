@@ -23,6 +23,11 @@ ComPtr<ID3D11Resource> Alpine::Texture::GetResource()
 	return myResource;
 }
 
+ComPtr<ID3D11ShaderResourceView> Alpine::Texture::GetShaderResourceView()
+{
+	return myShaderResourceView;
+}
+
 std::shared_ptr<Alpine::Texture> Alpine::Texture::Create(const std::filesystem::path& aPath)
 {
 	return std::make_shared<Texture>(Texture(aPath));

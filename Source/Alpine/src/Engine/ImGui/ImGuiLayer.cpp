@@ -82,7 +82,7 @@ void Alpine::ImGuiLayer::OnAttach()
 	style->Colors[ImGuiCol_TextSelectedBg] = ImVec4(0.25f, 1.00f, 0.00f, 0.43f);
 	style->Colors[ImGuiCol_ModalWindowDimBg] = ImVec4(1.00f, 0.98f, 0.95f, 0.73f);
 
-	ImGui_ImplGlfw_InitForVulkan(static_cast<GLFWwindow*>(Alpine::Application::GetWindow()->GetWindow()), true);
+	ImGui_ImplGlfw_InitForOther(static_cast<GLFWwindow*>(Alpine::Application::GetWindow()->GetWindow()), true);
 	ImGui_ImplDX11_Init(DX11::GetDevice(), DX11::GetDeviceContext());
 }
 void Alpine::ImGuiLayer::OnDetach()
@@ -97,7 +97,6 @@ void Alpine::ImGuiLayer::Begin()
 	ImGui_ImplDX11_NewFrame();
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
-	ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_None);
 }
 
 void Alpine::ImGuiLayer::RenderImGui()
@@ -120,6 +119,6 @@ void Alpine::ImGuiLayer::End()
 		ImGui::UpdatePlatformWindows();
 		ImGui::RenderPlatformWindowsDefault();
 
-		//DX11::GetDeviceContext()->OMSetRenderTargets(1, DX11::GetAdressOfRenderTargetView(), DX11::GetDepthStencilView());
+		DX11::GetDeviceContext()->OMSetRenderTargets(1, DX11::GetChainRenderView().GetAddressOf(), DX11::GetChainDepthView().Get());
 	}
 }

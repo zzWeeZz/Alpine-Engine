@@ -22,11 +22,14 @@ void Alpine::FrameBuffer::ClearDepthStencil()
 void Alpine::FrameBuffer::Bind()
 {
 	DX11::GetDeviceContext()->OMSetRenderTargets(1, &m_RenderTargetView, m_DepthStencilView);
+	DX11::GetDeviceContext()->RSSetViewports(1, &m_Viewport);
 }
 
 void Alpine::FrameBuffer::UnBind()
 {
-	DX11::GetDeviceContext()->OMSetRenderTargets(0, nullptr, nullptr);
+	ID3D11RenderTargetView* nullViews[] = { nullptr };
+	DX11::GetDeviceContext()->OMSetRenderTargets(_countof(nullViews), nullViews, nullptr);
+	DX11::GetDeviceContext()->Flush();
 }
 
 Alpine::FrameBuffer::~FrameBuffer()
@@ -45,16 +48,27 @@ std::shared_ptr<Alpine::FrameBuffer> Alpine::FrameBuffer::Create(const Framebuff
 void Alpine::FrameBuffer::Invalidate()
 {
 	ID3D11Texture2D* ptrSurface;
-	auto hr = DX11::GetSwapChain()->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&ptrSurface);
+	D3D11_TEXTURE2D_DESC desc = {};
+	desc.Width = m_Specification.width;
+	desc.Height = m_Specification.height;
+	desc.MipLevels = 1;
+	desc.ArraySize = 1;
+	desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+	desc.SampleDesc.Count = 1;
+	desc.SampleDesc.Quality = 0;
+	desc.Usage = D3D11_USAGE_DEFAULT;
+	desc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
+	desc.CPUAccessFlags = 0;
+	desc.MiscFlags = 0;
+	auto hr = DX11::GetDevice()->CreateTexture2D(&desc, nullptr, &ptrSurface);
 	assert(SUCCEEDED(hr));
-	hr = DX11::GetDevice()->CreateRenderTargetView(ptrSurface, nullptr, &m_RenderTargetView);
+	// map ptrSurface
+	m_ColorBuffer = ptrSurface;
+	hr = DX11::GetDevice()->CreateRenderTargetView(m_ColorBuffer, nullptr, &m_RenderTargetView);
 	assert(SUCCEEDED(hr));
-	ptrSurface->Release();
-	ID3D11Texture2D* ptrshaderResourceView;
-	m_RenderTargetView->GetResource((ID3D11Resource**)&ptrshaderResourceView);
+	hr = DX11::GetDevice()->CreateShaderResourceView(m_ColorBuffer, nullptr, &m_ShaderResourceView);
+	assert(SUCCEEDED(hr));
 	
-	hr = DX11::GetDevice()->CreateShaderResourceView(ptrSurface, nullptr, &m_ShaderResourceView);
-	assert(SUCCEEDED(hr));
 	D3D11_TEXTURE2D_DESC depthStencilDesc = {};
 	depthStencilDesc.Width = m_Specification.width;
 	depthStencilDesc.Height = m_Specification.height;
@@ -70,4 +84,11 @@ void Alpine::FrameBuffer::Invalidate()
 	assert(SUCCEEDED(hr));
 	hr = DX11::GetDevice()->CreateDepthStencilView(m_DepthStencilBuffer, nullptr, &m_DepthStencilView);
 	assert(SUCCEEDED(hr));
+
+	m_Viewport.Width = (float)m_Specification.width;
+	m_Viewport.Height = (float)m_Specification.height;
+	m_Viewport.MinDepth = 0.0f;
+	m_Viewport.MaxDepth = 1.0f;
+	m_Viewport.TopLeftX = 0;
+	m_Viewport.TopLeftY = 0;
 }

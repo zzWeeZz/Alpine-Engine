@@ -32,11 +32,13 @@ namespace Alpine
 	private:
 		void Invalidate();
 
+		ID3D11Texture2D* m_ColorBuffer = nullptr;
 		ID3D11RenderTargetView* m_RenderTargetView;
 		ID3D11DepthStencilView* m_DepthStencilView;
 		ID3D11Texture2D* m_DepthStencilBuffer;
 		ID3D11ShaderResourceView* m_ShaderResourceView;
-		
+		D3D11_VIEWPORT m_Viewport = {};
+
 		FramebufferSpecification m_Specification;
 	};
 }

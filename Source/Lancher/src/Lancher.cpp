@@ -42,8 +42,7 @@ int main()
 		myTimer.Update();
 		myEngine.RenderFrame();
 		/* Poll for and process events */
-		
-		//Alpine::DX11::Present(false);
+		Alpine::DX11::Present(false);
 		myEngine.Update(myTimer.GetDeltaTime());
 		
 	}

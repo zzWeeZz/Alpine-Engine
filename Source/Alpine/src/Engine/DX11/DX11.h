@@ -19,12 +19,17 @@ namespace Alpine
 
 		static ID3D11DeviceContext* GetDeviceContext();
 		static ID3D11DeviceContext** GetAdressOfDeviceContext();
+		static Microsoft::WRL::ComPtr<ID3D11RenderTargetView> GetChainRenderView();
+		static Microsoft::WRL::ComPtr<ID3D11DepthStencilView> GetChainDepthView();
+		static Microsoft::WRL::ComPtr<ID3D11Texture2D> GetChainDepthBuffer();
 
 
 		static void Initialize(int32_t width, int32_t height, bool fullscreen);
 
 		static void Resize(int width, int height);
 
+		static void ClearView();
+		static void Bind();
 		static void Present(const bool& vsync);
 
 		static void CleanUpDX11();
@@ -34,5 +39,8 @@ namespace Alpine
 		Microsoft::WRL::ComPtr<IDXGISwapChain> m_Swapchain;
 		Microsoft::WRL::ComPtr<ID3D11Device> m_Device;
 		Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_DeviceContext;
+		Microsoft::WRL::ComPtr<ID3D11RenderTargetView> m_SwapchainRenderTargetView;
+		Microsoft::WRL::ComPtr<ID3D11DepthStencilView> m_SwapchainDepthStencilView;
+		Microsoft::WRL::ComPtr<ID3D11Texture2D> m_SwapchainDepthStencilBuffer;
 	};
 }
