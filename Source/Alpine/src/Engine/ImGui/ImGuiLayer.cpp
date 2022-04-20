@@ -37,6 +37,7 @@ void Alpine::ImGuiLayer::OnAttach()
 	style->ScrollbarRounding = 9.0f;
 	style->GrabMinSize = 5.0f;
 	style->GrabRounding = 3.0f;
+	style->WindowBorderSize = 0;
 
 	style->Colors[ImGuiCol_Text] = ImVec4(0.80f, 0.80f, 0.83f, 1.00f);
 	style->Colors[ImGuiCol_TextDisabled] = ImVec4(0.24f, 0.23f, 0.29f, 1.00f);
@@ -96,10 +97,7 @@ void Alpine::ImGuiLayer::Begin()
 	ImGui_ImplDX11_NewFrame();
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
-	ImGuiViewport* viewport = ImGui::GetMainViewport();
-	ImGui::DockSpaceOverViewport(viewport, ImGuiDockNodeFlags_PassthruCentralNode);
-	ImGui::ShowDemoWindow();
-	
+	ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_None);
 }
 
 void Alpine::ImGuiLayer::RenderImGui()
@@ -122,6 +120,6 @@ void Alpine::ImGuiLayer::End()
 		ImGui::UpdatePlatformWindows();
 		ImGui::RenderPlatformWindowsDefault();
 
-		DX11::GetDeviceContext()->OMSetRenderTargets(1, DX11::GetAdressOfRenderTargetView(), DX11::GetDepthStencilView());
+		//DX11::GetDeviceContext()->OMSetRenderTargets(1, DX11::GetAdressOfRenderTargetView(), DX11::GetDepthStencilView());
 	}
 }

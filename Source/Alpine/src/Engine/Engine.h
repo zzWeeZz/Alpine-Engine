@@ -12,6 +12,7 @@ using namespace DirectX::SimpleMath;
 #include "Lights/AmbientLight.h"
 #include "imGui/ImGuiLayer.h"
 #include "Graphics/Buffers/BufferData.h"
+#include "RenderSystem/FrameBuffer.h"
 
 namespace Alpine
 {
@@ -35,6 +36,7 @@ namespace Alpine
 		std::shared_ptr<Material> myGroundMaterial;
 		std::shared_ptr<Texture> myTexture;
 		std::shared_ptr<TextureCube> myCubeMap;
+		std::shared_ptr<FrameBuffer> myFrameBuffer;
 		ID3D11UnorderedAccessView* myUAV;
 		Model myHeli;
 		Model mySphere;

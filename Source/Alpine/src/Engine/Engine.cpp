@@ -43,7 +43,11 @@ namespace Alpine
 		//wireFrameDesc.AntialiasedLineEnable = true;
 		//myDevice->CreateRasterizerState(&wireFrameDesc, &myWireFrame);
 		//myContext->RSSetState(myWireFrame);
-
+		FramebufferSpecification spec = {};
+		spec.width = Application::GetWindowSize().x;
+		spec.height = Application::GetWindowSize().y;
+		
+		myFrameBuffer = FrameBuffer::Create(spec);
 
 
 
@@ -78,8 +82,8 @@ namespace Alpine
 		auto topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
 		DX11::GetDeviceContext()->IAGetPrimitiveTopology(&topology);
 		DX11::GetDeviceContext()->RSSetState(myCCWcullMode);
-		DX11::GetDeviceContext()->OMSetRenderTargets(1, DX11::GetAdressOfRenderTargetView(), DX11::GetDepthStencilView());
-
+		myFrameBuffer->Bind();
+		
 		myCameraBuffer.Create();
 		myLightBuffer.Create();
 		myModelBuffer.Create();
@@ -134,7 +138,9 @@ namespace Alpine
 	void Engine::RenderFrame()
 	{
 		myImguiLayer.Begin();
-		DX11::ClearView();
+		myFrameBuffer->ClearView({0.4, 0,3, 1});
+		myFrameBuffer->ClearDepthStencil();
+		myFrameBuffer->Bind();
 		auto ratio = Application::GetWindow()->GetAspectRatio();
 		myCamera.SetAspectRatio(ratio);
 		myCameraBufferObject.position = Vector4(myCamera.GetPosition().x, myCamera.GetPosition().y, myCamera.GetPosition().z, 1);
@@ -142,18 +148,10 @@ namespace Alpine
 		myCameraBufferObject.toProjectionSpace = myCamera.GetProjectionMatrix();
 		myCameraBuffer.SetData(&myCameraBufferObject, sizeof(CameraBuffer));
 		myCameraBuffer.Bind();
-
-
-		ImGui::BeginMainMenuBar();
-		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-		ImGui::EndMainMenuBar();
-		ImGui::Begin("Light");
-		
 		static float dir[] = { -1, -1, -1 };
-		ImGui::SliderFloat3("Light Direction", dir, -1.f, 1.f);
+		
 		static float intensity = 5.f;
-		ImGui::SliderFloat("Light Intensity", &intensity, 1.f, 30.f);
-		ImGui::End();
+
 		myLightBufferObject.ambientColor = Vector4(myAmbientLight.GetLightColor().x, myAmbientLight.GetLightColor().y, myAmbientLight.GetLightColor().z, 1);
 		myLightBufferObject.lights[0] = { Vector4(1, 1, 1, intensity), Vector4(dir[0], dir[1], dir[2], 0)};
 
@@ -173,8 +171,20 @@ namespace Alpine
 		myGround.Draw();
 
 		myImguiLayer.RenderImGui();
-		myImguiLayer.End();
+		ImGui::Begin("ViewPort");
 		
+		ImGui::End();
+		ImGui::BeginMainMenuBar();
+		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+		ImGui::EndMainMenuBar();
+		ImGui::Begin("Light");
+
+		ImGui::SliderFloat3("Light Direction", dir, -1.f, 1.f);
+		ImGui::Image((void*)myFrameBuffer->GetColorAttachment(), { ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y });
+		ImGui::SliderFloat("Light Intensity", &intensity, 1.f, 30.f);
+		ImGui::End();
+		myImguiLayer.End();
+		myFrameBuffer->UnBind();
 	}
 
 	void Engine::CleanD3D()

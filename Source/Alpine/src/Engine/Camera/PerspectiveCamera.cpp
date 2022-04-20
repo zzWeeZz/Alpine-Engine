@@ -1,7 +1,6 @@
 #include "PerspectiveCamera.h"
 
 #include "ToolBox/Input/Input.h"
-#include "ToolBox/Math/Matrix/Matrix3x3.hpp"
 
 void PerspectiveCamera::Init(const Vector3& aPosition)
 {

@@ -170,6 +170,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Engine\RenderSystem\FrameBuffer.cpp" />
     <ClCompile Include="src\Engine\RenderSystem\RenderSystem.cpp" />
     <ClCompile Include="src\Engine\Graphics\Model\Mesh.cpp" />
     <ClCompile Include="src\Application\Application.cpp" />
@@ -194,6 +195,7 @@
     <ClCompile Include="src\Engine\Textures\TextureCube.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Engine\RenderSystem\FrameBuffer.h" />
     <ClInclude Include="src\Engine\RenderSystem\RenderCommands.h" />
     <ClInclude Include="src\Engine\RenderSystem\RenderSystem.h" />
     <ClInclude Include="src\Engine\Graphics\Buffers\BufferData.h" />
