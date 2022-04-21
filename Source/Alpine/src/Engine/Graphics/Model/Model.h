@@ -17,6 +17,9 @@ namespace Alpine
 		void Draw();
 
 		Matrix& GetTransform();
+		Vector3 GetPosition();
+		Vector3 GetRotation();
+		Vector3 GetScale();
 		void SetPosition(const Vector3& aPosition);
 		void SetRotation(const Vector3& aRotation);
 		void Rotate(const Vector3& aRotation);

@@ -13,7 +13,7 @@ namespace Alpine
 		void Create();
 		void SetData(const T* data, uint32_t size);
 
-		void Bind();
+		void Bind(bool compute = false, uint8_t slot = 0);
 	private:
 		ID3D11Buffer* myBuffer;
 		UINT myBufferSize;
@@ -37,7 +37,7 @@ namespace Alpine
 		bufferDesc.MiscFlags = 0;
 		bufferDesc.StructureByteStride = 0;
 
-		DX11::GetDevice()->CreateBuffer(&bufferDesc,NULL, &myBuffer);
+		DX11::GetDevice()->CreateBuffer(&bufferDesc, NULL, &myBuffer);
 	}
 
 	template <class T>
@@ -51,9 +51,16 @@ namespace Alpine
 	}
 
 	template<class T>
-	inline void ConstantBuffer<T>::Bind()
+	inline void ConstantBuffer<T>::Bind(bool compute, uint8_t slot)
 	{
-		DX11::GetDeviceContext()->VSSetConstantBuffers(myBindSlot, 1, &myBuffer);
-		DX11::GetDeviceContext()->PSSetConstantBuffers(myBindSlot, 1, &myBuffer);
+		if (!compute)
+		{
+			DX11::GetDeviceContext()->VSSetConstantBuffers(myBindSlot, 1, &myBuffer);
+			DX11::GetDeviceContext()->PSSetConstantBuffers(myBindSlot, 1, &myBuffer);
+		}
+		else
+		{
+			DX11::GetDeviceContext()->CSSetConstantBuffers(slot, 1, &myBuffer);
+		}
 	}
 }

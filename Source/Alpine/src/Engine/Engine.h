@@ -28,21 +28,26 @@ namespace Alpine
 	private:
 		VertexShader myVertexShader;
 		PixelShader myPixelShader;
-		ComputeShader myComputeShader;
+		ComputeShader myIrrComputeShader;
+		ComputeShader mySpecularComputeShader;
 
 		AmbientLight myAmbientLight;
 		PerspectiveCamera myCamera;
 		std::shared_ptr<Material> myMetalicMaterial;
 		std::shared_ptr<Material> myGroundMaterial;
+		
 		std::shared_ptr<Texture> myTexture;
+		
 		std::shared_ptr<TextureCube> myCubeMap;
+		std::shared_ptr<TextureCube> myIrMap;
+		std::shared_ptr<TextureCube> mySpecularMap;
 		std::shared_ptr<FrameBuffer> myFrameBuffer;
-		ID3D11UnorderedAccessView* myUAV;
 		Model myHeli;
 		Model mySphere;
 		Model myGround;
 		CameraBuffer myCameraBufferObject;
 		LightBuffer myLightBufferObject;
+		ConstantBuffer<SpectularMapFilerSettingsBuffer> mySpecBuffer;
 		ConstantBuffer<CameraBuffer> myCameraBuffer;
 		ConstantBuffer<Matrix> myModelBuffer;
 		ConstantBuffer<LightBuffer> myLightBuffer;

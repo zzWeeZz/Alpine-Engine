@@ -25,6 +25,21 @@ Matrix& Alpine::Model::GetTransform()
 	return myTransform;
 }
 
+Vector3 Alpine::Model::GetPosition()
+{
+	return myPosition;
+}
+
+Vector3 Alpine::Model::GetRotation()
+{
+	return myRotation;
+}
+
+Vector3 Alpine::Model::GetScale()
+{
+	return mySize;
+}
+
 void Alpine::Model::SetPosition(const Vector3& aPosition)
 {
 	myPosition = aPosition;

@@ -175,8 +175,9 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="src\Engine\Shaders\VertexShader.hlsl" />
-    <FxCompile Include="src\Engine\Shaders\PixelShader.hlsl" />
+    <FxCompile Include="src\Engine\Shaders\pbrShader_vs.hlsl" />
+    <FxCompile Include="src\Engine\Shaders\pbrShader_ps.hlsl" />
     <FxCompile Include="src\Engine\Shaders\IrradianceMap_cs.hlsl" />
+    <FxCompile Include="src\Engine\Shaders\SpeclularMap_cs.hlsl" />
   </ItemGroup>
 </Project>

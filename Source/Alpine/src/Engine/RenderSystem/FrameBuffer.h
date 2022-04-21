@@ -22,7 +22,7 @@ namespace Alpine
 		void ClearDepthStencil();
 		void Bind();
 		void UnBind();
-		
+		void Resize(uint32_t width, uint32_t height);
 		ID3D11ShaderResourceView* GetColorAttachment() { return m_ShaderResourceView; };
 		FramebufferSpecification& GetSpecification() { return m_Specification; };
 

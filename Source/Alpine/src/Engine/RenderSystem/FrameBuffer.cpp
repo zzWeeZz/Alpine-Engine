@@ -5,6 +5,10 @@
 
 Alpine::FrameBuffer::FrameBuffer(const FramebufferSpecification& spec) : m_Specification(spec)
 {
+	m_DepthStencilBuffer = nullptr;
+	m_DepthStencilView = nullptr;
+	m_RenderTargetView = nullptr;
+	m_ShaderResourceView = nullptr;
 	Invalidate();
 }
 
@@ -32,6 +36,13 @@ void Alpine::FrameBuffer::UnBind()
 	DX11::GetDeviceContext()->Flush();
 }
 
+void Alpine::FrameBuffer::Resize(uint32_t width, uint32_t height)
+{
+	m_Specification.width = width;
+	m_Specification.height = height;
+	Invalidate();
+}
+
 Alpine::FrameBuffer::~FrameBuffer()
 {
 	m_ShaderResourceView->Release();
@@ -47,13 +58,18 @@ std::shared_ptr<Alpine::FrameBuffer> Alpine::FrameBuffer::Create(const Framebuff
 
 void Alpine::FrameBuffer::Invalidate()
 {
+	if(m_ShaderResourceView) m_ShaderResourceView->Release();
+	if (m_DepthStencilBuffer) m_DepthStencilBuffer->Release();
+	if (m_DepthStencilView) m_DepthStencilView->Release();
+	if (m_RenderTargetView) m_RenderTargetView->Release();
+
 	ID3D11Texture2D* ptrSurface;
 	D3D11_TEXTURE2D_DESC desc = {};
 	desc.Width = m_Specification.width;
 	desc.Height = m_Specification.height;
 	desc.MipLevels = 1;
 	desc.ArraySize = 1;
-	desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+	desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 	desc.SampleDesc.Count = 1;
 	desc.SampleDesc.Quality = 0;
 	desc.Usage = D3D11_USAGE_DEFAULT;

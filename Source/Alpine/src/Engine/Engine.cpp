@@ -13,7 +13,7 @@
 
 namespace Alpine
 {
-	Engine::Engine() : myModelBuffer(1), myCameraBuffer(0), myLightBuffer(2)
+	Engine::Engine() : myModelBuffer(1), myCameraBuffer(0), myLightBuffer(2), mySpecBuffer(5)
 	{
 
 	}
@@ -30,22 +30,53 @@ namespace Alpine
 			{"BITANGENT", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 44, D3D11_INPUT_PER_VERTEX_DATA, 0},
 			{"TBASIS" , 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 56, D3D11_INPUT_PER_VERTEX_DATA, 0}
 		};
-		myVertexShader.Initialize(L"Shaders/VertexShader.cso", layout, ARRAYSIZE(layout));
-		myPixelShader.Initialize(L"Shaders/PixelShader.cso");
-		myComputeShader.Initialize("Shaders/ComputeShader.cso");
+		myVertexShader.Initialize(L"Shaders/pbrShader_vs.cso", layout, ARRAYSIZE(layout));
+		myPixelShader.Initialize(L"Shaders/pbrShader_ps.cso");
+		myIrrComputeShader.Initialize("Shaders/IrradianceMap_cs.cso");
+		mySpecularComputeShader.Initialize("Shaders/SpeclularMap_cs.cso");
 
 		DX11::GetDeviceContext()->VSSetShader(myVertexShader.GetShader(), 0, 0);
 		DX11::GetDeviceContext()->PSSetShader(myPixelShader.GetShader(), 0, 0);
-		
 	
 		FramebufferSpecification spec = {};
 		spec.width = Application::GetWindowSize().x;
 		spec.height = Application::GetWindowSize().y;
 		
 		myFrameBuffer = FrameBuffer::Create(spec);
-
-
-
+		myCubeMap = TextureCube::Create("Textures/Storforsen4");
+		ID3D11UnorderedAccessView* nullUAV[1] = { nullptr };
+		mySpecBuffer.Create();
+		mySpecularMap = TextureCube::Create(1024, 1024, DXGI_FORMAT_R16G16B16A16_FLOAT, 1);
+		DX11::GetDeviceContext()->CSSetShaderResources(0, 1, myCubeMap->GetShaderResourceView().GetAddressOf());
+		DX11::GetDeviceContext()->CSSetShader(mySpecularComputeShader.GetShader(), 0, 0);
+		const float deltaRoughness = 1.0f / std::max((float)(myCubeMap->GetLevels() - 1), 1.0f);
+		for (UINT level = 1, size = 512; level < myCubeMap->GetLevels(); ++level, size /= 2)
+		{
+			const UINT numGroups = std::max<UINT>(1, size / 32.f);
+			myCubeMap->CreateUAV(level);
+			const SpectularMapFilerSettingsBuffer al = { level * deltaRoughness };
+			mySpecBuffer.SetData(&al, sizeof(SpectularMapFilerSettingsBuffer));
+			mySpecBuffer.Bind(true, 0);
+			DX11::GetDeviceContext()->CSSetUnorderedAccessViews(0, 1, mySpecularMap->GetUnorderedAccessView().GetAddressOf(), nullptr);
+			DX11::GetDeviceContext()->Dispatch(numGroups, numGroups, 6);
+		}
+		DX11::GetDeviceContext()->CSSetUnorderedAccessViews(0, 1, nullUAV, nullptr);
+		mySpecularMap->Bind(10);
+		
+		myIrMap = TextureCube::Create(32, 32, DXGI_FORMAT_R16G16B16A16_FLOAT, 1);
+		myIrMap->CreateUAV();
+		myFrameBuffer->Resize(32, 32);
+		myFrameBuffer->Bind();
+		myCubeMap->Bind(9, true);
+		DX11::GetDeviceContext()->CSSetShaderResources(0, 1, myCubeMap->GetShaderResourceView().GetAddressOf());
+		DX11::GetDeviceContext()->CSSetUnorderedAccessViews(0, 1, myIrMap->GetUnorderedAccessView().GetAddressOf(), 0);
+		DX11::GetDeviceContext()->CSSetShader(myIrrComputeShader.GetShader(), 0, 0);
+		DX11::GetDeviceContext()->Dispatch(32, 32, 1);
+		DX11::GetDeviceContext()->CSSetUnorderedAccessViews(0, 1, nullUAV, nullptr);
+		myIrMap->Bind(11);
+		
+		
+		
 		D3D11_RASTERIZER_DESC cmDesc = {};
 		cmDesc.FillMode = D3D11_FILL_SOLID;
 		cmDesc.CullMode = D3D11_CULL_BACK;
@@ -88,7 +119,6 @@ namespace Alpine
 	{
 		myCamera.Init({ 0,50, 100 });
 		myTexture = Texture::Create("Textures/BRDF LUT.png");
-		myCubeMap = TextureCube::Create("Textures/Storforsen4");
 		myMetalicMaterial = Material::Create("Metalic");
 		myMetalicMaterial->AddTexture(Texture::Create("Textures/mesh-covered-metal1-albedo.png"));
 		myMetalicMaterial->AddTexture(Texture::Create("Textures/mesh-covered-metal1-roughness.png"));
@@ -116,8 +146,6 @@ namespace Alpine
 		myGround.SetScale({ 200, 10, 200 });
 		myImguiLayer.OnAttach();
 		myTexture->Bind(6);
-		myCubeMap->Bind(10);
-		myCubeMap->Bind(11);
 		
 	}
 
@@ -135,8 +163,9 @@ namespace Alpine
 		myFrameBuffer->Bind();
 		myImguiLayer.Begin();
 		DX11::ClearView();
-		auto ratio = Application::GetWindow()->GetAspectRatio();
-		myCamera.SetAspectRatio(ratio);
+		myFrameBuffer->ClearView({ 0.3, 0, 3, 1 });
+		myFrameBuffer->ClearDepthStencil();
+	
 		myCameraBufferObject.position = Vector4(myCamera.GetPosition().x, myCamera.GetPosition().y, myCamera.GetPosition().z, 1);
 		myCameraBufferObject.toCameraSpace = myCamera.GetViewMatrix();
 		myCameraBufferObject.toProjectionSpace = myCamera.GetProjectionMatrix();
@@ -241,14 +270,30 @@ namespace Alpine
 			
 			ImGui::EndMenuBar();
 		}
-		ImGui::Begin("ViewPort");
+		ImGui::Begin("ViewPort", &pOpen, ImGuiWindowFlags_NoCollapse);
+		if (myFrameBuffer->GetSpecification().width != ImGui::GetWindowWidth() || myFrameBuffer->GetSpecification().height != ImGui::GetWindowHeight())
+		{
+			myFrameBuffer->Resize(ImGui::GetWindowWidth(), ImGui::GetWindowHeight());
+			myCamera.SetAspectRatio(ImGui::GetWindowWidth() / ImGui::GetWindowHeight());
+		}
 		ImGui::Image(myFrameBuffer->GetColorAttachment(), { ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y });
 
 		ImGui::End();
-		ImGui::Begin("Light");
-
-		ImGui::SliderFloat3("Light Direction", dir, -1.f, 1.f);
-		ImGui::SliderFloat("Light Intensity", &intensity, 1.f, 30.f);
+		ImGui::Begin("Inspector");
+		if(ImGui::CollapsingHeader("Transfrom"))
+		{
+			static float heliPos[3] = { myHeli.GetPosition().x, myHeli.GetPosition().y, myHeli.GetPosition().z };
+			ImGui::DragFloat3("Position", heliPos);
+			myHeli.SetPosition({ heliPos[0], heliPos[1], heliPos[2] });
+			
+			static float rot[3] = { myHeli.GetRotation().x, myHeli.GetRotation().y, myHeli.GetRotation().z };
+			ImGui::DragFloat3("Rotation", rot);
+			
+			myHeli.SetRotation({ fmodf(rot[0], 360), fmodf(rot[1], 360), fmodf(rot[2], 360) });
+		}
+		ImGui::End();
+		ImGui::ShowDemoWindow();
+		ImGui::Begin("Objects");
 		ImGui::End();
 		ImGui::End();
 		myImguiLayer.End();

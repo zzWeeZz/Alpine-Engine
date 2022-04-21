@@ -20,4 +20,9 @@ namespace Alpine
 		DirectionalLightBuffer lights[4];
 		Vector4 ambientColor;
 	};
+	struct SpectularMapFilerSettingsBuffer
+	{
+		float roughness;
+		float padding[3];
+	};
 }
