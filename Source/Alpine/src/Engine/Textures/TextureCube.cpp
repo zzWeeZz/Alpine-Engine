@@ -46,7 +46,7 @@ Alpine::TextureCube::TextureCube(const std::filesystem::path& filePath)
 	texArrayDesc.SampleDesc.Count = 1;
 	texArrayDesc.SampleDesc.Quality = 0;
 	texArrayDesc.Usage = D3D11_USAGE_DEFAULT;
-	texArrayDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+	texArrayDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS;
 	texArrayDesc.CPUAccessFlags = 0;
 	texArrayDesc.MiscFlags = D3D11_RESOURCE_MISC_TEXTURECUBE;
 

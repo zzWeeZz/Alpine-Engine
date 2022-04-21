@@ -46,7 +46,7 @@ namespace Alpine
 		myCubeMap = TextureCube::Create("Textures/Storforsen4");
 		ID3D11UnorderedAccessView* nullUAV[1] = { nullptr };
 		mySpecBuffer.Create();
-		mySpecularMap = TextureCube::Create(1024, 1024, DXGI_FORMAT_R16G16B16A16_FLOAT, 1);
+		mySpecularMap = TextureCube::Create(1024, 1024, DXGI_FORMAT_R16G16B16A16_FLOAT);
 		DX11::GetDeviceContext()->CSSetShaderResources(0, 1, myCubeMap->GetShaderResourceView().GetAddressOf());
 		DX11::GetDeviceContext()->CSSetShader(mySpecularComputeShader.GetShader(), 0, 0);
 		const float deltaRoughness = 1.0f / std::max((float)(myCubeMap->GetLevels() - 1), 1.0f);
@@ -55,7 +55,7 @@ namespace Alpine
 			const UINT numGroups = std::max<UINT>(1, size / 32.f);
 			myCubeMap->CreateUAV(level);
 			const SpectularMapFilerSettingsBuffer al = { level * deltaRoughness };
-			mySpecBuffer.SetData(&al, sizeof(SpectularMapFilerSettingsBuffer));
+			DX11::GetDeviceContext()->UpdateSubresource(mySpecBuffer.GetBuffer(), 0, nullptr, &al, 0, 0);
 			mySpecBuffer.Bind(true, 0);
 			DX11::GetDeviceContext()->CSSetUnorderedAccessViews(0, 1, mySpecularMap->GetUnorderedAccessView().GetAddressOf(), nullptr);
 			DX11::GetDeviceContext()->Dispatch(numGroups, numGroups, 6);

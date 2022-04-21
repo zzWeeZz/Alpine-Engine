@@ -12,10 +12,10 @@ namespace Alpine
 		ConstantBuffer(uint32_t slot);
 		void Create();
 		void SetData(const T* data, uint32_t size);
-
+		ID3D11Buffer* GetBuffer() { return m_Buffer; }
 		void Bind(bool compute = false, uint8_t slot = 0);
 	private:
-		ID3D11Buffer* myBuffer;
+		ID3D11Buffer* m_Buffer;
 		UINT myBufferSize;
 		uint32_t myBindSlot;
 	};
@@ -37,7 +37,7 @@ namespace Alpine
 		bufferDesc.MiscFlags = 0;
 		bufferDesc.StructureByteStride = 0;
 
-		DX11::GetDevice()->CreateBuffer(&bufferDesc, NULL, &myBuffer);
+		DX11::GetDevice()->CreateBuffer(&bufferDesc, NULL, &m_Buffer);
 	}
 
 	template <class T>
@@ -45,9 +45,9 @@ namespace Alpine
 	{
 
 		D3D11_MAPPED_SUBRESOURCE subResource = {};
-		DX11::GetDeviceContext()->Map(myBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &subResource);
+		DX11::GetDeviceContext()->Map(m_Buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &subResource);
 		memcpy(subResource.pData, data, size);
-		DX11::GetDeviceContext()->Unmap(myBuffer, 0);
+		DX11::GetDeviceContext()->Unmap(m_Buffer, 0);
 	}
 
 	template<class T>
@@ -55,12 +55,12 @@ namespace Alpine
 	{
 		if (!compute)
 		{
-			DX11::GetDeviceContext()->VSSetConstantBuffers(myBindSlot, 1, &myBuffer);
-			DX11::GetDeviceContext()->PSSetConstantBuffers(myBindSlot, 1, &myBuffer);
+			DX11::GetDeviceContext()->VSSetConstantBuffers(myBindSlot, 1, &m_Buffer);
+			DX11::GetDeviceContext()->PSSetConstantBuffers(myBindSlot, 1, &m_Buffer);
 		}
 		else
 		{
-			DX11::GetDeviceContext()->CSSetConstantBuffers(slot, 1, &myBuffer);
+			DX11::GetDeviceContext()->CSSetConstantBuffers(slot, 1, &m_Buffer);
 		}
 	}
 }
