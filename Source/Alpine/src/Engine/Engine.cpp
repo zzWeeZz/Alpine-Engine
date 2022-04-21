@@ -46,14 +46,16 @@ namespace Alpine
 		myCubeMap = TextureCube::Create("Textures/Storforsen4");
 		ID3D11UnorderedAccessView* nullUAV[1] = { nullptr };
 		mySpecBuffer.Create();
-		mySpecularMap = TextureCube::Create(1024, 1024, DXGI_FORMAT_R16G16B16A16_FLOAT);
+		mySpecularMap = TextureCube::Create(1024, 1024, DXGI_FORMAT_R32G32B32A32_FLOAT);
+		myFrameBuffer->Resize(1024, 1024);
+		myFrameBuffer->Bind();
 		DX11::GetDeviceContext()->CSSetShaderResources(0, 1, myCubeMap->GetShaderResourceView().GetAddressOf());
 		DX11::GetDeviceContext()->CSSetShader(mySpecularComputeShader.GetShader(), 0, 0);
 		const float deltaRoughness = 1.0f / std::max((float)(myCubeMap->GetLevels() - 1), 1.0f);
 		for (UINT level = 1, size = 512; level < myCubeMap->GetLevels(); ++level, size /= 2)
 		{
-			const UINT numGroups = std::max<UINT>(1, size / 32.f);
-			myCubeMap->CreateUAV(level);
+			const UINT numGroups = std::max<UINT>(1, size / 32);
+			mySpecularMap->CreateUAV(level);
 			const SpectularMapFilerSettingsBuffer al = { level * deltaRoughness };
 			DX11::GetDeviceContext()->UpdateSubresource(mySpecBuffer.GetBuffer(), 0, nullptr, &al, 0, 0);
 			mySpecBuffer.Bind(true, 0);
@@ -61,9 +63,9 @@ namespace Alpine
 			DX11::GetDeviceContext()->Dispatch(numGroups, numGroups, 6);
 		}
 		DX11::GetDeviceContext()->CSSetUnorderedAccessViews(0, 1, nullUAV, nullptr);
+		myFrameBuffer->UnBind();
 		mySpecularMap->Bind(10);
-		
-		myIrMap = TextureCube::Create(32, 32, DXGI_FORMAT_R16G16B16A16_FLOAT, 1);
+		myIrMap = TextureCube::Create(32, 32, DXGI_FORMAT_R32G32B32A32_FLOAT, 1);
 		myIrMap->CreateUAV();
 		myFrameBuffer->Resize(32, 32);
 		myFrameBuffer->Bind();
@@ -71,9 +73,10 @@ namespace Alpine
 		DX11::GetDeviceContext()->CSSetShaderResources(0, 1, myCubeMap->GetShaderResourceView().GetAddressOf());
 		DX11::GetDeviceContext()->CSSetUnorderedAccessViews(0, 1, myIrMap->GetUnorderedAccessView().GetAddressOf(), 0);
 		DX11::GetDeviceContext()->CSSetShader(myIrrComputeShader.GetShader(), 0, 0);
-		DX11::GetDeviceContext()->Dispatch(32, 32, 1);
+		DX11::GetDeviceContext()->Dispatch(1, 1, 1);
 		DX11::GetDeviceContext()->CSSetUnorderedAccessViews(0, 1, nullUAV, nullptr);
 		myIrMap->Bind(11);
+		myFrameBuffer->UnBind();
 		
 		
 		
@@ -118,7 +121,7 @@ namespace Alpine
 	void Engine::InitObjects()
 	{
 		myCamera.Init({ 0,50, 100 });
-		myTexture = Texture::Create("Textures/BRDF LUT.png");
+		myTexture = Texture::Create("Textures/BRDF LUT2.png");
 		myMetalicMaterial = Material::Create("Metalic");
 		myMetalicMaterial->AddTexture(Texture::Create("Textures/mesh-covered-metal1-albedo.png"));
 		myMetalicMaterial->AddTexture(Texture::Create("Textures/mesh-covered-metal1-roughness.png"));
@@ -126,10 +129,10 @@ namespace Alpine
 		myMetalicMaterial->AddTexture(Texture::Create("Textures/mesh-covered-metal1-ao.png"));
 		myMetalicMaterial->AddTexture(Texture::Create("Textures/mesh-covered-metal1-metallic.png"));
 		myMetalicMaterial->AddTexture(Texture::Create("Textures/mesh-covered-metal1-height.png"));
-		myHeli.LoadModel("Model/helicopter.fbx", myMetalicMaterial);
-		myHeli.SetRotation({ -90, -90, 0 });
-		myHeli.SetPosition({ 0,0.f, 0 });
-		myHeli.SetScale({ 0.5f, 0.5f, 0.5f });
+		myHeli.LoadModel("Model/M_MED_Gumshoe_Export.fbx", myMetalicMaterial);
+		myHeli.SetRotation({ 0, 0, 0 });
+		myHeli.SetPosition({ 0,10.f, 0 });
+		myHeli.SetScale({ 0.1f, 0.1f, 0.1f });
 
 		myGroundMaterial = Material::Create("Ground");
 		myGroundMaterial->AddTexture(Texture::Create("Textures/wet-stones-with-sand1-albedo.png"));
@@ -138,9 +141,9 @@ namespace Alpine
 		myGroundMaterial->AddTexture(Texture::Create("Textures/wet-stones-with-sand1-ao.png"));
 		myGroundMaterial->AddTexture(Texture::Create("Textures/wet-stones-with-sand1-metallic.png"));
 		myGroundMaterial->AddTexture(Texture::Create("Textures/wet-stones-with-sand1-height.png"));
-		mySphere.LoadModel("Model/M_MED_Gumshoe_Export.fbx", myMetalicMaterial);
+		mySphere.LoadModel("Model/M_MED_Gumshoe_Export.fbx", myGroundMaterial);
 		mySphere.SetScale({ 0.1f, 0.1f, 0.1f });
-		mySphere.SetPosition({ 0, 10, 30 });
+		mySphere.SetPosition({ 30, 10, 0 });
 
 		myGround.LoadModel("Cube", myGroundMaterial);
 		myGround.SetScale({ 200, 10, 200 });
@@ -155,6 +158,7 @@ namespace Alpine
 		static float rotation = 0;
 		rotation += aDeltaTime * 100.f;
 		mySphere.SetRotation({ 0, -rotation / 2, 0 });
+		myHeli.SetRotation({ 0, -rotation / 2, 0 });
 	}
 
 
@@ -163,7 +167,7 @@ namespace Alpine
 		myFrameBuffer->Bind();
 		myImguiLayer.Begin();
 		DX11::ClearView();
-		myFrameBuffer->ClearView({ 0.3, 0, 3, 1 });
+		myFrameBuffer->ClearView({ 0.3f, 0, 3, 1 });
 		myFrameBuffer->ClearDepthStencil();
 	
 		myCameraBufferObject.position = Vector4(myCamera.GetPosition().x, myCamera.GetPosition().y, myCamera.GetPosition().z, 1);
@@ -286,7 +290,7 @@ namespace Alpine
 			ImGui::DragFloat3("Position", heliPos);
 			myHeli.SetPosition({ heliPos[0], heliPos[1], heliPos[2] });
 			
-			static float rot[3] = { myHeli.GetRotation().x, myHeli.GetRotation().y, myHeli.GetRotation().z };
+			static float rot[3];
 			ImGui::DragFloat3("Rotation", rot);
 			
 			myHeli.SetRotation({ fmodf(rot[0], 360), fmodf(rot[1], 360), fmodf(rot[2], 360) });
@@ -295,6 +299,7 @@ namespace Alpine
 		ImGui::ShowDemoWindow();
 		ImGui::Begin("Objects");
 		ImGui::End();
+		
 		ImGui::End();
 		myImguiLayer.End();
 

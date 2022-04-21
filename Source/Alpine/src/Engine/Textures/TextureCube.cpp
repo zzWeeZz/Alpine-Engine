@@ -37,7 +37,7 @@ Alpine::TextureCube::TextureCube(const std::filesystem::path& filePath)
 	D3D11_TEXTURE2D_DESC texElementDesc;
 	((ID3D11Texture2D*)m_TextureViews[0])->GetDesc(&texElementDesc);
 
-	D3D11_TEXTURE2D_DESC texArrayDesc;
+	D3D11_TEXTURE2D_DESC texArrayDesc = {};
 	texArrayDesc.Width = texElementDesc.Width;
 	texArrayDesc.Height = texElementDesc.Height;
 	texArrayDesc.MipLevels = texElementDesc.MipLevels;
@@ -79,7 +79,9 @@ Alpine::TextureCube::TextureCube(const std::filesystem::path& filePath)
 			pd3dContext->CopySubresourceRegion(m_Texture, D3D11CalcSubresource(mipLevel, x, texArrayDesc.MipLevels), 0, 0, 0, m_TextureViews[x], mipLevel, &sourceRegion);
 		}
 	}
-	m_Levels = texArrayDesc.MipLevels;
+	D3D11_TEXTURE2D_DESC desc;
+	m_Texture->GetDesc(&desc);
+	m_Levels = desc.MipLevels;
 	// Create a resource view to the texture array.
 	D3D11_SHADER_RESOURCE_VIEW_DESC viewDesc;
 	viewDesc.Format = texArrayDesc.Format;
@@ -134,7 +136,7 @@ Alpine::TextureCube::TextureCube(UINT width, UINT height, DXGI_FORMAT format, UI
 	viewDesc.Format = texElementDesc.Format;
 	viewDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURECUBE;
 	viewDesc.TextureCube.MostDetailedMip = 0;
-	viewDesc.TextureCube.MipLevels = texElementDesc.MipLevels;
+	viewDesc.TextureCube.MipLevels = -1;
 
 	if (FAILED(DX11::GetDevice()->CreateShaderResourceView(m_Texture, &viewDesc, &m_ShaderResourceView)))
 	{
@@ -146,13 +148,12 @@ Alpine::TextureCube::TextureCube(UINT width, UINT height, DXGI_FORMAT format, UI
 	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
 	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
 	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
-	samplerDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
+	samplerDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
 	samplerDesc.MinLOD = 0;
 	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
 
 	DX11::GetDevice()->CreateSamplerState(&samplerDesc, &m_TextureSamplerState);
 }
-
 
 void Alpine::TextureCube::Bind(unsigned int slot, bool forCompute)
 {

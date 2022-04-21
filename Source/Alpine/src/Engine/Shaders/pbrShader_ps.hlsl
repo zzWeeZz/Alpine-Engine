@@ -16,7 +16,7 @@ cbuffer LightBuffer : register(b2)
 {
     struct DirectionalLight
     {
-        float4 LightColor;
+        float4 radiance;
         float4 LightDirection;
         
     } DirLights[4];
@@ -35,13 +35,16 @@ TextureCube irradianceTexture : register(t11);
 
 Texture2D specularBRDF_LUT : register(t6);
 SamplerState defaultSampler : register(s0);
-SamplerState spBRDF_Sampler : register(s10);
+SamplerState spBRDF_Sampler : register(s1);
 
-
-static float PI = 3.1415926535897932384626433832795f;
-static const float3 Fdielectric = 0.04;
+static const float PI = 3.141592;
 static const float Epsilon = 0.00001;
-// GGX
+
+static const uint NumLights = 3;
+
+// Constant normal incidence Fresnel factor for all dielectrics.
+static const float3 Fdielectric = 0.04;
+
 float ndfGGX(float cosLh, float roughness)
 {
     float alpha = roughness * roughness;
@@ -75,10 +78,11 @@ float3 fresnelSchlick(float3 F0, float cosTheta)
 uint querySpecularTextureLevels()
 {
     uint width, height, levels;
-    aoTexture.GetDimensions(0, width, height, levels);
+    specularTexture.GetDimensions(0, width, height, levels);
     return levels;
 }
 
+// Pixel shader
 float4 main(VS_OUTPUT pin) : SV_Target
 {
 	// Sample input textures to get shading model params.
@@ -104,10 +108,10 @@ float4 main(VS_OUTPUT pin) : SV_Target
 
 	// Direct lighting calculation for analytical lights.
     float3 directLighting = 0.0;
-    for (uint i = 0; i < 4; ++i)
+    for (uint i = 0; i < NumLights; ++i)
     {
         float3 Li = -DirLights[i].LightDirection;
-        float3 Lradiance = DirLights[i].LightColor;
+        float3 Lradiance = DirLights[i].radiance;
 
 		// Half-vector between Li and Lo.
         float3 Lh = normalize(Li + Lo);
@@ -130,6 +134,7 @@ float4 main(VS_OUTPUT pin) : SV_Target
 
 		// Lambert diffuse BRDF.
 		// We don't scale by 1/PI for lighting & material units to be more convenient.
+		// See: https://seblagarde.wordpress.com/2012/01/08/pi-or-not-to-pi-in-game-lighting-equation/
         float3 diffuseBRDF = kd * albedo;
 
 		// Cook-Torrance specular microfacet BRDF.

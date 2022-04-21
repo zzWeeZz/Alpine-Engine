@@ -200,7 +200,7 @@ void Alpine::DX11::Bind()
 
 void Alpine::DX11::Present(const bool& vsync)
 {
-	if(vsync)
+	if (vsync)
 	{
 		m_Instance.m_Swapchain->Present(1, 0);
 	}

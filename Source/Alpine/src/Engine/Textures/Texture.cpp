@@ -14,6 +14,7 @@ Alpine::Texture::Texture(const std::filesystem::path& aPath)
 
 void Alpine::Texture::Bind(unsigned int slot)
 {
+	DX11::GetDeviceContext()->PSSetSamplers(slot, 1, mySamplerState.GetAddressOf());
 	DX11::GetDeviceContext()->PSSetShaderResources(slot, 1, myShaderResourceView.GetAddressOf());
 	DX11::GetDeviceContext()->CSSetShaderResources(slot, 1, myShaderResourceView.GetAddressOf());
 }
