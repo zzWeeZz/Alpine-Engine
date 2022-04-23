@@ -11,11 +11,11 @@ void Alpine::Mesh::SetMesh(std::string aPath)
 {
 	auto device = DX11::GetDevice();
 	auto context = DX11::GetDeviceContext();
-	//auto hr = DirectX::CreateWICTextureFromFile(device, aTexturePath.c_str(), nullptr, &myTexture);
+	//auto hr = DirectX::CreateWICTextureFromFile(device, aTexturePath.c_str(), nullptr, &m_Texture);
 	//if (FAILED(hr))
 	//{
 	//	spdlog::error("Failed to load texture: {}; Loading missing texture.", std::string(aTexturePath.begin(), aTexturePath.end()));
-	//	DirectX::CreateWICTextureFromFile(device, L"Textures/MissingTexture.png", nullptr, &myTexture);
+	//	DirectX::CreateWICTextureFromFile(device, L"Textures/MissingTexture.png", nullptr, &m_Texture);
 	//}
 	if (aPath == "Cube")
 	{

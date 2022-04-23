@@ -47,8 +47,7 @@ namespace Alpine
 		ID3D11UnorderedAccessView* nullUAV[1] = { nullptr };
 		mySpecBuffer.Create();
 		mySpecularMap = TextureCube::Create(1024, 1024, DXGI_FORMAT_R32G32B32A32_FLOAT);
-		myFrameBuffer->Resize(1024, 1024);
-		myFrameBuffer->Bind();
+		//myFrameBuffer->Bind();
 		DX11::GetDeviceContext()->CSSetShaderResources(0, 1, myCubeMap->GetShaderResourceView().GetAddressOf());
 		DX11::GetDeviceContext()->CSSetShader(mySpecularComputeShader.GetShader(), 0, 0);
 		const float deltaRoughness = 1.0f / std::max((float)(myCubeMap->GetLevels() - 1), 1.0f);
@@ -60,15 +59,15 @@ namespace Alpine
 			DX11::GetDeviceContext()->UpdateSubresource(mySpecBuffer.GetBuffer(), 0, nullptr, &al, 0, 0);
 			mySpecBuffer.Bind(true, 0);
 			DX11::GetDeviceContext()->CSSetUnorderedAccessViews(0, 1, mySpecularMap->GetUnorderedAccessView().GetAddressOf(), nullptr);
-			DX11::GetDeviceContext()->Dispatch(numGroups, numGroups, 6);
+			DX11::GetDeviceContext()->Dispatch(numGroups, numGroups, 1);
 		}
 		DX11::GetDeviceContext()->CSSetUnorderedAccessViews(0, 1, nullUAV, nullptr);
-		myFrameBuffer->UnBind();
+		//myFrameBuffer->UnBind();
 		mySpecularMap->Bind(10);
 		myIrMap = TextureCube::Create(32, 32, DXGI_FORMAT_R32G32B32A32_FLOAT, 1);
-		myIrMap->CreateUAV();
+		myIrMap->CreateUAV();/*
 		myFrameBuffer->Resize(32, 32);
-		myFrameBuffer->Bind();
+		myFrameBuffer->Bind();*/
 		myCubeMap->Bind(9, true);
 		DX11::GetDeviceContext()->CSSetShaderResources(0, 1, myCubeMap->GetShaderResourceView().GetAddressOf());
 		DX11::GetDeviceContext()->CSSetUnorderedAccessViews(0, 1, myIrMap->GetUnorderedAccessView().GetAddressOf(), 0);
@@ -76,7 +75,7 @@ namespace Alpine
 		DX11::GetDeviceContext()->Dispatch(1, 1, 1);
 		DX11::GetDeviceContext()->CSSetUnorderedAccessViews(0, 1, nullUAV, nullptr);
 		myIrMap->Bind(11);
-		myFrameBuffer->UnBind();
+		//myFrameBuffer->UnBind();
 		
 		
 		

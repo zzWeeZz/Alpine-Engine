@@ -42,6 +42,7 @@ namespace Alpine
 		std::shared_ptr<TextureCube> myIrMap;
 		std::shared_ptr<TextureCube> mySpecularMap;
 		std::shared_ptr<FrameBuffer> myFrameBuffer;
+
 		Model myHeli;
 		Model mySphere;
 		Model myGround;

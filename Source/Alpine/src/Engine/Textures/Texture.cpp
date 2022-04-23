@@ -6,27 +6,32 @@
 
 Alpine::Texture::Texture(const std::filesystem::path& aPath)
 {
-	auto hr = DirectX::CreateWICTextureFromFile(Alpine::DX11::GetDevice(),aPath.wstring().c_str(), &myResource,myShaderResourceView.GetAddressOf());
+	auto hr = DirectX::CreateWICTextureFromFile(Alpine::DX11::GetDevice(),aPath.wstring().c_str(), &m_Resource,m_ShaderResourceView.GetAddressOf());
 	assert(SUCCEEDED(hr));
-	hr = myResource->QueryInterface(__uuidof(ID3D11Texture2D), reinterpret_cast<void**>(myTexture.GetAddressOf()));
+	hr = m_Resource->QueryInterface(__uuidof(ID3D11Texture2D), reinterpret_cast<void**>(m_Texture.GetAddressOf()));
 	assert(SUCCEEDED(hr));
 }
 
-void Alpine::Texture::Bind(unsigned int slot)
+void Alpine::Texture::Bind(unsigned int slot, bool useCompute)
 {
-	DX11::GetDeviceContext()->PSSetSamplers(slot, 1, mySamplerState.GetAddressOf());
-	DX11::GetDeviceContext()->PSSetShaderResources(slot, 1, myShaderResourceView.GetAddressOf());
-	DX11::GetDeviceContext()->CSSetShaderResources(slot, 1, myShaderResourceView.GetAddressOf());
+	if (!useCompute)
+	{
+		Alpine::DX11::GetDeviceContext()->PSSetShaderResources(slot, 1, m_ShaderResourceView.GetAddressOf());
+	}
+	else
+	{
+		Alpine::DX11::GetDeviceContext()->CSSetShaderResources(slot, 1, m_ShaderResourceView.GetAddressOf());
+	}
 }
 
 ComPtr<ID3D11Resource> Alpine::Texture::GetResource()
 {
-	return myResource;
+	return m_Resource;
 }
 
 ComPtr<ID3D11ShaderResourceView> Alpine::Texture::GetShaderResourceView()
 {
-	return myShaderResourceView;
+	return m_ShaderResourceView;
 }
 
 std::shared_ptr<Alpine::Texture> Alpine::Texture::Create(const std::filesystem::path& aPath)
