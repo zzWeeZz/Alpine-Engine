@@ -55,7 +55,7 @@ namespace Alpine
 
 	void Engine::InitObjects()
 	{
-		m_Camera.Init({ 0,50, 100 });
+		m_Camera.Init({ 0,0, 0 });
 	
 		m_MetalicMaterial = Material::Create("Metalic");
 		m_MetalicMaterial->AddTexture(Texture::Create("Textures/mesh-covered-metal1-albedo.png"));
@@ -216,7 +216,6 @@ namespace Alpine
 		{
 			m_FrameBuffer->Resize(ImGui::GetWindowWidth(), ImGui::GetWindowHeight());
 			m_Camera.SetAspectRatio(ImGui::GetWindowWidth() / ImGui::GetWindowHeight());
-			m_SkyBox->GenerateSPBRDF(ImGui::GetWindowWidth(), ImGui::GetWindowHeight());
 		}
 		ImGui::Image(m_FrameBuffer->GetColorAttachment(), { ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y });
 		ImGui::End();

@@ -65,6 +65,7 @@ void PerspectiveCamera::SetAspectRatio(float ratio)
 
 Vector3& PerspectiveCamera::GetPosition()
 {
+	
 	return m_Position;
 }
 

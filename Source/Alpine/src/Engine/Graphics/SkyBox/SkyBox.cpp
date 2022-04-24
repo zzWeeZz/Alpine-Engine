@@ -47,7 +47,7 @@ void Alpine::SkyBox::ConvertToCubeMap(const std::filesystem::path& skyBoxTexture
 	DX11::Context()->CSSetShaderResources(0, 1, m_skyBoxTexture->GetShaderResourceView().GetAddressOf());
 	DX11::Context()->CSSetUnorderedAccessViews(0, 1, m_CubeMap->GetUnorderedAccessView().GetAddressOf(), 0);
 	DX11::Context()->CSSetShader(m_EquirectToCubeMapShader.GetShader(), 0, 0);
-	DX11::Context()->Dispatch(1024 / 32, 1024 / 32, 1);
+	DX11::Context()->Dispatch(1024 / 32, 1024 / 32, 6);
 	DX11::Context()->CSSetUnorderedAccessViews(0, 1, nullUAV, nullptr);
 	m_CubeMap->GenerateMipMaps();
 }
@@ -79,7 +79,7 @@ void Alpine::SkyBox::FilterEnviorment()
 		DX11::Context()->UpdateSubresource(m_SpecBuffer.GetBuffer(), 0, nullptr, &al, 0, 0);
 		m_SpecBuffer.Bind(true, 0);
 		DX11::Context()->CSSetUnorderedAccessViews(0, 1, m_SpecularMap->GetUnorderedAccessView().GetAddressOf(), nullptr);
-		DX11::Context()->Dispatch(numGroups, numGroups, 1);
+		DX11::Context()->Dispatch(numGroups, numGroups, 6);
 	}
 	DX11::Context()->CSSetUnorderedAccessViews(0, 1, nullUAV, nullptr);
 }
