@@ -3,11 +3,8 @@
 
 #include <d3d11.h>
 #include <filesystem>
-#include <wrl/client.h>
+#include "DX11/Utilities.h"
 #include <array>
-
-
-using namespace Microsoft::WRL;
 
 namespace Alpine
 {
@@ -22,8 +19,8 @@ namespace Alpine
 		ComPtr<ID3D11UnorderedAccessView> GetUnorderedAccessView() { return m_UAV; }
 		void CreateUAV(UINT levels = 0);
 		unsigned int GetLevels();
-		static std::shared_ptr<TextureCube> Create(const std::filesystem::path& filePath);
-		static std::shared_ptr<TextureCube> Create(UINT width, UINT height, DXGI_FORMAT format, UINT levels = 0);
+		static Ref<TextureCube> Create(const std::filesystem::path& filePath);
+		static Ref<TextureCube> Create(UINT width, UINT height, DXGI_FORMAT format, UINT levels = 0);
 	private:
 		unsigned int m_Levels;
 		std::array<ID3D11Resource*, 6> m_TextureViews;

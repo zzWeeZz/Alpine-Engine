@@ -4,13 +4,13 @@
 
 void PerspectiveCamera::Init(const Vector3& aPosition)
 {
-	myPosition = aPosition;
-	myProjectionMatrix = Matrix::CreatePerspectiveFieldOfView(3.14f / 2.f, 16.f / 9.f, 0.1f, 1000.f);
-	myForward = Vector3(0.f, 0.f, -1.f);
-	myRight = Vector3(-1.f, 0.f, 0.f);
-	myUp = Vector3(0.f, 1.f, 0.f);
-	myRotation = Vector3(0.f, 0.f, 0.f);
-	myMouseSensitivity = 0.001f;
+	m_Position = aPosition;
+	m_ProjectionMatrix = Matrix::CreatePerspectiveFieldOfView(3.14f / 2.f, 16.f / 9.f, 0.1f, 1000.f);
+	m_Forward = Vector3(0.f, 0.f, -1.f);
+	m_Right = Vector3(-1.f, 0.f, 0.f);
+	m_Up = Vector3(0.f, 1.f, 0.f);
+	m_Rotation = Vector3(0.f, 0.f, 0.f);
+	m_MouseSensitivity = 0.001f;
 	UpdateViewMatrix();
 }
 
@@ -21,109 +21,109 @@ void PerspectiveCamera::Update(float aDeltaTime)
 
 		if (Input::GetInstance().GetKeyDown(Keys::A))
 		{
-			myPosition -= myRight * 100 * aDeltaTime;
+			m_Position -= m_Right * 100 * aDeltaTime;
 			UpdateViewMatrix();
 		}
 		if (Input::GetInstance().GetKeyDown(Keys::D))
 		{
-			myPosition += myRight * 100 * aDeltaTime;
+			m_Position += m_Right * 100 * aDeltaTime;
 			UpdateViewMatrix();
 		}
 		if (Input::GetInstance().GetKeyDown(Keys::W))
 		{
-			myPosition += myForward * 100 * aDeltaTime;
+			m_Position += m_Forward * 100 * aDeltaTime;
 			UpdateViewMatrix();
 		}
 		if (Input::GetInstance().GetKeyDown(Keys::S))
 		{
-			myPosition -= myForward * 100 * aDeltaTime;
+			m_Position -= m_Forward * 100 * aDeltaTime;
 			UpdateViewMatrix();
 		}
 		if (Input::GetInstance().GetKeyDown(Keys::Space))
 		{
-			myPosition += myUp * 100 * aDeltaTime;
+			m_Position += m_Up * 100 * aDeltaTime;
 			UpdateViewMatrix();
 		}
 		if (Input::GetInstance().GetKeyDown(Keys::Z))
 		{
-			myPosition -= myUp * 100 * aDeltaTime;
+			m_Position -= m_Up * 100 * aDeltaTime;
 			UpdateViewMatrix();
 		}
 		CalcMouseMovement();
 	}
 	else
 	{
-		myGiveControll = false;
+		m_GiveControl = false;
 	}
 }
 
 void PerspectiveCamera::SetAspectRatio(float ratio)
 {
-	myProjectionMatrix = Matrix::CreatePerspectiveFieldOfView(3.14f / 2.f, ratio, 0.1f, 1000.f);
+	m_ProjectionMatrix = Matrix::CreatePerspectiveFieldOfView(3.14f / 2.f, ratio, 0.1f, 1000.f);
 	UpdateViewMatrix();
 }
 
 Vector3& PerspectiveCamera::GetPosition()
 {
-	return myPosition;
+	return m_Position;
 }
 
 Matrix& PerspectiveCamera::GetProjectionMatrix()
 {
-	return myProjectionMatrix;
+	return m_ProjectionMatrix;
 }
 
 Matrix& PerspectiveCamera::GetViewMatrix()
 {
-	return myViewMatrix;
+	return m_ViewMatrix;
 }
 
 void PerspectiveCamera::CalcMouseMovement()
 {
-	if(!myGiveControll)
+	if(!m_GiveControl)
 	{
-		myLastMousePosition.x = Input::GetInstance().myMousePosition.first;
-		myLastMousePosition.y = Input::GetInstance().myMousePosition.second;
-		myGiveControll = true;
+		m_LastMousePosition.x = Input::GetInstance().myMousePosition.first;
+		m_LastMousePosition.y = Input::GetInstance().myMousePosition.second;
+		m_GiveControl = true;
 	}
-	float xOffset = Input::GetInstance().myMousePosition.first - myLastMousePosition.x;
-	float yOffset = myLastMousePosition.y - Input::GetInstance().myMousePosition.second;
-	myLastMousePosition.x = Input::GetInstance().myMousePosition.first;
-	myLastMousePosition.y = Input::GetInstance().myMousePosition.second;
+	float xOffset = Input::GetInstance().myMousePosition.first - m_LastMousePosition.x;
+	float yOffset = m_LastMousePosition.y - Input::GetInstance().myMousePosition.second;
+	m_LastMousePosition.x = Input::GetInstance().myMousePosition.first;
+	m_LastMousePosition.y = Input::GetInstance().myMousePosition.second;
 
-	xOffset *= myMouseSensitivity;
-	yOffset *= myMouseSensitivity;
-	myRotation = myRotation + Vector3(yOffset, -xOffset, 0);
+	xOffset *= m_MouseSensitivity;
+	yOffset *= m_MouseSensitivity;
+	m_Rotation = m_Rotation + Vector3(yOffset, -xOffset, 0);
 
-	if (myRotation.x > 89.f)
+	if (m_Rotation.x > 89.f)
 	{
-		myRotation.x = 89.f;
+		m_Rotation.x = 89.f;
 	}
-	if (myRotation.x < -89.f)
+	if (m_Rotation.x < -89.f)
 	{
-		myRotation.x = -89.f;
+		m_Rotation.x = -89.f;
 	}
-	myRotation.z = 0;
+	m_Rotation.z = 0;
 	UpdateVectors();
 
 }
 
 void PerspectiveCamera::UpdateVectors()
 {
-	auto rotMatrix = Matrix::CreateFromYawPitchRoll(myRotation);
-	myForward = rotMatrix.Forward();
-	myForward.Normalize();
+	auto rotMatrix = Matrix::CreateFromYawPitchRoll(m_Rotation);
+	m_Forward = rotMatrix.Forward();
+	m_Forward.Normalize();
 
-	myRight = rotMatrix.Right();
-	myRight.Normalize();
+	m_Right = rotMatrix.Right();
+	m_Right.Normalize();
 
-	myUp = rotMatrix.Up();
-	myUp.Normalize();
+	m_Up = rotMatrix.Up();
+	m_Up.Normalize();
 
 	UpdateViewMatrix();
 }
 
 void PerspectiveCamera::UpdateViewMatrix()
 {
-	myViewMatrix = Matrix::CreateLookAt(myPosition, myPosition + myForward, myUp);
+	m_ViewMatrix = Matrix::CreateLookAt(m_Position, m_Position + m_Forward, m_Up);
 }

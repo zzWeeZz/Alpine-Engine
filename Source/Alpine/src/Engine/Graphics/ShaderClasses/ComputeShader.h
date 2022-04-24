@@ -12,7 +12,7 @@ namespace Alpine
 		~ComputeShader();
 
 	private:
-		Microsoft::WRL::ComPtr<ID3D11ComputeShader> m_Shader;
-		Microsoft::WRL::ComPtr<ID3D11UnorderedAccessView> m_UAV;
+		ComPtr<ID3D11ComputeShader> m_Shader;
+		ComPtr<ID3D11UnorderedAccessView> m_UAV;
 	};
 }

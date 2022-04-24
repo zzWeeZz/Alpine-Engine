@@ -1,7 +1,6 @@
 #pragma once
 #include <d3d11.h>
-#include <wrl.h>
-#include <memory>
+#include "DX11/Utilities.h"
 #include "DX11/DX11.h"
 
 namespace Alpine
@@ -16,39 +15,39 @@ namespace Alpine
 
 		VertexBuffer<T>& operator=(const VertexBuffer<T>& a);
 
-		ID3D11Buffer* Get() const { return myBuffer.Get(); }
+		ID3D11Buffer* Get() const { return m_Buffer.Get(); }
 
-		ID3D11Buffer* const* GetAddressOf() const { return myBuffer.GetAddressOf(); }
+		ID3D11Buffer* const* GetAddressOf() const { return m_Buffer.GetAddressOf(); }
 
-		UINT GetBufferSize() const { return myBufferSize; }
+		UINT GetBufferSize() const { return m_BufferSize; }
 
-		const UINT Stride() const { return *myStride.get(); }
+		const UINT Stride() const { return *m_Stride.get(); }
 
-		const UINT* StridePtr() const { return myStride.get(); }
+		const UINT* StridePtr() const { return m_Stride.get(); }
 
 		HRESULT Initialize(T* aData, UINT aVertexCount);
 
 	private:
-
-		Microsoft::WRL::ComPtr<ID3D11Buffer> myBuffer;
-		std::shared_ptr<UINT> myStride;
-		UINT myBufferSize = 0;
+		ComPtr<ID3D11Buffer> m_Buffer;
+		std::shared_ptr<UINT> m_Stride;
+		UINT m_BufferSize = 0;
 	};
 }
+
 template<class T>
 inline Alpine::VertexBuffer<T>& Alpine::VertexBuffer<T>::operator=(const VertexBuffer<T>& a)
 {
-	this->myBuffer = a.myBuffer;
-	this->myBufferSize = a.myBufferSize;
-	this->myStride = a.myStride;
+	this->m_Buffer = a.m_Buffer;
+	this->m_BufferSize = a.m_BufferSize;
+	this->m_Stride = a.m_Stride;
 	return *this;
 }
 
 template<class T>
 inline HRESULT Alpine::VertexBuffer<T>::Initialize(T* aData, UINT aVertexCount)
 {
-	myBufferSize = aVertexCount;
-	myStride = std::make_shared<UINT>(sizeof(T));
+	m_BufferSize = aVertexCount;
+	m_Stride = std::make_shared<UINT>(sizeof(T));
 
 	D3D11_BUFFER_DESC vertexBufferDesc = {};
 	vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
@@ -59,6 +58,6 @@ inline HRESULT Alpine::VertexBuffer<T>::Initialize(T* aData, UINT aVertexCount)
 	D3D11_SUBRESOURCE_DATA vertexBufferData;
 	ZeroMemory(&vertexBufferData, sizeof(vertexBufferData));
 	vertexBufferData.pSysMem = aData;
-	auto hr = DX11::GetDevice()->CreateBuffer(&vertexBufferDesc, &vertexBufferData, myBuffer.GetAddressOf());
+	auto hr = DX11::Device()->CreateBuffer(&vertexBufferDesc, &vertexBufferData, m_Buffer.GetAddressOf());
 	return hr;
 }

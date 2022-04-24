@@ -5,73 +5,73 @@
 #include "DX11/DX11.h"
 #include "ToolBox/Utility/UtilityFunctions.hpp"
 
-void Alpine::Model::LoadModel(std::string aPath, std::shared_ptr<Material> material)
+void Alpine::Model::LoadModel(std::string aPath, Ref<Material> material)
 {
-	myMaterial = material;
-	myMesh.SetMesh(aPath);
-	myPosition = DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f);
-	myRotation = DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f);
-	mySize = DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f);
+	m_Material = material;
+	m_Mesh.SetMesh(aPath);
+	m_Position = DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f);
+	m_Rotation = DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f);
+	m_Size = DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f);
 }
 
 void Alpine::Model::Draw()
 {
-	myMaterial->Bind();
-	myMesh.SubmitMesh();
+	m_Material->Bind();
+	m_Mesh.SubmitMesh();
 }
 
 Matrix& Alpine::Model::GetTransform()
 {
-	return myTransform;
+	return m_Transform;
 }
 
 Vector3 Alpine::Model::GetPosition()
 {
-	return myPosition;
+	return m_Position;
 }
 
 Vector3 Alpine::Model::GetRotation()
 {
-	return myRotation;
+	return m_Rotation;
 }
 
 Vector3 Alpine::Model::GetScale()
 {
-	return mySize;
+	return m_Size;
 }
 
 void Alpine::Model::SetPosition(const Vector3& aPosition)
 {
-	myPosition = aPosition;
+	m_Position = aPosition;
 	CalculateTransform();
 }
 
 void Alpine::Model::SetRotation(const Vector3& aRotation)
 {
-	myRotation = aRotation / 180.0f * DirectX::XM_PI;
+	m_Rotation = aRotation / 180.0f * DirectX::XM_PI;
 	CalculateTransform();
 }
 
 void Alpine::Model::Rotate(const Vector3& aRotation)
 {
 	Vector3 vec = aRotation / 180.0f * DirectX::XM_PI;
-	myRotation += vec;
+	m_Rotation += vec;
 	CalculateTransform();
 }
 
 void Alpine::Model::SetScale(const Vector3& aScale)
 {
-	mySize = aScale;
+	m_Size = aScale;
 	CalculateTransform();
 }
 
 void Alpine::Model::CalculateTransform()
 {
 	Matrix transform;
-	transform *= Matrix::CreateRotationX(myRotation.x);
-	transform *= Matrix::CreateRotationZ(myRotation.z);
-	transform *= Matrix::CreateRotationY(myRotation.y);
-	transform *= Matrix::CreateScale(mySize.x, mySize.y, mySize.z);
-	transform *= Matrix::CreateTranslation(myPosition.x, myPosition.y, myPosition.z);
-	myTransform = transform;
+	transform *= Matrix::CreateRotationX(m_Rotation.x);
+	transform *= Matrix::CreateRotationZ(m_Rotation.z);
+	transform *= Matrix::CreateRotationY(m_Rotation.y);
+	transform *= Matrix::CreateScale(m_Size.x, m_Size.y, m_Size.z);
+	transform *= Matrix::CreateTranslation(m_Position.x, m_Position.y, m_Position.z);
+	m_Transform = transform;
 }

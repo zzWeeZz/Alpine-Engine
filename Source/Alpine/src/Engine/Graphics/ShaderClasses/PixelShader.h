@@ -1,21 +1,17 @@
 #pragma once
-#include <d3d11.h>
-#include <d3dcompiler.h>
-#include <wrl.h>
-#include <string>
 #include "DX11/DX11.h"
-
+#include "Shader.h"
 namespace Alpine
 {
-	class PixelShader
+	class PixelShader : Shader
 	{
 	public:
-		bool Initialize(std::wstring aShaderPath);
+		bool Initialize(const std::filesystem::path& filePath) override;
 		ID3D11PixelShader* GetShader() const;
-		ID3D10Blob* GetBuffer() const;
+		ID3D10Blob* GetBuffer() override;
 
 	private:
-		Microsoft::WRL::ComPtr<ID3D11PixelShader> myShader;
-		Microsoft::WRL::ComPtr<ID3D10Blob> myBuffer;
+		ComPtr<ID3D11PixelShader> myShader;
+		ComPtr<ID3D10Blob> myBuffer;
 	};
 }

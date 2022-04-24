@@ -1,8 +1,6 @@
 #pragma once
-#include <d3d11.h>
-#include <d3dcompiler.h>
-#include <wrl.h>
-#include <string>
+#include "shader.h"
+#include "DX11/Utilities.h"
 #include "DX11/DX11.h"
 
 namespace Alpine
@@ -16,8 +14,8 @@ namespace Alpine
 		ID3D11InputLayout* GetInputLayout();
 
 	private:
-		Microsoft::WRL::ComPtr<ID3D11VertexShader> myShader;
-		Microsoft::WRL::ComPtr<ID3D10Blob> myBuffer;
-		Microsoft::WRL::ComPtr<ID3D11InputLayout> myInputLayout;
+		ComPtr<ID3D11VertexShader> myShader;
+		ComPtr<ID3D10Blob> myBuffer;
+		ComPtr<ID3D11InputLayout> myInputLayout;
 	};
 }

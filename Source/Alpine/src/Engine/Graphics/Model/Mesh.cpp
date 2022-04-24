@@ -6,11 +6,11 @@
 #include <spdlog/spdlog.h>
 
 #include "Materials/Material.h"
-std::vector<std::future<bool>> Alpine::Mesh::myFutures;
+std::vector<std::future<bool>> Alpine::Mesh::m_Futures;
 void Alpine::Mesh::SetMesh(std::string aPath)
 {
-	auto device = DX11::GetDevice();
-	auto context = DX11::GetDeviceContext();
+	auto device = DX11::Device();
+	auto context = DX11::Context();
 	//auto hr = DirectX::CreateWICTextureFromFile(device, aTexturePath.c_str(), nullptr, &m_Texture);
 	//if (FAILED(hr))
 	//{
@@ -36,7 +36,7 @@ void Alpine::Mesh::SetMesh(std::string aPath)
 		{
 			indices.push_back(indences[i]);
 		}
-		mySubMeshes.push_back(SubMesh(vertices, indices));
+		m_SubMeshes.push_back(SubMesh(vertices, indices));
 	}
 	else if (aPath == "Sphere")
 	{
@@ -57,11 +57,11 @@ void Alpine::Mesh::SetMesh(std::string aPath)
 		{
 			indices.push_back(indences[i]);
 		}
-		mySubMeshes.push_back(SubMesh(vertices, indices));
+		m_SubMeshes.push_back(SubMesh(vertices, indices));
 	}
 	else
 	{
-		myFutures.push_back(std::async(std::launch::async, &Mesh::LoadModel, this, aPath));
+		m_Futures.push_back(std::async(std::launch::async, &Mesh::LoadModel, this, aPath));
 	}
 
 	PrepareForRender();
@@ -69,7 +69,7 @@ void Alpine::Mesh::SetMesh(std::string aPath)
 
 void Alpine::Mesh::SubmitMesh()
 {
-	for (auto& subMesh : mySubMeshes)
+	for (auto& subMesh : m_SubMeshes)
 	{
 		subMesh.Draw();
 	}
@@ -86,7 +86,7 @@ void Alpine::Mesh::PrepareForRender()
 	samplerDesc.MinLOD = 0;
 	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
 
-	DX11::GetDevice()->CreateSamplerState(&samplerDesc, &myTextureSamplerState);
+	DX11::Device()->CreateSamplerState(&samplerDesc, &m_TextureSamplerState);
 }
 
 bool Alpine::Mesh::LoadModel(const std::string& aFilePath)
@@ -100,7 +100,8 @@ bool Alpine::Mesh::LoadModel(const std::string& aFilePath)
 		aiProcess_GenUVCoords |
 		aiProcess_OptimizeMeshes |
 		aiProcess_JoinIdenticalVertices |
-		aiProcess_ValidateDataStructure | aiProcess_FlipUVs);
+		aiProcess_ValidateDataStructure |
+		aiProcess_FlipUVs);
 
 	if (pScene == nullptr)
 	{
@@ -118,7 +119,7 @@ void Alpine::Mesh::ProcessNode(aiNode* aNode, const aiScene* aScene)
 	{
 		aiMesh* mesh = aScene->mMeshes[aNode->mMeshes[i]];
 
-		mySubMeshes.push_back(ProcessSubMesh(mesh, aScene));
+		m_SubMeshes.push_back(ProcessSubMesh(mesh, aScene));
 	}
 
 	for (int i = 0; i < aNode->mNumChildren; i++)

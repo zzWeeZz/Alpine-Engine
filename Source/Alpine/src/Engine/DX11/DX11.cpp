@@ -1,60 +1,42 @@
 #include "DX11.h"
 #include <cassert>
 #include <DirectXColors.h>
-#include <iostream>
-#include <ostream>
-
 #include "Application/Application.h"
 
 Alpine::DX11 Alpine::DX11::m_Instance;
-
 Alpine::DX11::DX11()
 {
 	m_Instance = *this;
 }
 
+
 #pragma region Getters
-IDXGISwapChain* Alpine::DX11::GetSwapChain()
+ComPtr<IDXGISwapChain>& Alpine::DX11::SwapChain()
 {
-	return m_Instance.m_Swapchain.Get();
+	return m_Instance.m_Swapchain;
 }
 
-IDXGISwapChain** Alpine::DX11::GetAdressOfSwapChain()
+ComPtr<ID3D11Device>& Alpine::DX11::Device()
 {
-	return m_Instance.m_Swapchain.GetAddressOf();
+	return m_Instance.m_Device;
 }
 
-ID3D11Device* Alpine::DX11::GetDevice()
+ComPtr<ID3D11DeviceContext>& Alpine::DX11::Context()
 {
-	return m_Instance.m_Device.Get();
+	return m_Instance.m_DeviceContext;
 }
 
-ID3D11Device** Alpine::DX11::GetAdressOfDevice()
-{
-	return m_Instance.m_Device.GetAddressOf();
-}
-
-ID3D11DeviceContext* Alpine::DX11::GetDeviceContext()
-{
-	return m_Instance.m_DeviceContext.Get();
-}
-
-ID3D11DeviceContext** Alpine::DX11::GetAdressOfDeviceContext()
-{
-	return m_Instance.m_DeviceContext.GetAddressOf();
-}
-
-Microsoft::WRL::ComPtr<ID3D11RenderTargetView> Alpine::DX11::GetChainRenderView()
+ComPtr<ID3D11RenderTargetView>& Alpine::DX11::SwapChainRenderView()
 {
 	return m_Instance.m_SwapchainRenderTargetView;
 }
 
-Microsoft::WRL::ComPtr<ID3D11DepthStencilView> Alpine::DX11::GetChainDepthView()
+ComPtr<ID3D11DepthStencilView>& Alpine::DX11::SwapChainDepthView()
 {
 	return m_Instance.m_SwapchainDepthStencilView;
 }
 
-Microsoft::WRL::ComPtr<ID3D11Texture2D> Alpine::DX11::GetChainDepthBuffer()
+ComPtr<ID3D11Texture2D>& Alpine::DX11::SwapChainDepthBuffer()
 {
 	return m_Instance.m_SwapchainDepthStencilBuffer;
 }
@@ -82,10 +64,10 @@ void Alpine::DX11::Initialize(int32_t width, int32_t height, bool fullscreen)
 		NULL,
 		D3D11_SDK_VERSION,
 		&swapChainDesc,
-		DX11::GetAdressOfSwapChain(),
-		DX11::GetAdressOfDevice(),
+		DX11::SwapChain().GetAddressOf(),
+		DX11::Device().GetAddressOf(),
 		NULL,
-		DX11::GetAdressOfDeviceContext());
+		DX11::Context().GetAddressOf());
 
 	ID3D11Texture2D* backBuffer;
 	auto hr = m_Instance.m_Swapchain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(&backBuffer));
@@ -122,7 +104,7 @@ void Alpine::DX11::Initialize(int32_t width, int32_t height, bool fullscreen)
 	viewport.Width = Application::GetWindow()->GetWidth();
 	viewport.MinDepth = 0.0f;
 	viewport.MaxDepth = 1.0f;
-	DX11::GetDeviceContext()->RSSetViewports(1, &viewport);
+	DX11::Context()->RSSetViewports(1, &viewport);
 }
 
 void Alpine::DX11::Resize(int width, int height)
@@ -215,4 +197,7 @@ void Alpine::DX11::CleanUpDX11()
 	m_Instance.m_Swapchain.Reset();
 	m_Instance.m_Device.Reset();
 	m_Instance.m_DeviceContext.Reset();
+	m_Instance.m_SwapchainRenderTargetView.Reset();
+	m_Instance.m_SwapchainDepthStencilBuffer.Reset();
+	m_Instance.m_SwapchainDepthStencilView.Reset();
 }

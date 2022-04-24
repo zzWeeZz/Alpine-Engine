@@ -21,7 +21,7 @@ namespace Alpine
 		SubMesh(const SubMesh& aMesh);
 		void Draw();
 	private:
-		VertexBuffer<Vertex> myVertexBuffer;
-		IndexBuffer myIndexBuffer;
+		VertexBuffer<Vertex> m_VertexBuffer;
+		IndexBuffer m_IndexBuffer;
 	};
 }

@@ -1,10 +1,7 @@
 #pragma once
 #include <d3d11.h>
-#include <d3dcompiler.h>
-#include <wrl.h>
-#include <string>
-#include "DX11/DX11.h"
 #include <filesystem>
+#include "DX11/Utilities.h"
 namespace Alpine
 {
 
@@ -15,6 +12,6 @@ namespace Alpine
 		virtual ID3D10Blob* GetBuffer() = 0;
 		virtual ~Shader() {}
 	protected:
-		Microsoft::WRL::ComPtr<ID3D10Blob> myBuffer;
+		ComPtr<ID3D10Blob> myBuffer;
 	};
 }

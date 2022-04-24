@@ -1,4 +1,5 @@
 #include "VertexShader.h"
+#include <d3dcompiler.h>
 
 bool Alpine::VertexShader::Initialize(std::wstring aShaderPath, D3D11_INPUT_ELEMENT_DESC* aDesc, UINT aElements)
 {
@@ -9,13 +10,13 @@ bool Alpine::VertexShader::Initialize(std::wstring aShaderPath, D3D11_INPUT_ELEM
 		return false;
 	}
 
-	hr = DX11::GetDevice()->CreateVertexShader(myBuffer.Get()->GetBufferPointer(), myBuffer.Get()->GetBufferSize(), NULL, myShader.GetAddressOf());
+	hr = DX11::Device()->CreateVertexShader(myBuffer.Get()->GetBufferPointer(), myBuffer.Get()->GetBufferSize(), NULL, myShader.GetAddressOf());
 	if (FAILED(hr))
 	{
 		return false;
 	}
 
-	hr = DX11::GetDevice()->CreateInputLayout(aDesc, aElements, myBuffer->GetBufferPointer(), myBuffer->GetBufferSize(), &myInputLayout);
+	hr = DX11::Device()->CreateInputLayout(aDesc, aElements, myBuffer->GetBufferPointer(), myBuffer->GetBufferSize(), &myInputLayout);
 
 	return true;
 }

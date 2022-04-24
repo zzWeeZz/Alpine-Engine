@@ -1,16 +1,16 @@
 #include "PixelShader.h"
 
+#include <d3dcompiler.h>
 
-
-bool Alpine::PixelShader::Initialize(std::wstring aShaderPath)
+bool Alpine::PixelShader::Initialize(const std::filesystem::path& filePath)
 {
-	auto hr = D3DReadFileToBlob(aShaderPath.c_str(), myBuffer.GetAddressOf());
+	auto hr = D3DReadFileToBlob(filePath.c_str(), myBuffer.GetAddressOf());
 	if (FAILED(hr))
 	{
 		return false;
 	}
 
-	hr = DX11::GetDevice()->CreatePixelShader(myBuffer.Get()->GetBufferPointer(), myBuffer.Get()->GetBufferSize(), NULL, myShader.GetAddressOf());
+	hr = DX11::Device()->CreatePixelShader(myBuffer.Get()->GetBufferPointer(), myBuffer.Get()->GetBufferSize(), NULL, myShader.GetAddressOf());
 	if (FAILED(hr))
 	{
 		return false;
@@ -22,7 +22,7 @@ ID3D11PixelShader* Alpine::PixelShader::GetShader() const
 	return myShader.Get();
 }
 
-ID3D10Blob* Alpine::PixelShader::GetBuffer() const
+ID3D10Blob* Alpine::PixelShader::GetBuffer()
 {
 	return myBuffer.Get();
 }

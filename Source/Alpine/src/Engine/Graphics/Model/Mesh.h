@@ -19,9 +19,9 @@ namespace Alpine
 		SubMesh ProcessSubMesh(aiMesh* aMesh, const aiScene* aScene);
 
 	private:
-		std::vector<SubMesh> mySubMeshes;
-		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> myTexture;
-		Microsoft::WRL::ComPtr< ID3D11SamplerState> myTextureSamplerState;
-		static std::vector<std::future<bool>> myFutures;
+		std::vector<SubMesh> m_SubMeshes;
+		ComPtr<ID3D11ShaderResourceView> m_Texture;
+		ComPtr<ID3D11SamplerState> m_TextureSamplerState;
+		static std::vector<std::future<bool>> m_Futures;
 	};
 }

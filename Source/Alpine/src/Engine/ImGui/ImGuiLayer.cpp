@@ -83,7 +83,7 @@ void Alpine::ImGuiLayer::OnAttach()
 	style->Colors[ImGuiCol_ModalWindowDimBg] = ImVec4(1.00f, 0.98f, 0.95f, 0.73f);
 
 	ImGui_ImplGlfw_InitForOther(static_cast<GLFWwindow*>(Alpine::Application::GetWindow()->GetWindow()), true);
-	ImGui_ImplDX11_Init(DX11::GetDevice(), DX11::GetDeviceContext());
+	ImGui_ImplDX11_Init(DX11::Device().Get(), DX11::Context().Get());
 }
 void Alpine::ImGuiLayer::OnDetach()
 {
@@ -119,6 +119,6 @@ void Alpine::ImGuiLayer::End()
 		ImGui::UpdatePlatformWindows();
 		ImGui::RenderPlatformWindowsDefault();
 
-		DX11::GetDeviceContext()->OMSetRenderTargets(1, DX11::GetChainRenderView().GetAddressOf(), DX11::GetChainDepthView().Get());
+		DX11::Context()->OMSetRenderTargets(1, DX11::SwapChainRenderView().GetAddressOf(), DX11::SwapChainDepthView().Get());
 	}
 }

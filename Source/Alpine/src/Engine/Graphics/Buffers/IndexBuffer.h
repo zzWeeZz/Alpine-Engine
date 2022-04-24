@@ -1,6 +1,6 @@
 #pragma once
 #include <d3d11.h>
-#include <wrl.h>
+#include "DX11/Utilities.h"
 #include <memory>
 
 namespace Alpine
@@ -15,7 +15,7 @@ namespace Alpine
 		UINT BufferSize() const;
 
 	private:
-		Microsoft::WRL::ComPtr<ID3D11Buffer> myIndexsBuffer;
-		UINT myBufferSize = 0;
+		ComPtr<ID3D11Buffer> m_IndexsBuffer;
+		UINT m_BufferSize = 0;
 	};
 }

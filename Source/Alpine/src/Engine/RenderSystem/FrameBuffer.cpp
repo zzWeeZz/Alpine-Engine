@@ -15,25 +15,25 @@ Alpine::FrameBuffer::FrameBuffer(const FramebufferSpecification& spec) : m_Speci
 void Alpine::FrameBuffer::ClearView(const Color& clearColor)
 {
 	float color[4] = { clearColor.R(), clearColor.G(), clearColor.B(), clearColor.A()};
-	DX11::GetDeviceContext()->ClearRenderTargetView(m_RenderTargetView, color);
+	DX11::Context()->ClearRenderTargetView(m_RenderTargetView, color);
 }
 
 void Alpine::FrameBuffer::ClearDepthStencil()
 {
-	DX11::GetDeviceContext()->ClearDepthStencilView(m_DepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+	DX11::Context()->ClearDepthStencilView(m_DepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 }
 
 void Alpine::FrameBuffer::Bind()
 {
-	DX11::GetDeviceContext()->OMSetRenderTargets(1, &m_RenderTargetView, m_DepthStencilView);
-	DX11::GetDeviceContext()->RSSetViewports(1, &m_Viewport);
+	DX11::Context()->OMSetRenderTargets(1, &m_RenderTargetView, m_DepthStencilView);
+	DX11::Context()->RSSetViewports(1, &m_Viewport);
 }
 
 void Alpine::FrameBuffer::UnBind()
 {
 	ID3D11RenderTargetView* nullViews[] = { nullptr };
-	DX11::GetDeviceContext()->OMSetRenderTargets(_countof(nullViews), nullViews, nullptr);
-	DX11::GetDeviceContext()->Flush();
+	DX11::Context()->OMSetRenderTargets(_countof(nullViews), nullViews, nullptr);
+	DX11::Context()->Flush();
 }
 
 void Alpine::FrameBuffer::Resize(uint32_t width, uint32_t height)
@@ -51,7 +51,7 @@ Alpine::FrameBuffer::~FrameBuffer()
 	m_RenderTargetView->Release();
 }
 
-std::shared_ptr<Alpine::FrameBuffer> Alpine::FrameBuffer::Create(const FramebufferSpecification& specs)
+Alpine::Ref<Alpine::FrameBuffer> Alpine::FrameBuffer::Create(const FramebufferSpecification& specs)
 {
 	return std::make_shared<FrameBuffer>(specs);
 }
@@ -76,13 +76,13 @@ void Alpine::FrameBuffer::Invalidate()
 	desc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
 	desc.CPUAccessFlags = 0;
 	desc.MiscFlags = 0;
-	auto hr = DX11::GetDevice()->CreateTexture2D(&desc, nullptr, &ptrSurface);
+	auto hr = DX11::Device()->CreateTexture2D(&desc, nullptr, &ptrSurface);
 	assert(SUCCEEDED(hr));
 	// map ptrSurface
 	m_ColorBuffer = ptrSurface;
-	hr = DX11::GetDevice()->CreateRenderTargetView(m_ColorBuffer, nullptr, &m_RenderTargetView);
+	hr = DX11::Device()->CreateRenderTargetView(m_ColorBuffer, nullptr, &m_RenderTargetView);
 	assert(SUCCEEDED(hr));
-	hr = DX11::GetDevice()->CreateShaderResourceView(m_ColorBuffer, nullptr, &m_ShaderResourceView);
+	hr = DX11::Device()->CreateShaderResourceView(m_ColorBuffer, nullptr, &m_ShaderResourceView);
 	assert(SUCCEEDED(hr));
 	
 	D3D11_TEXTURE2D_DESC depthStencilDesc = {};
@@ -96,9 +96,9 @@ void Alpine::FrameBuffer::Invalidate()
 	depthStencilDesc.Usage = D3D11_USAGE_DEFAULT;
 	depthStencilDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
 	depthStencilDesc.MiscFlags = 0;
-	hr = DX11::GetDevice()->CreateTexture2D(&depthStencilDesc, nullptr, &m_DepthStencilBuffer);
+	hr = DX11::Device()->CreateTexture2D(&depthStencilDesc, nullptr, &m_DepthStencilBuffer);
 	assert(SUCCEEDED(hr));
-	hr = DX11::GetDevice()->CreateDepthStencilView(m_DepthStencilBuffer, nullptr, &m_DepthStencilView);
+	hr = DX11::Device()->CreateDepthStencilView(m_DepthStencilBuffer, nullptr, &m_DepthStencilView);
 	assert(SUCCEEDED(hr));
 
 	m_Viewport.Width = (float)m_Specification.width;

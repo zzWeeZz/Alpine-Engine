@@ -2,18 +2,16 @@
 #include "SubMesh.h"
 
 #include <string>
-#include <DirectXTK/SimpleMath.h>
 #include "Mesh.h"
 #include "Materials/Material.h"
-
-using namespace DirectX::SimpleMath;
+#include "DX11/Utilities.h"
 
 namespace Alpine
 {
 	class Model
 	{
 	public:
-		void LoadModel(std::string aPath, std::shared_ptr<Material> material);
+		void LoadModel(std::string aPath, Ref<Material> material);
 		void Draw();
 
 		Matrix& GetTransform();
@@ -28,13 +26,13 @@ namespace Alpine
 	private:
 		void CalculateTransform();
 
-		Vector3 myPosition;
-		Vector3 myRotation;
-		Vector3 mySize;
+		Vector3 m_Position;
+		Vector3 m_Rotation;
+		Vector3 m_Size;
 
-		std::shared_ptr<Material> myMaterial;
+		Ref<Material> m_Material;
 
-		Mesh myMesh;
-		Matrix myTransform;
+		Mesh m_Mesh;
+		Matrix m_Transform;
 	};
 }

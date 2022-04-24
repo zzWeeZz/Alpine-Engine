@@ -3,7 +3,7 @@
 
 HRESULT Alpine::IndexBuffer::Initalize(DWORD* aData, UINT aNumberOfIndices)
 {
-	myBufferSize = aNumberOfIndices;
+	m_BufferSize = aNumberOfIndices;
 
 	D3D11_BUFFER_DESC indexBufferDesc = {};
 	indexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
@@ -14,21 +14,21 @@ HRESULT Alpine::IndexBuffer::Initalize(DWORD* aData, UINT aNumberOfIndices)
 
 	D3D11_SUBRESOURCE_DATA iinitData = {};
 	iinitData.pSysMem = aData;
-	auto hr = DX11::GetDevice()->CreateBuffer(&indexBufferDesc, &iinitData, &myIndexsBuffer);
+	auto hr = DX11::Device()->CreateBuffer(&indexBufferDesc, &iinitData, &m_IndexsBuffer);
 	return hr;
 }
 
 ID3D11Buffer* Alpine::IndexBuffer::Get() const
 {
-	return myIndexsBuffer.Get();
+	return m_IndexsBuffer.Get();
 }
 
 ID3D11Buffer* const* Alpine::IndexBuffer::GetAddressOf() const
 {
-	return myIndexsBuffer.GetAddressOf();
+	return m_IndexsBuffer.GetAddressOf();
 }
 
 UINT Alpine::IndexBuffer::BufferSize() const
 {
-	return myBufferSize;
+	return m_BufferSize;
 }

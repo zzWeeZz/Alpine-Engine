@@ -173,11 +173,15 @@
     <ClInclude Include="src\Engine\RenderSystem\FrameBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Engine\DX11\Utilities.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="src\Engine\Shaders\pbrShader_vs.hlsl" />
     <FxCompile Include="src\Engine\Shaders\pbrShader_ps.hlsl" />
     <FxCompile Include="src\Engine\Shaders\IrradianceMap_cs.hlsl" />
     <FxCompile Include="src\Engine\Shaders\SpeclularMap_cs.hlsl" />
+    <FxCompile Include="src\Engine\Shaders\spdrdfGenerator_cs.hlsl" />
   </ItemGroup>
 </Project>

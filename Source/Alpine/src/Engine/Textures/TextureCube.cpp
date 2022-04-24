@@ -5,33 +5,31 @@
 #include <DirectXTK/WICTextureLoader.h>
 #include <spdlog/spdlog.h>
 #include <DirectXTK/SimpleMath.h>
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
 Alpine::TextureCube::TextureCube(const std::filesystem::path& filePath)
 {
 	std::wstring path = filePath.wstring().c_str();
 	path += L"/negz.jpg";
-	auto hr = DirectX::CreateWICTextureFromFile(Alpine::DX11::GetDevice(), path.c_str(), &m_TextureViews[0], m_ShaderResourceView.GetAddressOf());
+	auto hr = DirectX::CreateWICTextureFromFile(Alpine::DX11::Device().Get(), path.c_str(), &m_TextureViews[0], m_ShaderResourceView.GetAddressOf());
 	assert(SUCCEEDED(hr));
 	path = filePath.wstring().c_str();
 	path += L"/posz.jpg";
-	hr = DirectX::CreateWICTextureFromFile(Alpine::DX11::GetDevice(), path.c_str(), &m_TextureViews[1], m_ShaderResourceView.GetAddressOf());
+	hr = DirectX::CreateWICTextureFromFile(Alpine::DX11::Device().Get(), path.c_str(), &m_TextureViews[1], m_ShaderResourceView.GetAddressOf());
 	assert(SUCCEEDED(hr));
 	path = filePath.wstring().c_str();
 	path += L"/posy.jpg";
-	hr = DirectX::CreateWICTextureFromFile(Alpine::DX11::GetDevice(), path.c_str(), &m_TextureViews[2], m_ShaderResourceView.GetAddressOf());
+	hr = DirectX::CreateWICTextureFromFile(Alpine::DX11::Device().Get(), path.c_str(), &m_TextureViews[2], m_ShaderResourceView.GetAddressOf());
 	assert(SUCCEEDED(hr));
 	path = filePath.wstring().c_str();
 	path += L"/negy.jpg";
-	hr = DirectX::CreateWICTextureFromFile(Alpine::DX11::GetDevice(), path.c_str(), &m_TextureViews[3], m_ShaderResourceView.GetAddressOf());
+	hr = DirectX::CreateWICTextureFromFile(Alpine::DX11::Device().Get(), path.c_str(), &m_TextureViews[3], m_ShaderResourceView.GetAddressOf());
 	assert(SUCCEEDED(hr));
 	path = filePath.wstring().c_str();
 	path += L"/posx.jpg";
-	hr = DirectX::CreateWICTextureFromFile(Alpine::DX11::GetDevice(), path.c_str(), &m_TextureViews[4], m_ShaderResourceView.GetAddressOf());
+	hr = DirectX::CreateWICTextureFromFile(Alpine::DX11::Device().Get(), path.c_str(), &m_TextureViews[4], m_ShaderResourceView.GetAddressOf());
 	assert(SUCCEEDED(hr));
 	path = filePath.wstring().c_str();
 	path += L"/negx.jpg";
-	hr = DirectX::CreateWICTextureFromFile(Alpine::DX11::GetDevice(), path.c_str(), &m_TextureViews[5], m_ShaderResourceView.GetAddressOf());
+	hr = DirectX::CreateWICTextureFromFile(Alpine::DX11::Device().Get(), path.c_str(), &m_TextureViews[5], m_ShaderResourceView.GetAddressOf());
 	assert(SUCCEEDED(hr));
 
 	D3D11_TEXTURE2D_DESC texElementDesc;
@@ -50,14 +48,14 @@ Alpine::TextureCube::TextureCube(const std::filesystem::path& filePath)
 	texArrayDesc.CPUAccessFlags = 0;
 	texArrayDesc.MiscFlags = D3D11_RESOURCE_MISC_TEXTURECUBE;
 
-	if (FAILED(DX11::GetDevice()->CreateTexture2D(&texArrayDesc, 0, &m_Texture)))
+	if (FAILED(DX11::Device()->CreateTexture2D(&texArrayDesc, 0, &m_Texture)))
 	{
 		spdlog::error("Failed to create texture array");
 		return;
 	}
 	// Copy individual texture elements into texture array.
 	ID3D11DeviceContext* pd3dContext;
-	DX11::GetDevice()->GetImmediateContext(&pd3dContext);
+	DX11::Device()->GetImmediateContext(&pd3dContext);
 	D3D11_BOX sourceRegion;
 
 	//Here i copy the mip map levels of the textures
@@ -89,7 +87,7 @@ Alpine::TextureCube::TextureCube(const std::filesystem::path& filePath)
 	viewDesc.TextureCube.MostDetailedMip = 0;
 	viewDesc.TextureCube.MipLevels = texArrayDesc.MipLevels;
 
-	if (FAILED(DX11::GetDevice()->CreateShaderResourceView(m_Texture, &viewDesc, &m_ShaderResourceView)))
+	if (FAILED(DX11::Device()->CreateShaderResourceView(m_Texture, &viewDesc, &m_ShaderResourceView)))
 	{
 		spdlog::error("Failed to create shader resource view");
 		return;
@@ -103,7 +101,7 @@ Alpine::TextureCube::TextureCube(const std::filesystem::path& filePath)
 	samplerDesc.MinLOD = 0;
 	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
 
-	DX11::GetDevice()->CreateSamplerState(&samplerDesc, &m_TextureSamplerState);
+	DX11::Device()->CreateSamplerState(&samplerDesc, &m_TextureSamplerState);
 }
 
 Alpine::TextureCube::TextureCube(UINT width, UINT height, DXGI_FORMAT format, UINT levels)
@@ -126,7 +124,7 @@ Alpine::TextureCube::TextureCube(UINT width, UINT height, DXGI_FORMAT format, UI
 		texElementDesc.MiscFlags |= D3D11_RESOURCE_MISC_GENERATE_MIPS;
 	}
 	m_Levels = levels;
-	if (FAILED(DX11::GetDevice()->CreateTexture2D(&texElementDesc, 0, &m_Texture)))
+	if (FAILED(DX11::Device()->CreateTexture2D(&texElementDesc, 0, &m_Texture)))
 	{
 		spdlog::error("Failed to create texture array");
 		return;
@@ -138,7 +136,7 @@ Alpine::TextureCube::TextureCube(UINT width, UINT height, DXGI_FORMAT format, UI
 	viewDesc.TextureCube.MostDetailedMip = 0;
 	viewDesc.TextureCube.MipLevels = -1;
 
-	if (FAILED(DX11::GetDevice()->CreateShaderResourceView(m_Texture, &viewDesc, &m_ShaderResourceView)))
+	if (FAILED(DX11::Device()->CreateShaderResourceView(m_Texture, &viewDesc, &m_ShaderResourceView)))
 	{
 		spdlog::error("Failed to create shader resource view");
 		return;
@@ -152,20 +150,20 @@ Alpine::TextureCube::TextureCube(UINT width, UINT height, DXGI_FORMAT format, UI
 	samplerDesc.MinLOD = 0;
 	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
 
-	DX11::GetDevice()->CreateSamplerState(&samplerDesc, &m_TextureSamplerState);
+	DX11::Device()->CreateSamplerState(&samplerDesc, &m_TextureSamplerState);
 }
 
 void Alpine::TextureCube::Bind(unsigned int slot, bool forCompute)
 {
 	if (!forCompute)
 	{
-		DX11::GetDeviceContext()->PSSetSamplers(slot, 1, &m_TextureSamplerState);
-		DX11::GetDeviceContext()->PSSetShaderResources(slot, 1, m_ShaderResourceView.GetAddressOf());
+		DX11::Context()->PSSetSamplers(slot, 1, &m_TextureSamplerState);
+		DX11::Context()->PSSetShaderResources(slot, 1, m_ShaderResourceView.GetAddressOf());
 	}
 	else
 	{
-		DX11::GetDeviceContext()->CSSetSamplers(slot, 1, &m_TextureSamplerState);
-		DX11::GetDeviceContext()->CSSetShaderResources(slot, 1, m_ShaderResourceView.GetAddressOf());
+		DX11::Context()->CSSetSamplers(slot, 1, &m_TextureSamplerState);
+		DX11::Context()->CSSetShaderResources(slot, 1, m_ShaderResourceView.GetAddressOf());
 	}
 }
 
@@ -186,7 +184,7 @@ void Alpine::TextureCube::CreateUAV(UINT levels)
 	uavDesc.Texture2DArray.FirstArraySlice = 0;
 	uavDesc.Texture2DArray.ArraySize = desc.ArraySize;
 
-	auto hr = DX11::GetDevice()->CreateUnorderedAccessView(m_Texture, &uavDesc, &m_UAV);
+	auto hr = DX11::Device()->CreateUnorderedAccessView(m_Texture, &uavDesc, &m_UAV);
 	assert(SUCCEEDED(hr));
 }
 

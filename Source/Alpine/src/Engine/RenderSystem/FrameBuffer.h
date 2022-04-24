@@ -1,8 +1,6 @@
 #pragma once
-#include "DirectXTK/SimpleMath.h"
+#include "DX11/Utilities.h"
 #include <d3d11.h>
-
-using namespace DirectX::SimpleMath;
 namespace Alpine
 {
 	struct FramebufferSpecification
@@ -28,7 +26,7 @@ namespace Alpine
 
 		~FrameBuffer();
 		
-		static std::shared_ptr<FrameBuffer> Create(const FramebufferSpecification& specs);
+		static Ref<FrameBuffer> Create(const FramebufferSpecification& specs);
 	private:
 		void Invalidate();
 
