@@ -17,8 +17,9 @@ namespace Alpine
 
 		static DirectX::SimpleMath::Vector2 GetWindowSize();
 	private:
-		static Application myInstance;
 		static void ResizeCallBack(GLFWwindow* window, int width, int height);
-		GlfwWindow myWindow;
+
+		static Application s_Instance;
+		GlfwWindow m_Window;
 	};
 }

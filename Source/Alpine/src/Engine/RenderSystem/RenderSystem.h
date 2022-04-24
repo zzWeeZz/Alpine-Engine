@@ -13,7 +13,7 @@ namespace Alpine
 		static void End();
 		static void Shutdown();
 	private:
-		static RenderSystem* myInstance;
+		static RenderSystem myInstance;
 	};
 }
 

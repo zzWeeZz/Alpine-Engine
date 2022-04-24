@@ -1,9 +1,9 @@
 #include "RenderSystem.h"
 
-Alpine::RenderSystem* Alpine::RenderSystem::myInstance;
+Alpine::RenderSystem Alpine::RenderSystem::myInstance;
 Alpine::RenderSystem::RenderSystem()
 {
-	myInstance = this;
+	myInstance = *this;
 }
 
 

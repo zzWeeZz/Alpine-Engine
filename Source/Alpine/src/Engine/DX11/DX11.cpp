@@ -3,42 +3,47 @@
 #include <DirectXColors.h>
 #include "Application/Application.h"
 
-Alpine::DX11 Alpine::DX11::m_Instance;
+Alpine::DX11 Alpine::DX11::s_Instance;
 Alpine::DX11::DX11()
 {
-	m_Instance = *this;
+	s_Instance = *this;
 }
 
 
 #pragma region Getters
 ComPtr<IDXGISwapChain>& Alpine::DX11::SwapChain()
 {
-	return m_Instance.m_Swapchain;
+	return s_Instance.m_Swapchain;
 }
 
 ComPtr<ID3D11Device>& Alpine::DX11::Device()
 {
-	return m_Instance.m_Device;
+	return s_Instance.m_Device;
 }
 
 ComPtr<ID3D11DeviceContext>& Alpine::DX11::Context()
 {
-	return m_Instance.m_DeviceContext;
+	return s_Instance.m_DeviceContext;
 }
 
 ComPtr<ID3D11RenderTargetView>& Alpine::DX11::SwapChainRenderView()
 {
-	return m_Instance.m_SwapchainRenderTargetView;
+	return s_Instance.m_SwapchainRenderTargetView;
 }
 
 ComPtr<ID3D11DepthStencilView>& Alpine::DX11::SwapChainDepthView()
 {
-	return m_Instance.m_SwapchainDepthStencilView;
+	return s_Instance.m_SwapchainDepthStencilView;
 }
 
 ComPtr<ID3D11Texture2D>& Alpine::DX11::SwapChainDepthBuffer()
 {
-	return m_Instance.m_SwapchainDepthStencilBuffer;
+	return s_Instance.m_SwapchainDepthStencilBuffer;
+}
+
+Alpine::RenderStateManager& Alpine::DX11::GetRenderStateManager()
+{
+	return s_Instance.m_RenderStateManager;
 }
 #pragma endregion
 
@@ -70,9 +75,9 @@ void Alpine::DX11::Initialize(int32_t width, int32_t height, bool fullscreen)
 		DX11::Context().GetAddressOf());
 
 	ID3D11Texture2D* backBuffer;
-	auto hr = m_Instance.m_Swapchain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(&backBuffer));
+	auto hr = s_Instance.m_Swapchain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(&backBuffer));
 	assert(SUCCEEDED(hr));
-	hr = m_Instance.m_Device->CreateRenderTargetView(backBuffer, NULL, &m_Instance.m_SwapchainRenderTargetView);
+	hr = s_Instance.m_Device->CreateRenderTargetView(backBuffer, NULL, &s_Instance.m_SwapchainRenderTargetView);
 	assert(SUCCEEDED(hr));
 	backBuffer->Release();
 	backBuffer = nullptr;
@@ -89,12 +94,12 @@ void Alpine::DX11::Initialize(int32_t width, int32_t height, bool fullscreen)
 	depthStencilDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
 	depthStencilDesc.MiscFlags = 0;
 
-	hr = m_Instance.m_Device->CreateTexture2D(&depthStencilDesc, NULL, &m_Instance.m_SwapchainDepthStencilBuffer);
+	hr = s_Instance.m_Device->CreateTexture2D(&depthStencilDesc, NULL, &s_Instance.m_SwapchainDepthStencilBuffer);
 	assert(SUCCEEDED(hr));
-	hr = m_Instance.m_Device->CreateDepthStencilView(m_Instance.m_SwapchainDepthStencilBuffer.Get(), NULL, &m_Instance.m_SwapchainDepthStencilView);
+	hr = s_Instance.m_Device->CreateDepthStencilView(s_Instance.m_SwapchainDepthStencilBuffer.Get(), NULL, &s_Instance.m_SwapchainDepthStencilView);
 	assert(SUCCEEDED(hr));
 
-	m_Instance.m_DeviceContext->OMSetRenderTargets(1, m_Instance.m_SwapchainRenderTargetView.GetAddressOf(), m_Instance.m_SwapchainDepthStencilView.Get());
+	s_Instance.m_DeviceContext->OMSetRenderTargets(1, s_Instance.m_SwapchainRenderTargetView.GetAddressOf(), s_Instance.m_SwapchainDepthStencilView.Get());
 
 	D3D11_VIEWPORT viewport;
 	ZeroMemory(&viewport, sizeof(D3D11_VIEWPORT));
@@ -105,6 +110,8 @@ void Alpine::DX11::Initialize(int32_t width, int32_t height, bool fullscreen)
 	viewport.MinDepth = 0.0f;
 	viewport.MaxDepth = 1.0f;
 	DX11::Context()->RSSetViewports(1, &viewport);
+	s_Instance.m_RenderStateManager.Initialize();
+	s_Instance.m_RenderStateManager.SetRasterizerState(CullMode::Back);
 }
 
 void Alpine::DX11::Resize(int width, int height)
@@ -114,26 +121,26 @@ void Alpine::DX11::Resize(int width, int height)
 		return;
 	}
 
-	assert(m_Instance.m_DeviceContext);
-	assert(m_Instance.m_Device);
-	assert(m_Instance.m_Swapchain);
+	assert(s_Instance.m_DeviceContext);
+	assert(s_Instance.m_Device);
+	assert(s_Instance.m_Swapchain);
 
-	m_Instance.m_SwapchainDepthStencilBuffer.Reset();
-	m_Instance.m_SwapchainDepthStencilView.Reset();
-	m_Instance.m_SwapchainRenderTargetView.Reset();
+	s_Instance.m_SwapchainDepthStencilBuffer.Reset();
+	s_Instance.m_SwapchainDepthStencilView.Reset();
+	s_Instance.m_SwapchainRenderTargetView.Reset();
 
 	ID3D11RenderTargetView* nullViews[] = { nullptr, nullptr };
-	m_Instance.m_DeviceContext->OMSetRenderTargets(_countof(nullViews), nullViews, nullptr);
-	m_Instance.m_DeviceContext->Flush();
+	s_Instance.m_DeviceContext->OMSetRenderTargets(_countof(nullViews), nullViews, nullptr);
+	s_Instance.m_DeviceContext->Flush();
 	//Resize swap chain
-	auto hr = m_Instance.m_Swapchain->ResizeBuffers(1, width, height, DXGI_FORMAT_UNKNOWN, 0);
+	auto hr = s_Instance.m_Swapchain->ResizeBuffers(1, width, height, DXGI_FORMAT_UNKNOWN, 0);
 	assert(SUCCEEDED(hr));
 	
 	////Create new views
 	ID3D11Texture2D* backBuffer;
-	hr = m_Instance.m_Swapchain->GetBuffer(0, __uuidof(ID3D11Texture2D),reinterpret_cast<void**>(&backBuffer));
+	hr = s_Instance.m_Swapchain->GetBuffer(0, __uuidof(ID3D11Texture2D),reinterpret_cast<void**>(&backBuffer));
 	assert(SUCCEEDED(hr));
-	hr = m_Instance.m_Device->CreateRenderTargetView(backBuffer, 0, &m_Instance.m_SwapchainRenderTargetView);
+	hr = s_Instance.m_Device->CreateRenderTargetView(backBuffer, 0, &s_Instance.m_SwapchainRenderTargetView);
 	assert(SUCCEEDED(hr));
 	backBuffer->Release();
 	//Create depth stencil buffer
@@ -150,11 +157,11 @@ void Alpine::DX11::Resize(int width, int height)
 	depthStencilDesc.MiscFlags = 0;
 
 
-	hr = m_Instance.m_Device->CreateTexture2D(&depthStencilDesc, 0, m_Instance.m_SwapchainDepthStencilBuffer.GetAddressOf());
+	hr = s_Instance.m_Device->CreateTexture2D(&depthStencilDesc, 0, s_Instance.m_SwapchainDepthStencilBuffer.GetAddressOf());
 	assert(SUCCEEDED(hr));
-	hr = m_Instance.m_Device->CreateDepthStencilView(m_Instance.m_SwapchainDepthStencilBuffer.Get(), 0, m_Instance.m_SwapchainDepthStencilView.GetAddressOf());
+	hr = s_Instance.m_Device->CreateDepthStencilView(s_Instance.m_SwapchainDepthStencilBuffer.Get(), 0, s_Instance.m_SwapchainDepthStencilView.GetAddressOf());
 	assert(SUCCEEDED(hr));
-	m_Instance.m_DeviceContext->OMSetRenderTargets(1, m_Instance.m_SwapchainRenderTargetView.GetAddressOf(), m_Instance.m_SwapchainDepthStencilView.Get());
+	s_Instance.m_DeviceContext->OMSetRenderTargets(1, s_Instance.m_SwapchainRenderTargetView.GetAddressOf(), s_Instance.m_SwapchainDepthStencilView.Get());
 	//Bind to output merger
 
 	//Set viewport
@@ -166,38 +173,38 @@ void Alpine::DX11::Resize(int width, int height)
 	viewportDesc.MinDepth = 0.f;
 	viewportDesc.MaxDepth = 1.f;
 
-	m_Instance.m_DeviceContext->RSSetViewports(1, &viewportDesc);
+	s_Instance.m_DeviceContext->RSSetViewports(1, &viewportDesc);
 }
 
 void Alpine::DX11::ClearView()
 {
-	m_Instance.m_DeviceContext->ClearRenderTargetView(m_Instance.m_SwapchainRenderTargetView.Get(), DirectX::Colors::Cyan);
-	m_Instance.m_DeviceContext->ClearDepthStencilView(m_Instance.m_SwapchainDepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+	s_Instance.m_DeviceContext->ClearRenderTargetView(s_Instance.m_SwapchainRenderTargetView.Get(), DirectX::Colors::Cyan);
+	s_Instance.m_DeviceContext->ClearDepthStencilView(s_Instance.m_SwapchainDepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 }
 
 void Alpine::DX11::Bind()
 {
-	m_Instance.m_DeviceContext->OMSetRenderTargets(1, m_Instance.m_SwapchainRenderTargetView.GetAddressOf(), m_Instance.m_SwapchainDepthStencilView.Get());
+	s_Instance.m_DeviceContext->OMSetRenderTargets(1, s_Instance.m_SwapchainRenderTargetView.GetAddressOf(), s_Instance.m_SwapchainDepthStencilView.Get());
 }
 
 void Alpine::DX11::Present(const bool& vsync)
 {
 	if (vsync)
 	{
-		m_Instance.m_Swapchain->Present(1, 0);
+		s_Instance.m_Swapchain->Present(1, 0);
 	}
 	else
 	{
-		m_Instance.m_Swapchain->Present(0, 0);
+		s_Instance.m_Swapchain->Present(0, 0);
 	}
 }
 
 void Alpine::DX11::CleanUpDX11()
 {
-	m_Instance.m_Swapchain.Reset();
-	m_Instance.m_Device.Reset();
-	m_Instance.m_DeviceContext.Reset();
-	m_Instance.m_SwapchainRenderTargetView.Reset();
-	m_Instance.m_SwapchainDepthStencilBuffer.Reset();
-	m_Instance.m_SwapchainDepthStencilView.Reset();
+	s_Instance.m_Swapchain.Reset();
+	s_Instance.m_Device.Reset();
+	s_Instance.m_DeviceContext.Reset();
+	s_Instance.m_SwapchainRenderTargetView.Reset();
+	s_Instance.m_SwapchainDepthStencilBuffer.Reset();
+	s_Instance.m_SwapchainDepthStencilView.Reset();
 }

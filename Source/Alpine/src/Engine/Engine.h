@@ -55,11 +55,7 @@ namespace Alpine
 
 		ImGuiLayer m_ImguiLayer;
 
-		ID3D11RasterizerState* m_WireFrame;
-		ID3D11RasterizerState* m_NoCull;
-		ID3D11BlendState* m_Transparency;
-		ID3D11RasterizerState* m_CCWcullMode;
-		ID3D11RasterizerState* m_CWcullMode;
+		
 
 	};
 }

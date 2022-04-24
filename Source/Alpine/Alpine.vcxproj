@@ -170,6 +170,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Engine\DX11\RenderStateManager.cpp" />
     <ClCompile Include="src\Engine\RenderSystem\FrameBuffer.cpp" />
     <ClCompile Include="src\Engine\RenderSystem\RenderSystem.cpp" />
     <ClCompile Include="src\Engine\Graphics\Model\Mesh.cpp" />
@@ -195,6 +196,7 @@
     <ClCompile Include="src\Engine\Textures\TextureCube.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Engine\DX11\RenderStateManager.h" />
     <ClInclude Include="src\Engine\DX11\Utilities.h" />
     <ClInclude Include="src\Engine\RenderSystem\FrameBuffer.h" />
     <ClInclude Include="src\Engine\RenderSystem\RenderCommands.h" />

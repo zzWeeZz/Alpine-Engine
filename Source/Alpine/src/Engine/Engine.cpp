@@ -83,38 +83,11 @@ namespace Alpine
 		DX11::Context()->Dispatch(256/32, 256 / 32, 1);
 		DX11::Context()->CSSetUnorderedAccessViews(0, 1, nullUAV, nullptr);
 		m_Texture->Bind(6);
-		
-		D3D11_RASTERIZER_DESC cmDesc = {};
-		cmDesc.FillMode = D3D11_FILL_SOLID;
-		cmDesc.CullMode = D3D11_CULL_BACK;
-		cmDesc.FrontCounterClockwise = true;
-		cmDesc.DepthClipEnable = false;
-		DX11::Device()->CreateRasterizerState(&cmDesc, &m_CCWcullMode);
-		cmDesc.FrontCounterClockwise = false;
-		DX11::Device()->CreateRasterizerState(&cmDesc, &m_CWcullMode);
 
-		D3D11_RASTERIZER_DESC rastDesc = {};
-		cmDesc.FillMode = D3D11_FILL_SOLID;
-		cmDesc.CullMode = D3D11_CULL_NONE;
-		DX11::Device()->CreateRasterizerState(&rastDesc, &m_NoCull);
-
-		D3D11_BLEND_DESC blendDesc = {};
-		D3D11_RENDER_TARGET_BLEND_DESC renderTargetBlendDesc = {};
-		renderTargetBlendDesc.BlendEnable = true;
-		renderTargetBlendDesc.SrcBlend = D3D11_BLEND_SRC_ALPHA;
-		renderTargetBlendDesc.DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
-		renderTargetBlendDesc.BlendOp = D3D11_BLEND_OP_ADD;
-		renderTargetBlendDesc.SrcBlendAlpha = D3D11_BLEND_ONE;
-		renderTargetBlendDesc.DestBlendAlpha = D3D11_BLEND_ZERO;
-		renderTargetBlendDesc.BlendOpAlpha = D3D11_BLEND_OP_ADD;
-		renderTargetBlendDesc.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
-
-		blendDesc.RenderTarget[0] = renderTargetBlendDesc;
 
 		DX11::Context()->IASetInputLayout(m_VertexShader.GetInputLayout());
 		auto topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
 		DX11::Context()->IAGetPrimitiveTopology(&topology);
-		DX11::Context()->RSSetState(m_CCWcullMode);
 		
 		m_CameraBuffer.Create();
 		m_LightBuffer.Create();
@@ -152,7 +125,8 @@ namespace Alpine
 		m_Ground.LoadModel("Cube", m_GroundMaterial);
 		m_Ground.SetScale({ 200, 10, 200 });
 		m_ImguiLayer.OnAttach();
-		
+		DX11::GetRenderStateManager().SetSamplerState(SamplerMode::Wrap, ShaderType::Pixel);
+		DX11::GetRenderStateManager().SetSamplerState(SamplerMode::Clamp, ShaderType::Pixel, 1);
 	}
 
 	void Engine::Update(float aDeltaTime)
@@ -277,6 +251,7 @@ namespace Alpine
 			
 			ImGui::EndMenuBar();
 		}
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
 		ImGui::Begin("ViewPort", &pOpen, ImGuiWindowFlags_NoCollapse);
 		if (m_FrameBuffer->GetSpecification().width != ImGui::GetWindowWidth() || m_FrameBuffer->GetSpecification().height != ImGui::GetWindowHeight())
 		{
@@ -284,8 +259,8 @@ namespace Alpine
 			m_Camera.SetAspectRatio(ImGui::GetWindowWidth() / ImGui::GetWindowHeight());
 		}
 		ImGui::Image(m_FrameBuffer->GetColorAttachment(), { ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y });
-
 		ImGui::End();
+		ImGui::PopStyleVar();
 		ImGui::Begin("Inspector");
 		if(ImGui::CollapsingHeader("Transfrom"))
 		{
