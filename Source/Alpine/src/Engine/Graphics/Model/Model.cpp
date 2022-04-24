@@ -32,7 +32,7 @@ Vector3 Alpine::Model::GetPosition()
 
 Vector3 Alpine::Model::GetRotation()
 {
-	return m_Rotation;
+	return m_Rotation * 180.0f / DirectX::XM_PI;
 }
 
 Vector3 Alpine::Model::GetScale()

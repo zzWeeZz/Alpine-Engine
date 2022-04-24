@@ -13,7 +13,7 @@
 
 namespace Alpine
 {
-	Engine::Engine() : m_ModelBuffer(1), m_CameraBuffer(0), m_LightBuffer(2), m_SpecBuffer(5)
+	Engine::Engine() : m_ModelBuffer(1), m_CameraBuffer(0), m_LightBuffer(2)
 	{
 
 	}
@@ -32,9 +32,6 @@ namespace Alpine
 		};
 		m_VertexShader.Initialize(L"Shaders/pbrShader_vs.cso", layout, ARRAYSIZE(layout));
 		m_PixelShader.Initialize(L"Shaders/pbrShader_ps.cso");
-		m_IrrComputeShader.Initialize("Shaders/IrradianceMap_cs.cso");
-		m_SpecularComputeShader.Initialize("Shaders/SpeclularMap_cs.cso");
-		m_SpbrdfShader.Initialize("Shaders/spdrdfGenerator_cs.cso");
 
 		DX11::Context()->VSSetShader(m_VertexShader.GetShader(), 0, 0);
 		DX11::Context()->PSSetShader(m_PixelShader.GetShader(), 0, 0);
@@ -44,47 +41,8 @@ namespace Alpine
 		spec.height = Application::GetWindowSize().y;
 		
 		m_FrameBuffer = FrameBuffer::Create(spec);
-		m_CubeMap = TextureCube::Create("Textures/Storforsen4");
-		ID3D11UnorderedAccessView* nullUAV[1] = { nullptr };
-		m_SpecBuffer.Create();
-		m_SpecularMap = TextureCube::Create(1024, 1024, DXGI_FORMAT_R32G32B32A32_FLOAT);
-		// specular map
-		DX11::Context()->CSSetShaderResources(0, 1, m_CubeMap->GetShaderResourceView().GetAddressOf());
-		DX11::Context()->CSSetShader(m_SpecularComputeShader.GetShader(), 0, 0);
-		const float deltaRoughness = 1.0f / std::max((float)(m_CubeMap->GetLevels() - 1), 1.0f);
-		for (UINT level = 1, size = 512; level < m_CubeMap->GetLevels(); ++level, size /= 2)
-		{
-			const UINT numGroups = std::max<UINT>(1, size / 32);
-			m_SpecularMap->CreateUAV(level);
-			const SpectularMapFilerSettingsBuffer al = { level * deltaRoughness };
-			DX11::Context()->UpdateSubresource(m_SpecBuffer.GetBuffer(), 0, nullptr, &al, 0, 0);
-			m_SpecBuffer.Bind(true, 0);
-			DX11::Context()->CSSetUnorderedAccessViews(0, 1, m_SpecularMap->GetUnorderedAccessView().GetAddressOf(), nullptr);
-			DX11::Context()->Dispatch(numGroups, numGroups, 1);
-		}
-		DX11::Context()->CSSetUnorderedAccessViews(0, 1, nullUAV, nullptr);
-		m_SpecularMap->Bind(10);
-		// irradians
-		m_IrMap = TextureCube::Create(32, 32, DXGI_FORMAT_R32G32B32A32_FLOAT, 1);
-		m_IrMap->CreateUAV();
-		m_CubeMap->Bind(9, true);
-		DX11::Context()->CSSetShaderResources(0, 1, m_CubeMap->GetShaderResourceView().GetAddressOf());
-		DX11::Context()->CSSetUnorderedAccessViews(0, 1, m_IrMap->GetUnorderedAccessView().GetAddressOf(), 0);
-		DX11::Context()->CSSetShader(m_IrrComputeShader.GetShader(), 0, 0);
-		DX11::Context()->Dispatch(1, 1, 1);
-		DX11::Context()->CSSetUnorderedAccessViews(0, 1, nullUAV, nullptr);
-		m_IrMap->Bind(11);
-
-		// spdrbf
-		m_Texture = Texture::Create(256, 256, DXGI_FORMAT_R16G16_FLOAT, 1);
-		m_Texture->CreateUAV();
-		DX11::Context()->CSSetUnorderedAccessViews(0, 1, m_Texture->GetUnorderedAccessView().GetAddressOf(), 0);
-		DX11::Context()->CSSetShader(m_SpbrdfShader.GetShader(), 0, 0);
-		DX11::Context()->Dispatch(256/32, 256 / 32, 1);
-		DX11::Context()->CSSetUnorderedAccessViews(0, 1, nullUAV, nullptr);
-		m_Texture->Bind(6);
-
-
+		
+		
 		DX11::Context()->IASetInputLayout(m_VertexShader.GetInputLayout());
 		auto topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
 		DX11::Context()->IAGetPrimitiveTopology(&topology);
@@ -122,26 +80,29 @@ namespace Alpine
 		m_RockMan.SetScale({ 0.1f, 0.1f, 0.1f });
 		m_RockMan.SetPosition({ 30, 10, 0 });
 
-		m_Ground.LoadModel("Cube", m_GroundMaterial);
-		m_Ground.SetScale({ 200, 10, 200 });
 		m_ImguiLayer.OnAttach();
-		DX11::GetRenderStateManager().SetSamplerState(SamplerMode::Wrap, ShaderType::Pixel);
-		DX11::GetRenderStateManager().SetSamplerState(SamplerMode::Clamp, ShaderType::Pixel, 1);
+		m_FrameBuffer->Resize(256, 256);
+		m_FrameBuffer->Bind();
+		m_SkyBox = SkyBox::Create(L"Textures/environment.hdr");
+
 	}
 
 	void Engine::Update(float aDeltaTime)
 	{
 		m_Camera.Update(aDeltaTime);
-		static float rotation = 0;
+		float rotation = 0;
 		rotation += aDeltaTime * 100.f;
-		m_RockMan.SetRotation({ 0, -rotation / 2, 0 });
-		m_MetalMan.SetRotation({ 0, -rotation / 2, 0 });
+		m_RockMan.SetRotation({ m_RockMan.GetRotation().x, m_RockMan.GetRotation().y - rotation / 2, m_RockMan.GetRotation().z });
+		m_MetalMan.SetRotation({ m_MetalMan.GetRotation().x, m_MetalMan.GetRotation().y - rotation / 2, m_MetalMan.GetRotation().z });
 	}
 
 
 	void Engine::RenderFrame()
 	{
+		DX11::GetRenderStateManager().SetSamplerState(SamplerMode::Wrap, ShaderType::Pixel, 0);
+		DX11::GetRenderStateManager().SetSamplerState(SamplerMode::Clamp, ShaderType::Pixel, 1);
 		m_FrameBuffer->Bind();
+		m_SkyBox->Bind();
 		m_ImguiLayer.Begin();
 		DX11::ClearView();
 		m_FrameBuffer->ClearView({ 0.3f, 0, 3, 1 });
@@ -169,10 +130,8 @@ namespace Alpine
 		m_ModelBuffer.SetData(&m_RockMan.GetTransform(), sizeof(Matrix));
 		m_ModelBuffer.Bind();
 		m_RockMan.Draw();
+		
 
-		m_ModelBuffer.SetData(&m_Ground.GetTransform(), sizeof(Matrix));
-		m_ModelBuffer.Bind();
-		m_Ground.Draw();
 		m_FrameBuffer->UnBind();
 		DX11::Bind();
 		m_ImguiLayer.RenderImGui();
@@ -257,10 +216,12 @@ namespace Alpine
 		{
 			m_FrameBuffer->Resize(ImGui::GetWindowWidth(), ImGui::GetWindowHeight());
 			m_Camera.SetAspectRatio(ImGui::GetWindowWidth() / ImGui::GetWindowHeight());
+			m_SkyBox->GenerateSPBRDF(ImGui::GetWindowWidth(), ImGui::GetWindowHeight());
 		}
 		ImGui::Image(m_FrameBuffer->GetColorAttachment(), { ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y });
 		ImGui::End();
 		ImGui::PopStyleVar();
+		m_SkyBox->Check();
 		ImGui::Begin("Inspector");
 		if(ImGui::CollapsingHeader("Transfrom"))
 		{

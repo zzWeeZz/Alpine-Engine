@@ -2,18 +2,37 @@
 
 #include <cassert>
 #include <DirectXTK/WICTextureLoader.h>
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
 #include <DX11/DX11.h>
 
 Alpine::Texture::Texture(const std::filesystem::path& aPath)
 {
-	auto hr = DirectX::CreateWICTextureFromFile(Alpine::DX11::Device().Get(),aPath.wstring().c_str(), &m_Resource,m_ShaderResourceView.GetAddressOf());
-	assert(SUCCEEDED(hr));
-	hr = m_Resource->QueryInterface(__uuidof(ID3D11Texture2D), reinterpret_cast<void**>(m_Texture.GetAddressOf()));
-	assert(SUCCEEDED(hr));
+	if(stbi_is_hdr(aPath.string().c_str()))
+	{
+		float* pixels = stbi_loadf(aPath.string().c_str(), &m_Width, &m_Height, &m_Channels, 4);
+		if(pixels)
+		{
+			m_Pixels.reset(reinterpret_cast<unsigned char*>(pixels));
+			m_IsHDR = true;
+			CreateTextureFromHdrData();
+		}
+	}
+	else
+	{
+		m_IsHDR = false;
+		auto hr = DirectX::CreateWICTextureFromFile(Alpine::DX11::Device().Get(), aPath.wstring().c_str(), &m_Resource, m_ShaderResourceView.GetAddressOf());
+		assert(SUCCEEDED(hr));
+		hr = m_Resource->QueryInterface(__uuidof(ID3D11Texture2D), reinterpret_cast<void**>(m_Texture.GetAddressOf()));
+		assert(SUCCEEDED(hr));
+	}
+	
 }
 
 Alpine::Texture::Texture(UINT width, UINT height, DXGI_FORMAT format, UINT levels)
 {
+	m_Height = height;
+	m_Width = width;
 	D3D11_TEXTURE2D_DESC texElementDesc = {};
 	texElementDesc.Width = width;
 	texElementDesc.Height = height;
@@ -98,4 +117,17 @@ Alpine::Ref<Alpine::Texture> Alpine::Texture::Create(const std::filesystem::path
 Alpine::Ref<Alpine::Texture> Alpine::Texture::Create(UINT width, UINT height, DXGI_FORMAT format, UINT levels)
 {
 	return std::make_shared<Texture>(width, height, format, levels);
+}
+
+void Alpine::Texture::CreateTextureFromHdrData()
+{
+	Ref<Texture> text = Create(m_Width, m_Height, DXGI_FORMAT_R32G32B32A32_FLOAT, 0);
+	
+	DX11::Context()->UpdateSubresource(text->m_Texture.Get(), 0, 0, m_Pixels.get(), m_Width * 4 * sizeof(float), 0);
+	if(text->m_Texture)
+	{
+		DX11::Context()->GenerateMips(text->m_ShaderResourceView.Get());
+	}
+	m_Texture = text->m_Texture;
+	m_ShaderResourceView = text->m_ShaderResourceView;
 }

@@ -74,7 +74,7 @@ Alpine::TextureCube::TextureCube(const std::filesystem::path& filePath)
 			if (sourceRegion.bottom == 0 || sourceRegion.right == 0)
 				break;
 
-			pd3dContext->CopySubresourceRegion(m_Texture, D3D11CalcSubresource(mipLevel, x, texArrayDesc.MipLevels), 0, 0, 0, m_TextureViews[x], mipLevel, &sourceRegion);
+			pd3dContext->CopySubresourceRegion(m_Texture.Get(), D3D11CalcSubresource(mipLevel, x, texArrayDesc.MipLevels), 0, 0, 0, m_TextureViews[x], mipLevel, &sourceRegion);
 		}
 	}
 	D3D11_TEXTURE2D_DESC desc;
@@ -87,7 +87,7 @@ Alpine::TextureCube::TextureCube(const std::filesystem::path& filePath)
 	viewDesc.TextureCube.MostDetailedMip = 0;
 	viewDesc.TextureCube.MipLevels = texArrayDesc.MipLevels;
 
-	if (FAILED(DX11::Device()->CreateShaderResourceView(m_Texture, &viewDesc, &m_ShaderResourceView)))
+	if (FAILED(DX11::Device()->CreateShaderResourceView(m_Texture.Get(), &viewDesc, &m_ShaderResourceView)))
 	{
 		spdlog::error("Failed to create shader resource view");
 		return;
@@ -136,7 +136,7 @@ Alpine::TextureCube::TextureCube(UINT width, UINT height, DXGI_FORMAT format, UI
 	viewDesc.TextureCube.MostDetailedMip = 0;
 	viewDesc.TextureCube.MipLevels = -1;
 
-	if (FAILED(DX11::Device()->CreateShaderResourceView(m_Texture, &viewDesc, &m_ShaderResourceView)))
+	if (FAILED(DX11::Device()->CreateShaderResourceView(m_Texture.Get(), &viewDesc, &m_ShaderResourceView)))
 	{
 		spdlog::error("Failed to create shader resource view");
 		return;
@@ -167,9 +167,14 @@ void Alpine::TextureCube::Bind(unsigned int slot, bool forCompute)
 	}
 }
 
-ID3D11Resource* Alpine::TextureCube::GetTextures()
+void Alpine::TextureCube::GenerateMipMaps()
 {
-	return *m_TextureViews.data();
+	DX11::Context()->GenerateMips(m_ShaderResourceView.Get());
+}
+
+ComPtr<ID3D11Texture2D> Alpine::TextureCube::GetTextures()
+{
+	return m_Texture;
 }
 
 void Alpine::TextureCube::CreateUAV(UINT levels)
@@ -184,7 +189,7 @@ void Alpine::TextureCube::CreateUAV(UINT levels)
 	uavDesc.Texture2DArray.FirstArraySlice = 0;
 	uavDesc.Texture2DArray.ArraySize = desc.ArraySize;
 
-	auto hr = DX11::Device()->CreateUnorderedAccessView(m_Texture, &uavDesc, &m_UAV);
+	auto hr = DX11::Device()->CreateUnorderedAccessView(m_Texture.Get(), &uavDesc, &m_UAV);
 	assert(SUCCEEDED(hr));
 }
 

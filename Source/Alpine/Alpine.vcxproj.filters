@@ -90,6 +90,9 @@
     <ClCompile Include="src\Engine\DX11\RenderStateManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Engine\Graphics\SkyBox\SkyBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Engine\Engine.h">
@@ -182,6 +185,12 @@
     <ClInclude Include="src\Engine\DX11\RenderStateManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Engine\Graphics\SkyBox\SkyBox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\stb_image.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="src\Engine\Shaders\pbrShader_vs.hlsl" />
@@ -189,5 +198,7 @@
     <FxCompile Include="src\Engine\Shaders\IrradianceMap_cs.hlsl" />
     <FxCompile Include="src\Engine\Shaders\SpeclularMap_cs.hlsl" />
     <FxCompile Include="src\Engine\Shaders\spdrdfGenerator_cs.hlsl" />
+    <FxCompile Include="src\Engine\Shaders\SkyBox_ps.hlsl" />
+    <FxCompile Include="src\Engine\Shaders\Equirect2Cube_cs.hlsl" />
   </ItemGroup>
 </Project>

@@ -8,8 +8,6 @@ Alpine::DX11::DX11()
 {
 	s_Instance = *this;
 }
-
-
 #pragma region Getters
 ComPtr<IDXGISwapChain>& Alpine::DX11::SwapChain()
 {
@@ -111,7 +109,9 @@ void Alpine::DX11::Initialize(int32_t width, int32_t height, bool fullscreen)
 	viewport.MaxDepth = 1.0f;
 	DX11::Context()->RSSetViewports(1, &viewport);
 	s_Instance.m_RenderStateManager.Initialize();
-	s_Instance.m_RenderStateManager.SetRasterizerState(CullMode::Back);
+	s_Instance.m_RenderStateManager.PushRasterizerState(CullMode::Back);
+	s_Instance.m_RenderStateManager.PushBlendState(BlendMode::Opaque);
+	s_Instance.m_RenderStateManager.PushDepthStencilState(DepthStencilMode::ReadWrite);
 }
 
 void Alpine::DX11::Resize(int width, int height)

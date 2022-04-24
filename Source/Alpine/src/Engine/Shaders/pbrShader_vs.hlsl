@@ -26,10 +26,12 @@ VS_OUTPUT main(float4 inPos : POSITION, float2 inTexCoord : TEXCOORD, float3 inN
     float4x4 worldViewPorj = mul(toProjectionSpace, mul(toCameraSpace, modelSpace));
     output.Position = mul(worldViewPorj, inPos);
     output.WorldPosition = mul(modelSpace, inPos);
-    output.Normal = mul((float3x3) modelSpace, inNormal);
+    output.Normal = inNormal.xyz;
+
+
     float3x3 tangentBasis = float3x3(inTangent, inBitangent, cross(inTangent, inBitangent));
     output.tangentBasis = mul((float3x3) modelSpace, transpose(tangentBasis));
-    output.TexCoord = float2(inTexCoord.x, 1.0 - inTexCoord.y);
+    output.TexCoord = float2(inTexCoord.x, inTexCoord.y);
 
     return output;
 }

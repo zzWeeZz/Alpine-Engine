@@ -2,8 +2,6 @@
 #include <d3d11.h>
 #include "Graphics/Shaders.h"
 #include "Graphics/Model/Model.h"
-#include "Graphics/Buffers/ConstantBuffer.hpp"
-#include <wrl.h>
 #include "DX11/Utilities.h"
 
 #include "Textures/TextureCube.h"
@@ -12,6 +10,7 @@
 #include "imGui/ImGuiLayer.h"
 #include "Graphics/Buffers/BufferData.h"
 #include "RenderSystem/FrameBuffer.h"
+#include "Graphics/SkyBox/SkyBox.h"
 
 namespace Alpine
 {
@@ -27,28 +26,18 @@ namespace Alpine
 	private:
 		VertexShader m_VertexShader;
 		PixelShader m_PixelShader;
-		ComputeShader m_IrrComputeShader;
-		ComputeShader m_SpecularComputeShader;
-		ComputeShader m_SpbrdfShader;
 
 		AmbientLight m_AmbientLight;
 		PerspectiveCamera m_Camera;
 		Ref<Material> m_MetalicMaterial;
 		Ref<Material> m_GroundMaterial;
-		
-		Ref<Texture> m_Texture;
-		
-		Ref<TextureCube> m_CubeMap;
-		Ref<TextureCube> m_IrMap;
-		Ref<TextureCube> m_SpecularMap;
-		Ref<FrameBuffer> m_FrameBuffer;
 
+		Ref<FrameBuffer> m_FrameBuffer;
+		Ref<SkyBox> m_SkyBox;
 		Model m_MetalMan;
 		Model m_RockMan;
-		Model m_Ground;
 		CameraBuffer m_CameraBufferObject;
 		LightBuffer m_LightBufferObject;
-		ConstantBuffer<SpectularMapFilerSettingsBuffer> m_SpecBuffer;
 		ConstantBuffer<CameraBuffer> m_CameraBuffer;
 		ConstantBuffer<Matrix> m_ModelBuffer;
 		ConstantBuffer<LightBuffer> m_LightBuffer;
