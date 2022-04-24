@@ -92,7 +92,7 @@ float4 main(VS_OUTPUT pin) : SV_Target
     float roughness = roughnessTexture.Sample(defaultSampler, pin.texcoord).r;
 
 	// Outgoing light direction (vector from world-space fragment position to the "eye").
-    float3 Lo = normalize(cameraPosition.xyz - pin.position);
+    float3 Lo = normalize(cameraPosition.xyz - pin.WorldPosition.xyz);
 
 	// Get current fragment's normal and transform to world space.
     float3 N = normalize(2.0 * normalTexture.Sample(defaultSampler, pin.texcoord).rgb - 1.0);

@@ -22,7 +22,7 @@ void Alpine::SkyBox::Bind()
 {
 	m_SDRBF->Bind(6);
 	m_IrMap->Bind(11);
-	m_SpecularMap->Bind(10);
+	m_CubeMap->Bind(10);
 }
 
 void Alpine::SkyBox::Check()
