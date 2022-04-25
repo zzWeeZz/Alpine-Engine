@@ -33,8 +33,8 @@ namespace Alpine
 		m_VertexShader.Initialize(L"Shaders/pbrShader_vs.cso", layout, ARRAYSIZE(layout));
 		m_PixelShader.Initialize(L"Shaders/pbrShader_ps.cso");
 
-		DX11::Context()->VSSetShader(m_VertexShader.GetShader(), 0, 0);
-		DX11::Context()->PSSetShader(m_PixelShader.GetShader(), 0, 0);
+		m_VertexShader.Bind();
+		m_PixelShader.Bind();
 	
 		FramebufferSpecification spec = {};
 		spec.width = Application::GetWindowSize().x;
@@ -43,7 +43,6 @@ namespace Alpine
 		m_FrameBuffer = FrameBuffer::Create(spec);
 		
 		
-		DX11::Context()->IASetInputLayout(m_VertexShader.GetInputLayout());
 		auto topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
 		DX11::Context()->IAGetPrimitiveTopology(&topology);
 		
@@ -58,13 +57,13 @@ namespace Alpine
 		m_Camera.Init({ 0,0, 0 });
 	
 		m_MetalicMaterial = Material::Create("Metalic");
-		m_MetalicMaterial->AddTexture(Texture::Create("Textures/mesh-covered-metal1-albedo.png"));
-		m_MetalicMaterial->AddTexture(Texture::Create("Textures/mesh-covered-metal1-roughness.png"));
-		m_MetalicMaterial->AddTexture(Texture::Create("Textures/mesh-covered-metal1-normal-dx.png"));
+		m_MetalicMaterial->AddTexture(Texture::Create("Textures/worn-shiny-metal-ue/worn-shiny-metal-albedo.png"));
+		m_MetalicMaterial->AddTexture(Texture::Create("Textures/worn-shiny-metal-ue/worn-shiny-metal-Roughness.png"));
+		m_MetalicMaterial->AddTexture(Texture::Create("Textures/worn-shiny-metal-ue/worn-shiny-metal-Normal-dx.png"));
 		m_MetalicMaterial->AddTexture(Texture::Create("Textures/mesh-covered-metal1-ao.png"));
-		m_MetalicMaterial->AddTexture(Texture::Create("Textures/mesh-covered-metal1-metallic.png"));
+		m_MetalicMaterial->AddTexture(Texture::Create("Textures/worn-shiny-metal-ue/worn-shiny-metal-Metallic.png"));
 		m_MetalicMaterial->AddTexture(Texture::Create("Textures/mesh-covered-metal1-height.png"));
-		m_MetalMan.LoadModel("Model/M_MED_Gumshoe_Export.fbx", m_MetalicMaterial);
+		m_MetalMan.LoadModel("Model/Lamborghini_Aventador.fbx", m_MetalicMaterial);
 		m_MetalMan.SetRotation({ 0, 0, 0 });
 		m_MetalMan.SetPosition({ 0,10.f, 0 });
 		m_MetalMan.SetScale({ 0.1f, 0.1f, 0.1f });
@@ -83,7 +82,8 @@ namespace Alpine
 		m_ImguiLayer.OnAttach();
 		m_FrameBuffer->Resize(256, 256);
 		m_FrameBuffer->Bind();
-		m_SkyBox = SkyBox::Create(L"Textures/environment.hdr");
+		m_SkyBox = SkyBox::Create(L"Textures/monbachtal_riverbank_4k.hdr");
+		m_SkyBox->Bind();
 
 	}
 
@@ -102,7 +102,6 @@ namespace Alpine
 		DX11::GetRenderStateManager().SetSamplerState(SamplerMode::Wrap, ShaderType::Pixel, 0);
 		DX11::GetRenderStateManager().SetSamplerState(SamplerMode::Clamp, ShaderType::Pixel, 1);
 		m_FrameBuffer->Bind();
-		m_SkyBox->Bind();
 		m_ImguiLayer.Begin();
 		DX11::ClearView();
 		m_FrameBuffer->ClearView({ 0.3f, 0, 3, 1 });
@@ -111,12 +110,17 @@ namespace Alpine
 		m_CameraBufferObject.position = Vector4(m_Camera.GetPosition().x, m_Camera.GetPosition().y, m_Camera.GetPosition().z, 1);
 		m_CameraBufferObject.toCameraSpace = m_Camera.GetViewMatrix();
 		m_CameraBufferObject.toProjectionSpace = m_Camera.GetProjectionMatrix();
+		m_CameraBufferObject.viewMatrix = m_Camera.GetViewMatrix();
 		m_CameraBuffer.SetData(&m_CameraBufferObject, sizeof(CameraBuffer));
 		m_CameraBuffer.Bind();
 		static float dir[] = { -1, -1, -1 };
-		
-		static float intensity = 5.f;
 
+		m_SkyBox->Draw();
+
+
+		static float intensity = 5.f;
+		m_VertexShader.Bind();
+		m_PixelShader.Bind();
 		m_LightBufferObject.ambientColor = Vector4(m_AmbientLight.GetLightColor().x, m_AmbientLight.GetLightColor().y, m_AmbientLight.GetLightColor().z, 1);
 		m_LightBufferObject.lights[0] = { Vector4(1, 1, 1, intensity), Vector4(dir[0], dir[1], dir[2], 0)};
 
@@ -130,7 +134,7 @@ namespace Alpine
 		m_ModelBuffer.SetData(&m_RockMan.GetTransform(), sizeof(Matrix));
 		m_ModelBuffer.Bind();
 		m_RockMan.Draw();
-		
+
 
 		m_FrameBuffer->UnBind();
 		DX11::Bind();

@@ -9,6 +9,7 @@ namespace Alpine
 		bool Initialize(const std::filesystem::path& filePath) override;
 		ID3D11PixelShader* GetShader() const;
 		ID3D10Blob* GetBuffer() override;
+		void Bind();
 
 	private:
 		ComPtr<ID3D11PixelShader> myShader;

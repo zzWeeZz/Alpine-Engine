@@ -1,13 +1,4 @@
-cbuffer Camera : register(b0)
-{
-    float4 cameraPosition;
-    float4x4 toCameraSpace;
-    float4x4 toProjectionSpace;
-};
-cbuffer Model : register(b1)
-{
-    float4x4 modelSpace;
-};
+#include "ConstBuffers.hlsli"
 
 struct VS_OUTPUT
 {
@@ -29,7 +20,7 @@ VS_OUTPUT main(float4 inPos : POSITION, float2 inTexCoord : TEXCOORD, float3 inN
     output.Normal = inNormal.xyz;
 
 
-    float3x3 tangentBasis = float3x3(inTangent, inBitangent, cross(inTangent, inBitangent));
+    float3x3 tangentBasis = float3x3(inTangent, inBitangent, inNormal);
     output.tangentBasis = mul((float3x3) modelSpace, transpose(tangentBasis));
     output.TexCoord = float2(inTexCoord.x, 1.0 - inTexCoord.y);
 

@@ -10,12 +10,21 @@ Alpine::SkyBox::SkyBox(const std::filesystem::path& skyBoxTexturePath) : m_SpecB
 	m_SpbrdfShader.Initialize("Shaders/spdrdfGenerator_cs.cso");
 	m_EquirectToCubeMapShader.Initialize("Shaders/Equirect2Cube_cs.cso");
 
+	D3D11_INPUT_ELEMENT_DESC layout[] =
+	{
+		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	};
+	m_VertexShader.Initialize(L"Shaders/SkyBox_vs.cso", layout, ARRAYSIZE(layout));
+	m_PixelShader.Initialize(L"Shaders/SkyBox_ps.cso");
 	
-	
+
 	ConvertToCubeMap(skyBoxTexturePath);
 	FilterEnviorment();
 	GenerateIrradience();
 	GenerateSPBRDF();
+	Ref<Material> skyBoxMaterial = Material::Create("skybox");
+	skyBoxMaterial->AddTexture(m_CubeMap);
+	m_Model.LoadModel("Cube", skyBoxMaterial);
 }
 
 void Alpine::SkyBox::Bind()
@@ -23,6 +32,17 @@ void Alpine::SkyBox::Bind()
 	m_SDRBF->Bind(6);
 	m_IrMap->Bind(11);
 	m_CubeMap->Bind(10);
+}
+
+void Alpine::SkyBox::Draw()
+{
+	m_VertexShader.Bind();
+	m_PixelShader.Bind();
+	DX11::GetRenderStateManager().PushRasterizerState(CullMode::Front);
+	DX11::GetRenderStateManager().PushDepthStencilState(DepthStencilMode::ReadOnly);
+	m_Model.Draw();
+	DX11::GetRenderStateManager().PopRasterizerState();
+	DX11::GetRenderStateManager().PopDepthStencilState();
 }
 
 void Alpine::SkyBox::Check()

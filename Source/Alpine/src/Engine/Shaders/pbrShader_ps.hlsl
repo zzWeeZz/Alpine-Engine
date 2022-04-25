@@ -1,3 +1,5 @@
+#include "ConstBuffers.hlsli"
+
 struct VS_OUTPUT
 {
     float4 position : SV_POSITION;
@@ -5,22 +7,6 @@ struct VS_OUTPUT
     float3 Normal : NORMAL;
     float2 texcoord : TEXCOORD;
     float3x3 tangentBasis : TBASIS;
-};
-cbuffer Camera : register(b0)
-{
-    float4 cameraPosition;
-    float4x4 toCameraSpace;
-    float4x4 toProjectionSpace;
-};
-cbuffer LightBuffer : register(b2)
-{
-    struct DirectionalLight
-    {
-        float4 radiance;
-        float4 LightDirection;
-        
-    } DirLights[4];
-    float4 ambientColor;
 };
 
 Texture2D albedoTexture : register(t0);

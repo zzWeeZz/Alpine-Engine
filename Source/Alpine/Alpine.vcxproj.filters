@@ -200,5 +200,9 @@
     <FxCompile Include="src\Engine\Shaders\spdrdfGenerator_cs.hlsl" />
     <FxCompile Include="src\Engine\Shaders\SkyBox_ps.hlsl" />
     <FxCompile Include="src\Engine\Shaders\Equirect2Cube_cs.hlsl" />
+    <FxCompile Include="src\Engine\Shaders\SkyBox_vs.hlsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\Engine\Shaders\ConstBuffers.hlsli" />
   </ItemGroup>
 </Project>

@@ -12,6 +12,7 @@ namespace Alpine
 		ID3D11VertexShader* GetShader();
 		ID3D10Blob* GetBuffer();
 		ID3D11InputLayout* GetInputLayout();
+		void Bind();
 
 	private:
 		ComPtr<ID3D11VertexShader> myShader;

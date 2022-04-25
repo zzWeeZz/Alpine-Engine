@@ -9,6 +9,7 @@ namespace Alpine
 		Vector4 position;
 		Matrix toCameraSpace;
 		Matrix toProjectionSpace;
+		Matrix viewMatrix;
 	};
 	struct DirectionalLightBuffer
 	{

@@ -26,3 +26,8 @@ ID3D10Blob* Alpine::PixelShader::GetBuffer()
 {
 	return myBuffer.Get();
 }
+
+void Alpine::PixelShader::Bind()
+{
+	DX11::Context()->PSSetShader(myShader.Get(), nullptr, 0);
+}

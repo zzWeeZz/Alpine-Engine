@@ -1,6 +1,7 @@
 #include "VertexShader.h"
 #include <d3dcompiler.h>
 
+
 bool Alpine::VertexShader::Initialize(std::wstring aShaderPath, D3D11_INPUT_ELEMENT_DESC* aDesc, UINT aElements)
 {
 	
@@ -34,4 +35,10 @@ ID3D10Blob* Alpine::VertexShader::GetBuffer()
 ID3D11InputLayout* Alpine::VertexShader::GetInputLayout()
 {
 	return myInputLayout.Get();
+}
+
+void Alpine::VertexShader::Bind()
+{
+	DX11::Context()->IASetInputLayout(myInputLayout.Get());
+	DX11::Context()->VSSetShader(myShader.Get(), NULL, 0);
 }

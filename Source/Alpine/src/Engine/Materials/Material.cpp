@@ -21,8 +21,18 @@ void Alpine::Material::AddTexture(std::shared_ptr<Texture> texture)
 		assert(false);
 	}
 }
+
+void Alpine::Material::AddTexture(std::shared_ptr<TextureCube> texture)
+{
+	m_Cube = texture;
+}
+
 void Alpine::Material::Bind()
 {
+	if(m_Cube)
+	{
+		m_Cube->Bind(0);
+	}
 	for (size_t i = 0; i < myTextures.size(); i++)
 	{
 		myTextures[i]->Bind(static_cast<int>(i));

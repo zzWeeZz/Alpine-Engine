@@ -25,6 +25,8 @@ Alpine::Texture::Texture(const std::filesystem::path& aPath)
 		assert(SUCCEEDED(hr));
 		hr = m_Resource->QueryInterface(__uuidof(ID3D11Texture2D), reinterpret_cast<void**>(m_Texture.GetAddressOf()));
 		assert(SUCCEEDED(hr));
+		// gen mip maps
+		DX11::Context()->GenerateMips(m_ShaderResourceView.Get());
 	}
 	
 }
@@ -64,6 +66,11 @@ Alpine::Texture::Texture(UINT width, UINT height, DXGI_FORMAT format, UINT level
 	{
 		spdlog::error("Failed to create shader resource view");
 		return;
+	}
+	//gen mip maps
+	if (levels == 0)
+	{
+		DX11::Context()->GenerateMips(m_ShaderResourceView.Get());
 	}
 }
 
