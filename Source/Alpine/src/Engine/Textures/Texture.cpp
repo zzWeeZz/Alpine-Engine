@@ -26,9 +26,8 @@ Alpine::Texture::Texture(const std::filesystem::path& aPath)
 		hr = m_Resource->QueryInterface(__uuidof(ID3D11Texture2D), reinterpret_cast<void**>(m_Texture.GetAddressOf()));
 		assert(SUCCEEDED(hr));
 		// gen mip maps
-		DX11::Context()->GenerateMips(m_ShaderResourceView.Get());
 	}
-	
+	DX11::Context()->GenerateMips(m_ShaderResourceView.Get());
 }
 
 Alpine::Texture::Texture(UINT width, UINT height, DXGI_FORMAT format, UINT levels)

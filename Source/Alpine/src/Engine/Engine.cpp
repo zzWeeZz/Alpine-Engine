@@ -63,7 +63,7 @@ namespace Alpine
 		m_MetalicMaterial->AddTexture(Texture::Create("Textures/mesh-covered-metal1-ao.png"));
 		m_MetalicMaterial->AddTexture(Texture::Create("Textures/worn-shiny-metal-ue/worn-shiny-metal-Metallic.png"));
 		m_MetalicMaterial->AddTexture(Texture::Create("Textures/mesh-covered-metal1-height.png"));
-		m_MetalMan.LoadModel("Model/Lamborghini_Aventador.fbx", m_MetalicMaterial);
+		m_MetalMan.LoadModel("Model/M_MED_Gumshoe_Export.fbx", m_MetalicMaterial);
 		m_MetalMan.SetRotation({ 0, 0, 0 });
 		m_MetalMan.SetPosition({ 0,10.f, 0 });
 		m_MetalMan.SetScale({ 0.1f, 0.1f, 0.1f });
@@ -224,7 +224,6 @@ namespace Alpine
 		ImGui::Image(m_FrameBuffer->GetColorAttachment(), { ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y });
 		ImGui::End();
 		ImGui::PopStyleVar();
-		m_SkyBox->Check();
 		ImGui::Begin("Inspector");
 		if(ImGui::CollapsingHeader("Transfrom"))
 		{
@@ -232,7 +231,7 @@ namespace Alpine
 			ImGui::DragFloat3("Position", heliPos);
 			m_MetalMan.SetPosition({ heliPos[0], heliPos[1], heliPos[2] });
 			
-			static float rot[3];
+			static float rot[3] = { m_MetalMan.GetRotation().x, m_MetalMan.GetRotation().y, m_MetalMan.GetRotation().z };
 			ImGui::DragFloat3("Rotation", rot);
 			
 			m_MetalMan.SetRotation({ fmodf(rot[0], 360), fmodf(rot[1], 360), fmodf(rot[2], 360) });
