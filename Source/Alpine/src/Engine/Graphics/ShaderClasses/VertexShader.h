@@ -5,6 +5,16 @@
 
 namespace Alpine
 {
+	struct InputElementSpecs
+	{
+		std::string name;
+		unsigned int semanticIndex;
+		DXGI_FORMAT format;
+		unsigned int inputSlot;
+		unsigned int alignedByteOffset;
+		D3D11_INPUT_CLASSIFICATION inputSlotClass;
+		unsigned int instanceDataStepRate;
+	};
 	class VertexShader
 	{
 	public:

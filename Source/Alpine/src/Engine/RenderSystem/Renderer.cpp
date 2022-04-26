@@ -27,16 +27,16 @@ namespace Alpine
 		s_Instance.m_PbrVertexShader = VertexShader::Create(L"Shaders/pbrShader_vs.cso", layout, ARRAYSIZE(layout));
 		s_Instance.m_PbrPixelShader = PixelShader::Create(L"Shaders/pbrShader_ps.cso");
 
-		D3D11_INPUT_ELEMENT_DESC layout[] =
+		D3D11_INPUT_ELEMENT_DESC layout2[] =
 		{
 			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 		};
-		s_Instance.m_SkyBoxVertexShader = VertexShader::Create(L"Shaders/SkyBox_vs.cso", layout, ARRAYSIZE(layout));
+		s_Instance.m_SkyBoxVertexShader = VertexShader::Create(L"Shaders/SkyBox_vs.cso", layout2, ARRAYSIZE(layout2));
 		s_Instance.m_SkyBoxPixelShader = PixelShader::Create(L"Shaders/SkyBox_ps.cso");
 
 		FramebufferSpecification spec = {};
-		spec.width = Application::GetWindowSize().x;
-		spec.height = Application::GetWindowSize().y;
+		spec.width = Application::GetWindow()->GetWidth();
+		spec.height = Application::GetWindow()->GetHeight();
 
 		s_Instance.m_FrameBuffer = FrameBuffer::Create(spec);
 	}

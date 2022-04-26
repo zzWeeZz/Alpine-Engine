@@ -34,8 +34,7 @@ namespace Alpine
 
 		Ref<FrameBuffer> m_FrameBuffer;
 		Ref<SkyBox> m_SkyBox;
-		Model m_MetalMan;
-		Model m_RockMan;
+
 		CameraBuffer m_CameraBufferObject;
 		LightBuffer m_LightBufferObject;
 		ConstantBuffer<CameraBuffer> m_CameraBuffer;

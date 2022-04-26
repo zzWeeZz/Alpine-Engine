@@ -14,8 +14,8 @@ namespace Alpine
 		// creates new instance of the window
 		static bool CreateNewWindow(const std::string& name, int width, int height);
 		static GlfwWindow* GetWindow();
-
-		static DirectX::SimpleMath::Vector2 GetWindowSize();
+		static void Run();
+		
 	private:
 		static void ResizeCallBack(GLFWwindow* window, int width, int height);
 

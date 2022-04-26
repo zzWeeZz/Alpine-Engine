@@ -19,10 +19,9 @@ Alpine::GlfwWindow* Alpine::Application::GetWindow()
 	return &s_Instance.m_Window;
 }
 
-
-DirectX::SimpleMath::Vector2 Alpine::Application::GetWindowSize()
+void Alpine::Application::Run()
 {
-	return DirectX::SimpleMath::Vector2(s_Instance.m_Window.GetWidth(), s_Instance.m_Window.GetHeight());
+
 }
 
 void Alpine::Application::ResizeCallBack(GLFWwindow* window, int width, int height)

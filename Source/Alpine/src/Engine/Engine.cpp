@@ -61,7 +61,7 @@ namespace Alpine
 		m_GroundMaterial->AddTexture(Texture::Create("Textures/wet-stones-with-sand1-ao.png"));
 		m_GroundMaterial->AddTexture(Texture::Create("Textures/wet-stones-with-sand1-metallic.png"));
 		m_GroundMaterial->AddTexture(Texture::Create("Textures/wet-stones-with-sand1-height.png"));
-		m_RockMan.LoadModel("Model/M_MED_Gumshoe_Export.fbx", m_GroundMaterial);
+		m_RockMan = ("Model/M_MED_Gumshoe_Export.fbx", m_GroundMaterial);
 		m_RockMan.SetScale({ 0.1f, 0.1f, 0.1f });
 		m_RockMan.SetPosition({ 30, 10, 0 });
 
@@ -104,22 +104,14 @@ namespace Alpine
 		m_SkyBox->Draw();
 
 
-		static float intensity = 5.f;
+		/*static float intensity = 5.f;
 		m_VertexShader.Bind();
 		m_PixelShader.Bind();
 		m_LightBufferObject.ambientColor = Vector4(m_AmbientLight.GetLightColor().x, m_AmbientLight.GetLightColor().y, m_AmbientLight.GetLightColor().z, 1);
 		m_LightBufferObject.lights[0] = { Vector4(1, 1, 1, intensity), Vector4(dir[0], dir[1], dir[2], 0)};
 
 		m_LightBuffer.SetData(&m_LightBufferObject, sizeof(LightBuffer));
-		m_LightBuffer.Bind();
-
-		m_ModelBuffer.SetData(&m_MetalMan.GetTransform(), sizeof(Matrix));
-		m_ModelBuffer.Bind();
-		m_MetalMan.Draw();
-
-		m_ModelBuffer.SetData(&m_RockMan.GetTransform(), sizeof(Matrix));
-		m_ModelBuffer.Bind();
-		m_RockMan.Draw();
+		m_LightBuffer.Bind();*/
 
 
 		m_FrameBuffer->UnBind();
