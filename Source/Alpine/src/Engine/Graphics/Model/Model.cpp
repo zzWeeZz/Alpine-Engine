@@ -5,7 +5,7 @@
 #include "DX11/DX11.h"
 #include "ToolBox/Utility/UtilityFunctions.hpp"
 
-void Alpine::Model::LoadModel(std::string aPath, Ref<Material> material)
+Alpine::Model::Model(std::string aPath, Ref<Material> material)
 {
 	m_Material = material;
 	m_Mesh.SetMesh(aPath);
@@ -63,6 +63,11 @@ void Alpine::Model::SetScale(const Vector3& aScale)
 {
 	m_Size = aScale;
 	CalculateTransform();
+}
+
+Alpine::Ref<Alpine::Model> Alpine::Model::Create(std::string aPath, Ref<Material> material)
+{
+	return std::make_shared<Model>();
 }
 
 void Alpine::Model::CalculateTransform()

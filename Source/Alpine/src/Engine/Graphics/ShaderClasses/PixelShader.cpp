@@ -2,32 +2,24 @@
 
 #include <d3dcompiler.h>
 
-bool Alpine::PixelShader::Initialize(const std::filesystem::path& filePath)
-{
-	auto hr = D3DReadFileToBlob(filePath.c_str(), myBuffer.GetAddressOf());
-	if (FAILED(hr))
-	{
-		return false;
-	}
 
-	hr = DX11::Device()->CreatePixelShader(myBuffer.Get()->GetBufferPointer(), myBuffer.Get()->GetBufferSize(), NULL, myShader.GetAddressOf());
-	if (FAILED(hr))
-	{
-		return false;
-	}
-}
-
-ID3D11PixelShader* Alpine::PixelShader::GetShader() const
+Alpine::PixelShader::PixelShader(const std::filesystem::path& filePath)
 {
-	return myShader.Get();
-}
-
-ID3D10Blob* Alpine::PixelShader::GetBuffer()
-{
-	return myBuffer.Get();
+	AssertIfFailed(D3DReadFileToBlob(filePath.c_str(), m_Buffer.GetAddressOf()));
+	AssertIfFailed(DX11::Device()->CreatePixelShader(m_Buffer.Get()->GetBufferPointer(), m_Buffer.Get()->GetBufferSize(), NULL, m_Shader.GetAddressOf()));	
 }
 
 void Alpine::PixelShader::Bind()
 {
-	DX11::Context()->PSSetShader(myShader.Get(), nullptr, 0);
+	DX11::Context()->PSSetShader(m_Shader.Get(), nullptr, 0);
+}
+
+void Alpine::PixelShader::Unbind()
+{
+	DX11::Context()->PSSetShader(nullptr, nullptr, 0);
+}
+
+Alpine::Ref<Alpine::PixelShader> Alpine::PixelShader::Create(const std::filesystem::path& filePath)
+{
+	return std::make_shared<PixelShader>(filePath);
 }

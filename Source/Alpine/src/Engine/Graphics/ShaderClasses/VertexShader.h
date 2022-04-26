@@ -8,14 +8,14 @@ namespace Alpine
 	class VertexShader
 	{
 	public:
-		bool Initialize(std::wstring aShaderPath, D3D11_INPUT_ELEMENT_DESC* aDesc, UINT aElements);
-		ID3D11VertexShader* GetShader();
-		ID3D10Blob* GetBuffer();
-		ID3D11InputLayout* GetInputLayout();
+		VertexShader(const std::filesystem::path& aShaderPath, D3D11_INPUT_ELEMENT_DESC* aDesc, UINT aElements);
+		
 		void Bind();
 
+		static Ref<VertexShader> Create(const std::filesystem::path& aShaderPath, D3D11_INPUT_ELEMENT_DESC* aDesc, UINT aElements);
+
 	private:
-		ComPtr<ID3D11VertexShader> myShader;
+		ComPtr<ID3D11VertexShader> m_Shader;
 		ComPtr<ID3D10Blob> myBuffer;
 		ComPtr<ID3D11InputLayout> myInputLayout;
 	};

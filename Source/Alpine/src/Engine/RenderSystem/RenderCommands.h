@@ -1,14 +1,13 @@
 #pragma once
-#include "Engine/Graphics/Buffers/VertexBuffer.h"
-#include "Engine/Graphics/Buffers/IndexBuffer.h"
-#include "Engine/Graphics/Model/ModelData.hpp"
+#include "Engine/Graphics/Model/Mesh.h"
 #include "Engine/Materials/Material.h"
+#include "DX11/Utilities.h"
 namespace Alpine
 {
-	struct ModelCommand
+	struct MeshCommand
 	{
-		VertexBuffer<Vertex> vertexBuffer;
-		IndexBuffer indexBuffer;
-		std::shared_ptr<Material> material;
+		Ref<Material> material;
+		Matrix transform;
+		Mesh mesh;
 	};
 }

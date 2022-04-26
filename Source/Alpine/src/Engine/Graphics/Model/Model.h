@@ -11,7 +11,7 @@ namespace Alpine
 	class Model
 	{
 	public:
-		void LoadModel(std::string aPath, Ref<Material> material);
+		Model(std::string aPath, Ref<Material> material);
 		void Draw();
 
 		Matrix& GetTransform();
@@ -22,6 +22,8 @@ namespace Alpine
 		void SetRotation(const Vector3& aRotation);
 		void Rotate(const Vector3& aRotation);
 		void SetScale(const Vector3& aScale);
+
+		static Ref<Model> Create(std::string aPath, Ref<Material> material);
 
 	private:
 		void CalculateTransform();

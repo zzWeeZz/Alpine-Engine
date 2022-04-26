@@ -4,8 +4,11 @@
 #include <filesystem>
 #include <wrl/client.h>
 #include <spdlog/spdlog.h>
+#include <cassert>
 using namespace Microsoft::WRL;
 using namespace DirectX::SimpleMath;
+
+#define AssertIfFailed(x) { assert(x == S_OK); }
 
 namespace Alpine
 {
@@ -14,4 +17,5 @@ namespace Alpine
 
 	template<typename T>
 	using Ref = std::shared_ptr<T>;
+
 }

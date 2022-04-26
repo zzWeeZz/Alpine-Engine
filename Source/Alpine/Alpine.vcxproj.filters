@@ -81,7 +81,7 @@
     <ClCompile Include="src\Engine\Graphics\ShaderClasses\ComputeShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Engine\RenderSystem\RenderSystem.cpp">
+    <ClCompile Include="src\Engine\RenderSystem\Renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\RenderSystem\FrameBuffer.cpp">
@@ -170,7 +170,7 @@
     <ClInclude Include="src\Engine\Graphics\ShaderClasses\Shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Engine\RenderSystem\RenderSystem.h">
+    <ClInclude Include="src\Engine\RenderSystem\Renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\RenderSystem\RenderCommands.h">

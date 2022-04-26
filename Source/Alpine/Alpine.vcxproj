@@ -173,7 +173,7 @@
     <ClCompile Include="src\Engine\Graphics\SkyBox\SkyBox.cpp" />
     <ClCompile Include="src\Engine\DX11\RenderStateManager.cpp" />
     <ClCompile Include="src\Engine\RenderSystem\FrameBuffer.cpp" />
-    <ClCompile Include="src\Engine\RenderSystem\RenderSystem.cpp" />
+    <ClCompile Include="src\Engine\RenderSystem\Renderer.cpp" />
     <ClCompile Include="src\Engine\Graphics\Model\Mesh.cpp" />
     <ClCompile Include="src\Application\Application.cpp" />
     <ClCompile Include="src\Application\Window\GlfwWindow.cpp" />
@@ -202,7 +202,7 @@
     <ClInclude Include="src\Engine\DX11\Utilities.h" />
     <ClInclude Include="src\Engine\RenderSystem\FrameBuffer.h" />
     <ClInclude Include="src\Engine\RenderSystem\RenderCommands.h" />
-    <ClInclude Include="src\Engine\RenderSystem\RenderSystem.h" />
+    <ClInclude Include="src\Engine\RenderSystem\Renderer.h" />
     <ClInclude Include="src\Engine\Graphics\Buffers\BufferData.h" />
     <ClInclude Include="src\Engine\Graphics\Model\Mesh.h" />
     <ClInclude Include="src\Application\Application.h" />

@@ -21,21 +21,7 @@ namespace Alpine
 	{
 		DX11::Initialize(aScreenWidth, aScreenHight, false);
 
-		D3D11_INPUT_ELEMENT_DESC layout[] =
-		{
-			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-			{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-			{"NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 20, D3D11_INPUT_PER_VERTEX_DATA, 0},
-			{"TANGENT", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 32, D3D11_INPUT_PER_VERTEX_DATA, 0},
-			{"BITANGENT", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 44, D3D11_INPUT_PER_VERTEX_DATA, 0},
-			{"TBASIS" , 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 56, D3D11_INPUT_PER_VERTEX_DATA, 0}
-		};
-		m_VertexShader.Initialize(L"Shaders/pbrShader_vs.cso", layout, ARRAYSIZE(layout));
-		m_PixelShader.Initialize(L"Shaders/pbrShader_ps.cso");
 
-		m_VertexShader.Bind();
-		m_PixelShader.Bind();
-	
 		FramebufferSpecification spec = {};
 		spec.width = Application::GetWindowSize().x;
 		spec.height = Application::GetWindowSize().y;
