@@ -18,7 +18,6 @@ namespace Alpine
 
 		void Bind();
 		void Draw();
-		void Check();
 		static Ref<SkyBox> Create(const std::filesystem::path& skyBoxTexturePath);
 	private:
 		void ConvertToCubeMap(const std::filesystem::path& skyBoxTexturePath);
@@ -26,11 +25,7 @@ namespace Alpine
 		void GenerateIrradience();
 		void GenerateSPBRDF(uint32_t width = 256, uint32_t height = 256);
 
-		VertexShader m_VertexShader;
-		PixelShader m_PixelShader;
-
-		Model m_Model;
-
+		Ref<Model> m_Model;
 
 		Ref<Texture> m_skyBoxTexture;
 		Ref<Texture> m_SDRBF;
@@ -44,7 +39,6 @@ namespace Alpine
 		ComputeShader m_EquirectToCubeMapShader;
 
 		ConstantBuffer<SpectularMapFilerSettingsBuffer> m_SpecBuffer;
-
 		SpectularMapFilerSettingsBuffer m_SpecBufferData;
 	};
 }

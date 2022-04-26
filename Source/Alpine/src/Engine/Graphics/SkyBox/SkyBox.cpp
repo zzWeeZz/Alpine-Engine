@@ -15,7 +15,7 @@ Alpine::SkyBox::SkyBox(const std::filesystem::path& skyBoxTexturePath) : m_SpecB
 	GenerateSPBRDF();
 	Ref<Material> skyBoxMaterial = Material::Create("skybox");
 	skyBoxMaterial->AddTexture(m_CubeMap);
-	m_Model.LoadModel("Cube", skyBoxMaterial);
+	m_Model = Model::Create("Cube", skyBoxMaterial);
 }
 
 void Alpine::SkyBox::Bind()
@@ -29,16 +29,9 @@ void Alpine::SkyBox::Draw()
 {
 	DX11::GetRenderStateManager().PushRasterizerState(CullMode::Front);
 	DX11::GetRenderStateManager().PushDepthStencilState(DepthStencilMode::ReadOnly);
-	m_Model.Draw();
+	m_Model->Draw();
 	DX11::GetRenderStateManager().PopRasterizerState();
 	DX11::GetRenderStateManager().PopDepthStencilState();
-}
-
-void Alpine::SkyBox::Check()
-{
-	ImGui::Begin("Test");
-	ImGui::Image(m_skyBoxTexture->GetShaderResourceView().Get(), {0, 0});
-	ImGui::End();
 }
 
 Alpine::Ref<Alpine::SkyBox> Alpine::SkyBox::Create(const std::filesystem::path& skyBoxTexturePath)
