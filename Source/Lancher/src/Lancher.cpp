@@ -8,17 +8,18 @@
 #include "ToolBox/Utility/Timer.h"
 
 #include "Application/Application.h"
+#include "Engine/RenderSystem/Renderer.h"
 #include "Engine/ImGui/ImGuiLayer.h"
+#include "Playground/Playground.h"
 
 int main()
 {
-	Alpine::Engine myEngine;
+	
 	Input myKeyInput();
+	Alpine::Playground playground;
 	ToolBox::Utility::Timer myTimer;
-	/* Initialize the library */
 	if (!glfwInit())
 		return -1;
-	/* Create a windowed mode window and its OpenGL context */
 	if (!Alpine::Application::CreateNewWindow("Alpine", 1280, 720))
 	{
 		return -1;
@@ -26,27 +27,27 @@ int main()
 	auto window = static_cast<GLFWwindow*>(Alpine::Application::GetWindow()->GetWindow());
 	Alpine::ImGuiLayer imguiLayer;
 	Input::GetInstance().SetupKeyInputs(window);
-
-	/* Make the window's context current */
+	Alpine::DX11::Initialize(1280, 720, false);
+	Alpine::Renderer::Initalize();
 	glfwMakeContextCurrent(window);
 	int width, height;
 	glfwGetWindowSize(window, &width, &height);
-	myEngine.InitD3D(glfwGetWin32Window(window), width, height);
+	playground.Init();
 	myTimer.Update();
-	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
 	{
 		glfwPollEvents();
-		/* Render here */
-		
 		myTimer.Update();
-		myEngine.RenderFrame();
-		/* Poll for and process events */
+		playground.Update();
+		playground.Render();
+
+		Alpine::Renderer::Begin();
+		Alpine::Renderer::DrawStash();
+		Alpine::Renderer::End();
+		playground.ImGuiRender();
 		Alpine::DX11::Present(false);
-		myEngine.Update(myTimer.GetDeltaTime());
 		
 	}
 	glfwTerminate();
-	myEngine.CleanD3D();
 	return 0;
 }

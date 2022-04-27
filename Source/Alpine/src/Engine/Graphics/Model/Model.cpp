@@ -4,6 +4,8 @@
 #include <spdlog/spdlog.h>
 #include "DX11/DX11.h"
 #include "ToolBox/Utility/UtilityFunctions.hpp"
+#include "Engine/RenderSystem/Renderer.h"
+#include "RenderSystem/RenderCommands.h"
 
 Alpine::Model::Model(std::string aPath, Ref<Material> material)
 {
@@ -16,8 +18,8 @@ Alpine::Model::Model(std::string aPath, Ref<Material> material)
 
 void Alpine::Model::Draw()
 {
-	m_Material->Bind();
-	m_Mesh.SubmitMesh();
+	MeshCommand command(m_Material, m_Transform, m_Mesh);
+	Renderer::SubmitMesh(command);
 }
 
 Matrix& Alpine::Model::GetTransform()
@@ -67,7 +69,7 @@ void Alpine::Model::SetScale(const Vector3& aScale)
 
 Alpine::Ref<Alpine::Model> Alpine::Model::Create(std::string aPath, Ref<Material> material)
 {
-	return std::make_shared<Model>();
+	return std::make_shared<Model>(aPath, material);
 }
 
 void Alpine::Model::CalculateTransform()

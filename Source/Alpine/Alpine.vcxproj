@@ -197,6 +197,7 @@
     <ClCompile Include="src\Engine\Textures\TextureCube.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Engine\Alpine.h" />
     <ClInclude Include="src\Engine\Graphics\SkyBox\SkyBox.h" />
     <ClInclude Include="src\Engine\DX11\RenderStateManager.h" />
     <ClInclude Include="src\Engine\DX11\Utilities.h" />
