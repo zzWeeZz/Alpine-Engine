@@ -5,15 +5,33 @@
 
 namespace Alpine
 {
-	struct InputElementSpecs
+	enum class Value
+	{
+		FLOAT = 4,
+		VEC2 = 8,
+		VEC3 = 12,
+		VEC4 = 16,
+	};
+
+	struct InputElementSpec
 	{
 		std::string name;
-		unsigned int semanticIndex;
-		DXGI_FORMAT format;
-		unsigned int inputSlot;
-		unsigned int alignedByteOffset;
-		D3D11_INPUT_CLASSIFICATION inputSlotClass;
-		unsigned int instanceDataStepRate;
+		Value value;
+		InputElementSpec(Value size, std::string identifier)
+		{
+			value = size;
+			name = identifier;
+		}
+		
+	};
+
+	struct VertexLayoutSpecs
+	{
+		VertexLayoutSpecs(std::vector<InputElementSpec>& specs)
+		{
+			theSpecs = specs;
+		}
+		std::vector<InputElementSpec> theSpecs;
 	};
 	class VertexShader
 	{

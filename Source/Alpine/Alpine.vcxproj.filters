@@ -191,6 +191,9 @@
     <ClInclude Include="src\stb_image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Engine\Alpine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="src\Engine\Shaders\pbrShader_vs.hlsl" />

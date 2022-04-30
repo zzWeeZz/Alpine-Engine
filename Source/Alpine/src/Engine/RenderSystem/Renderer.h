@@ -1,18 +1,20 @@
 #pragma once
 #include <vector>
-#include "DX11/Utilities.h"
-#include "Graphics/Buffers/ConstantBuffer.hpp"
+#include "Engine/DX11/Utilities.h"
+#include "Engine/Graphics/Buffers/ConstantBuffer.hpp"
+#include "Engine/Camera/PerspectiveCamera.h"
 #include "FrameBuffer.h"
 
-#include "Graphics/Shaders.h"
+#include "Engine/Graphics/Shaders.h"
 
-#include "Graphics/SkyBox/SkyBox.h"
+#include "Engine/Graphics/SkyBox/SkyBox.h"
 namespace Alpine
 {
 	class MeshCommand;
 	
 	struct Stash
 	{
+		Ref<PerspectiveCamera> camera;
 		std::vector<MeshCommand> meshes;
 	};
 
@@ -21,8 +23,10 @@ namespace Alpine
 	public:
 		Renderer();
 		static void Initalize();
+		static void SubmitCamera(Ref<PerspectiveCamera> camera);
 		static bool SubmitMesh(MeshCommand& model);
 		static void Begin();
+		static Ref<FrameBuffer> GetFrameBuffer();
 		static void DrawStash();
 		static void End();
 	private:
@@ -36,6 +40,9 @@ namespace Alpine
 
 		Ref<FrameBuffer> m_FrameBuffer;
 		ConstantBuffer<Matrix> m_ModelBuffer;
+
+		CameraBuffer m_CameraBufferObject;
+		ConstantBuffer<CameraBuffer> m_CameraBuffer;
 	};
 }
 

@@ -24,24 +24,22 @@ namespace Alpine
 		void RenderFrame();
 		void CleanD3D();
 	private:
-		VertexShader m_VertexShader;
-		PixelShader m_PixelShader;
+		
 
-		AmbientLight m_AmbientLight;
-		PerspectiveCamera m_Camera;
-		Ref<Material> m_MetalicMaterial;
-		Ref<Material> m_GroundMaterial;
+		//PerspectiveCamera m_Camera;
+		//Ref<Material> m_MetalicMaterial;
+		//Ref<Material> m_GroundMaterial;
 
-		Ref<FrameBuffer> m_FrameBuffer;
-		Ref<SkyBox> m_SkyBox;
+		//Ref<FrameBuffer> m_FrameBuffer;
+		//Ref<SkyBox> m_SkyBox;
 
-		CameraBuffer m_CameraBufferObject;
-		LightBuffer m_LightBufferObject;
-		ConstantBuffer<CameraBuffer> m_CameraBuffer;
-		ConstantBuffer<Matrix> m_ModelBuffer;
-		ConstantBuffer<LightBuffer> m_LightBuffer;
+		//CameraBuffer m_CameraBufferObject;
+		///*LightBuffer m_LightBufferObject;*/
+		//ConstantBuffer<CameraBuffer> m_CameraBuffer;
+		//ConstantBuffer<Matrix> m_ModelBuffer;
+		//ConstantBuffer<LightBuffer> m_LightBuffer;
 
-		ImGuiLayer m_ImguiLayer;
+		//ImGuiLayer m_ImguiLayer;
 
 		
 

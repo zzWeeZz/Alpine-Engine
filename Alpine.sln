@@ -5,6 +5,7 @@ VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lancher", "Source\Lancher\Lancher.vcxproj", "{140E6255-AAB2-4469-BF0C-02A5DD3C1703}"
 	ProjectSection(ProjectDependencies) = postProject
+		{D702E575-CC8C-45E1-B903-5E9B548ECB67} = {D702E575-CC8C-45E1-B903-5E9B548ECB67}
 		{1AB6A294-7355-451C-AFF1-064260204497} = {1AB6A294-7355-451C-AFF1-064260204497}
 	EndProjectSection
 EndProject
@@ -13,6 +14,13 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Apline", "Source\Alpine\Alpine.vcxproj", "{1AB6A294-7355-451C-AFF1-064260204497}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Imgui", "Source\Imgui\Imgui.vcxproj", "{4E037445-1FFD-42BD-8B3D-B673EF9CD12A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Glacier", "Source\Glacier\Glacier.vcxproj", "{D702E575-CC8C-45E1-B903-5E9B548ECB67}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4E037445-1FFD-42BD-8B3D-B673EF9CD12A} = {4E037445-1FFD-42BD-8B3D-B673EF9CD12A}
+		{1AB6A294-7355-451C-AFF1-064260204497} = {1AB6A294-7355-451C-AFF1-064260204497}
+		{236D69D4-0504-41C1-964A-8FF9005123A7} = {236D69D4-0504-41C1-964A-8FF9005123A7}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,6 +62,14 @@ Global
 		{4E037445-1FFD-42BD-8B3D-B673EF9CD12A}.Release|x64.Build.0 = Release|x64
 		{4E037445-1FFD-42BD-8B3D-B673EF9CD12A}.Release|x86.ActiveCfg = Release|Win32
 		{4E037445-1FFD-42BD-8B3D-B673EF9CD12A}.Release|x86.Build.0 = Release|Win32
+		{D702E575-CC8C-45E1-B903-5E9B548ECB67}.Debug|x64.ActiveCfg = Debug|x64
+		{D702E575-CC8C-45E1-B903-5E9B548ECB67}.Debug|x64.Build.0 = Debug|x64
+		{D702E575-CC8C-45E1-B903-5E9B548ECB67}.Debug|x86.ActiveCfg = Debug|Win32
+		{D702E575-CC8C-45E1-B903-5E9B548ECB67}.Debug|x86.Build.0 = Debug|Win32
+		{D702E575-CC8C-45E1-B903-5E9B548ECB67}.Release|x64.ActiveCfg = Release|x64
+		{D702E575-CC8C-45E1-B903-5E9B548ECB67}.Release|x64.Build.0 = Release|x64
+		{D702E575-CC8C-45E1-B903-5E9B548ECB67}.Release|x86.ActiveCfg = Release|Win32
+		{D702E575-CC8C-45E1-B903-5E9B548ECB67}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

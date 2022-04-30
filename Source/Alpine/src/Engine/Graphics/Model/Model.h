@@ -3,8 +3,8 @@
 
 #include <string>
 #include "Mesh.h"
-#include "Materials/Material.h"
-#include "DX11/Utilities.h"
+#include "Engine/Materials/Material.h"
+#include "Engine/DX11/DX11.h"
 
 namespace Alpine
 {
