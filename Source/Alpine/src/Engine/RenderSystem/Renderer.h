@@ -43,6 +43,9 @@ namespace Alpine
 
 		CameraBuffer m_CameraBufferObject;
 		ConstantBuffer<CameraBuffer> m_CameraBuffer;
+
+		LightBuffer m_LightBufferObject;
+		ConstantBuffer<LightBuffer> m_LightBuffer;
 	};
 }
 

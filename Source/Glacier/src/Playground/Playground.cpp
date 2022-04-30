@@ -14,25 +14,25 @@ void Alpine::Playground::Init()
 	m_Metal->AddTexture(Texture::Create("Textures/mesh-covered-metal1-height.png"));
 	m_Model = Alpine::Model::Create("Model/M_MED_Gumshoe_Export.fbx", m_Metal);
 	m_Model->SetRotation({ 0, 0, 0 });
-	m_Model->SetPosition({ 0,10.f, 0 });
+	m_Model->SetPosition({ 0,0.f, -10});
 	m_Model->SetScale({ 0.1f, 0.1f, 0.1f });
 	m_ImGuiLayer.OnAttach();
 }
 
-void Alpine::Playground::Update()
+void Alpine::Playground::Update(float delta)
 {
-	m_Camera.Update(0.0001f);
+	m_Camera.Update(delta);
 }
 
 void Alpine::Playground::Render()
 {
+	Renderer::SubmitCamera(std::make_shared<PerspectiveCamera>(m_Camera));
 	m_Model->Draw();
 }
 
 void Alpine::Playground::ImGuiRender()
 {
 	m_ImGuiLayer.Begin();
-	DX11::Bind();
 	m_ImGuiLayer.RenderImGui();
 	static bool pOpen = true;
 	static bool opt_fullscreen = true;

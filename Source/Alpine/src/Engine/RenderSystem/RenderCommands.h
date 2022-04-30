@@ -6,14 +6,16 @@ namespace Alpine
 {
 	struct MeshCommand
 	{
-		MeshCommand(Ref<Material> mat, Matrix trans, Mesh me)
+		MeshCommand(Ref<Material> mat, Matrix trans, Mesh me, bool usePbr)
 		{
 			material = mat;
 			transform = trans;
 			mesh = me;
+			usePBR = usePbr;
 		}
 		Ref<Material> material;
 		Matrix transform;
 		Mesh mesh;
+		bool usePBR = true;
 	};
 }

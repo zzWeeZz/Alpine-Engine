@@ -6,7 +6,7 @@ namespace Alpine
 {
 	static Scope<Stash> s_Stash = std::make_unique<Stash>();
 	Renderer Renderer::s_Instance;
-	Renderer::Renderer() : m_CameraBuffer(0), m_ModelBuffer(1)
+	Renderer::Renderer() : m_CameraBuffer(0), m_ModelBuffer(1), m_LightBuffer(2)
 	{
 		s_Instance = *this;
 	}
@@ -15,6 +15,8 @@ namespace Alpine
 	{
 		s_Instance.m_Skybox = SkyBox::Create("Textures/cannon_4k.hdr");
 		s_Instance.m_ModelBuffer.Create();
+		s_Instance.m_CameraBuffer.Create();
+		s_Instance.m_LightBuffer.Create();
 		D3D11_INPUT_ELEMENT_DESC layout[] =
 		{
 			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
@@ -50,7 +52,7 @@ namespace Alpine
 
 	bool Renderer::SubmitMesh(MeshCommand& model)
 	{
-		s_Stash->meshes.emplace_back(model);
+		s_Stash->meshes.push_back(model);
 		return true;
 	}
 	Ref<FrameBuffer> Renderer::GetFrameBuffer()
@@ -64,35 +66,68 @@ namespace Alpine
 
 	void Renderer::DrawStash()
 	{
-		s_Instance.m_PbrVertexShader->Bind();
-		s_Instance.m_PbrPixelShader->Bind();
-	
+		DX11::GetRenderStateManager().SetSamplerState(SamplerMode::Wrap, ShaderType::Pixel, 0);
+		DX11::GetRenderStateManager().SetSamplerState(SamplerMode::Clamp, ShaderType::Pixel, 1);
+		s_Instance.m_FrameBuffer->ClearView({ 0,1,0,1 });
+		s_Instance.m_FrameBuffer->ClearDepthStencil();
+
 		s_Instance.m_CameraBufferObject.position = Vector4(s_Stash->camera->GetPosition().x, s_Stash->camera->GetPosition().y, s_Stash->camera->GetPosition().z, 1);
 		s_Instance.m_CameraBufferObject.toCameraSpace = s_Stash->camera->GetViewMatrix();
 		s_Instance.m_CameraBufferObject.toProjectionSpace = s_Stash->camera->GetProjectionMatrix();
 		s_Instance.m_CameraBufferObject.viewMatrix = s_Stash->camera->GetViewMatrix();
 		s_Instance.m_CameraBuffer.SetData(&s_Instance.m_CameraBufferObject, sizeof(CameraBuffer));
 		s_Instance.m_CameraBuffer.Bind();
-		DX11::GetRenderStateManager().SetSamplerState(SamplerMode::Wrap, ShaderType::Pixel, 0);
-		DX11::GetRenderStateManager().SetSamplerState(SamplerMode::Clamp, ShaderType::Pixel, 1);
+
+		s_Instance.m_LightBufferObject.ambientColor = Vector4(0.1f, 0.1f, 0.1f, 1);
+		s_Instance.m_LightBuffer.SetData(&s_Instance.m_LightBufferObject, sizeof(LightBuffer));
+		s_Instance.m_LightBuffer.Bind();
+
+
+		s_Instance.m_Skybox->Draw();
+
+		s_Instance.m_Skybox->Bind();
+		s_Instance.m_PbrVertexShader->Bind();
+		s_Instance.m_PbrPixelShader->Bind();
 		for (size_t i = 0; i < s_Stash->meshes.size(); i++)
 		{
-			s_Instance.m_ModelBuffer.SetData(&s_Stash->meshes[i].transform, sizeof(Matrix));
-			s_Instance.m_ModelBuffer.Bind();
-			s_Stash->meshes[i].material->Bind();
-			s_Stash->meshes[i].mesh.SubmitMesh();
+			if (s_Stash->meshes[i].usePBR)
+			{
+				s_Instance.m_PbrVertexShader->Bind();
+				s_Instance.m_PbrPixelShader->Bind();
+				s_Instance.m_Skybox->Bind();
+				s_Instance.m_FrameBuffer->Bind();
+				DX11::GetRenderStateManager().SetSamplerState(SamplerMode::Wrap, ShaderType::Pixel, 0);
+				DX11::GetRenderStateManager().SetSamplerState(SamplerMode::Clamp, ShaderType::Pixel, 1);
+				s_Instance.m_ModelBuffer.SetData(&s_Stash->meshes[i].transform, sizeof(Matrix));
+				s_Instance.m_ModelBuffer.Bind();
+				DX11::GetRenderStateManager().PushRasterizerState(CullMode::Back);
+				DX11::GetRenderStateManager().PushDepthStencilState(DepthStencilMode::ReadWrite);
+				s_Stash->meshes[i].material->Bind();
+				s_Stash->meshes[i].mesh.SubmitMesh();
+				DX11::GetRenderStateManager().PopRasterizerState();
+				DX11::GetRenderStateManager().PopDepthStencilState();
+			}
+			else
+			{
+				s_Instance.m_SkyBoxVertexShader->Bind();
+				s_Instance.m_SkyBoxPixelShader->Bind();
+				DX11::GetRenderStateManager().PushRasterizerState(CullMode::Front);
+				DX11::GetRenderStateManager().PushDepthStencilState(DepthStencilMode::ReadOnly);
+				s_Instance.m_FrameBuffer->Bind();
+				DX11::GetRenderStateManager().SetSamplerState(SamplerMode::Wrap, ShaderType::Pixel, 0);
+				DX11::GetRenderStateManager().SetSamplerState(SamplerMode::Clamp, ShaderType::Pixel, 1);
+				s_Instance.m_Skybox->BindForSky();
+				s_Stash->meshes[i].material->Bind();
+				s_Stash->meshes[i].mesh.SubmitMesh();
+				DX11::GetRenderStateManager().PopRasterizerState();
+				DX11::GetRenderStateManager().PopDepthStencilState();
+			}
 		}
-
-		s_Instance.m_SkyBoxVertexShader->Bind();
-		s_Instance.m_SkyBoxPixelShader->Bind();
-		s_Instance.m_Skybox->Draw();
+		s_Stash->meshes.clear();
 	}
 
 	void Renderer::End()
 	{
-		s_Instance.m_FrameBuffer->ClearView({0,0,0,0});
-		s_Instance.m_FrameBuffer->ClearDepthStencil();
 		s_Instance.m_FrameBuffer->UnBind();
-		s_Stash->meshes.clear();
 	}
 }

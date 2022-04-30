@@ -17,6 +17,7 @@ namespace Alpine
 		SkyBox(const std::filesystem::path& skyBoxTexturePath);
 
 		void Bind();
+		void BindForSky();
 		void Draw();
 		static Ref<SkyBox> Create(const std::filesystem::path& skyBoxTexturePath);
 	private:

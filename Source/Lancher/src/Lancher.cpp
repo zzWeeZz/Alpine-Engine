@@ -38,14 +38,15 @@ int main()
 	{
 		glfwPollEvents();
 		myTimer.Update();
-		playground.Update();
-		playground.Render();
+		playground.Update(myTimer.GetDeltaTime());
 
 		Alpine::Renderer::Begin();
+		Alpine::DX11::ClearView();
 		Alpine::Renderer::DrawStash();
-		Alpine::Renderer::End();
+		Alpine::DX11::Bind();
+		playground.Render();
 		playground.ImGuiRender();
-		Alpine::DX11::Present(false);
+		Alpine::DX11::Present(true);
 		
 	}
 	glfwTerminate();

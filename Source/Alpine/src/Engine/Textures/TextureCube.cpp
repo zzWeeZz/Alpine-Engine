@@ -167,6 +167,11 @@ void Alpine::TextureCube::Bind(unsigned int slot, bool forCompute)
 	}
 }
 
+void Alpine::TextureCube::UnBind()
+{
+	DX11::Context()->PSSetShaderResources(0, 1, nullptr);
+}
+
 void Alpine::TextureCube::GenerateMipMaps()
 {
 	DX11::Context()->GenerateMips(m_ShaderResourceView.Get());

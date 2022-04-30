@@ -25,11 +25,18 @@ void Alpine::SkyBox::Bind()
 	m_CubeMap->Bind(10);
 }
 
+void Alpine::SkyBox::BindForSky()
+{
+	m_CubeMap->Bind(0);
+}
+
+
 void Alpine::SkyBox::Draw()
 {
+	m_CubeMap->Bind(0);
 	DX11::GetRenderStateManager().PushRasterizerState(CullMode::Front);
 	DX11::GetRenderStateManager().PushDepthStencilState(DepthStencilMode::ReadOnly);
-	m_Model->Draw();
+	m_Model->Draw(true);
 	DX11::GetRenderStateManager().PopRasterizerState();
 	DX11::GetRenderStateManager().PopDepthStencilState();
 }
@@ -64,7 +71,7 @@ void Alpine::SkyBox::FilterEnviorment()
 	DX11::Context()->CSSetShaderResources(0, 1, m_CubeMap->GetShaderResourceView().GetAddressOf());
 	DX11::Context()->CSSetShader(m_SpecularComputeShader.GetShader(), 0, 0);
 
-	for(uint32_t i = 0; i < 6; ++i)
+	for (uint32_t i = 0; i < 6; ++i)
 	{
 		uint32_t subResourceIndex = D3D11CalcSubresource(0, i, m_SpecularMap->GetLevels());
 		DX11::Context()->CopySubresourceRegion(m_SpecularMap->GetTextures().Get(), subResourceIndex, 0, 0, 0, m_CubeMap->GetTextures().Get(), subResourceIndex, nullptr);

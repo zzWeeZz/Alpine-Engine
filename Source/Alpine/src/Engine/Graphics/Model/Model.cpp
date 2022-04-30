@@ -16,10 +16,11 @@ Alpine::Model::Model(std::string aPath, Ref<Material> material)
 	m_Size = DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f);
 }
 
-void Alpine::Model::Draw()
+void Alpine::Model::Draw(bool dontSendToRenderer)
 {
-	MeshCommand command(m_Material, m_Transform, m_Mesh);
-	Renderer::SubmitMesh(command);
+		MeshCommand command(m_Material, m_Transform, m_Mesh, !dontSendToRenderer);
+		Renderer::SubmitMesh(command);
+	
 }
 
 Matrix& Alpine::Model::GetTransform()

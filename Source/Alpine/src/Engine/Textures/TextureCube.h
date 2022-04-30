@@ -14,6 +14,7 @@ namespace Alpine
 		TextureCube(const std::filesystem::path& filePath);
 		TextureCube(UINT width, UINT height, DXGI_FORMAT format, UINT levels);
 		void Bind(unsigned int slot, bool forCompute = false);
+		void UnBind();
 		void GenerateMipMaps();
 		void CreateUAV(UINT levels = 0);
 		unsigned int GetLevels();

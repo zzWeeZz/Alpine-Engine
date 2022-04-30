@@ -12,7 +12,7 @@ namespace Alpine
 	{
 	public:
 		Model(std::string aPath, Ref<Material> material);
-		void Draw();
+		void Draw(bool dontSendToRenderer = false);
 
 		Matrix& GetTransform();
 		Vector3 GetPosition();
