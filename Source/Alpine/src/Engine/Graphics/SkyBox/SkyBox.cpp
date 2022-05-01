@@ -36,7 +36,7 @@ void Alpine::SkyBox::Draw()
 	m_CubeMap->Bind(0);
 	DX11::GetRenderStateManager().PushRasterizerState(CullMode::Front);
 	DX11::GetRenderStateManager().PushDepthStencilState(DepthStencilMode::ReadOnly);
-	m_Model->Draw(true);
+	m_Model->Draw(CullMode::Front, DepthStencilMode::ReadOnly);
 	DX11::GetRenderStateManager().PopRasterizerState();
 	DX11::GetRenderStateManager().PopDepthStencilState();
 }

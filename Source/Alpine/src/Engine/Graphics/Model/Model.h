@@ -12,7 +12,7 @@ namespace Alpine
 	{
 	public:
 		Model(std::string aPath, Ref<Material> material);
-		void Draw(bool dontSendToRenderer = false);
+		void Draw(CullMode cullmode = CullMode::Back, DepthStencilMode depthMode = DepthStencilMode::ReadWrite);
 
 		Matrix& GetTransform();
 		Vector3 GetPosition();

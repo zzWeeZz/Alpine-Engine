@@ -16,9 +16,9 @@ Alpine::Model::Model(std::string aPath, Ref<Material> material)
 	m_Size = DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f);
 }
 
-void Alpine::Model::Draw(bool dontSendToRenderer)
+void Alpine::Model::Draw(CullMode cullmode, DepthStencilMode depthMode)
 {
-		MeshCommand command(m_Material, m_Transform, m_Mesh, !dontSendToRenderer);
+		MeshCommand command(m_Material, m_Transform, m_Mesh, cullmode, depthMode);
 		Renderer::SubmitMesh(command);
 	
 }

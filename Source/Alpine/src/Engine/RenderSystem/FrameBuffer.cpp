@@ -34,6 +34,7 @@ void Alpine::FrameBuffer::UnBind()
 	ID3D11RenderTargetView* nullViews[] = { nullptr };
 	DX11::Context()->OMSetRenderTargets(_countof(nullViews), nullViews, nullptr);
 	DX11::Context()->Flush();
+	DX11::Bind();
 }
 
 void Alpine::FrameBuffer::Resize(uint32_t width, uint32_t height)
