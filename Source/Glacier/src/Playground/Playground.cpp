@@ -6,28 +6,48 @@ void Alpine::Playground::Init()
 	m_Camera.Init({0, 0, 0});
 	Renderer::SubmitCamera(std::make_shared<PerspectiveCamera>(m_Camera));
 	m_Metal = Material::Create("Metalic");
-	m_Metal->AddTexture(Texture::Create("Textures/worn-shiny-metal-ue/worn-shiny-metal-albedo.png"));
-	m_Metal->AddTexture(Texture::Create("Textures/worn-shiny-metal-ue/worn-shiny-metal-Roughness.png"));
-	m_Metal->AddTexture(Texture::Create("Textures/worn-shiny-metal-ue/worn-shiny-metal-Normal-dx.png"));
+	m_Metal->AddTexture(Texture::Create("Textures/mesh-covered-metal1-albedo.png"));
+	m_Metal->AddTexture(Texture::Create("Textures/mesh-covered-metal1-roughness.png"));
+	m_Metal->AddTexture(Texture::Create("Textures/mesh-covered-metal1-normal-dx.png"));
 	m_Metal->AddTexture(Texture::Create("Textures/mesh-covered-metal1-ao.png"));
-	m_Metal->AddTexture(Texture::Create("Textures/worn-shiny-metal-ue/worn-shiny-metal-Metallic.png"));
+	m_Metal->AddTexture(Texture::Create("Textures/mesh-covered-metal1-metallic.png"));
 	m_Metal->AddTexture(Texture::Create("Textures/mesh-covered-metal1-height.png"));
 	m_Model = Alpine::Model::Create("Model/M_MED_Gumshoe_Export.fbx", m_Metal);
 	m_Model->SetRotation({ 0, 0, 0 });
-	m_Model->SetPosition({ 0,0.f, -10});
+	m_Model->SetPosition({ 0,0.f, 0});
 	m_Model->SetScale({ 0.1f, 0.1f, 0.1f });
+
+
+	m_Ground = Model::Create("Cube", m_Metal);
+	m_Ground->SetScale({ 100, 10, 100 });
+	m_Ground->SetPosition({ 0, -5, 0 });
+
+	m_DirectonalLight = DirectionalLight::Create();
+	m_DirectonalLight->SetLightColor({ 1,0,0, 1 });
+	m_DirectonalLight->SetDirection({ 1,1, 1});
+	Renderer::SubmitDirLight(*m_DirectonalLight.get());
+	m_PointLight = PointLight::Create();
+	m_PointLight->SetLightColor({ 0,1,0, 2.f });
+	m_PointLight->SetPosition({ 0,10,-10 });
+	m_PointLight->SetRange(100);
+	m_PointLight->SetFallOff(0.9f);
+	Renderer::AddPointLight(*m_PointLight.get());
 	m_ImGuiLayer.OnAttach();
 }
 
 void Alpine::Playground::Update(float delta)
 {
 	m_Camera.Update(delta);
+	static float angle = 0;
+	angle += delta * 90;
+	m_Model->SetRotation({ 0, angle, 0 });
 }
 
 void Alpine::Playground::Render()
 {
 	Renderer::SubmitCamera(std::make_shared<PerspectiveCamera>(m_Camera));
 	m_Model->Draw();
+	m_Ground->Draw();
 }
 
 void Alpine::Playground::ImGuiRender()
@@ -119,22 +139,7 @@ void Alpine::Playground::ImGuiRender()
 	ImGui::Image(Renderer::GetFrameBuffer()->GetColorAttachment(), {ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y});
 	ImGui::End();
 	ImGui::PopStyleVar();
-	ImGui::Begin("Inspector");
-	/*if (ImGui::CollapsingHeader("Transfrom"))
-	{
-		static float heliPos[3] = { m_MetalMan.GetPosition().x, m_MetalMan.GetPosition().y, m_MetalMan.GetPosition().z };
-		ImGui::DragFloat3("Position", heliPos);
-		m_MetalMan.SetPosition({ heliPos[0], heliPos[1], heliPos[2] });
-
-		static float rot[3] = { m_MetalMan.GetRotation().x, m_MetalMan.GetRotation().y, m_MetalMan.GetRotation().z };
-		ImGui::DragFloat3("Rotation", rot);
-
-		m_MetalMan.SetRotation({ fmodf(rot[0], 360), fmodf(rot[1], 360), fmodf(rot[2], 360) });
-	}*/
-	ImGui::End();
-	ImGui::ShowDemoWindow();
-	ImGui::Begin("Objects");
-	ImGui::End();
+	
 
 	ImGui::End();
 	m_ImGuiLayer.End();

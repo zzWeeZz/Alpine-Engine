@@ -170,6 +170,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Engine\Lights\PointLight.cpp" />
     <ClCompile Include="src\Engine\Graphics\SkyBox\SkyBox.cpp" />
     <ClCompile Include="src\Engine\DX11\RenderStateManager.cpp" />
     <ClCompile Include="src\Engine\RenderSystem\FrameBuffer.cpp" />
@@ -180,7 +181,6 @@
     <ClCompile Include="src\Engine\Graphics\ShaderClasses\ComputeShader.cpp" />
     <ClCompile Include="src\Engine\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Engine\ImGui\ImGuiBuild.cpp" />
-    <ClCompile Include="src\Engine\Lights\AmbientLight.cpp" />
     <ClCompile Include="src\Engine\Lights\DirectionalLight.cpp" />
     <ClCompile Include="src\Engine\DX11\DX11.cpp" />
     <ClCompile Include="src\Engine\Engine.cpp" />
@@ -197,6 +197,7 @@
     <ClCompile Include="src\Engine\Textures\TextureCube.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Engine\Lights\PointLight.h" />
     <ClInclude Include="src\Engine\Alpine.h" />
     <ClInclude Include="src\Engine\Graphics\SkyBox\SkyBox.h" />
     <ClInclude Include="src\Engine\DX11\RenderStateManager.h" />
@@ -212,7 +213,6 @@
     <ClInclude Include="src\Engine\Graphics\ShaderClasses\ComputeShader.h" />
     <ClInclude Include="src\Engine\Graphics\ShaderClasses\Shader.h" />
     <ClInclude Include="src\Engine\ImGui\ImGuiLayer.h" />
-    <ClInclude Include="src\Engine\Lights\AmbientLight.h" />
     <ClInclude Include="src\Engine\Lights\DirectionalLight.h" />
     <ClInclude Include="src\Engine\DX11\DX11.h" />
     <ClInclude Include="src\Engine\Engine.h" />

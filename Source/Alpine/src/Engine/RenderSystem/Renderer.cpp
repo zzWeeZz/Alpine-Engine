@@ -1,4 +1,7 @@
 #include "Renderer.h"
+
+#include <iostream>
+
 #include "RenderCommands.h"
 #include "Application/Application.h"
 
@@ -6,7 +9,7 @@ namespace Alpine
 {
 	static Scope<Stash> s_Stash = std::make_unique<Stash>();
 	Renderer Renderer::s_Instance;
-	Renderer::Renderer() : m_CameraBuffer(0), m_ModelBuffer(1), m_LightBuffer(2)
+	Renderer::Renderer() : m_CameraBuffer(0), m_ModelBuffer(1), m_DirLightBuffer(2), m_PointLightBuffer(3)
 	{
 		s_Instance = *this;
 	}
@@ -16,7 +19,8 @@ namespace Alpine
 		s_Instance.m_Skybox = SkyBox::Create("Textures/monbachtal_riverbank_4k.hdr");
 		s_Instance.m_ModelBuffer.Create();
 		s_Instance.m_CameraBuffer.Create();
-		s_Instance.m_LightBuffer.Create();
+		s_Instance.m_DirLightBuffer.Create();
+		s_Instance.m_PointLightBuffer.Create();
 		D3D11_INPUT_ELEMENT_DESC layout[] =
 		{
 			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
@@ -52,7 +56,7 @@ namespace Alpine
 
 	bool Renderer::SubmitMesh(MeshCommand& model)
 	{
-		if(model.cullmode == CullMode::Front)
+		if (model.cullmode == CullMode::Front)
 		{
 			s_Instance.m_SkyBoxVertexShader->Bind();
 			s_Instance.m_SkyBoxPixelShader->Bind();
@@ -77,6 +81,32 @@ namespace Alpine
 		s_Instance.m_FrameBuffer->UnBind();
 		return true;
 	}
+
+	void Renderer::SubmitDirLight(DirectionalLight& light)
+	{
+		s_Instance.m_DirLightBufferObject.lightColor = light.GetLightColor();
+		s_Instance.m_DirLightBufferObject.lightDirection = Vector4(light.GetDirection().x, light.GetDirection().y, light.GetDirection().z, 0.0f);
+		s_Instance.m_DirLightBuffer.SetData(&s_Instance.m_DirLightBufferObject, sizeof(DirectionalLight));
+		s_Instance.m_DirLightBuffer.Bind();
+	}
+
+	void Renderer::AddPointLight(PointLight& light)
+	{
+		if(s_Instance.m_PointLightCount == 8)
+		{
+			std::cout << "Max point lights reached" << std::endl;
+			return;
+		}
+		auto& pointLight = s_Instance.m_PointLightBufferObject.PointLightData[s_Instance.m_PointLightCount];
+		pointLight.lightColor = light.GetLightColor();
+		pointLight.lightPosition = Vector4(light.GetPosition().x, light.GetPosition().y, light.GetPosition().z, 1.0f);
+		pointLight.lightRange = light.GetRange();
+		pointLight.falloff = light.GetFallOff();
+		s_Instance.m_PointLightBuffer.SetData(&s_Instance.m_PointLightBufferObject, sizeof(PointLightBuffer));
+		s_Instance.m_PointLightBuffer.Bind();
+		s_Instance.m_PointLightCount++;
+	}
+
 	Ref<FrameBuffer> Renderer::GetFrameBuffer()
 	{
 		return s_Instance.m_FrameBuffer;
@@ -99,10 +129,6 @@ namespace Alpine
 		s_Instance.m_CameraBufferObject.viewMatrix = s_Stash->camera->GetViewMatrix();
 		s_Instance.m_CameraBuffer.SetData(&s_Instance.m_CameraBufferObject, sizeof(CameraBuffer));
 		s_Instance.m_CameraBuffer.Bind();
-
-		s_Instance.m_LightBufferObject.ambientColor = Vector4(0.1f, 0.1f, 0.1f, 1);
-		s_Instance.m_LightBuffer.SetData(&s_Instance.m_LightBufferObject, sizeof(LightBuffer));
-		s_Instance.m_LightBuffer.Bind();
 	}
 
 	void Renderer::End()

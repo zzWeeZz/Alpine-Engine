@@ -6,7 +6,6 @@
 
 #include "Textures/TextureCube.h"
 #include "Camera/PerspectiveCamera.h"
-#include "Lights/AmbientLight.h"
 #include "imGui/ImGuiLayer.h"
 #include "Graphics/Buffers/BufferData.h"
 #include "RenderSystem/FrameBuffer.h"

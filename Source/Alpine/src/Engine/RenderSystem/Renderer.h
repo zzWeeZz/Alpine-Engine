@@ -6,7 +6,8 @@
 #include "FrameBuffer.h"
 
 #include "Engine/Graphics/Shaders.h"
-
+#include "Engine/Lights/DirectionalLight.h"
+#include "Engine/Lights/PointLight.h"
 #include "Engine/Graphics/SkyBox/SkyBox.h"
 namespace Alpine
 {
@@ -25,6 +26,8 @@ namespace Alpine
 		static void Initalize();
 		static void SubmitCamera(Ref<PerspectiveCamera> camera);
 		static bool SubmitMesh(MeshCommand& model);
+		static void SubmitDirLight(DirectionalLight& light);
+		static void AddPointLight(PointLight& light);
 		static void Begin();
 		static Ref<FrameBuffer> GetFrameBuffer();
 		static void DrawStash();
@@ -44,8 +47,12 @@ namespace Alpine
 		CameraBuffer m_CameraBufferObject;
 		ConstantBuffer<CameraBuffer> m_CameraBuffer;
 
-		LightBuffer m_LightBufferObject;
-		ConstantBuffer<LightBuffer> m_LightBuffer;
+		DirLightBuffer m_DirLightBufferObject;
+		ConstantBuffer<DirLightBuffer> m_DirLightBuffer;
+
+		size_t m_PointLightCount = 0;
+		PointLightBuffer m_PointLightBufferObject;
+		ConstantBuffer<PointLightBuffer> m_PointLightBuffer;
 	};
 }
 

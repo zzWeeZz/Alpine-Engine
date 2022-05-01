@@ -83,7 +83,7 @@ void Alpine::SkyBox::FilterEnviorment()
 	{
 		const UINT numGroups = std::max<UINT>(1, size / 32);
 		m_SpecularMap->CreateUAV(level);
-		const SpectularMapFilerSettingsBuffer al = { level * deltaRoughness };
+		const SpectularMapFillerSettingsBuffer al = { level * deltaRoughness };
 		DX11::GetRenderStateManager().SetSamplerState(SamplerMode::Wrap, ShaderType::Compute);
 		DX11::Context()->UpdateSubresource(m_SpecBuffer.GetBuffer(), 0, nullptr, &al, 0, 0);
 		m_SpecBuffer.Bind(true, 0);

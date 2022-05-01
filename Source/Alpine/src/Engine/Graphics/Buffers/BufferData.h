@@ -11,17 +11,39 @@ namespace Alpine
 		Matrix toProjectionSpace;
 		Matrix viewMatrix;
 	};
-	struct DirectionalLightBuffer
+
+	struct DirLightBuffer
 	{
+		Vector4 lightDirection;
+		Vector4 lightColor;
+	};
+
+	struct PointLightBuffer
+	{
+		struct PointLight
+		{
+			Vector4 lightPosition;
+			Vector4 lightColor;
+			float falloff;
+			float lightRange;
+			float padding[2];
+		} PointLightData[8];
+	
+	};
+
+	struct SpotLightBuffer
+	{
+		Vector4 lightPosition;
 		Vector4 lightColor;
 		Vector4 lightDirection;
+		Vector4 attenuation;
+		float lightRange;
+		float lightInnerRadius;
+		float lightOuterRadius;
+		float padding[1];
 	};
-	struct LightBuffer
-	{
-		DirectionalLightBuffer lights[4];
-		Vector4 ambientColor;
-	};
-	struct SpectularMapFilerSettingsBuffer
+
+	struct SpectularMapFillerSettingsBuffer
 	{
 		float roughness;
 		float padding[3];

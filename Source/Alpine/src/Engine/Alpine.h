@@ -7,3 +7,5 @@
 #include "Engine/ImGui/ImGuiLayer.h"
 #include "Engine/Camera/PerspectiveCamera.h"
 #include "Engine/RenderSystem/Renderer.h"
+#include "Engine/Lights/DirectionalLight.h"
+#include "Engine/Lights/PointLight.h"

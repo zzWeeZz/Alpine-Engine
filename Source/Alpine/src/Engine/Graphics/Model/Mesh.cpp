@@ -61,7 +61,7 @@ void Alpine::Mesh::SetMesh(std::string aPath)
 	}
 	else
 	{
-		m_Futures.push_back(std::async(std::launch::async, &Mesh::LoadModel, this, aPath));
+		LoadModel(aPath);
 	}
 
 	PrepareForRender();

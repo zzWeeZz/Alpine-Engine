@@ -39,7 +39,7 @@ namespace Alpine
 		ComputeShader m_SpbrdfShader;
 		ComputeShader m_EquirectToCubeMapShader;
 
-		ConstantBuffer<SpectularMapFilerSettingsBuffer> m_SpecBuffer;
-		SpectularMapFilerSettingsBuffer m_SpecBufferData;
+		ConstantBuffer<SpectularMapFillerSettingsBuffer> m_SpecBuffer;
+		SpectularMapFillerSettingsBuffer m_SpecBufferData;
 	};
 }
