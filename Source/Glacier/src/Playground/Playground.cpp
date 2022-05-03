@@ -23,13 +23,13 @@ void Alpine::Playground::Init()
 	m_Ground->SetPosition({ 0, -5, 0 });
 
 	m_DirectonalLight = DirectionalLight::Create();
-	m_DirectonalLight->SetLightColor({ 1,0,0, 1 });
+	m_DirectonalLight->SetLightColor({ 1,1,1, 1 });
 	m_DirectonalLight->SetDirection({ 1,1, 1});
 	Renderer::SubmitDirLight(*m_DirectonalLight.get());
 	m_PointLight = PointLight::Create();
-	m_PointLight->SetLightColor({ 0,1,0, 2.f });
-	m_PointLight->SetPosition({ 0,10,-10 });
-	m_PointLight->SetRange(100);
+	m_PointLight->SetLightColor({ 1,1,0, 10.f });
+	m_PointLight->SetPosition({ 0,5,-10 });
+	m_PointLight->SetRange(20);
 	m_PointLight->SetFallOff(0.9f);
 	Renderer::AddPointLight(*m_PointLight.get());
 	m_ImGuiLayer.OnAttach();

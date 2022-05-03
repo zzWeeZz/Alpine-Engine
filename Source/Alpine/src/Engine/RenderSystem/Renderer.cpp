@@ -16,7 +16,7 @@ namespace Alpine
 
 	void Renderer::Initalize()
 	{
-		s_Instance.m_Skybox = SkyBox::Create("Textures/monbachtal_riverbank_4k.hdr");
+		s_Instance.m_Skybox = SkyBox::Create("Textures/hdr.png");
 		s_Instance.m_ModelBuffer.Create();
 		s_Instance.m_CameraBuffer.Create();
 		s_Instance.m_DirLightBuffer.Create();
