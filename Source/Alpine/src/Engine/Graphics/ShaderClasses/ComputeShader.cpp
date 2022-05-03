@@ -1,28 +1,29 @@
 #include "ComputeShader.h"
 
-#include "DX11/DX11.h"
+#include "Engine/DX11/DX11.h"
 #include <cassert>
 #include <d3dcompiler.h>
 
 
-bool Alpine::ComputeShader::Initialize(const std::filesystem::path& filePath)
+Alpine::ComputeShader::ComputeShader(const std::filesystem::path& filePath)
 {
-	auto hr = D3DReadFileToBlob(filePath.c_str(), myBuffer.GetAddressOf());
+	auto hr = D3DReadFileToBlob(filePath.c_str(), m_Buffer.GetAddressOf());
 	assert(SUCCEEDED(hr));
 
-	hr = DX11::Device()->CreateComputeShader(myBuffer.Get()->GetBufferPointer(), myBuffer.Get()->GetBufferSize(), NULL, m_Shader.GetAddressOf());
+	hr = DX11::Device()->CreateComputeShader(m_Buffer.Get()->GetBufferPointer(), m_Buffer.Get()->GetBufferSize(), NULL, m_Shader.GetAddressOf());
 	assert(SUCCEEDED(hr));
-	return true;
 }
-
-ID3D10Blob* Alpine::ComputeShader::GetBuffer()
-{
-	return myBuffer.Get();
-}
-
 
 Alpine::ComputeShader::~ComputeShader()
 {
 	m_Shader.Reset();
-	myBuffer.Reset();
+}
+
+void Alpine::ComputeShader::Bind()
+{
+}
+
+Alpine::Ref<Alpine::ComputeShader> Alpine::ComputeShader::Create(const std::filesystem::path& filePath)
+{
+	return CreateRef<ComputeShader>(filePath);
 }

@@ -136,7 +136,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\include\;$(SolutionDir)Source\ToolBox\src\;$(SolutionDir)Source\Alpine\src\Engine\;$(SolutionDir)Dependencies\include\imgui\;$(SolutionDir)Source\Alpine\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\include\;$(SolutionDir)Source\ToolBox\src\;$(SolutionDir)Dependencies\include\imgui\;$(SolutionDir)Source\Alpine\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -156,7 +156,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\include\;$(SolutionDir)Source\ToolBox\src\;$(SolutionDir)Source\Alpine\src\Engine\;$(SolutionDir)Dependencies\include\imgui\;$(SolutionDir)Source\Alpine\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\include\;$(SolutionDir)Source\ToolBox\src\;$(SolutionDir)Dependencies\include\imgui\;$(SolutionDir)Source\Alpine\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -170,6 +170,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Engine\Graphics\ShaderClasses\ShaderLibrary.cpp" />
     <ClCompile Include="src\Engine\Lights\PointLight.cpp" />
     <ClCompile Include="src\Engine\Graphics\SkyBox\SkyBox.cpp" />
     <ClCompile Include="src\Engine\DX11\RenderStateManager.cpp" />
@@ -183,7 +184,6 @@
     <ClCompile Include="src\Engine\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Engine\Lights\DirectionalLight.cpp" />
     <ClCompile Include="src\Engine\DX11\DX11.cpp" />
-    <ClCompile Include="src\Engine\Engine.cpp" />
     <ClCompile Include="src\Engine\Graphics\Buffers\IndexBuffer.cpp" />
     <ClCompile Include="src\Engine\Graphics\Buffers\VertexBuffer.cpp" />
     <ClCompile Include="src\Engine\Camera\PerspectiveCamera.cpp" />
@@ -197,6 +197,7 @@
     <ClCompile Include="src\Engine\Textures\TextureCube.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Engine\Graphics\ShaderClasses\ShaderLibrary.h" />
     <ClInclude Include="src\Engine\Lights\PointLight.h" />
     <ClInclude Include="src\Engine\Alpine.h" />
     <ClInclude Include="src\Engine\Graphics\SkyBox\SkyBox.h" />
@@ -215,7 +216,6 @@
     <ClInclude Include="src\Engine\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Engine\Lights\DirectionalLight.h" />
     <ClInclude Include="src\Engine\DX11\DX11.h" />
-    <ClInclude Include="src\Engine\Engine.h" />
     <ClInclude Include="src\Engine\Graphics\Buffers\ConstantBuffer.hpp" />
     <ClInclude Include="src\Engine\Graphics\Buffers\IndexBuffer.h" />
     <ClInclude Include="src\Engine\Graphics\Buffers\VertexBuffer.h" />

@@ -2,10 +2,10 @@
 #include <iostream>
 #include <DirectXTK/GeometricPrimitive.h>
 #include <spdlog/spdlog.h>
-#include "DX11/DX11.h"
+#include "Engine/DX11/DX11.h"
 #include "ToolBox/Utility/UtilityFunctions.hpp"
 #include "Engine/RenderSystem/Renderer.h"
-#include "RenderSystem/RenderCommands.h"
+#include "Engine/RenderSystem/RenderCommands.h"
 
 Alpine::Model::Model(std::string aPath, Ref<Material> material)
 {

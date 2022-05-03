@@ -1,13 +1,13 @@
 #pragma once
-#include "Graphics/Shaders.h"
-#include "Graphics/Model/Model.h"
-#include "Graphics/Buffers/BufferData.h"
-#include "Graphics/Buffers/ConstantBuffer.hpp"
+#include "Engine/Graphics/Shaders.h"
+#include "Engine/Graphics/Model/Model.h"
+#include "Engine/Graphics/Buffers/BufferData.h"
+#include "Engine/Graphics/Buffers/ConstantBuffer.hpp"
 
-#include "DX11/Utilities.h"
+#include "Engine/DX11/Utilities.h"
 
-#include "Textures/Texture.h"
-#include "Textures/TextureCube.h"
+#include "Engine/Textures/Texture.h"
+#include "Engine/Textures/TextureCube.h"
 
 namespace Alpine
 {
@@ -34,10 +34,10 @@ namespace Alpine
 		Ref<TextureCube> m_SpecularMap;
 		Ref<TextureCube> m_IrMap;
 
-		ComputeShader m_IrrComputeShader;
-		ComputeShader m_SpecularComputeShader;
-		ComputeShader m_SpbrdfShader;
-		ComputeShader m_EquirectToCubeMapShader;
+		Ref<ComputeShader> m_IrrComputeShader;
+		Ref<ComputeShader> m_SpecularComputeShader;
+		Ref<ComputeShader> m_SpbrdfShader;
+		Ref<ComputeShader> m_EquirectToCubeMapShader;
 
 		ConstantBuffer<SpectularMapFillerSettingsBuffer> m_SpecBuffer;
 		SpectularMapFillerSettingsBuffer m_SpecBufferData;

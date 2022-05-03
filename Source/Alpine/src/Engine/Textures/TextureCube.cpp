@@ -1,6 +1,6 @@
 #include "TextureCube.h"
 
-#include "DX11/DX11.h"
+#include "Engine/DX11/DX11.h"
 #include <cassert>
 #include <DirectXTK/WICTextureLoader.h>
 #include <spdlog/spdlog.h>

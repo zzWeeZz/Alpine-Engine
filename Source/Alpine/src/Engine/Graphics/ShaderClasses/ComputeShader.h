@@ -6,10 +6,11 @@ namespace Alpine
 	class ComputeShader : public Shader
 	{
 	public:
-		bool Initialize(const std::filesystem::path& filePath) override;
+		ComputeShader(const std::filesystem::path& filePath);
 		ID3D11ComputeShader* GetShader() const { return m_Shader.Get(); }
-		ID3D10Blob* GetBuffer() override;
 		~ComputeShader();
+		void Bind() override;
+		static Ref<ComputeShader> Create(const std::filesystem::path& filePath);
 
 	private:
 		ComPtr<ID3D11ComputeShader> m_Shader;

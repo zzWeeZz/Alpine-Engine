@@ -5,10 +5,10 @@
 
 Alpine::SkyBox::SkyBox(const std::filesystem::path& skyBoxTexturePath) : m_SpecBuffer(4)
 {
-	m_IrrComputeShader.Initialize("Shaders/IrradianceMap_cs.cso");
-	m_SpecularComputeShader.Initialize("Shaders/SpeclularMap_cs.cso");
-	m_SpbrdfShader.Initialize("Shaders/spdrdfGenerator_cs.cso");
-	m_EquirectToCubeMapShader.Initialize("Shaders/Equirect2Cube_cs.cso");
+	m_IrrComputeShader = ComputeShader::Create("Shaders/IrradianceMap_cs.cso");
+	m_SpecularComputeShader = ComputeShader::Create("Shaders/SpeclularMap_cs.cso");
+	m_SpbrdfShader = ComputeShader::Create("Shaders/spdrdfGenerator_cs.cso");
+	m_EquirectToCubeMapShader = ComputeShader::Create("Shaders/Equirect2Cube_cs.cso");
 	ConvertToCubeMap(skyBoxTexturePath);
 	FilterEnviorment();
 	GenerateIrradience();
@@ -55,7 +55,7 @@ void Alpine::SkyBox::ConvertToCubeMap(const std::filesystem::path& skyBoxTexture
 	DX11::GetRenderStateManager().SetSamplerState(SamplerMode::Wrap, ShaderType::Compute);
 	DX11::Context()->CSSetShaderResources(0, 1, m_skyBoxTexture->GetShaderResourceView().GetAddressOf());
 	DX11::Context()->CSSetUnorderedAccessViews(0, 1, m_CubeMap->GetUnorderedAccessView().GetAddressOf(), 0);
-	DX11::Context()->CSSetShader(m_EquirectToCubeMapShader.GetShader(), 0, 0);
+	DX11::Context()->CSSetShader(m_EquirectToCubeMapShader->GetShader(), 0, 0);
 	DX11::Context()->Dispatch(1024 / 32, 1024 / 32, 6);
 	DX11::Context()->CSSetUnorderedAccessViews(0, 1, nullUAV, nullptr);
 	m_CubeMap->GenerateMipMaps();
@@ -69,7 +69,7 @@ void Alpine::SkyBox::FilterEnviorment()
 	// specular map
 	DX11::GetRenderStateManager().SetSamplerState(SamplerMode::Wrap, ShaderType::Compute);
 	DX11::Context()->CSSetShaderResources(0, 1, m_CubeMap->GetShaderResourceView().GetAddressOf());
-	DX11::Context()->CSSetShader(m_SpecularComputeShader.GetShader(), 0, 0);
+	DX11::Context()->CSSetShader(m_SpecularComputeShader->GetShader(), 0, 0);
 
 	for (uint32_t i = 0; i < 6; ++i)
 	{
@@ -102,7 +102,7 @@ void Alpine::SkyBox::GenerateIrradience()
 	DX11::GetRenderStateManager().SetSamplerState(SamplerMode::Wrap, ShaderType::Compute);
 	DX11::Context()->CSSetShaderResources(0, 1, m_SpecularMap->GetShaderResourceView().GetAddressOf());
 	DX11::Context()->CSSetUnorderedAccessViews(0, 1, m_IrMap->GetUnorderedAccessView().GetAddressOf(), 0);
-	DX11::Context()->CSSetShader(m_IrrComputeShader.GetShader(), 0, 0);
+	DX11::Context()->CSSetShader(m_IrrComputeShader->GetShader(), 0, 0);
 	DX11::Context()->Dispatch(1, 1, 6);
 	DX11::Context()->CSSetUnorderedAccessViews(0, 1, nullUAV, nullptr);
 }
@@ -114,7 +114,7 @@ void Alpine::SkyBox::GenerateSPBRDF(uint32_t width, uint32_t height)
 	m_SDRBF = Texture::Create(width, height, DXGI_FORMAT_R16G16_FLOAT, 1);
 	m_SDRBF->CreateUAV();
 	DX11::Context()->CSSetUnorderedAccessViews(0, 1, m_SDRBF->GetUnorderedAccessView().GetAddressOf(), 0);
-	DX11::Context()->CSSetShader(m_SpbrdfShader.GetShader(), 0, 0);
+	DX11::Context()->CSSetShader(m_SpbrdfShader->GetShader(), 0, 0);
 	DX11::Context()->Dispatch(width / 32, height / 32, 1);
 	DX11::Context()->CSSetUnorderedAccessViews(0, 1, nullUAV, nullptr);
 }

@@ -2,8 +2,8 @@
 #include <string>
 #include <vector>
 #include <memory>
-#include "Textures/Texture.h"
-#include "Textures/TextureCube.h"
+#include "Engine/Textures/Texture.h"
+#include "Engine/Textures/TextureCube.h"
 
 namespace Alpine
 {

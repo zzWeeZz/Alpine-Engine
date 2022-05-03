@@ -23,7 +23,7 @@ struct PointLight
     float4 color;
     float fallOff;
     float radius;
-    float padding[2];
+    float2 padding;
 };
 
 cbuffer PointLight : register(b3)

@@ -177,11 +177,49 @@ float3 CalcSpotLight
     return finalColor;
 }
 
+//Frostbite accurate SRGB to linear conversion
+float3 SRGBToLinear(in float3 color)
+{
+    float3 linearRGBLo = color / 12.92f;
+    float3 linearRGBHi = pow((color + 0.055f) / 1.055f, 2.4f);
+    float3 linearRGB = (color <= 0.04045f) ? linearRGBLo : linearRGBHi;
+
+    return linearRGB;
+}
+
+float3 LinearToSRGB(in float3 color)
+{
+    float3 sRGBLo = color * 12.92f;
+    float3 sRGBHi = pow(abs(color), 1.f / 2.4f) * 1.055f - 0.055f;
+    float3 sRGB = (color <= 0.0031308f) ? sRGBLo : sRGBHi;
+
+    return sRGB;
+}
+
+float3 ACESTonemap(float3 color)
+{
+    float3x3 m1 = float3x3(
+		0.59719, 0.07600, 0.02840,
+		0.35458, 0.90834, 0.13383,
+		0.04823, 0.01566, 0.83777
+	);
+    float3x3 m2 = float3x3(
+		1.60475, -0.10208, -0.00327,
+		-0.53108, 1.10813, -0.07276,
+		-0.07367, -0.00605, 1.07602
+	);
+    float3 v = mul(color, m1);
+    float3 a = v * (v + 0.0245786) - 0.000090537;
+    float3 b = v * (0.983729 * v + 0.4329510) + 0.238081;
+    return clamp(mul((a / b), m2), 0.0, 1.0);
+}
+
 // Pixel shader
 float4 main(VS_OUTPUT pin) :SV_Target
 {
 	// Sample input textures to get shading model params.
     float3 albedo = albedoTexture.Sample(defaultSampler, pin.texcoord).rgb;
+    float alpha = albedoTexture.Sample(defaultSampler, pin.texcoord).a;
     float metalness = metallicTexture.Sample(defaultSampler, pin.texcoord).r;
     float roughness = roughnessTexture.Sample(defaultSampler, pin.texcoord).r;
 
@@ -236,7 +274,10 @@ float4 main(VS_OUTPUT pin) :SV_Target
 		// Total ambient lighting contribution.
         ambientLighting = diffuseIBL + specularIBL;
     }
-
+    float4 finalColor = 0.0f;
+    finalColor = float4(directLighting + ambientLighting,alpha);
+    finalColor.xyz = LinearToSRGB(finalColor.xyz);
+    finalColor.xyz = ACESTonemap(finalColor.xyz);
 	// Final fragment color.
-    return float4(directLighting + ambientLighting, 1.0);
+    return finalColor;
 }

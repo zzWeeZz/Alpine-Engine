@@ -1,7 +1,7 @@
 #pragma once
 #include "shader.h"
-#include "DX11/Utilities.h"
-#include "DX11/DX11.h"
+#include "Engine/DX11/Utilities.h"
+#include "Engine/DX11/DX11.h"
 
 namespace Alpine
 {
@@ -33,12 +33,12 @@ namespace Alpine
 		}
 		std::vector<InputElementSpec> theSpecs;
 	};
-	class VertexShader
+	class VertexShader : public Shader
 	{
 	public:
 		VertexShader(const std::filesystem::path& aShaderPath, D3D11_INPUT_ELEMENT_DESC* aDesc, UINT aElements);
 		
-		void Bind();
+		void Bind() override;
 
 		static Ref<VertexShader> Create(const std::filesystem::path& aShaderPath, D3D11_INPUT_ELEMENT_DESC* aDesc, UINT aElements);
 

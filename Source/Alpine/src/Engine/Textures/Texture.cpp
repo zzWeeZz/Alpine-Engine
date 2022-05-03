@@ -4,7 +4,7 @@
 #include <DirectXTK/WICTextureLoader.h>
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
-#include <DX11/DX11.h>
+#include <Engine/DX11/DX11.h>
 
 Alpine::Texture::Texture(const std::filesystem::path& aPath)
 {

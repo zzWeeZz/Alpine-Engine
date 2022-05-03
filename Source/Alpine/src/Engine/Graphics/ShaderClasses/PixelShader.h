@@ -1,15 +1,15 @@
 #pragma once
-#include "DX11/DX11.h"
-#include "DX11/Utilities.h"
 #include "Shader.h"
+#include "Engine/DX11/DX11.h"
+#include "Engine/DX11/Utilities.h"
 namespace Alpine
 {
-	class PixelShader
+	class PixelShader : public Shader
 	{
 	public:
 		PixelShader(const std::filesystem::path& filePath);
 
-		void Bind();
+		void Bind() override;
 		void Unbind();
 
 		static Ref<PixelShader> Create(const std::filesystem::path& filePath);
