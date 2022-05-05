@@ -91,9 +91,6 @@ float3 CalcDirectionalLight(float3 viewDirection, float3 normal, float3 albedo, 
     return ((Diffuse / PI + specular) * NdotL) * DirLightColor.xyz;
 }
 
-
-
-
 float3 CalcPointLight(float3 viewDirection, float3 pos, float3 normal, float3 albedo, float roughness, float metallness, float3 fs)
 {
     float3 finalColor = 0.0f;
@@ -135,9 +132,7 @@ float3 CalcPointLight(float3 viewDirection, float3 pos, float3 normal, float3 al
 }
 
 // PBR SpotLight light function
-float3 CalcSpotLight
-        (
-        float3 viewDirection, float3 normal, float3 albedo, float roughness)
+float3 CalcSpotLight(float3 viewDirection, float3 normal, float3 albedo, float roughness)
 {
     float3 finalColor = 0.0f;
     for (int i = 0; i < 8; i++)

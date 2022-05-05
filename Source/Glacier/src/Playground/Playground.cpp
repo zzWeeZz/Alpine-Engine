@@ -29,7 +29,7 @@ void Alpine::Playground::Init()
 	m_PointLight = PointLight::Create();
 	m_PointLight->SetLightColor({ 1,1,0, 10.f });
 	m_PointLight->SetPosition({ 0,5,-10 });
-	m_PointLight->SetRange(20);
+	m_PointLight->SetRange(50);
 	m_PointLight->SetFallOff(0.9f);
 	Renderer::AddPointLight(*m_PointLight.get());
 	m_ImGuiLayer.OnAttach();
