@@ -227,6 +227,7 @@
     <ClInclude Include="src\Engine\Graphics\ShaderClasses\VertexShader.h" />
     <ClInclude Include="src\Engine\Lights\Light.h" />
     <ClInclude Include="src\Engine\Materials\Material.h" />
+    <ClInclude Include="src\Engine\Snowflake\Snowflake.hpp" />
     <ClInclude Include="src\Engine\Textures\Texture.h" />
     <ClInclude Include="src\Engine\Textures\TextureCube.h" />
     <ClInclude Include="src\stb_image.h" />

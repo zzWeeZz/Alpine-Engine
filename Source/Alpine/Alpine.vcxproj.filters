@@ -194,6 +194,9 @@
     <ClInclude Include="src\Engine\Graphics\ShaderClasses\ShaderLibrary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Engine\Snowflake\Snowflake.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="src\Engine\Shaders\pbrShader_vs.hlsl" />
