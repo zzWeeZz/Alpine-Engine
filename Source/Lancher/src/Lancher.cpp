@@ -8,8 +8,8 @@
 #include "ToolBox/Utility/Timer.h"
 
 #include "Application/Application.h"
-#include "Engine/RenderSystem/Renderer.h"
-#include "Engine/ImGui/ImGuiLayer.h"
+#include "Alpine/RenderSystem/Renderer.h"
+#include "Alpine/ImGui/ImGuiLayer.h"
 #include "Playground/Playground.h"
 
 int main()

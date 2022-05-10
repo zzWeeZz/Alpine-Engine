@@ -170,70 +170,70 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Engine\Graphics\ShaderClasses\ShaderLibrary.cpp" />
-    <ClCompile Include="src\Engine\Lights\PointLight.cpp" />
-    <ClCompile Include="src\Engine\Graphics\SkyBox\SkyBox.cpp" />
-    <ClCompile Include="src\Engine\DX11\RenderStateManager.cpp" />
-    <ClCompile Include="src\Engine\RenderSystem\FrameBuffer.cpp" />
-    <ClCompile Include="src\Engine\RenderSystem\Renderer.cpp" />
-    <ClCompile Include="src\Engine\Graphics\Model\Mesh.cpp" />
+    <ClCompile Include="src\Alpine\RenderSystem\ShaderClasses\ShaderLibrary.cpp" />
+    <ClCompile Include="src\Alpine\Assets\Lights\PointLight.cpp" />
+    <ClCompile Include="src\Alpine\Assets\SkyBox\SkyBox.cpp" />
+    <ClCompile Include="src\Alpine\DX11\RenderStateManager.cpp" />
+    <ClCompile Include="src\Alpine\RenderSystem\FrameBuffer.cpp" />
+    <ClCompile Include="src\Alpine\RenderSystem\Renderer.cpp" />
+    <ClCompile Include="src\Alpine\RenderSystem\Mesh\Mesh.cpp" />
     <ClCompile Include="src\Application\Application.cpp" />
     <ClCompile Include="src\Application\Window\GlfwWindow.cpp" />
-    <ClCompile Include="src\Engine\Graphics\ShaderClasses\ComputeShader.cpp" />
-    <ClCompile Include="src\Engine\ImGui\ImGuiLayer.cpp" />
-    <ClCompile Include="src\Engine\ImGui\ImGuiBuild.cpp" />
-    <ClCompile Include="src\Engine\Lights\DirectionalLight.cpp" />
-    <ClCompile Include="src\Engine\DX11\DX11.cpp" />
-    <ClCompile Include="src\Engine\Graphics\Buffers\IndexBuffer.cpp" />
-    <ClCompile Include="src\Engine\Graphics\Buffers\VertexBuffer.cpp" />
-    <ClCompile Include="src\Engine\Camera\PerspectiveCamera.cpp" />
-    <ClCompile Include="src\Engine\Graphics\Model\SubMesh.cpp" />
-    <ClCompile Include="src\Engine\Graphics\Model\Model.cpp" />
-    <ClCompile Include="src\Engine\Graphics\ShaderClasses\PixelShader.cpp" />
-    <ClCompile Include="src\Engine\Graphics\Shaders.h" />
-    <ClCompile Include="src\Engine\Graphics\ShaderClasses\VertexShader.cpp" />
-    <ClCompile Include="src\Engine\Materials\Material.cpp" />
-    <ClCompile Include="src\Engine\Textures\Texture.cpp" />
-    <ClCompile Include="src\Engine\Textures\TextureCube.cpp" />
+    <ClCompile Include="src\Alpine\RenderSystem\ShaderClasses\ComputeShader.cpp" />
+    <ClCompile Include="src\Alpine\ImGui\ImGuiLayer.cpp" />
+    <ClCompile Include="src\Alpine\ImGui\ImGuiBuild.cpp" />
+    <ClCompile Include="src\Alpine\Assets\Lights\DirectionalLight.cpp" />
+    <ClCompile Include="src\Alpine\DX11\DX11.cpp" />
+    <ClCompile Include="src\Alpine\RenderSystem\Buffers\IndexBuffer.cpp" />
+    <ClCompile Include="src\Alpine\RenderSystem\Buffers\VertexBuffer.cpp" />
+    <ClCompile Include="src\Alpine\Assets\Camera\PerspectiveCamera.cpp" />
+    <ClCompile Include="src\Alpine\RenderSystem\Mesh\SubMesh.cpp" />
+    <ClCompile Include="src\Alpine\Assets\Model\Model.cpp" />
+    <ClCompile Include="src\Alpine\RenderSystem\ShaderClasses\PixelShader.cpp" />
+    <ClCompile Include="src\Alpine\RenderSystem\Shaders.h" />
+    <ClCompile Include="src\Alpine\RenderSystem\ShaderClasses\VertexShader.cpp" />
+    <ClCompile Include="src\Alpine\Assets\Materials\Material.cpp" />
+    <ClCompile Include="src\Alpine\Assets\Textures\Texture.cpp" />
+    <ClCompile Include="src\Alpine\Assets\Textures\TextureCube.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Engine\Graphics\ShaderClasses\ShaderLibrary.h" />
-    <ClInclude Include="src\Engine\Lights\PointLight.h" />
-    <ClInclude Include="src\Engine\Alpine.h" />
-    <ClInclude Include="src\Engine\Graphics\SkyBox\SkyBox.h" />
-    <ClInclude Include="src\Engine\DX11\RenderStateManager.h" />
-    <ClInclude Include="src\Engine\DX11\Utilities.h" />
-    <ClInclude Include="src\Engine\RenderSystem\FrameBuffer.h" />
-    <ClInclude Include="src\Engine\RenderSystem\RenderCommands.h" />
-    <ClInclude Include="src\Engine\RenderSystem\Renderer.h" />
-    <ClInclude Include="src\Engine\Graphics\Buffers\BufferData.h" />
-    <ClInclude Include="src\Engine\Graphics\Model\Mesh.h" />
+    <ClInclude Include="src\Alpine\RenderSystem\ShaderClasses\ShaderLibrary.h" />
+    <ClInclude Include="src\Alpine\Assets\Lights\PointLight.h" />
+    <ClInclude Include="src\Alpine\Alpine.h" />
+    <ClInclude Include="src\Alpine\Assets\SkyBox\SkyBox.h" />
+    <ClInclude Include="src\Alpine\DX11\RenderStateManager.h" />
+    <ClInclude Include="src\Alpine\DX11\Utilities.h" />
+    <ClInclude Include="src\Alpine\RenderSystem\FrameBuffer.h" />
+    <ClInclude Include="src\Alpine\RenderSystem\RenderCommands.h" />
+    <ClInclude Include="src\Alpine\RenderSystem\Renderer.h" />
+    <ClInclude Include="src\Alpine\RenderSystem\Buffers\BufferData.h" />
+    <ClInclude Include="src\Alpine\RenderSystem\Mesh\Mesh.h" />
     <ClInclude Include="src\Application\Application.h" />
     <ClInclude Include="src\Application\Window\GlfwWindow.h" />
     <ClInclude Include="src\Application\Window\IWindow.h" />
-    <ClInclude Include="src\Engine\Graphics\ShaderClasses\ComputeShader.h" />
-    <ClInclude Include="src\Engine\Graphics\ShaderClasses\Shader.h" />
-    <ClInclude Include="src\Engine\ImGui\ImGuiLayer.h" />
-    <ClInclude Include="src\Engine\Lights\DirectionalLight.h" />
-    <ClInclude Include="src\Engine\DX11\DX11.h" />
-    <ClInclude Include="src\Engine\Graphics\Buffers\ConstantBuffer.hpp" />
-    <ClInclude Include="src\Engine\Graphics\Buffers\IndexBuffer.h" />
-    <ClInclude Include="src\Engine\Graphics\Buffers\VertexBuffer.h" />
-    <ClInclude Include="src\Engine\Camera\PerspectiveCamera.h" />
-    <ClInclude Include="src\Engine\Graphics\Model\SubMesh.h" />
-    <ClInclude Include="src\Engine\Graphics\Model\Model.h" />
-    <ClInclude Include="src\Engine\Graphics\Model\ModelData.hpp" />
-    <ClInclude Include="src\Engine\Graphics\ShaderClasses\PixelShader.h" />
-    <ClInclude Include="src\Engine\Graphics\ShaderClasses\VertexShader.h" />
-    <ClInclude Include="src\Engine\Lights\Light.h" />
-    <ClInclude Include="src\Engine\Materials\Material.h" />
-    <ClInclude Include="src\Engine\Snowflake\Snowflake.hpp" />
-    <ClInclude Include="src\Engine\Textures\Texture.h" />
-    <ClInclude Include="src\Engine\Textures\TextureCube.h" />
+    <ClInclude Include="src\Alpine\RenderSystem\ShaderClasses\ComputeShader.h" />
+    <ClInclude Include="src\Alpine\RenderSystem\ShaderClasses\Shader.h" />
+    <ClInclude Include="src\Alpine\ImGui\ImGuiLayer.h" />
+    <ClInclude Include="src\Alpine\Assets\Lights\DirectionalLight.h" />
+    <ClInclude Include="src\Alpine\DX11\DX11.h" />
+    <ClInclude Include="src\Alpine\RenderSystem\Buffers\ConstantBuffer.hpp" />
+    <ClInclude Include="src\Alpine\RenderSystem\Buffers\IndexBuffer.h" />
+    <ClInclude Include="src\Alpine\RenderSystem\Buffers\VertexBuffer.h" />
+    <ClInclude Include="src\Alpine\Assets\Camera\PerspectiveCamera.h" />
+    <ClInclude Include="src\Alpine\RenderSystem\Mesh\SubMesh.h" />
+    <ClInclude Include="src\Alpine\Assets\Model\Model.h" />
+    <ClInclude Include="src\Alpine\RenderSystem\Mesh\ModelData.hpp" />
+    <ClInclude Include="src\Alpine\RenderSystem\ShaderClasses\PixelShader.h" />
+    <ClInclude Include="src\Alpine\RenderSystem\ShaderClasses\VertexShader.h" />
+    <ClInclude Include="src\Alpine\Assets\Lights\Light.h" />
+    <ClInclude Include="src\Alpine\Assets\Materials\Material.h" />
+    <ClInclude Include="src\Alpine\Snowflake\Snowflake.hpp" />
+    <ClInclude Include="src\Alpine\Assets\Textures\Texture.h" />
+    <ClInclude Include="src\Alpine\Assets\Textures\TextureCube.h" />
     <ClInclude Include="src\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="src\Engine\Shaders\Equirect2Cube_cs.hlsl">
+    <FxCompile Include="src\Alpine\Shaders\Equirect2Cube_cs.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compute</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compute</ShaderType>
@@ -245,7 +245,7 @@
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)Export\Shaders\%(Filename).cso</ObjectFileOutput>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)Export\Shaders\%(Filename).cso</ObjectFileOutput>
     </FxCompile>
-    <FxCompile Include="src\Engine\Shaders\IrradianceMap_cs.hlsl">
+    <FxCompile Include="src\Alpine\Shaders\IrradianceMap_cs.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compute</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compute</ShaderType>
@@ -257,7 +257,7 @@
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)Export\Shaders\%(Filename).cso</ObjectFileOutput>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)Export\Shaders\%(Filename).cso</ObjectFileOutput>
     </FxCompile>
-    <FxCompile Include="src\Engine\Shaders\pbrShader_ps.hlsl">
+    <FxCompile Include="src\Alpine\Shaders\pbrShader_ps.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)Export\Shaders\%(Filename).cso</ObjectFileOutput>
@@ -265,7 +265,7 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="src\Engine\Shaders\pbrShader_vs.hlsl">
+    <FxCompile Include="src\Alpine\Shaders\pbrShader_vs.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)Export\Shaders\%(Filename).cso</ObjectFileOutput>
@@ -273,7 +273,7 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="src\Engine\Shaders\SkyBox_ps.hlsl">
+    <FxCompile Include="src\Alpine\Shaders\SkyBox_ps.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
@@ -283,7 +283,7 @@
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)Export\Shaders\%(Filename).cso</ObjectFileOutput>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)Export\Shaders\%(Filename).cso</ObjectFileOutput>
     </FxCompile>
-    <FxCompile Include="src\Engine\Shaders\SkyBox_vs.hlsl">
+    <FxCompile Include="src\Alpine\Shaders\SkyBox_vs.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
@@ -293,7 +293,7 @@
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)Export\Shaders\%(Filename).cso</ObjectFileOutput>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)Export\Shaders\%(Filename).cso</ObjectFileOutput>
     </FxCompile>
-    <FxCompile Include="src\Engine\Shaders\spdrdfGenerator_cs.hlsl">
+    <FxCompile Include="src\Alpine\Shaders\spdrdfGenerator_cs.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compute</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compute</ShaderType>
@@ -305,7 +305,7 @@
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)Export\Shaders\%(Filename).cso</ObjectFileOutput>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)Export\Shaders\%(Filename).cso</ObjectFileOutput>
     </FxCompile>
-    <FxCompile Include="src\Engine\Shaders\SpeclularMap_cs.hlsl">
+    <FxCompile Include="src\Alpine\Shaders\SpeclularMap_cs.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compute</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compute</ShaderType>
@@ -330,7 +330,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\Engine\Shaders\ConstBuffers.hlsli" />
+    <None Include="src\Alpine\Shaders\ConstBuffers.hlsli" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
