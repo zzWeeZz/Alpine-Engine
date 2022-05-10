@@ -45,6 +45,7 @@ int main()
 		Alpine::Renderer::DrawStash();
 		Alpine::DX11::Bind();
 		playground.Render();
+		Alpine::Renderer::End();
 		playground.ImGuiRender();
 		Alpine::DX11::Present(true);
 		

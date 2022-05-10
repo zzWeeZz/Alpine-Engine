@@ -23,13 +23,13 @@ void Alpine::Playground::Init()
 	m_Ground->SetPosition({ 0, -5, 0 });
 
 	m_DirectonalLight = DirectionalLight::Create();
-	m_DirectonalLight->SetLightColor({ 1,1,1, 10 });
-	m_DirectonalLight->SetDirection({ 1,1, 1});
+	m_DirectonalLight->SetLightColor({ 0,0,1, 50 });
+	m_DirectonalLight->SetDirection({ -1,-0, -0});
 	Renderer::SubmitDirLight(*m_DirectonalLight.get());
 	m_PointLight = PointLight::Create();
-	m_PointLight->SetLightColor({ 1,1,0, 10.f });
+	m_PointLight->SetLightColor({ 0,1,0, 50.f });
 	m_PointLight->SetPosition({ 0,5,-10 });
-	m_PointLight->SetRange(50);
+	m_PointLight->SetRange(20);
 	m_PointLight->SetFallOff(0.9f);
 	Renderer::AddPointLight(*m_PointLight.get());
 	m_ImGuiLayer.OnAttach();
@@ -41,11 +41,13 @@ void Alpine::Playground::Update(float delta)
 	static float angle = 0;
 	angle += delta * 90;
 	m_Model->SetRotation({ 0, angle, 0 });
+	m_PointLight->SetPosition({0,  20 * sin(angle/190.f), -10});
 }
 
 void Alpine::Playground::Render()
 {
 	Renderer::SubmitCamera(std::make_shared<PerspectiveCamera>(m_Camera));
+	Renderer::AddPointLight(*m_PointLight.get());
 	m_Model->Draw();
 	m_Ground->Draw();
 }

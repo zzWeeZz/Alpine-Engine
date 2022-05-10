@@ -7,8 +7,7 @@ namespace Alpine
 	{
 		uint32_t width, height;
 		uint32_t samples = 1;
-		
-		bool swapChainTarget = false;
+		std::vector<DXGI_FORMAT> colorFormat = {DXGI_FORMAT_R8G8B8A8_UNORM};
 	};
 
 	class FrameBuffer

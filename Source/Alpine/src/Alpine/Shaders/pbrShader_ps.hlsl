@@ -61,6 +61,13 @@ float3 fresnelSchlick(float3 F0, float cosTheta)
     return F0 + (1.0 - F0) * pow(1.0 - cosTheta, 5.0);
 }
 
+float3 fresnelSchlickRough(float3 F0, float cosTheta, float roughness)
+{
+    float r = roughness + 1.0;
+    float k = (r * r) / 8.0; // Epic suggests using this roughness remapping for analytic lights.
+    return F0 + (1.0 - F0) * pow(1.0 - cosTheta, k);
+}
+
 // Returns number of mipmap levels for specular IBL environment map.
 uint querySpecularTextureLevels()
 {
@@ -72,23 +79,21 @@ uint querySpecularTextureLevels()
 // PBR Directional light function
 float3 CalcDirectionalLight(float3 viewDirection, float3 normal, float3 albedo, float roughness, float metallness, float3 fs)
 {
-    float3 halfVector = normalize(DirLightDirection.xyz + viewDirection);
-    float NdotL = saturate(dot(normal, DirLightDirection.xyz));
-    float NdotH = saturate(dot(normal, halfVector));
-    float NdotV = saturate(dot(normal, viewDirection));
-    float VdotH = saturate(dot(viewDirection, halfVector));
+    float3 halfVector = normalize(normalize(DirLightDirection.xyz) + (viewDirection));
+    float NdotL = max(Epsilon, dot(normal, normalize(DirLightDirection.xyz)));
+    float NdotH = max(0.f, dot(normal, halfVector));
+    float NdotV = max(0.f, dot(normal, viewDirection));
+    float VdotH = max(Epsilon, dot(viewDirection, halfVector));
 
     float dist = ndfGGX(NdotH, roughness);
-    float geoSmith = gaSchlickGGX(NdotL, NdotV, roughness);
+    float geoSmith = gaSchlickGGX(NdotV, NdotL, roughness);
     float3 F0 = fresnelSchlick(fs, VdotH);
 
-
-    float3 KD = (float3(1, 1, 1) - F0) * (1 - metallness);
-
-    float3 specular = (dist * geoSmith * F0) / max(4.0 * NdotL * NdotV, Epsilon);
+    float3 KD = lerp(float3(0, 0, 0), float3(1, 1, 1) - F0, metallness);
+    float3 specular = (F0 * dist * geoSmith) / max(Epsilon, 4.0 * NdotV * NdotL);
     float3 Diffuse = KD * albedo;
 
-    return ((Diffuse / PI + specular) * NdotL) * DirLightColor.xyz;
+    return ((Diffuse / PI + specular) * NdotL) * DirLightColor.w * DirLightColor.rgb;
 }
 
 float3 CalcPointLight(float3 viewDirection, float3 pos, float3 normal, float3 albedo, float roughness, float metallness, float3 fs)
@@ -113,17 +118,17 @@ float3 CalcPointLight(float3 viewDirection, float3 pos, float3 normal, float3 al
 
         float3 radiance = (pointLights[i].color.xyz * pointLights[i].color.w) * attenuation;
 
-        float NdotL = saturate(dot(normal, dirToLight));
-        float NdotH = saturate(dot(normal, halfVector));
-        float NdotV = saturate(dot(normal, viewDirection));
-        float VdotH = saturate(dot(viewDirection, halfVector));
+        float NdotL = max(Epsilon, dot(normal, dirToLight));
+        float NdotH = max(0.f, dot(normal, halfVector));
+        float NdotV = max(Epsilon, dot(normal, viewDirection));
+        float VdotH = max(0.f, dot(viewDirection, halfVector));
 
         float dist = ndfGGX(NdotH, roughness);
-        float geoSmith = gaSchlickGGX(NdotL, NdotV, roughness);
+        float geoSmith = gaSchlickGGX(NdotV, NdotL, roughness);
         float3 F0 = fresnelSchlick(fs, VdotH);
 
-        float3 KD = lerp(float3(0, 0, 0),float3(1, 1, 1) - F0, metallness);
-        float3 specular = (F0 * dist * geoSmith) / 4.0 * NdotV * NdotL;
+        float3 KD = lerp(float3(0, 0, 0), float3(1, 1, 1) - F0, metallness);
+        float3 specular = (F0 * dist * geoSmith) / max(Epsilon, 4.0 * NdotV * NdotL);
         float3 Diffuse = KD * albedo;
 
         finalColor += ((Diffuse / PI + specular) * radiance) * NdotL;
@@ -210,7 +215,7 @@ float3 ACESTonemap(float3 color)
 }
 
 // Pixel shader
-float4 main(VS_OUTPUT pin) :SV_Target
+float4 main(VS_OUTPUT pin) : SV_Target
 {
 	// Sample input textures to get shading model params.
     float3 albedo = SRGBToLinear(albedoTexture.Sample(defaultSampler, pin.texcoord).rgb);
@@ -230,7 +235,7 @@ float4 main(VS_OUTPUT pin) :SV_Target
 		
 	// Specular reflection vector.
     float3 Lr = 2.0 * cosLo * N - Lo;
-
+    
 	// Fresnel reflectance at normal incidence (for metals use albedo color).
     float3 F0 = lerp(Fdielectric, albedo, metalness);
 
@@ -248,7 +253,7 @@ float4 main(VS_OUTPUT pin) :SV_Target
 
 		// Calculate Fresnel term for ambient lighting.
 		//https://seblagarde.wordpress.com/2011/08/17/hello-world/
-        float3 F = fresnelSchlick(F0, cosLo);
+        float3 F = fresnelSchlickRough(F0, cosLo, roughness);
 
 		// Get diffuse contribution factor (as with direct lighting).
         float3 kd = lerp(1.0 - F, 0.0, metalness);
@@ -270,7 +275,7 @@ float4 main(VS_OUTPUT pin) :SV_Target
         ambientLighting = diffuseIBL + specularIBL;
     }
     float4 finalColor = 0.0f;
-    finalColor = float4(directLighting + ambientLighting,alpha);
+    finalColor = float4(directLighting + ambientLighting, alpha);
     finalColor.xyz = LinearToSRGB(finalColor.xyz);
     finalColor.xyz = ACESTonemap(finalColor.xyz);
 	// Final fragment color.

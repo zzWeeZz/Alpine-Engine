@@ -18,7 +18,7 @@ namespace Alpine
 
 	void Renderer::Initalize()
 	{
-		s_Instance.m_Skybox = SkyBox::Create("Textures/cannon_4k.hdr");
+		s_Instance.m_Skybox = SkyBox::Create("Textures/monbachtal_riverbank_4k.hdr");
 		s_Instance.m_ModelBuffer.Create();
 		s_Instance.m_CameraBuffer.Create();
 		s_Instance.m_DirLightBuffer.Create();
@@ -45,6 +45,7 @@ namespace Alpine
 		FramebufferSpecification spec = {};
 		spec.width = Application::GetWindow()->GetWidth();
 		spec.height = Application::GetWindow()->GetHeight();
+		spec.colorFormat = { DXGI_FORMAT_R8G8B8A8_UNORM_SRGB };
 
 		s_Instance.m_FrameBuffer = FrameBuffer::Create(spec);
 		auto topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
@@ -134,5 +135,6 @@ namespace Alpine
 	void Renderer::End()
 	{
 		s_Instance.m_FrameBuffer->UnBind();
+		s_Instance.m_PointLightCount = 0;
 	}
 }
