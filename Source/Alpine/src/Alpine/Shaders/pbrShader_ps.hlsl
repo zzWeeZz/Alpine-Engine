@@ -87,7 +87,7 @@ float3 CalcDirectionalLight(float3 viewDirection, float3 normal, float3 albedo, 
 
     float dist = ndfGGX(NdotH, roughness);
     float geoSmith = gaSchlickGGX(NdotV, NdotL, roughness);
-    float3 F0 = fresnelSchlick(fs, VdotH);
+    float3 F0 = fresnelSchlickRough(fs, VdotH, roughness);
 
     float3 KD = lerp(float3(0, 0, 0), float3(1, 1, 1) - F0, metallness);
     float3 specular = (F0 * dist * geoSmith) / max(Epsilon, 4.0 * NdotV * NdotL);
@@ -125,7 +125,7 @@ float3 CalcPointLight(float3 viewDirection, float3 pos, float3 normal, float3 al
 
         float dist = ndfGGX(NdotH, roughness);
         float geoSmith = gaSchlickGGX(NdotV, NdotL, roughness);
-        float3 F0 = fresnelSchlick(fs, VdotH);
+        float3 F0 = fresnelSchlickRough(fs, VdotH, roughness);
 
         float3 KD = lerp(float3(0, 0, 0), float3(1, 1, 1) - F0, metallness);
         float3 specular = (F0 * dist * geoSmith) / max(Epsilon, 4.0 * NdotV * NdotL);

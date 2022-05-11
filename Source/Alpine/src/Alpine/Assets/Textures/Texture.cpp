@@ -23,27 +23,39 @@ Alpine::Texture::Texture(const std::filesystem::path& aPath, bool isSRGB)
 		m_IsHDR = false;
 		if (isSRGB)
 		{
-			AssertIfFailed(DirectX::CreateWICTextureFromFileEx(Alpine::DX11::Device().Get(), 
-				aPath.wstring().c_str(), 
-				0, 
-				D3D11_USAGE_DEFAULT, 
-				D3D11_BIND_FLAG::D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_FLAG::D3D11_BIND_UNORDERED_ACCESS,
-				0, 
-				0, 
-				DirectX::WIC_LOADER_FLAGS::WIC_LOADER_FORCE_SRGB,
-				&m_Resource,
-				m_ShaderResourceView.GetAddressOf()));
+			float* pixels = stbi_loadf(aPath.string().c_str(), &m_Width, &m_Height, &m_Channels, 4);
+			if (pixels)
+			{
+				m_Pixels.reset(reinterpret_cast<unsigned char*>(pixels));
+				CreateTextureFromImageData(DXGI_FORMAT::DXGI_FORMAT_B8G8R8A8_UNORM_SRGB);
+			}
 		}
 		else
 		{
-			AssertIfFailed(DirectX::CreateWICTextureFromFile(Alpine::DX11::Device().Get(), aPath.wstring().c_str(), &m_Resource, m_ShaderResourceView.GetAddressOf()));
+			float* pixels = stbi_loadf(aPath.string().c_str(), &m_Width, &m_Height, &m_Channels, 4);
+			if (pixels)
+			{
+				m_Pixels.reset(reinterpret_cast<unsigned char*>(pixels));
+				CreateTextureFromImageData(DXGI_FORMAT::DXGI_FORMAT_B8G8R8A8_UNORM);
+			}
+			/*AssertIfFailed(DirectX::CreateWICTextureFromFileEx(Alpine::DX11::Device().Get(),
+				aPath.wstring().c_str(),
+				0,
+				D3D11_USAGE_DEFAULT,
+				D3D11_BIND_FLAG::D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_FLAG::D3D11_BIND_UNORDERED_ACCESS,
+				0,
+				D3D11_RESOURCE_MISC_FLAG::D3D11_RESOURCE_MISC_GENERATE_MIPS,
+				DirectX::WIC_LOADER_DEFAULT,
+				m_Resource.GetAddressOf(),
+				m_ShaderResourceView.GetAddressOf()));
+			AssertIfFailed(m_Resource->QueryInterface(__uuidof(ID3D11Texture2D), reinterpret_cast<void**>(m_Texture.GetAddressOf())));
+			DX11::Context()->GenerateMips(m_ShaderResourceView.Get());*/
+
 		}
 			
 		
-		AssertIfFailed(m_Resource->QueryInterface(__uuidof(ID3D11Texture2D), reinterpret_cast<void**>(m_Texture.GetAddressOf())));
 		// gen mip maps
 	}
-	DX11::Context()->GenerateMips(m_ShaderResourceView.Get());
 }
 
 Alpine::Texture::Texture(UINT width, UINT height, DXGI_FORMAT format, UINT levels)
@@ -129,6 +141,19 @@ ComPtr<ID3D11UnorderedAccessView> Alpine::Texture::GetUnorderedAccessView()
 ComPtr<ID3D11ShaderResourceView> Alpine::Texture::GetShaderResourceView()
 {
 	return m_ShaderResourceView;
+}
+
+void Alpine::Texture::CreateTextureFromImageData(DXGI_FORMAT format)
+{
+	Ref<Texture> text = Create(m_Width, m_Height, format);
+
+	DX11::Context()->UpdateSubresource(text->m_Texture.Get(), 0, 0, m_Pixels.get(), m_Width * 4 * sizeof(float), 0);
+	if (text->m_Texture)
+	{
+		DX11::Context()->GenerateMips(text->m_ShaderResourceView.Get());
+	}
+	m_Texture = text->m_Texture;
+	m_ShaderResourceView = text->m_ShaderResourceView;
 }
 
 void Alpine::Texture::CreateTextureFromHdrData()

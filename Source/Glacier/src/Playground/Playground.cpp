@@ -41,7 +41,6 @@ void Alpine::Playground::Update(float delta)
 	static float angle = 0;
 	angle += delta * 90;
 	m_Model->SetRotation({ 0, angle, 0 });
-	m_PointLight->SetPosition({0,  20 * sin(angle/190.f), -10});
 }
 
 void Alpine::Playground::Render()

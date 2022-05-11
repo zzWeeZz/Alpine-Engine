@@ -19,6 +19,7 @@ namespace Alpine
 		static Ref<Texture> Create(const std::filesystem::path& aPath, bool isSRGB = true);
 		static Ref<Texture> Create(UINT width, UINT height, DXGI_FORMAT format, UINT levels = 0);
 	private:
+		void CreateTextureFromImageData(DXGI_FORMAT format);
 		void CreateTextureFromHdrData();
 		ComPtr<ID3D11Texture2D> m_Texture;
 		ComPtr< ID3D11Resource> m_Resource;
