@@ -23,20 +23,20 @@ Alpine::Texture::Texture(const std::filesystem::path& aPath, bool isSRGB)
 		m_IsHDR = false;
 		if (isSRGB)
 		{
-			float* pixels = stbi_loadf(aPath.string().c_str(), &m_Width, &m_Height, &m_Channels, 4);
+			void* pixels = stbi_load(aPath.string().c_str(), &m_Width, &m_Height, &m_Channels, 4);
 			if (pixels)
 			{
 				m_Pixels.reset(reinterpret_cast<unsigned char*>(pixels));
-				CreateTextureFromImageData(DXGI_FORMAT::DXGI_FORMAT_B8G8R8A8_UNORM_SRGB);
+				CreateTextureFromImageData(DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM_SRGB);
 			}
 		}
 		else
 		{
-			float* pixels = stbi_loadf(aPath.string().c_str(), &m_Width, &m_Height, &m_Channels, 4);
+			void* pixels = stbi_load(aPath.string().c_str(), &m_Width, &m_Height, &m_Channels, 4);
 			if (pixels)
 			{
 				m_Pixels.reset(reinterpret_cast<unsigned char*>(pixels));
-				CreateTextureFromImageData(DXGI_FORMAT::DXGI_FORMAT_B8G8R8A8_UNORM);
+				CreateTextureFromImageData(DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM);
 			}
 			/*AssertIfFailed(DirectX::CreateWICTextureFromFileEx(Alpine::DX11::Device().Get(),
 				aPath.wstring().c_str(),
@@ -147,7 +147,7 @@ void Alpine::Texture::CreateTextureFromImageData(DXGI_FORMAT format)
 {
 	Ref<Texture> text = Create(m_Width, m_Height, format);
 
-	DX11::Context()->UpdateSubresource(text->m_Texture.Get(), 0, 0, m_Pixels.get(), m_Width * 4 * sizeof(float), 0);
+	DX11::Context()->UpdateSubresource(text->m_Texture.Get(), 0, 0, m_Pixels.get(), m_Width * 4, 0);
 	if (text->m_Texture)
 	{
 		DX11::Context()->GenerateMips(text->m_ShaderResourceView.Get());

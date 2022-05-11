@@ -79,21 +79,22 @@ uint querySpecularTextureLevels()
 // PBR Directional light function
 float3 CalcDirectionalLight(float3 viewDirection, float3 normal, float3 albedo, float roughness, float metallness, float3 fs)
 {
-    float3 halfVector = normalize(normalize(DirLightDirection.xyz) + (viewDirection));
-    float NdotL = max(Epsilon, dot(normal, normalize(DirLightDirection.xyz)));
-    float NdotH = max(0.f, dot(normal, halfVector));
-    float NdotV = max(0.f, dot(normal, viewDirection));
-    float VdotH = max(Epsilon, dot(viewDirection, halfVector));
+    float3 halfVector = normalize(DirLightDirection.xyz + viewDirection);
+    float NdotL = saturate(dot(normal, DirLightDirection.xyz));
+    float NdotH = saturate(dot(normal, halfVector));
+    float NdotV = saturate(dot(normal, viewDirection));
+    float VdotH = saturate(dot(viewDirection, halfVector));
 
     float dist = ndfGGX(NdotH, roughness);
-    float geoSmith = gaSchlickGGX(NdotV, NdotL, roughness);
+    float geoSmith = gaSchlickGGX(NdotL, NdotV, roughness);
     float3 F0 = fresnelSchlickRough(fs, VdotH, roughness);
 
-    float3 KD = lerp(float3(0, 0, 0), float3(1, 1, 1) - F0, metallness);
-    float3 specular = (F0 * dist * geoSmith) / max(Epsilon, 4.0 * NdotV * NdotL);
+    float3 KD = (float3(1, 1, 1) - F0) * (1 - metallness);
+
+    float3 specular = (dist * geoSmith * F0) / max(4.0 * NdotL * NdotV, Epsilon);
     float3 Diffuse = KD * albedo;
 
-    return ((Diffuse / PI + specular) * NdotL) * DirLightColor.w * DirLightColor.rgb;
+    return ((Diffuse / PI + specular) * NdotL) * DirLightColor.rgb;
 }
 
 float3 CalcPointLight(float3 viewDirection, float3 pos, float3 normal, float3 albedo, float roughness, float metallness, float3 fs)

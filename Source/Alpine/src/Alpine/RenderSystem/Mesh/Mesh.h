@@ -16,11 +16,13 @@ namespace Alpine
 
 	private:
 		void PrepareForRender();
+		void ProcessMaterials(const aiScene* pScene, std::string path);
 		bool LoadModel(const std::string& aFilePath);
 		void ProcessNode(aiNode* aNode, const aiScene* aScene);
 		SubMesh ProcessSubMesh(aiMesh* aMesh, const aiScene* aScene);
 
 	private:
+		std::vector<Ref<Material>> m_Materials;
 		std::vector<SubMesh> m_SubMeshes;
 		ComPtr<ID3D11ShaderResourceView> m_Texture;
 		ComPtr<ID3D11SamplerState> m_TextureSamplerState;
