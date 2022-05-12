@@ -2,16 +2,17 @@
 
 #include <cassert>
 #include <DirectXTK/WICTextureLoader.h>
+#include <DirectXTK/DDSTextureLoader.h>
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 #include <Alpine/DX11/DX11.h>
 
 Alpine::Texture::Texture(const std::filesystem::path& aPath, bool isSRGB)
 {
-	if(stbi_is_hdr(aPath.string().c_str()))
+	if (stbi_is_hdr(aPath.string().c_str()))
 	{
 		float* pixels = stbi_loadf(aPath.string().c_str(), &m_Width, &m_Height, &m_Channels, 4);
-		if(pixels)
+		if (pixels)
 		{
 			m_Pixels.reset(reinterpret_cast<unsigned char*>(pixels));
 			m_IsHDR = true;
@@ -20,40 +21,44 @@ Alpine::Texture::Texture(const std::filesystem::path& aPath, bool isSRGB)
 	}
 	else
 	{
-		m_IsHDR = false;
-		if (isSRGB)
+		if (aPath.extension().string() != ".dds")
 		{
-			void* pixels = stbi_load(aPath.string().c_str(), &m_Width, &m_Height, &m_Channels, 4);
-			if (pixels)
+			m_IsHDR = false;
+			if (isSRGB)
 			{
-				m_Pixels.reset(reinterpret_cast<unsigned char*>(pixels));
-				CreateTextureFromImageData(DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM_SRGB);
+
+				void* pixels = stbi_load(aPath.string().c_str(), &m_Width, &m_Height, &m_Channels, 4);
+				if (pixels)
+				{
+					m_Pixels.reset(reinterpret_cast<unsigned char*>(pixels));
+					CreateTextureFromImageData(DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM_SRGB);
+				}
+			}
+			else
+			{
+				void* pixels = stbi_load(aPath.string().c_str(), &m_Width, &m_Height, &m_Channels, 4);
+				if (pixels)
+				{
+					m_Pixels.reset(reinterpret_cast<unsigned char*>(pixels));
+					CreateTextureFromImageData(DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM);
+				}
 			}
 		}
 		else
 		{
-			void* pixels = stbi_load(aPath.string().c_str(), &m_Width, &m_Height, &m_Channels, 4);
-			if (pixels)
-			{
-				m_Pixels.reset(reinterpret_cast<unsigned char*>(pixels));
-				CreateTextureFromImageData(DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM);
-			}
-			/*AssertIfFailed(DirectX::CreateWICTextureFromFileEx(Alpine::DX11::Device().Get(),
-				aPath.wstring().c_str(),
-				0,
-				D3D11_USAGE_DEFAULT,
-				D3D11_BIND_FLAG::D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_FLAG::D3D11_BIND_UNORDERED_ACCESS,
-				0,
-				D3D11_RESOURCE_MISC_FLAG::D3D11_RESOURCE_MISC_GENERATE_MIPS,
-				DirectX::WIC_LOADER_DEFAULT,
-				m_Resource.GetAddressOf(),
-				m_ShaderResourceView.GetAddressOf()));
-			AssertIfFailed(m_Resource->QueryInterface(__uuidof(ID3D11Texture2D), reinterpret_cast<void**>(m_Texture.GetAddressOf())));
-			DX11::Context()->GenerateMips(m_ShaderResourceView.Get());*/
+			auto device = DX11::Device();
+			ID3D11Resource* resource = nullptr;
+			DirectX::CreateDDSTextureFromFile(device.Get(), aPath.wstring().c_str(), &resource, m_ShaderResourceView.GetAddressOf());
 
+			AssertIfFailed(resource->QueryInterface(IID_ID3D11Texture2D, reinterpret_cast<void**>(m_Texture.GetAddressOf())));
+
+			D3D11_TEXTURE2D_DESC desc;
+			m_Texture->GetDesc(&desc);
+
+			m_Width = desc.Width;
+			m_Height = desc.Height;
 		}
-			
-		
+
 		// gen mip maps
 	}
 }
@@ -89,7 +94,7 @@ Alpine::Texture::Texture(UINT width, UINT height, DXGI_FORMAT format, UINT level
 	viewDesc.TextureCube.MostDetailedMip = 0;
 	viewDesc.TextureCube.MipLevels = -1;
 
-	if (FAILED(DX11::Device()->CreateShaderResourceView(m_Texture.Get(), &viewDesc, &m_ShaderResourceView)))
+	if (FAILED(DX11::Device()->CreateShaderResourceView(m_Texture.Get(), &viewDesc, m_ShaderResourceView.GetAddressOf())))
 	{
 		spdlog::error("Failed to create shader resource view");
 		return;
@@ -124,7 +129,7 @@ void Alpine::Texture::CreateUAV(UINT levels)
 	uavDesc.Texture2D.MipSlice = levels;
 
 
-	auto hr = DX11::Device()->CreateUnorderedAccessView(m_Texture.Get(), &uavDesc, &m_UAV);
+	auto hr = DX11::Device()->CreateUnorderedAccessView(m_Texture.Get(), &uavDesc, m_UAV.GetAddressOf());
 	assert(SUCCEEDED(hr));
 }
 

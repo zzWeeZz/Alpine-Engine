@@ -16,7 +16,7 @@ namespace Alpine
 
 	private:
 		void PrepareForRender();
-		void ProcessMaterials(const aiScene* pScene, std::string path);
+		void ProcessMaterials(const aiScene* pScene, const std::filesystem::path& path);
 		bool LoadModel(const std::string& aFilePath);
 		void ProcessNode(aiNode* aNode, const aiScene* aScene);
 		SubMesh ProcessSubMesh(aiMesh* aMesh, const aiScene* aScene);

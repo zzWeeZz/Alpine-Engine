@@ -31,7 +31,7 @@ void Alpine::Mesh::SetMesh(std::string aPath)
 		{
 			indices.push_back(indences[i]);
 		}
-		m_SubMeshes.push_back(SubMesh(vertices, indices));
+		//m_SubMeshes.push_back(SubMesh(vertices, indices));
 	}
 	else if (aPath == "Sphere")
 	{
@@ -52,7 +52,7 @@ void Alpine::Mesh::SetMesh(std::string aPath)
 		{
 			indices.push_back(indences[i]);
 		}
-		m_SubMeshes.push_back(SubMesh(vertices, indices));
+		//m_SubMeshes.push_back(SubMesh(vertices, indices));
 	}
 	else
 	{
@@ -84,78 +84,55 @@ void Alpine::Mesh::PrepareForRender()
 	DX11::Device()->CreateSamplerState(&samplerDesc, &m_TextureSamplerState);
 }
 
-void Alpine::Mesh::ProcessMaterials(const aiScene* pScene, std::string path)
+void Alpine::Mesh::ProcessMaterials(const aiScene* pScene, const std::filesystem::path& path)
 {
-	std::string::size_type dirIndex = path.find_last_of('/');
-	std::string dir = path.substr(0, dirIndex);
+	auto dir = path.parent_path();
 	for (unsigned int i = 0; i < pScene->mNumMaterials; i++)
 	{
-		aiMaterial* pMaterial = pScene->mMaterials[i];
-		Ref<Material> tempMaterial = Material::Create("dflak");
-		aiString path;
-		if (pMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &path) == AI_SUCCESS)
-		{
-			std::string fullPath = path.C_Str();
-			std::string::size_type nameIndex = fullPath.find_last_of('\\');
-			std::string name = fullPath.substr(nameIndex + 1);
-			std::string::size_type extIndex = name.find_last_of('.');
-			name = name.substr(0, extIndex);
-			std::string MatPath = dir + "/" + name + ".png";
-			
-			
-			tempMaterial->AddTexture(Texture::Create(MatPath));
-		}
-		if (pMaterial->GetTexture(aiTextureType_DIFFUSE_ROUGHNESS, 0, &path) == AI_SUCCESS)
-		{
-			std::string fullPath = path.C_Str();
-			std::string::size_type nameIndex = fullPath.find_last_of('\\');
-			std::string name = fullPath.substr(nameIndex + 1);
-			std::string::size_type extIndex = name.find_last_of('.');
-			name = name.substr(0, extIndex);
-			std::string MatPath = dir + "/" + name + ".png";
-			tempMaterial->AddTexture(Texture::Create(MatPath));
-		}
-		if (pMaterial->GetTexture(aiTextureType_NORMALS, 0, &path) == AI_SUCCESS)
-		{
-			std::string fullPath = path.C_Str();
-			std::string::size_type nameIndex = fullPath.find_last_of('\\');
-			std::string name = fullPath.substr(nameIndex + 1);
-			std::string::size_type extIndex = name.find_last_of('.');
-			name = name.substr(0, extIndex);
-			std::string MatPath = dir + "/" + name + ".png";
-			tempMaterial->AddTexture(Texture::Create(MatPath));
-		}
-		if (pMaterial->GetTexture(aiTextureType_AMBIENT_OCCLUSION, 0, &path) == AI_SUCCESS)
-		{
-			std::string fullPath = path.C_Str();
-			std::string::size_type nameIndex = fullPath.find_last_of('\\');
-			std::string name = fullPath.substr(nameIndex + 1);
-			std::string::size_type extIndex = name.find_last_of('.');
-			name = name.substr(0, extIndex);
-			std::string MatPath = dir + "/" + name + ".png";
-			tempMaterial->AddTexture(Texture::Create(MatPath));
-		}
-		if (pMaterial->GetTexture(aiTextureType_METALNESS, 0, &path) == AI_SUCCESS)
-		{
-			std::string fullPath = path.C_Str();
-			std::string::size_type nameIndex = fullPath.find_last_of('\\');
-			std::string name = fullPath.substr(nameIndex + 1);
-			std::string::size_type extIndex = name.find_last_of('.');
-			name = name.substr(0, extIndex);
-			std::string MatPath = dir + "/" + name + ".png";
-			tempMaterial->AddTexture(Texture::Create(MatPath));
-		}
-		if (pMaterial->GetTexture(aiTextureType_HEIGHT, 0, &path) == AI_SUCCESS)
-		{
-			std::string fullPath = path.C_Str();
-			std::string::size_type nameIndex = fullPath.find_last_of('\\');
-			std::string name = fullPath.substr(nameIndex + 1);
-			std::string::size_type extIndex = name.find_last_of('.');
-			name = name.substr(0, extIndex);
-			std::string MatPath = dir + "/" + name + ".png";
-			tempMaterial->AddTexture(Texture::Create(MatPath));
-		}
 
+		Ref<Material> tempMaterial = Material::Create("dflak");
+		{
+			std::filesystem::path diffuseColor = dir.string() + "/" + pScene->mMaterials[i]->GetName().C_Str() + "_c.dds";
+			if (std::filesystem::exists(diffuseColor))
+			{
+				tempMaterial->AddTexture(Texture::Create(diffuseColor));
+			}
+		}
+		{
+			std::filesystem::path diffuseColor = dir.string() + "/" + pScene->mMaterials[i]->GetName().C_Str() + "_m.dds";
+			if (std::filesystem::exists(diffuseColor))
+			{
+				tempMaterial->AddTexture(Texture::Create(diffuseColor));
+			}
+		}
+		{
+			std::filesystem::path diffuseColor = dir.string() + "/" + pScene->mMaterials[i]->GetName().C_Str() + "_n.dds";
+			if (std::filesystem::exists(diffuseColor))
+			{
+				tempMaterial->AddTexture(Texture::Create(diffuseColor));
+			}
+		}
+		{
+			std::filesystem::path diffuseColor = dir.string() + "C.dds";
+			if (std::filesystem::exists(diffuseColor))
+			{
+				tempMaterial->AddTexture(Texture::Create(diffuseColor));
+			}
+		}
+		{
+			std::filesystem::path diffuseColor = dir.string() + "C.dds";
+			if (std::filesystem::exists(diffuseColor))
+			{
+				tempMaterial->AddTexture(Texture::Create(diffuseColor));
+			}
+		}
+		{
+			std::filesystem::path diffuseColor = dir.string() + "C.dds";
+			if (std::filesystem::exists(diffuseColor))
+			{
+				tempMaterial->AddTexture(Texture::Create(diffuseColor));
+			}
+		}
 		m_Materials.push_back(tempMaterial);
 	}
 }
@@ -164,7 +141,7 @@ bool Alpine::Mesh::LoadModel(const std::string& aFilePath)
 {
 	Assimp::Importer importer;
 	spdlog::log(spdlog::level::info, "Loading: {}", aFilePath);
-	const aiScene* pScene = importer.ReadFile(aFilePath, aiProcess_Triangulate | 
+	const aiScene* pScene = importer.ReadFile(aFilePath, aiProcess_Triangulate |
 		aiProcess_CalcTangentSpace |
 		aiProcess_SortByPType |
 		aiProcess_GenNormals |
