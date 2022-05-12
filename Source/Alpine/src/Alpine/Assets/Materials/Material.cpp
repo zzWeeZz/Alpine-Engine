@@ -9,6 +9,12 @@ Alpine::Material::Material(std::string name)
 	myMaterialName = name;
 }
 
+Alpine::Material::Material(const Material& other)
+{
+	myMaterialName = other.myMaterialName;
+	myTextures = other.myTextures;
+}
+
 void Alpine::Material::AddTexture(std::shared_ptr<Texture> texture)
 {
 	if (myTextures.size() < 6)

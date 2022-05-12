@@ -12,6 +12,7 @@ namespace Alpine
 	{
 	public:
 		Material(std::string name);
+		Material(const Material& other);
 		void AddTexture(std::shared_ptr<Texture> texture);
 		void AddTexture(std::shared_ptr<TextureCube> texture);
 

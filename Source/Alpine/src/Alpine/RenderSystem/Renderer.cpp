@@ -75,7 +75,7 @@ namespace Alpine
 		s_Instance.m_ModelBuffer.Bind();
 		DX11::GetRenderStateManager().PushRasterizerState(model.cullmode);
 		DX11::GetRenderStateManager().PushDepthStencilState(model.depthStencilMode);
-		model.material->Bind();
+		//model.material->Bind();
 		model.mesh.SubmitMesh();
 		DX11::GetRenderStateManager().PopRasterizerState();
 		DX11::GetRenderStateManager().PopDepthStencilState();

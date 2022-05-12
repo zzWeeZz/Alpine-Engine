@@ -10,7 +10,7 @@ Alpine::SubMesh::SubMesh(std::vector<Vertex>& aVertices, std::vector<DWORD>& aIn
 {
 	m_VertexBuffer.Initialize(aVertices.data(), aVertices.size());
 	m_IndexBuffer.Initalize(aIndices.data(), aIndices.size());
-	m_Material = CreateRef<Material>(aMaterial);
+	m_Material = aMaterial;
 }
 
 Alpine::SubMesh::SubMesh(const SubMesh& aMesh) : m_IndexBuffer(aMesh.m_IndexBuffer)
