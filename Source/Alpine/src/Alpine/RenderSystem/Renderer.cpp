@@ -25,12 +25,12 @@ namespace Alpine
 		s_Instance.m_PointLightBuffer.Create();
 		D3D11_INPUT_ELEMENT_DESC layout[] =
 		{
-			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-			{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-			{"NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 20, D3D11_INPUT_PER_VERTEX_DATA, 0},
-			{"TANGENT", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 32, D3D11_INPUT_PER_VERTEX_DATA, 0},
-			{"BITANGENT", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 44, D3D11_INPUT_PER_VERTEX_DATA, 0},
-			{"TBASIS" , 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 56, D3D11_INPUT_PER_VERTEX_DATA, 0}
+			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			{"NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0},
+			{"TANGENT", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0},
+			{"BITANGENT", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0},
+			{"TBASIS" , 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0}
 		};
 		s_Instance.m_PbrVertexShader = VertexShader::Create(L"Shaders/pbrShader_vs.cso", layout, ARRAYSIZE(layout));
 		s_Instance.m_PbrPixelShader = PixelShader::Create(L"Shaders/pbrShader_ps.cso");
@@ -45,7 +45,7 @@ namespace Alpine
 		FramebufferSpecification spec = {};
 		spec.width = Application::GetWindow()->GetWidth();
 		spec.height = Application::GetWindow()->GetHeight();
-		spec.colorFormat = { DXGI_FORMAT_R8G8B8A8_UNORM_SRGB };
+		spec.colorFormat = { DXGI_FORMAT_R8G8B8A8_UNORM };
 
 		s_Instance.m_FrameBuffer = FrameBuffer::Create(spec);
 		auto topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
@@ -117,8 +117,8 @@ namespace Alpine
 		s_Instance.m_FrameBuffer->ClearView({ 0,1,0,1 });
 		s_Instance.m_FrameBuffer->ClearDepthStencil();
 		s_Instance.m_FrameBuffer->Bind();
-		s_Instance.m_Skybox->BindForSky();
-		s_Instance.m_Skybox->Draw();
+		//s_Instance.m_Skybox->BindForSky();
+		//s_Instance.m_Skybox->Draw();
 		s_Instance.m_FrameBuffer->UnBind();
 	}
 

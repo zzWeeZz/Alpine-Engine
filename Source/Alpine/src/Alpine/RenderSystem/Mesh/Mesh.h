@@ -19,7 +19,7 @@ namespace Alpine
 		void ProcessMaterials(const aiScene* pScene, const std::filesystem::path& path);
 		bool LoadModel(const std::string& aFilePath);
 		void ProcessNode(aiNode* aNode, const aiScene* aScene);
-		SubMesh ProcessSubMesh(aiMesh* aMesh, const aiScene* aScene);
+		Alpine::SubMesh ProcessSubMesh(aiMesh* aMesh, const aiScene* aScene);
 
 	private:
 		std::vector<Ref<Material>> m_Materials;

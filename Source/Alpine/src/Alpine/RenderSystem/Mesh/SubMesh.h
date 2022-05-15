@@ -19,7 +19,7 @@ namespace Alpine
 	{
 	public:
 		SubMesh(std::vector<Vertex>& aVertices, std::vector<DWORD>& aIndices);
-		SubMesh(std::vector<Vertex>& aVertices, std::vector<DWORD>& aIndices, Ref<Material> aMaterial);
+		SubMesh(std::vector<Vertex>& aVertices, std::vector<DWORD>& aIndices, Ref<Material> material);
 		SubMesh(const SubMesh& aMesh);
 		void Draw();
 	private:
@@ -27,4 +27,5 @@ namespace Alpine
 		VertexBuffer<Vertex> m_VertexBuffer;
 		IndexBuffer m_IndexBuffer;
 	};
+
 }

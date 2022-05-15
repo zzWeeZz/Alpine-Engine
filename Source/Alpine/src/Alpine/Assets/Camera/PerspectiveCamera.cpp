@@ -5,7 +5,7 @@
 void PerspectiveCamera::Init(const Vector3& aPosition)
 {
 	m_Position = aPosition;
-	m_ProjectionMatrix = Matrix::CreatePerspectiveFieldOfView(3.14f / 2.f, 16.f / 9.f, 0.1f, 1000.f);
+	m_ProjectionMatrix = Matrix::CreatePerspectiveFieldOfView(3.14f / 2.f, 16.f / 9.f, 0.1f, 1000000.f);
 	m_Forward = Vector3(0.f, 0.f, -1.f);
 	m_Right = Vector3(-1.f, 0.f, 0.f);
 	m_Up = Vector3(0.f, 1.f, 0.f);

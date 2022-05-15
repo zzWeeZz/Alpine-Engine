@@ -12,10 +12,10 @@ void Alpine::Playground::Init()
 	m_Metal->AddTexture(Texture::Create("Textures/mesh-covered-metal1-ao.png", false));
 	m_Metal->AddTexture(Texture::Create("Textures/mesh-covered-metal1-metallic.png", false));
 	m_Metal->AddTexture(Texture::Create("Textures/mesh-covered-metal1-height.png", false));
-	m_Model = Alpine::Model::Create("Model/Sponza/sponzaForTGE.fbx", m_Metal);
+	m_Model = Alpine::Model::Create("Model/Sponza/Sponza.fbx", m_Metal);
 	m_Model->SetRotation({ 0, 0, 0 });
 	m_Model->SetPosition({ 0,0.f, 0});
-	m_Model->SetScale({ 1.0f, 1.0f, 1.0f });
+	m_Model->SetScale({ 0.10f, 0.10f, 0.10f });
 
 
 	m_Ground = Model::Create("Cube", m_Metal);

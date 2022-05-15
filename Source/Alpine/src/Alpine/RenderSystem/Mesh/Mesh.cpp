@@ -92,42 +92,84 @@ void Alpine::Mesh::ProcessMaterials(const aiScene* pScene, const std::filesystem
 
 		Ref<Material> tempMaterial = Material::Create("dflak");
 		{
-			std::filesystem::path diffuseColor = dir.string() + "/" + pScene->mMaterials[i]->GetName().C_Str() + "_c.dds";
+			std::string matName = pScene->mMaterials[i]->GetName().C_Str();
+			// Find if there is a : and replace it with _
+			size_t found = matName.find(":");
+			if (found != std::string::npos)
+			{
+				matName.replace(found, 1, "_");
+			}
+			std::filesystem::path diffuseColor = dir.string() + "/" + matName + "_diffuse.png";
 			if (std::filesystem::exists(diffuseColor))
 			{
 				tempMaterial->AddTexture(Texture::Create(diffuseColor));
 			}
 		}
 		{
-			std::filesystem::path diffuseColor = dir.string() + "/" + pScene->mMaterials[i]->GetName().C_Str() + "_m.dds";
+			std::string matName = pScene->mMaterials[i]->GetName().C_Str();
+			// Find if there is a : and replace it with _
+			size_t found = matName.find(":");
+			if (found != std::string::npos)
+			{
+				matName.replace(found, 1, "_");
+			}
+			std::filesystem::path diffuseColor = dir.string() + "/" + matName + "_roughness.png";
 			if (std::filesystem::exists(diffuseColor))
 			{
 				tempMaterial->AddTexture(Texture::Create(diffuseColor));
 			}
 		}
 		{
-			std::filesystem::path diffuseColor = dir.string() + "/" + pScene->mMaterials[i]->GetName().C_Str() + "_n.dds";
+			std::string matName = pScene->mMaterials[i]->GetName().C_Str();
+			// Find if there is a : and replace it with _
+			size_t found = matName.find(":");
+			if (found != std::string::npos)
+			{
+				matName.replace(found, 1, "_");
+			}
+			std::filesystem::path diffuseColor = dir.string() + "/" + matName + "_Normal.png";
 			if (std::filesystem::exists(diffuseColor))
 			{
 				tempMaterial->AddTexture(Texture::Create(diffuseColor));
 			}
 		}
 		{
-			std::filesystem::path diffuseColor = dir.string() + "C.dds";
+			std::string matName = pScene->mMaterials[i]->GetName().C_Str();
+			// Find if there is a : and replace it with _
+			size_t found = matName.find(":");
+			if (found != std::string::npos)
+			{
+				matName.replace(found, 1, "_");
+			}
+			std::filesystem::path diffuseColor = dir.string() + "/" + matName + "_AO.png";
 			if (std::filesystem::exists(diffuseColor))
 			{
 				tempMaterial->AddTexture(Texture::Create(diffuseColor));
 			}
 		}
 		{
-			std::filesystem::path diffuseColor = dir.string() + "C.dds";
+			std::string matName = pScene->mMaterials[i]->GetName().C_Str();
+			// Find if there is a : and replace it with _
+			size_t found = matName.find(":");
+			if (found != std::string::npos)
+			{
+				matName.replace(found, 1, "_");
+			}
+			std::filesystem::path diffuseColor = dir.string() + "/" + matName + "_Metallic.dds";
 			if (std::filesystem::exists(diffuseColor))
 			{
 				tempMaterial->AddTexture(Texture::Create(diffuseColor));
 			}
 		}
 		{
-			std::filesystem::path diffuseColor = dir.string() + "C.dds";
+			std::string matName = pScene->mMaterials[i]->GetName().C_Str();
+			// Find if there is a : and replace it with _
+			size_t found = matName.find(":");
+			if (found != std::string::npos)
+			{
+				matName.replace(found, 1, "_");
+			}
+			std::filesystem::path diffuseColor = dir.string() + "/" + matName + "_m.dds";
 			if (std::filesystem::exists(diffuseColor))
 			{
 				tempMaterial->AddTexture(Texture::Create(diffuseColor));
