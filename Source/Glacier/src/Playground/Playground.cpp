@@ -18,7 +18,7 @@ void Alpine::Playground::Init()
 
 	m_DirectonalLight = DirectionalLight::Create();
 	m_DirectonalLight->SetLightColor({ 1,1,0, 1 });
-	m_DirectonalLight->SetDirection({ -1,-1, -0});
+	m_DirectonalLight->SetDirection({ -1,1, 0});
 	Renderer::SubmitDirLight(*m_DirectonalLight.get());
 	m_PointLight = PointLight::Create();
 	m_PointLight->SetLightColor({ 1,1,1, 50.f });

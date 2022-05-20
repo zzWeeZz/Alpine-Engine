@@ -2,8 +2,6 @@
 #include <d3dcompiler.h>
 
 
-
-
 Alpine::VertexShader::VertexShader(const std::filesystem::path& aShaderPath, D3D11_INPUT_ELEMENT_DESC* aDesc, UINT aElements)
 {
 	AssertIfFailed(D3DReadFileToBlob(aShaderPath.c_str(), myBuffer.GetAddressOf()));
@@ -16,6 +14,12 @@ void Alpine::VertexShader::Bind()
 	DX11::Context()->IASetInputLayout(myInputLayout.Get());
 	DX11::Context()->VSSetShader(m_Shader.Get(), NULL, 0);
 }
+
+Alpine::Ref<Alpine::VertexShader> Alpine::VertexShader::Create(const std::filesystem::path& aShaderPath, InputLayout& aLayout)
+{
+	return std::make_shared<VertexShader>(aShaderPath, aLayout.inputElements.data(), aLayout.inputElements.size());
+}
+
 
 Alpine::Ref<Alpine::VertexShader> Alpine::VertexShader::Create(const std::filesystem::path& aShaderPath, D3D11_INPUT_ELEMENT_DESC* aDesc, UINT aElements)
 {

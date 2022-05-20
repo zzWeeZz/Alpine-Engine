@@ -23,23 +23,24 @@ namespace Alpine
 		s_Instance.m_CameraBuffer.Create();
 		s_Instance.m_DirLightBuffer.Create();
 		s_Instance.m_PointLightBuffer.Create();
-		D3D11_INPUT_ELEMENT_DESC layout[] =
+
+		InputLayout layoutnew =
 		{
-			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-			{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-			{"NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0},
-			{"TANGENT", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0},
-			{"BITANGENT", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0},
-			{"TBASIS" , 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0}
+			{"POSITION", Value::FLOAT3},
+			{"TEXCOORD", Value::FLOAT2},
+			{"NORMAL", Value::FLOAT3},
+			{"TANGENT", Value::FLOAT3},
+			{"BITANGENT", Value::FLOAT3}
 		};
-		s_Instance.m_PbrVertexShader = VertexShader::Create(L"Shaders/pbrShader_vs.cso", layout, ARRAYSIZE(layout));
+		
+		s_Instance.m_PbrVertexShader = VertexShader::Create(L"Shaders/pbrShader_vs.cso", layoutnew);
 		s_Instance.m_PbrPixelShader = PixelShader::Create(L"Shaders/pbrShader_ps.cso");
 		ShaderLibrary::Store("PBR", { s_Instance.m_PbrVertexShader, s_Instance.m_PbrPixelShader });
 		D3D11_INPUT_ELEMENT_DESC layout2[] =
 		{
 			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 		};
-		s_Instance.m_SkyBoxVertexShader = VertexShader::Create(L"Shaders/SkyBox_vs.cso", layout2, ARRAYSIZE(layout2));
+		s_Instance.m_SkyBoxVertexShader = VertexShader::Create(L"Shaders/SkyBox_vs.cso", layoutnew);
 		s_Instance.m_SkyBoxPixelShader = PixelShader::Create(L"Shaders/SkyBox_ps.cso");
 		ShaderLibrary::Store("SkyBox", { s_Instance.m_SkyBoxVertexShader, s_Instance.m_SkyBoxPixelShader });
 		FramebufferSpecification spec = {};

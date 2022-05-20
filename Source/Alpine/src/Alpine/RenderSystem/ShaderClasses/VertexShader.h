@@ -7,19 +7,38 @@ namespace Alpine
 {
 	enum class Value
 	{
-		FLOAT = 4,
-		VEC2 = 8,
-		VEC3 = 12,
-		VEC4 = 16,
+		FLOAT4 = 2,
+		UINT4 = 3,
+		FLOAT3 = 6,
+		UINT3 = 7,
+		FLOAT2 = 16,
+		UINT2 = 17,
+		FLOAT = 41,
+		UINT = 42,
+		FLOAT4X4 = FLOAT4,
+		UINT4X4 = UINT4,
+		FLOAT3X3 = FLOAT3,
+		UINT3X3 = UINT3,
 	};
 
 	struct InputElementSpec
 	{
-		std::string name;
+		LPCSTR name;
 		Value value;
 		uint32_t offset = 0;
 	};
 
+	struct InputLayout
+	{
+		InputLayout(std::initializer_list<InputElementSpec> elements)
+		{
+			for (auto& element : elements)
+			{
+				inputElements.emplace_back(element.name, element.offset, static_cast<DXGI_FORMAT>(element.value), 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0);
+			}
+		}
+		std::vector<D3D11_INPUT_ELEMENT_DESC> inputElements{};
+	};
 
 	class VertexShader : public Shader
 	{
@@ -28,6 +47,7 @@ namespace Alpine
 		
 		void Bind() override;
 
+		static Ref<VertexShader> Create(const std::filesystem::path& aShaderPath, InputLayout& aLayout);
 		static Ref<VertexShader> Create(const std::filesystem::path& aShaderPath, D3D11_INPUT_ELEMENT_DESC* aDesc, UINT aElements);
 
 	private:
