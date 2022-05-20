@@ -90,91 +90,41 @@ void Alpine::Mesh::ProcessMaterials(const aiScene* pScene, const std::filesystem
 	for (unsigned int i = 0; i < pScene->mNumMaterials; i++)
 	{
 
-		Ref<Material> tempMaterial = Material::Create("dflak");
+		Ref<Material> tempMaterial = Material::Create("ModelMat");
+
+		std::string matName = pScene->mMaterials[i]->GetName().C_Str();
+		std::string DiffusePath = path.parent_path().string() + "/" + matName + "_c.dds";
+		std::string NormalPath = path.parent_path().string() + "/" + matName + "_n.dds";
+		std::string SpecularPath = path.parent_path().string() + "/" + matName + "_m.dds";
+
+		if(std::filesystem::exists(DiffusePath))
 		{
-			std::string matName = pScene->mMaterials[i]->GetName().C_Str();
-			// Find if there is a : and replace it with _
-			size_t found = matName.find(":");
-			if (found != std::string::npos)
-			{
-				matName.replace(found, 1, "_");
-			}
-			std::filesystem::path diffuseColor = dir.string() + "/" + matName + "_diffuse.png";
-			if (std::filesystem::exists(diffuseColor))
-			{
-				tempMaterial->AddTexture(Texture::Create(diffuseColor));
-			}
+			tempMaterial->AddDiffuseTexture(Texture::Create(DiffusePath));
 		}
+		else
 		{
-			std::string matName = pScene->mMaterials[i]->GetName().C_Str();
-			// Find if there is a : and replace it with _
-			size_t found = matName.find(":");
-			if (found != std::string::npos)
-			{
-				matName.replace(found, 1, "_");
-			}
-			std::filesystem::path diffuseColor = dir.string() + "/" + matName + "_roughness.png";
-			if (std::filesystem::exists(diffuseColor))
-			{
-				tempMaterial->AddTexture(Texture::Create(diffuseColor));
-			}
+			uint32_t white = 0xffffffff;
+			tempMaterial->AddDiffuseTexture(Texture::Create(1,1,DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM, 0, &white));
 		}
+		if(std::filesystem::exists(NormalPath))
 		{
-			std::string matName = pScene->mMaterials[i]->GetName().C_Str();
-			// Find if there is a : and replace it with _
-			size_t found = matName.find(":");
-			if (found != std::string::npos)
-			{
-				matName.replace(found, 1, "_");
-			}
-			std::filesystem::path diffuseColor = dir.string() + "/" + matName + "_Normal.png";
-			if (std::filesystem::exists(diffuseColor))
-			{
-				tempMaterial->AddTexture(Texture::Create(diffuseColor));
-			}
+			tempMaterial->AddNormalTexture(Texture::Create(NormalPath));
 		}
+		else
 		{
-			std::string matName = pScene->mMaterials[i]->GetName().C_Str();
-			// Find if there is a : and replace it with _
-			size_t found = matName.find(":");
-			if (found != std::string::npos)
-			{
-				matName.replace(found, 1, "_");
-			}
-			std::filesystem::path diffuseColor = dir.string() + "/" + matName + "_AO.png";
-			if (std::filesystem::exists(diffuseColor))
-			{
-				tempMaterial->AddTexture(Texture::Create(diffuseColor));
-			}
+			float Text[4] = {0.5, 0.5, 0.5, 0.5f};
+			tempMaterial->AddNormalTexture(Texture::Create(1, 1, DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM, 0, &Text));
 		}
+		if(std::filesystem::exists(SpecularPath))
 		{
-			std::string matName = pScene->mMaterials[i]->GetName().C_Str();
-			// Find if there is a : and replace it with _
-			size_t found = matName.find(":");
-			if (found != std::string::npos)
-			{
-				matName.replace(found, 1, "_");
-			}
-			std::filesystem::path diffuseColor = dir.string() + "/" + matName + "_Metallic.dds";
-			if (std::filesystem::exists(diffuseColor))
-			{
-				tempMaterial->AddTexture(Texture::Create(diffuseColor));
-			}
+			tempMaterial->AddSpecularTexture(Texture::Create(SpecularPath));
 		}
+		else
 		{
-			std::string matName = pScene->mMaterials[i]->GetName().C_Str();
-			// Find if there is a : and replace it with _
-			size_t found = matName.find(":");
-			if (found != std::string::npos)
-			{
-				matName.replace(found, 1, "_");
-			}
-			std::filesystem::path diffuseColor = dir.string() + "/" + matName + "_m.dds";
-			if (std::filesystem::exists(diffuseColor))
-			{
-				tempMaterial->AddTexture(Texture::Create(diffuseColor));
-			}
+			uint32_t white = 0xffffffff;
+			tempMaterial->AddSpecularTexture(Texture::Create(1, 1, DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM, 0, &white));
 		}
+
 		m_Materials.push_back(tempMaterial);
 	}
 }

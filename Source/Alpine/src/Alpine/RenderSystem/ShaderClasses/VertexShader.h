@@ -17,22 +17,10 @@ namespace Alpine
 	{
 		std::string name;
 		Value value;
-		InputElementSpec(Value size, std::string identifier)
-		{
-			value = size;
-			name = identifier;
-		}
-		
+		uint32_t offset = 0;
 	};
 
-	struct VertexLayoutSpecs
-	{
-		VertexLayoutSpecs(std::vector<InputElementSpec>& specs)
-		{
-			theSpecs = specs;
-		}
-		std::vector<InputElementSpec> theSpecs;
-	};
+
 	class VertexShader : public Shader
 	{
 	public:

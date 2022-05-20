@@ -8,7 +8,7 @@ namespace Alpine
 	{
 	public:
 		Texture(const std::filesystem::path& aPath, bool isSRGB);
-		Texture(UINT width, UINT height, DXGI_FORMAT format, UINT levels);
+		Texture(UINT width, UINT height, DXGI_FORMAT format, UINT levels, void* data);
 		void Bind(unsigned int slot, bool useCompute = false);
 
 		void CreateUAV(UINT levels = 0);
@@ -17,7 +17,7 @@ namespace Alpine
 		ComPtr<ID3D11UnorderedAccessView> GetUnorderedAccessView();
 		ComPtr<ID3D11ShaderResourceView> GetShaderResourceView();
 		static Ref<Texture> Create(const std::filesystem::path& aPath, bool isSRGB = true);
-		static Ref<Texture> Create(UINT width, UINT height, DXGI_FORMAT format, UINT levels = 0);
+		static Ref<Texture> Create(UINT width, UINT height, DXGI_FORMAT format, UINT levels = 0, void* data = nullptr);
 	private:
 		void CreateTextureFromImageData(DXGI_FORMAT format);
 		void CreateTextureFromHdrData();

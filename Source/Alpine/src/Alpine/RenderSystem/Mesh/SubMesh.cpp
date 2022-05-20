@@ -22,8 +22,7 @@ Alpine::SubMesh::SubMesh(const SubMesh& aMesh) : m_IndexBuffer(aMesh.m_IndexBuff
 void Alpine::SubMesh::Draw()
 {
 	UINT offset = 0;
-	if (m_Material)
-		m_Material->Bind();
+	if (m_Material) m_Material->Bind();
 	DX11::Context()->IASetVertexBuffers(0, 1, m_VertexBuffer.GetAddressOf(), m_VertexBuffer.StridePtr(), &offset);
 	DX11::Context()->IASetIndexBuffer(m_IndexBuffer.Get(), DXGI_FORMAT::DXGI_FORMAT_R32_UINT, 0);
 	DX11::Context()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);

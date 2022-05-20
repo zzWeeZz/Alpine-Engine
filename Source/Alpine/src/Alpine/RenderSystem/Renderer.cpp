@@ -112,13 +112,14 @@ namespace Alpine
 	{
 		return s_Instance.m_FrameBuffer;
 	}
+
 	void Renderer::Begin()
 	{
-		s_Instance.m_FrameBuffer->ClearView({ 0,1,0,1 });
+		s_Instance.m_FrameBuffer->ClearView({ 0,0,0,1 });
 		s_Instance.m_FrameBuffer->ClearDepthStencil();
 		s_Instance.m_FrameBuffer->Bind();
-		//s_Instance.m_Skybox->BindForSky();
-		//s_Instance.m_Skybox->Draw();
+		s_Instance.m_Skybox->BindForSky();
+		s_Instance.m_Skybox->Draw();
 		s_Instance.m_FrameBuffer->UnBind();
 	}
 

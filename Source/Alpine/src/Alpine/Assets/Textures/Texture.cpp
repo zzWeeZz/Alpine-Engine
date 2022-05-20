@@ -63,7 +63,7 @@ Alpine::Texture::Texture(const std::filesystem::path& aPath, bool isSRGB)
 	}
 }
 
-Alpine::Texture::Texture(UINT width, UINT height, DXGI_FORMAT format, UINT levels)
+Alpine::Texture::Texture(UINT width, UINT height, DXGI_FORMAT format, UINT levels, void* data)
 {
 	m_Height = height;
 	m_Width = width;
@@ -82,11 +82,19 @@ Alpine::Texture::Texture(UINT width, UINT height, DXGI_FORMAT format, UINT level
 		texElementDesc.BindFlags |= D3D11_BIND_RENDER_TARGET;
 		texElementDesc.MiscFlags |= D3D11_RESOURCE_MISC_GENERATE_MIPS;
 	}
-	if (FAILED(DX11::Device()->CreateTexture2D(&texElementDesc, 0, m_Texture.GetAddressOf())))
+
+	D3D11_SUBRESOURCE_DATA subData{};
+	subData.pSysMem = data;
+
+	if (data)
 	{
-		spdlog::error("Failed to create texture!");
-		return;
+		AssertIfFailed(DX11::Device()->CreateTexture2D(&texElementDesc, &subData, m_Texture.GetAddressOf()));
 	}
+	else
+	{
+		AssertIfFailed(DX11::Device()->CreateTexture2D(&texElementDesc, 0, m_Texture.GetAddressOf()));
+	}
+
 	// Create a resource view to the texture array.
 	D3D11_SHADER_RESOURCE_VIEW_DESC viewDesc = {};
 	viewDesc.Format = texElementDesc.Format;
@@ -181,8 +189,8 @@ Alpine::Ref<Alpine::Texture> Alpine::Texture::Create(const std::filesystem::path
 
 }
 
-Alpine::Ref<Alpine::Texture> Alpine::Texture::Create(UINT width, UINT height, DXGI_FORMAT format, UINT levels)
+Alpine::Ref<Alpine::Texture> Alpine::Texture::Create(UINT width, UINT height, DXGI_FORMAT format, UINT levels,
+	void* data)
 {
-	return std::make_shared<Texture>(width, height, format, levels);
+	return std::make_shared<Texture>(width, height, format, levels, data);
 }
-

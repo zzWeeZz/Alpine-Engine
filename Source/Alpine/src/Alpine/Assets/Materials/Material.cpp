@@ -13,20 +13,24 @@ Alpine::Material::Material(const Material& other)
 {
 	myMaterialName = other.myMaterialName;
 	myTextures = other.myTextures;
+	myTextures.resize(3);
 }
 
-void Alpine::Material::AddTexture(std::shared_ptr<Texture> texture)
+void Alpine::Material::AddDiffuseTexture(Ref<Texture> texture)
 {
-	if (myTextures.size() < 6)
-	{
-		myTextures.push_back(texture);
-	}
-	else
-	{
-		spdlog::critical("Material should not have more than 5 textures!");
-		assert(false);
-	}
+	myTextures[0] = texture;
 }
+
+void Alpine::Material::AddNormalTexture(Ref<Texture> texture)
+{
+	myTextures[1] = texture;
+}
+
+void Alpine::Material::AddSpecularTexture(Ref<Texture> texture)
+{
+	myTextures[2] = texture;
+}
+
 
 void Alpine::Material::AddTexture(std::shared_ptr<TextureCube> texture)
 {

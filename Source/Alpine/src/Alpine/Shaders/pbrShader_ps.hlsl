@@ -10,11 +10,9 @@ struct VS_OUTPUT
 };
 
 Texture2D albedoTexture : register(t0);
-Texture2D roughnessTexture : register(t1);
-Texture2D normalTexture : register(t2);
-Texture2D aoTexture : register(t3);
-Texture2D metallicTexture : register(t4);
-Texture2D emissionTexture : register(t5);
+Texture2D normalTexture : register(t1);
+Texture2D roughnessTexture : register(t2);
+
 
 TextureCube specularTexture : register(t10);
 TextureCube irradianceTexture : register(t11);
@@ -221,14 +219,21 @@ float4 main(VS_OUTPUT pin) : SV_Target
 	// Sample input textures to get shading model params.
     float3 albedo = SRGBToLinear(albedoTexture.Sample(defaultSampler, pin.texcoord).rgb);
     float alpha = albedoTexture.Sample(defaultSampler, pin.texcoord).a;
-    float metalness = metallicTexture.Sample(defaultSampler, pin.texcoord).r;
-    float roughness = roughnessTexture.Sample(defaultSampler, pin.texcoord).r;
+    float4 Mat = roughnessTexture.Sample(defaultSampler, pin.texcoord);
 
+    float metalness = Mat.r;
+    float roughness = Mat.g;
+    float emissive = Mat.b;
+    float emissiveIntensity = Mat.a;
+    if(alpha < 0.2f)
+    {
+	    discard;
+    }
 	// Outgoing light direction (vector from world-space fragment position to the "eye").
     float3 Lo = normalize(cameraPosition.xyz - pin.WorldPosition.xyz);
 
 	// Get current fragment's normal and transform to world space.
-    float3 N = normalize(2.0 * normalTexture.Sample(defaultSampler, pin.texcoord).rgb - 1.0);
+    float3 N = normalize(2.0 * normalTexture.Sample(defaultSampler, pin.texcoord).wyz - 1.0);
     N = normalize(mul(pin.tangentBasis, N));
 	
 	// Angle between surface normal and outgoing light direction.
@@ -254,8 +259,8 @@ float4 main(VS_OUTPUT pin) : SV_Target
 
 		// Calculate Fresnel term for ambient lighting.
 		//https://seblagarde.wordpress.com/2011/08/17/hello-world/
-        float3 F = fresnelSchlickRough(F0, cosLo, roughness);
-
+        float3 F = fresnelSchlick(F0, cosLo);
+		
 		// Get diffuse contribution factor (as with direct lighting).
         float3 kd = lerp(1.0 - F, 0.0, metalness);
 

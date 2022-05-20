@@ -6,16 +6,10 @@ void Alpine::Playground::Init()
 	m_Camera.Init({0, 0, 0});
 	Renderer::SubmitCamera(std::make_shared<PerspectiveCamera>(m_Camera));
 	m_Metal = Material::Create("Metalic");
-	m_Metal->AddTexture(Texture::Create("Textures/mesh-covered-metal1-albedo.png"));
-	m_Metal->AddTexture(Texture::Create("Textures/mesh-covered-metal1-roughness.png", false));
-	m_Metal->AddTexture(Texture::Create("Textures/mesh-covered-metal1-normal-dx.png", false));
-	m_Metal->AddTexture(Texture::Create("Textures/mesh-covered-metal1-ao.png", false));
-	m_Metal->AddTexture(Texture::Create("Textures/mesh-covered-metal1-metallic.png", false));
-	m_Metal->AddTexture(Texture::Create("Textures/mesh-covered-metal1-height.png", false));
-	m_Model = Alpine::Model::Create("Model/Sponza/Sponza.fbx", m_Metal);
+	m_Model = Alpine::Model::Create("Model/Sponza/sponzaForTGE.fbx", m_Metal);
 	m_Model->SetRotation({ 0, 0, 0 });
 	m_Model->SetPosition({ 0,0.f, 0});
-	m_Model->SetScale({ 0.10f, 0.10f, 0.10f });
+	m_Model->SetScale({ 10.0f, 10.0f, 10.0f });
 
 
 	m_Ground = Model::Create("Cube", m_Metal);
@@ -23,13 +17,13 @@ void Alpine::Playground::Init()
 	m_Ground->SetPosition({ 0, -5, 0 });
 
 	m_DirectonalLight = DirectionalLight::Create();
-	m_DirectonalLight->SetLightColor({ 0,0,1, 50 });
-	m_DirectonalLight->SetDirection({ -1,-0, -0});
+	m_DirectonalLight->SetLightColor({ 1,1,0, 1 });
+	m_DirectonalLight->SetDirection({ -1,-1, -0});
 	Renderer::SubmitDirLight(*m_DirectonalLight.get());
 	m_PointLight = PointLight::Create();
-	m_PointLight->SetLightColor({ 0,1,0, 50.f });
+	m_PointLight->SetLightColor({ 1,1,1, 50.f });
 	m_PointLight->SetPosition({ 0,5,-10 });
-	m_PointLight->SetRange(20);
+	m_PointLight->SetRange(30);
 	m_PointLight->SetFallOff(0.9f);
 	Renderer::AddPointLight(*m_PointLight.get());
 	m_ImGuiLayer.OnAttach();

@@ -13,8 +13,11 @@ namespace Alpine
 	public:
 		Material(std::string name);
 		Material(const Material& other);
-		void AddTexture(std::shared_ptr<Texture> texture);
-		void AddTexture(std::shared_ptr<TextureCube> texture);
+		void AddDiffuseTexture(Ref<Texture> texture);
+		void AddNormalTexture(Ref<Texture> texture);
+		void AddSpecularTexture(Ref<Texture> texture);
+
+		void AddTexture(Ref<TextureCube> texture);
 
 		void Bind();
 
@@ -22,7 +25,7 @@ namespace Alpine
 	private:
 		std::string myMaterialName;
 		Ref<TextureCube> m_Cube;
-		std::vector<std::shared_ptr<Texture>> myTextures;
+		std::vector<Ref<Texture>> myTextures;
 	};
 
 }
