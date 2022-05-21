@@ -1,57 +1,60 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="Input">
+      <UniqueIdentifier>{953A660D-014F-8EBE-CAD0-311E36A48AEF}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    <Filter Include="Math">
+      <UniqueIdentifier>{AFF4887C-9B2B-8A0D-4418-7010302E060F}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="Math\Matrix">
+      <UniqueIdentifier>{73311A30-DFE6-9225-68DB-8CFCD48F8929}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math\Vector">
+      <UniqueIdentifier>{F1B75745-5D6D-D03A-E661-CA115216C73E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utility">
+      <UniqueIdentifier>{594615A9-C525-9444-CE3D-1F1B3A9CFAA5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\ToolBox\Math\Vector\Vector.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\ToolBox\Input\Input.h">
+      <Filter>Input</Filter>
     </ClInclude>
-    <ClInclude Include="src\ToolBox\Math\Vector\Vector2.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ToolBox\Math\Vector\Vector3.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ToolBox\Math\Vector\Vector4.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ToolBox\Utility\Timer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ToolBox\Utility\UtilityFunctions.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\ToolBox\Math\Matrix\Matrix.h">
+      <Filter>Math\Matrix</Filter>
     </ClInclude>
     <ClInclude Include="src\ToolBox\Math\Matrix\Matrix3x3.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Math\Matrix</Filter>
     </ClInclude>
     <ClInclude Include="src\ToolBox\Math\Matrix\Matrix4x4.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Math\Matrix</Filter>
     </ClInclude>
-    <ClInclude Include="src\ToolBox\Input\Input.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\ToolBox\Math\Vector\Vector.h">
+      <Filter>Math\Vector</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ToolBox\Math\Vector\Vector2.hpp">
+      <Filter>Math\Vector</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ToolBox\Math\Vector\Vector3.hpp">
+      <Filter>Math\Vector</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ToolBox\Math\Vector\Vector4.hpp">
+      <Filter>Math\Vector</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ToolBox\Utility\Timer.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ToolBox\Utility\UtilityFunctions.hpp">
+      <Filter>Utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\ToolBox\Utility\Timer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ToolBox\Math\Matrix\Matrix.h">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\ToolBox\Input\Input.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ToolBox\Utility\Timer.cpp">
+      <Filter>Utility</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

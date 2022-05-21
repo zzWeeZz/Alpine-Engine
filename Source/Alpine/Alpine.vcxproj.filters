@@ -1,214 +1,269 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="Alpine">
+      <UniqueIdentifier>{BEE35FA7-AA85-8A7D-9340-9ED17F8111CE}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    <Filter Include="Alpine\Assets">
+      <UniqueIdentifier>{E0C81041-4C89-8C77-15C4-D5F48143D153}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="Alpine\Assets\Camera">
+      <UniqueIdentifier>{58A14D5C-4430-D725-ED4E-EB20D9BCE7CB}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Imgui">
-      <UniqueIdentifier>{01b1ceb7-1f6a-4dee-9312-97aac2298f33}</UniqueIdentifier>
+    <Filter Include="Alpine\Assets\Lights">
+      <UniqueIdentifier>{DA95D971-C624-633B-6F43-77365BB173E1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Alpine\Assets\Materials">
+      <UniqueIdentifier>{B1636015-1D9B-A8AC-26A5-0CD0925BCFA5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Alpine\Assets\Model">
+      <UniqueIdentifier>{205ACE1A-8CBB-AB28-1529-F2DA8189E2E7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Alpine\Assets\SkyBox">
+      <UniqueIdentifier>{CF1F5B82-BBAE-E44B-64CD-F846503BF5F1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Alpine\Assets\Textures">
+      <UniqueIdentifier>{B3963DA5-9F90-66F7-88FD-FC077496CC63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Alpine\DX11">
+      <UniqueIdentifier>{CB30735C-37E6-EB51-C0DA-E5282C8FE255}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Alpine\ImGui">
+      <UniqueIdentifier>{68AF3FEB-5412-CF8F-FD97-0746E9D99A12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Alpine\RenderSystem">
+      <UniqueIdentifier>{D20977B9-3E6B-54C7-C7D8-9A7933398B86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Alpine\RenderSystem\Buffers">
+      <UniqueIdentifier>{4E7B797F-BA88-A765-436F-A350AF7B731C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Alpine\RenderSystem\Mesh">
+      <UniqueIdentifier>{CE729E27-BA97-EDA7-E3E2-D237CF66ECC5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Alpine\RenderSystem\ShaderClasses">
+      <UniqueIdentifier>{C683D5DF-32F2-2A5F-7BDB-E55EE78820FB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Alpine\Shaders">
+      <UniqueIdentifier>{97E6D2B1-83B4-C6B7-6C48-37DE58B5A21C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Alpine\Snowflake">
+      <UniqueIdentifier>{F7CBC15D-E3C4-E0AF-0CF7-C534F84EC0BB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application">
+      <UniqueIdentifier>{D9DE78AF-4594-F1A4-CE88-EB7B3A3DE8A8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Window">
+      <UniqueIdentifier>{A09D6CE7-8C81-2D3D-F5E1-2790E1E417BF}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Alpine\RenderSystem\Shaders.h">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Alpine\RenderSystem\ShaderClasses\VertexShader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Alpine\RenderSystem\ShaderClasses\PixelShader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Alpine\Assets\Model\Model.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Alpine\RenderSystem\Buffers\IndexBuffer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Alpine\Assets\Camera\PerspectiveCamera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Alpine\RenderSystem\Mesh\SubMesh.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Alpine\DX11\DX11.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Alpine\RenderSystem\Buffers\VertexBuffer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Alpine\Assets\Lights\DirectionalLight.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Alpine\ImGui\ImGuiBuild.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Alpine\ImGui\ImGuiLayer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Application\Application.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Application\Window\GlfwWindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Alpine\RenderSystem\Mesh\Mesh.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Alpine\Assets\Textures\Texture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Alpine\Assets\Materials\Material.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Alpine\Assets\Textures\TextureCube.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Alpine\RenderSystem\ShaderClasses\ComputeShader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Alpine\RenderSystem\Renderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Alpine\RenderSystem\FrameBuffer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Alpine\DX11\RenderStateManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Alpine\Assets\SkyBox\SkyBox.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Alpine\Assets\Lights\PointLight.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Alpine\RenderSystem\ShaderClasses\ShaderLibrary.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\Alpine\RenderSystem\ShaderClasses\VertexShader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Alpine\RenderSystem\ShaderClasses\PixelShader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Alpine\Assets\Model\Model.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Alpine\RenderSystem\Mesh\ModelData.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Alpine\RenderSystem\Buffers\VertexBuffer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Alpine\RenderSystem\Buffers\IndexBuffer.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\Alpine\Alpine.h">
+      <Filter>Alpine</Filter>
     </ClInclude>
     <ClInclude Include="src\Alpine\Assets\Camera\PerspectiveCamera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Alpine\RenderSystem\Mesh\SubMesh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Alpine\RenderSystem\Buffers\ConstantBuffer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Alpine\DX11\DX11.h">
-      <Filter>Header Files</Filter>
+      <Filter>Alpine\Assets\Camera</Filter>
     </ClInclude>
     <ClInclude Include="src\Alpine\Assets\Lights\DirectionalLight.h">
-      <Filter>Header Files</Filter>
+      <Filter>Alpine\Assets\Lights</Filter>
     </ClInclude>
     <ClInclude Include="src\Alpine\Assets\Lights\Light.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Alpine\ImGui\ImGuiLayer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Application\Application.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Application\Window\GlfwWindow.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Application\Window\IWindow.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Alpine\RenderSystem\Mesh\Mesh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Alpine\RenderSystem\Buffers\BufferData.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Alpine\Assets\Materials\Material.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Alpine\Assets\Textures\Texture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Alpine\Assets\Textures\TextureCube.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Alpine\RenderSystem\ShaderClasses\ComputeShader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Alpine\RenderSystem\ShaderClasses\Shader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Alpine\RenderSystem\Renderer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Alpine\RenderSystem\RenderCommands.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Alpine\RenderSystem\FrameBuffer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Alpine\DX11\Utilities.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Alpine\DX11\RenderStateManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Alpine\Assets\SkyBox\SkyBox.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\stb_image.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Alpine\Alpine.h">
-      <Filter>Header Files</Filter>
+      <Filter>Alpine\Assets\Lights</Filter>
     </ClInclude>
     <ClInclude Include="src\Alpine\Assets\Lights\PointLight.h">
-      <Filter>Header Files</Filter>
+      <Filter>Alpine\Assets\Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Alpine\Assets\Materials\Material.h">
+      <Filter>Alpine\Assets\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Alpine\Assets\Model\Model.h">
+      <Filter>Alpine\Assets\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Alpine\Assets\SkyBox\SkyBox.h">
+      <Filter>Alpine\Assets\SkyBox</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Alpine\Assets\Textures\Texture.h">
+      <Filter>Alpine\Assets\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Alpine\Assets\Textures\TextureCube.h">
+      <Filter>Alpine\Assets\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Alpine\DX11\DX11.h">
+      <Filter>Alpine\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Alpine\DX11\RenderStateManager.h">
+      <Filter>Alpine\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Alpine\DX11\Utilities.h">
+      <Filter>Alpine\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Alpine\ImGui\ImGuiLayer.h">
+      <Filter>Alpine\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Alpine\RenderSystem\Buffers\BufferData.h">
+      <Filter>Alpine\RenderSystem\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Alpine\RenderSystem\Buffers\ConstantBuffer.hpp">
+      <Filter>Alpine\RenderSystem\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Alpine\RenderSystem\Buffers\IndexBuffer.h">
+      <Filter>Alpine\RenderSystem\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Alpine\RenderSystem\Buffers\VertexBuffer.h">
+      <Filter>Alpine\RenderSystem\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Alpine\RenderSystem\FrameBuffer.h">
+      <Filter>Alpine\RenderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Alpine\RenderSystem\Mesh\Mesh.h">
+      <Filter>Alpine\RenderSystem\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Alpine\RenderSystem\Mesh\ModelData.hpp">
+      <Filter>Alpine\RenderSystem\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Alpine\RenderSystem\Mesh\SubMesh.h">
+      <Filter>Alpine\RenderSystem\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Alpine\RenderSystem\RenderCommands.h">
+      <Filter>Alpine\RenderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Alpine\RenderSystem\Renderer.h">
+      <Filter>Alpine\RenderSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Alpine\RenderSystem\ShaderClasses\ComputeShader.h">
+      <Filter>Alpine\RenderSystem\ShaderClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Alpine\RenderSystem\ShaderClasses\PixelShader.h">
+      <Filter>Alpine\RenderSystem\ShaderClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Alpine\RenderSystem\ShaderClasses\Shader.h">
+      <Filter>Alpine\RenderSystem\ShaderClasses</Filter>
     </ClInclude>
     <ClInclude Include="src\Alpine\RenderSystem\ShaderClasses\ShaderLibrary.h">
-      <Filter>Header Files</Filter>
+      <Filter>Alpine\RenderSystem\ShaderClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Alpine\RenderSystem\ShaderClasses\VertexShader.h">
+      <Filter>Alpine\RenderSystem\ShaderClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Alpine\RenderSystem\Shaders.h">
+      <Filter>Alpine\RenderSystem</Filter>
     </ClInclude>
     <ClInclude Include="src\Alpine\Snowflake\Snowflake.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Alpine\Snowflake</Filter>
     </ClInclude>
+    <ClInclude Include="src\Application\Application.h">
+      <Filter>Application</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Window\GlfwWindow.h">
+      <Filter>Application\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Window\IWindow.h">
+      <Filter>Application\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="src\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="src\Alpine\Shaders\pbrShader_vs.hlsl" />
-    <FxCompile Include="src\Alpine\Shaders\pbrShader_ps.hlsl" />
-    <FxCompile Include="src\Alpine\Shaders\IrradianceMap_cs.hlsl" />
-    <FxCompile Include="src\Alpine\Shaders\SpeclularMap_cs.hlsl" />
-    <FxCompile Include="src\Alpine\Shaders\spdrdfGenerator_cs.hlsl" />
-    <FxCompile Include="src\Alpine\Shaders\SkyBox_ps.hlsl" />
-    <FxCompile Include="src\Alpine\Shaders\Equirect2Cube_cs.hlsl" />
-    <FxCompile Include="src\Alpine\Shaders\SkyBox_vs.hlsl" />
+    <ClCompile Include="src\Alpine\Assets\Camera\PerspectiveCamera.cpp">
+      <Filter>Alpine\Assets\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Alpine\Assets\Lights\DirectionalLight.cpp">
+      <Filter>Alpine\Assets\Lights</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Alpine\Assets\Lights\PointLight.cpp">
+      <Filter>Alpine\Assets\Lights</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Alpine\Assets\Materials\Material.cpp">
+      <Filter>Alpine\Assets\Materials</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Alpine\Assets\Model\Model.cpp">
+      <Filter>Alpine\Assets\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Alpine\Assets\SkyBox\SkyBox.cpp">
+      <Filter>Alpine\Assets\SkyBox</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Alpine\Assets\Textures\Texture.cpp">
+      <Filter>Alpine\Assets\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Alpine\Assets\Textures\TextureCube.cpp">
+      <Filter>Alpine\Assets\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Alpine\DX11\DX11.cpp">
+      <Filter>Alpine\DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Alpine\DX11\RenderStateManager.cpp">
+      <Filter>Alpine\DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Alpine\ImGui\ImGuiBuild.cpp">
+      <Filter>Alpine\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Alpine\ImGui\ImGuiLayer.cpp">
+      <Filter>Alpine\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Alpine\RenderSystem\Buffers\IndexBuffer.cpp">
+      <Filter>Alpine\RenderSystem\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Alpine\RenderSystem\Buffers\VertexBuffer.cpp">
+      <Filter>Alpine\RenderSystem\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Alpine\RenderSystem\FrameBuffer.cpp">
+      <Filter>Alpine\RenderSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Alpine\RenderSystem\Mesh\Mesh.cpp">
+      <Filter>Alpine\RenderSystem\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Alpine\RenderSystem\Mesh\SubMesh.cpp">
+      <Filter>Alpine\RenderSystem\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Alpine\RenderSystem\Renderer.cpp">
+      <Filter>Alpine\RenderSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Alpine\RenderSystem\ShaderClasses\ComputeShader.cpp">
+      <Filter>Alpine\RenderSystem\ShaderClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Alpine\RenderSystem\ShaderClasses\PixelShader.cpp">
+      <Filter>Alpine\RenderSystem\ShaderClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Alpine\RenderSystem\ShaderClasses\ShaderLibrary.cpp">
+      <Filter>Alpine\RenderSystem\ShaderClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Alpine\RenderSystem\ShaderClasses\VertexShader.cpp">
+      <Filter>Alpine\RenderSystem\ShaderClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Application.cpp">
+      <Filter>Application</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Window\GlfwWindow.cpp">
+      <Filter>Application\Window</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\Alpine\Shaders\ConstBuffers.hlsli" />
+    <FxCompile Include="src\Alpine\Shaders\Equirect2Cube_cs.hlsl">
+      <Filter>Alpine\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="src\Alpine\Shaders\IrradianceMap_cs.hlsl">
+      <Filter>Alpine\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="src\Alpine\Shaders\SkyBox_ps.hlsl">
+      <Filter>Alpine\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="src\Alpine\Shaders\SkyBox_vs.hlsl">
+      <Filter>Alpine\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="src\Alpine\Shaders\SpeclularMap_cs.hlsl">
+      <Filter>Alpine\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="src\Alpine\Shaders\pbrShader_ps.hlsl">
+      <Filter>Alpine\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="src\Alpine\Shaders\pbrShader_vs.hlsl">
+      <Filter>Alpine\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="src\Alpine\Shaders\spdrdfGenerator_cs.hlsl">
+      <Filter>Alpine\Shaders</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\Alpine\Shaders\ConstBuffers.hlsli">
+      <Filter>Alpine\Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

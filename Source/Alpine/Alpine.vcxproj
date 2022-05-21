@@ -1,14 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug|Win32">
-      <Configuration>Debug</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|Win32">
-      <Configuration>Release</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
       <Platform>x64</Platform>
@@ -17,52 +9,39 @@
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Export|x64">
+      <Configuration>Export</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <VCProjectVersion>16.0</VCProjectVersion>
+    <ProjectGuid>{BEE35FA7-AA85-8A7D-9340-9ED17F8111CE}</ProjectGuid>
+    <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{1ab6a294-7355-451c-aff1-064260204497}</ProjectGuid>
-    <RootNamespace>ZEngine</RootNamespace>
+    <RootNamespace>Alpine</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>Apline</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Export|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
-  </ImportGroup>
-  <ImportGroup Label="Shared">
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -70,267 +49,207 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Export|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)Export\</OutDir>
-    <IntDir>$(SolutionDir)Intermediates\$(Platform)\$(Configuration)\</IntDir>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)Export\</OutDir>
-    <IntDir>$(SolutionDir)Intermediates\$(Platform)\$(Configuration)\</IntDir>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)Dependencies\lib\</OutDir>
-    <IntDir>$(SolutionDir)Intermediates\$(Platform)\$(Configuration)\</IntDir>
-    <TargetName>Engine</TargetName>
+    <OutDir>..\..\Dependencies\lib\</OutDir>
+    <IntDir>..\..\Intermediates\x86_64\Debug\Alpine\</IntDir>
+    <TargetName>Alpine</TargetName>
+    <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)Dependencies\lib\</OutDir>
-    <IntDir>$(SolutionDir)Intermediates\$(Platform)\$(Configuration)\</IntDir>
-    <TargetName>Engine</TargetName>
+    <OutDir>..\..\Dependencies\lib\</OutDir>
+    <IntDir>..\..\Intermediates\x86_64\Release\Alpine\</IntDir>
+    <TargetName>Alpine</TargetName>
+    <TargetExt>.lib</TargetExt>
   </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ClCompile>
-    <Link>
-      <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;d3d11.lib;d3dcompiler.lib;DirectXTK.lib;assimp-vc142-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ClCompile>
-    <Link>
-      <SubSystem>Console</SubSystem>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;d3d11.lib;d3dcompiler.lib;DirectXTK.lib;assimp-vc142-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Link>
-  </ItemDefinitionGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Export|x64'">
+    <OutDir>..\..\Dependencies\lib\</OutDir>
+    <IntDir>..\..\Intermediates\x86_64\Export\Alpine\</IntDir>
+    <TargetName>Alpine</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\include\;$(SolutionDir)Source\ToolBox\src\;$(SolutionDir)Dependencies\include\imgui\;$(SolutionDir)Source\Alpine\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <PreprocessorDefinitions>_CONSOLE;DEBUG;WIN32;_LIB;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\Dependencies\include;..\ToolBox\src;..\..\Dependencies\include\imgui;src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;d3d11.lib;d3dcompiler.lib;DirectXTK.lib;assimp-vc142-mt.lib;assimp-vc142-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>_CONSOLE;RELEASE;WIN32;_LIB;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\Dependencies\include;..\ToolBox\src;..\..\Dependencies\include\imgui;src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\include\;$(SolutionDir)Source\ToolBox\src\;$(SolutionDir)Dependencies\include\imgui\;$(SolutionDir)Source\Alpine\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Export|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>_CONSOLE;EXPORT;WIN32;_LIB;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\Dependencies\include;..\ToolBox\src;..\..\Dependencies\include\imgui;src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;d3d11.lib;d3dcompiler.lib;DirectXTK.lib;assimp-vc142-mt.lib;assimp-vc142-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Alpine\RenderSystem\ShaderClasses\ShaderLibrary.cpp" />
-    <ClCompile Include="src\Alpine\Assets\Lights\PointLight.cpp" />
-    <ClCompile Include="src\Alpine\Assets\SkyBox\SkyBox.cpp" />
-    <ClCompile Include="src\Alpine\DX11\RenderStateManager.cpp" />
-    <ClCompile Include="src\Alpine\RenderSystem\FrameBuffer.cpp" />
-    <ClCompile Include="src\Alpine\RenderSystem\Renderer.cpp" />
-    <ClCompile Include="src\Alpine\RenderSystem\Mesh\Mesh.cpp" />
-    <ClCompile Include="src\Application\Application.cpp" />
-    <ClCompile Include="src\Application\Window\GlfwWindow.cpp" />
-    <ClCompile Include="src\Alpine\RenderSystem\ShaderClasses\ComputeShader.cpp" />
-    <ClCompile Include="src\Alpine\ImGui\ImGuiLayer.cpp" />
-    <ClCompile Include="src\Alpine\ImGui\ImGuiBuild.cpp" />
-    <ClCompile Include="src\Alpine\Assets\Lights\DirectionalLight.cpp" />
-    <ClCompile Include="src\Alpine\DX11\DX11.cpp" />
-    <ClCompile Include="src\Alpine\RenderSystem\Buffers\IndexBuffer.cpp" />
-    <ClCompile Include="src\Alpine\RenderSystem\Buffers\VertexBuffer.cpp" />
-    <ClCompile Include="src\Alpine\Assets\Camera\PerspectiveCamera.cpp" />
-    <ClCompile Include="src\Alpine\RenderSystem\Mesh\SubMesh.cpp" />
-    <ClCompile Include="src\Alpine\Assets\Model\Model.cpp" />
-    <ClCompile Include="src\Alpine\RenderSystem\ShaderClasses\PixelShader.cpp" />
-    <ClCompile Include="src\Alpine\RenderSystem\Shaders.h" />
-    <ClCompile Include="src\Alpine\RenderSystem\ShaderClasses\VertexShader.cpp" />
-    <ClCompile Include="src\Alpine\Assets\Materials\Material.cpp" />
-    <ClCompile Include="src\Alpine\Assets\Textures\Texture.cpp" />
-    <ClCompile Include="src\Alpine\Assets\Textures\TextureCube.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\Alpine\RenderSystem\ShaderClasses\ShaderLibrary.h" />
-    <ClInclude Include="src\Alpine\Assets\Lights\PointLight.h" />
     <ClInclude Include="src\Alpine\Alpine.h" />
+    <ClInclude Include="src\Alpine\Assets\Camera\PerspectiveCamera.h" />
+    <ClInclude Include="src\Alpine\Assets\Lights\DirectionalLight.h" />
+    <ClInclude Include="src\Alpine\Assets\Lights\Light.h" />
+    <ClInclude Include="src\Alpine\Assets\Lights\PointLight.h" />
+    <ClInclude Include="src\Alpine\Assets\Materials\Material.h" />
+    <ClInclude Include="src\Alpine\Assets\Model\Model.h" />
     <ClInclude Include="src\Alpine\Assets\SkyBox\SkyBox.h" />
+    <ClInclude Include="src\Alpine\Assets\Textures\Texture.h" />
+    <ClInclude Include="src\Alpine\Assets\Textures\TextureCube.h" />
+    <ClInclude Include="src\Alpine\DX11\DX11.h" />
     <ClInclude Include="src\Alpine\DX11\RenderStateManager.h" />
     <ClInclude Include="src\Alpine\DX11\Utilities.h" />
-    <ClInclude Include="src\Alpine\RenderSystem\FrameBuffer.h" />
-    <ClInclude Include="src\Alpine\RenderSystem\RenderCommands.h" />
-    <ClInclude Include="src\Alpine\RenderSystem\Renderer.h" />
-    <ClInclude Include="src\Alpine\RenderSystem\Buffers\BufferData.h" />
-    <ClInclude Include="src\Alpine\RenderSystem\Mesh\Mesh.h" />
-    <ClInclude Include="src\Application\Application.h" />
-    <ClInclude Include="src\Application\Window\GlfwWindow.h" />
-    <ClInclude Include="src\Application\Window\IWindow.h" />
-    <ClInclude Include="src\Alpine\RenderSystem\ShaderClasses\ComputeShader.h" />
-    <ClInclude Include="src\Alpine\RenderSystem\ShaderClasses\Shader.h" />
     <ClInclude Include="src\Alpine\ImGui\ImGuiLayer.h" />
-    <ClInclude Include="src\Alpine\Assets\Lights\DirectionalLight.h" />
-    <ClInclude Include="src\Alpine\DX11\DX11.h" />
+    <ClInclude Include="src\Alpine\RenderSystem\Buffers\BufferData.h" />
     <ClInclude Include="src\Alpine\RenderSystem\Buffers\ConstantBuffer.hpp" />
     <ClInclude Include="src\Alpine\RenderSystem\Buffers\IndexBuffer.h" />
     <ClInclude Include="src\Alpine\RenderSystem\Buffers\VertexBuffer.h" />
-    <ClInclude Include="src\Alpine\Assets\Camera\PerspectiveCamera.h" />
-    <ClInclude Include="src\Alpine\RenderSystem\Mesh\SubMesh.h" />
-    <ClInclude Include="src\Alpine\Assets\Model\Model.h" />
+    <ClInclude Include="src\Alpine\RenderSystem\FrameBuffer.h" />
+    <ClInclude Include="src\Alpine\RenderSystem\Mesh\Mesh.h" />
     <ClInclude Include="src\Alpine\RenderSystem\Mesh\ModelData.hpp" />
+    <ClInclude Include="src\Alpine\RenderSystem\Mesh\SubMesh.h" />
+    <ClInclude Include="src\Alpine\RenderSystem\RenderCommands.h" />
+    <ClInclude Include="src\Alpine\RenderSystem\Renderer.h" />
+    <ClInclude Include="src\Alpine\RenderSystem\ShaderClasses\ComputeShader.h" />
     <ClInclude Include="src\Alpine\RenderSystem\ShaderClasses\PixelShader.h" />
+    <ClInclude Include="src\Alpine\RenderSystem\ShaderClasses\Shader.h" />
+    <ClInclude Include="src\Alpine\RenderSystem\ShaderClasses\ShaderLibrary.h" />
     <ClInclude Include="src\Alpine\RenderSystem\ShaderClasses\VertexShader.h" />
-    <ClInclude Include="src\Alpine\Assets\Lights\Light.h" />
-    <ClInclude Include="src\Alpine\Assets\Materials\Material.h" />
+    <ClInclude Include="src\Alpine\RenderSystem\Shaders.h" />
     <ClInclude Include="src\Alpine\Snowflake\Snowflake.hpp" />
-    <ClInclude Include="src\Alpine\Assets\Textures\Texture.h" />
-    <ClInclude Include="src\Alpine\Assets\Textures\TextureCube.h" />
+    <ClInclude Include="src\Application\Application.h" />
+    <ClInclude Include="src\Application\Window\GlfwWindow.h" />
+    <ClInclude Include="src\Application\Window\IWindow.h" />
     <ClInclude Include="src\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="src\Alpine\Shaders\Equirect2Cube_cs.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compute</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compute</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.0</ShaderModel>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compute</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compute</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)Export\Shaders\%(Filename).cso</ObjectFileOutput>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)Export\Shaders\%(Filename).cso</ObjectFileOutput>
-    </FxCompile>
-    <FxCompile Include="src\Alpine\Shaders\IrradianceMap_cs.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compute</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compute</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.0</ShaderModel>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compute</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compute</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)Export\Shaders\%(Filename).cso</ObjectFileOutput>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)Export\Shaders\%(Filename).cso</ObjectFileOutput>
-    </FxCompile>
-    <FxCompile Include="src\Alpine\Shaders\pbrShader_ps.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)Export\Shaders\%(Filename).cso</ObjectFileOutput>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)Export\Shaders\%(Filename).cso</ObjectFileOutput>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
-    </FxCompile>
-    <FxCompile Include="src\Alpine\Shaders\pbrShader_vs.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)Export\Shaders\%(Filename).cso</ObjectFileOutput>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)Export\Shaders\%(Filename).cso</ObjectFileOutput>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
-    </FxCompile>
-    <FxCompile Include="src\Alpine\Shaders\SkyBox_ps.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)Export\Shaders\%(Filename).cso</ObjectFileOutput>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)Export\Shaders\%(Filename).cso</ObjectFileOutput>
-    </FxCompile>
-    <FxCompile Include="src\Alpine\Shaders\SkyBox_vs.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)Export\Shaders\%(Filename).cso</ObjectFileOutput>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)Export\Shaders\%(Filename).cso</ObjectFileOutput>
-    </FxCompile>
-    <FxCompile Include="src\Alpine\Shaders\spdrdfGenerator_cs.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compute</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compute</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.0</ShaderModel>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compute</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compute</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)Export\Shaders\%(Filename).cso</ObjectFileOutput>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)Export\Shaders\%(Filename).cso</ObjectFileOutput>
-    </FxCompile>
-    <FxCompile Include="src\Alpine\Shaders\SpeclularMap_cs.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compute</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compute</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.0</ShaderModel>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compute</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compute</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)Export\Shaders\%(Filename).cso</ObjectFileOutput>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)Export\Shaders\%(Filename).cso</ObjectFileOutput>
-    </FxCompile>
+    <ClCompile Include="src\Alpine\Assets\Camera\PerspectiveCamera.cpp" />
+    <ClCompile Include="src\Alpine\Assets\Lights\DirectionalLight.cpp" />
+    <ClCompile Include="src\Alpine\Assets\Lights\PointLight.cpp" />
+    <ClCompile Include="src\Alpine\Assets\Materials\Material.cpp" />
+    <ClCompile Include="src\Alpine\Assets\Model\Model.cpp" />
+    <ClCompile Include="src\Alpine\Assets\SkyBox\SkyBox.cpp" />
+    <ClCompile Include="src\Alpine\Assets\Textures\Texture.cpp" />
+    <ClCompile Include="src\Alpine\Assets\Textures\TextureCube.cpp" />
+    <ClCompile Include="src\Alpine\DX11\DX11.cpp" />
+    <ClCompile Include="src\Alpine\DX11\RenderStateManager.cpp" />
+    <ClCompile Include="src\Alpine\ImGui\ImGuiBuild.cpp" />
+    <ClCompile Include="src\Alpine\ImGui\ImGuiLayer.cpp" />
+    <ClCompile Include="src\Alpine\RenderSystem\Buffers\IndexBuffer.cpp" />
+    <ClCompile Include="src\Alpine\RenderSystem\Buffers\VertexBuffer.cpp" />
+    <ClCompile Include="src\Alpine\RenderSystem\FrameBuffer.cpp" />
+    <ClCompile Include="src\Alpine\RenderSystem\Mesh\Mesh.cpp" />
+    <ClCompile Include="src\Alpine\RenderSystem\Mesh\SubMesh.cpp" />
+    <ClCompile Include="src\Alpine\RenderSystem\Renderer.cpp" />
+    <ClCompile Include="src\Alpine\RenderSystem\ShaderClasses\ComputeShader.cpp" />
+    <ClCompile Include="src\Alpine\RenderSystem\ShaderClasses\PixelShader.cpp" />
+    <ClCompile Include="src\Alpine\RenderSystem\ShaderClasses\ShaderLibrary.cpp" />
+    <ClCompile Include="src\Alpine\RenderSystem\ShaderClasses\VertexShader.cpp" />
+    <ClCompile Include="src\Application\Application.cpp" />
+    <ClCompile Include="src\Application\Window\GlfwWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Imgui\Imgui.vcxproj">
-      <Project>{4e037445-1ffd-42bd-8b3d-b673ef9cd12a}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\Imgui\Imgui.vcxproj">
-      <Project>{4e037445-1ffd-42bd-8b3d-b673ef9cd12a}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\ToolBox\ToolBox.vcxproj">
-      <Project>{236d69d4-0504-41c1-964a-8ff9005123a7}</Project>
-    </ProjectReference>
+    <FxCompile Include="src\Alpine\Shaders\Equirect2Cube_cs.hlsl">
+      <ShaderType>Compute</ShaderType>
+      <ShaderModel>5.0</ShaderModel>
+      <ObjectFileOutput>../../Export/Shaders/Equirect2Cube_cs.cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="src\Alpine\Shaders\IrradianceMap_cs.hlsl">
+      <ShaderType>Compute</ShaderType>
+      <ShaderModel>5.0</ShaderModel>
+      <ObjectFileOutput>../../Export/Shaders/IrradianceMap_cs.cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="src\Alpine\Shaders\SkyBox_ps.hlsl">
+      <ShaderType>Pixel</ShaderType>
+      <ShaderModel>5.0</ShaderModel>
+      <ObjectFileOutput>../../Export/Shaders/SkyBox_ps.cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="src\Alpine\Shaders\SkyBox_vs.hlsl">
+      <ShaderType>Vertex</ShaderType>
+      <ShaderModel>5.0</ShaderModel>
+      <ObjectFileOutput>../../Export/Shaders/SkyBox_vs.cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="src\Alpine\Shaders\SpeclularMap_cs.hlsl">
+      <ShaderType>Compute</ShaderType>
+      <ShaderModel>5.0</ShaderModel>
+      <ObjectFileOutput>../../Export/Shaders/SpeclularMap_cs.cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="src\Alpine\Shaders\pbrShader_ps.hlsl">
+      <ShaderType>Pixel</ShaderType>
+      <ShaderModel>5.0</ShaderModel>
+      <ObjectFileOutput>../../Export/Shaders/pbrShader_ps.cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="src\Alpine\Shaders\pbrShader_vs.hlsl">
+      <ShaderType>Vertex</ShaderType>
+      <ShaderModel>5.0</ShaderModel>
+      <ObjectFileOutput>../../Export/Shaders/pbrShader_vs.cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="src\Alpine\Shaders\spdrdfGenerator_cs.hlsl">
+      <ShaderType>Compute</ShaderType>
+      <ShaderModel>5.0</ShaderModel>
+      <ObjectFileOutput>../../Export/Shaders/spdrdfGenerator_cs.cso</ObjectFileOutput>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\Alpine\Shaders\ConstBuffers.hlsli" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ToolBox\ToolBox.vcxproj">
+      <Project>{EC2ADD50-580A-5CEC-6122-E7C2CD80C24D}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Imgui\ImGui.vcxproj">
+      <Project>{C0FF640D-2C14-8DBE-F595-301E616989EF}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

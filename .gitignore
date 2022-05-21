@@ -1,4 +1,7 @@
 .vs
-.pdb
 Intermediates
-*.pdb
+.pdb
+.sln
+.vcxproj
+.vcxproj.filters
+.vcxproj.user
