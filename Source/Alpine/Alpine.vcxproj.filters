@@ -160,6 +160,9 @@
       <Filter>Application\Window</Filter>
     </ClInclude>
     <ClInclude Include="src\stb_image.h" />
+    <ClInclude Include="src\Alpine\Scene\Scene.h" />
+    <ClInclude Include="src\Alpine\Scene\Entity.h" />
+    <ClInclude Include="src\Alpine\Scene\DefaultComponents.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Alpine\Assets\Camera\PerspectiveCamera.cpp">
@@ -234,6 +237,8 @@
     <ClCompile Include="src\Application\Window\GlfwWindow.cpp">
       <Filter>Application\Window</Filter>
     </ClCompile>
+    <ClCompile Include="src\Alpine\Scene\Scene.cpp" />
+    <ClCompile Include="src\Alpine\Scene\Entity.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="src\Alpine\Shaders\Equirect2Cube_cs.hlsl">

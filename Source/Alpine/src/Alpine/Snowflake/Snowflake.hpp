@@ -147,6 +147,7 @@ namespace Snowflake
 			}
 			return (HasComponent<TComponents>(entity) && ...);
 		}
+
 		template<class ...TComponents, class TFunction>
 		void Execute(TFunction&& func)
 		{
@@ -158,6 +159,7 @@ namespace Snowflake
 				}
 			}
 		}
+
 		static Manager& GetManager()
 		{
 			return s_Instance;
@@ -194,7 +196,12 @@ namespace Snowflake
 		return Manager::GetManager();
 	}
 
-	
+	class Registry
+	{
+	public:
+
+	};
+
 
 	template<class Component>
 	class ComponentPool : public IPool

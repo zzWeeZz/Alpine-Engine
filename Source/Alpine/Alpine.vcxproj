@@ -136,6 +136,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Alpine\Scene\DefaultComponents.h" />
+    <ClInclude Include="src\Alpine\Scene\Entity.h" />
+    <ClInclude Include="src\Alpine\Scene\Scene.h" />
     <ClInclude Include="src\Alpine\Alpine.h" />
     <ClInclude Include="src\Alpine\Assets\Camera\PerspectiveCamera.h" />
     <ClInclude Include="src\Alpine\Assets\Lights\DirectionalLight.h" />
@@ -173,6 +176,8 @@
     <ClInclude Include="src\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Alpine\Scene\Entity.cpp" />
+    <ClCompile Include="src\Alpine\Scene\Scene.cpp" />
     <ClCompile Include="src\Alpine\Assets\Camera\PerspectiveCamera.cpp" />
     <ClCompile Include="src\Alpine\Assets\Lights\DirectionalLight.cpp" />
     <ClCompile Include="src\Alpine\Assets\Lights\PointLight.cpp" />
