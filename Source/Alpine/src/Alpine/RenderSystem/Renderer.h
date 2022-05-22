@@ -53,6 +53,7 @@ namespace Alpine
 		CameraBuffer m_CameraBufferObject;
 		ConstantBuffer<CameraBuffer> m_CameraBuffer;
 
+		size_t m_DirLightCount = 0;
 		DirLightBuffer m_DirLightBufferObject;
 		ConstantBuffer<DirLightBuffer> m_DirLightBuffer;
 

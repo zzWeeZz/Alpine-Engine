@@ -136,9 +136,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Alpine\Scene\DefaultComponents.h" />
-    <ClInclude Include="src\Alpine\Scene\Entity.h" />
-    <ClInclude Include="src\Alpine\Scene\Scene.h" />
     <ClInclude Include="src\Alpine\Alpine.h" />
     <ClInclude Include="src\Alpine\Assets\Camera\PerspectiveCamera.h" />
     <ClInclude Include="src\Alpine\Assets\Lights\DirectionalLight.h" />
@@ -169,6 +166,10 @@
     <ClInclude Include="src\Alpine\RenderSystem\ShaderClasses\ShaderLibrary.h" />
     <ClInclude Include="src\Alpine\RenderSystem\ShaderClasses\VertexShader.h" />
     <ClInclude Include="src\Alpine\RenderSystem\Shaders.h" />
+    <ClInclude Include="src\Alpine\Scene\DefaultComponents.h" />
+    <ClInclude Include="src\Alpine\Scene\Entity.h" />
+    <ClInclude Include="src\Alpine\Scene\Scene.h" />
+    <ClInclude Include="src\Alpine\Scene\ScriptableEntity.h" />
     <ClInclude Include="src\Alpine\Snowflake\Snowflake.hpp" />
     <ClInclude Include="src\Application\Application.h" />
     <ClInclude Include="src\Application\Window\GlfwWindow.h" />
@@ -176,8 +177,6 @@
     <ClInclude Include="src\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Alpine\Scene\Entity.cpp" />
-    <ClCompile Include="src\Alpine\Scene\Scene.cpp" />
     <ClCompile Include="src\Alpine\Assets\Camera\PerspectiveCamera.cpp" />
     <ClCompile Include="src\Alpine\Assets\Lights\DirectionalLight.cpp" />
     <ClCompile Include="src\Alpine\Assets\Lights\PointLight.cpp" />
@@ -200,6 +199,8 @@
     <ClCompile Include="src\Alpine\RenderSystem\ShaderClasses\PixelShader.cpp" />
     <ClCompile Include="src\Alpine\RenderSystem\ShaderClasses\ShaderLibrary.cpp" />
     <ClCompile Include="src\Alpine\RenderSystem\ShaderClasses\VertexShader.cpp" />
+    <ClCompile Include="src\Alpine\Scene\Entity.cpp" />
+    <ClCompile Include="src\Alpine\Scene\Scene.cpp" />
     <ClCompile Include="src\Application\Application.cpp" />
     <ClCompile Include="src\Application\Window\GlfwWindow.cpp" />
   </ItemGroup>

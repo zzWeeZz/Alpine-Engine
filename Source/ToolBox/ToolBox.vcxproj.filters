@@ -42,6 +42,9 @@
     <ClInclude Include="src\ToolBox\Math\Vector\Vector4.hpp">
       <Filter>Math\Vector</Filter>
     </ClInclude>
+    <ClInclude Include="src\ToolBox\Utility\Chrono.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
     <ClInclude Include="src\ToolBox\Utility\Timer.h">
       <Filter>Utility</Filter>
     </ClInclude>
@@ -52,6 +55,9 @@
   <ItemGroup>
     <ClCompile Include="src\ToolBox\Input\Input.cpp">
       <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ToolBox\Utility\Chrono.cpp">
+      <Filter>Utility</Filter>
     </ClCompile>
     <ClCompile Include="src\ToolBox\Utility\Timer.cpp">
       <Filter>Utility</Filter>

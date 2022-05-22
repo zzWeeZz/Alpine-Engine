@@ -7,7 +7,9 @@
 #include "Alpine/RenderSystem/Renderer.h"
 
 #include "Alpine/Scene/Entity.h"
+#include "Alpine/Scene/ScriptableEntity.h"
 #include "Alpine/Scene/Scene.h"
+#include "Alpine/Scene/DefaultComponents.h"
 
 #include "Alpine/Assets/Model/Model.h"
 #include "Alpine/Assets/Lights/PointLight.h"

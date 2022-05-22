@@ -86,6 +86,11 @@ namespace Alpine
 
 	void Renderer::SubmitDirLight(DirectionalLight& light)
 	{
+		if (s_Instance.m_DirLightCount == 4)
+		{
+			std::cout << "Max dir lights reached" << std::endl;
+			return;
+		}
 		s_Instance.m_DirLightBufferObject.lightColor = light.GetLightColor();
 		s_Instance.m_DirLightBufferObject.lightDirection = Vector4(light.GetDirection().x, light.GetDirection().y, light.GetDirection().z, 0.0f);
 		s_Instance.m_DirLightBuffer.SetData(&s_Instance.m_DirLightBufferObject, sizeof(DirectionalLight));
@@ -138,5 +143,6 @@ namespace Alpine
 	{
 		s_Instance.m_FrameBuffer->UnBind();
 		s_Instance.m_PointLightCount = 0;
+		s_Instance.m_DirLightCount = 0;
 	}
 }

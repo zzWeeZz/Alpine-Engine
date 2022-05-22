@@ -8,22 +8,30 @@ Alpine::Scene::Scene() : m_Manager(Snowflake::GetManager())
 
 void Alpine::Scene::Start()
 {
-	m_Manager.Execute<MeshComponent, TransformComponent>([](Snowflake::Entity entity, MeshComponent& mesh, TransformComponent& transform)
-		{
-			mesh.model = Model::Create(mesh.MeshPath.string());
-			mesh.model->SetPosition(transform.position);
-			mesh.model->SetRotation(transform.rotation);
-			mesh.model->SetScale(transform.size);
-		});
 }
 
 void Alpine::Scene::OnUpdate()
 {
 	m_Manager.Execute<MeshComponent, TransformComponent>([](Snowflake::Entity entity, MeshComponent& mesh, TransformComponent& transform)
 		{
+			if(!mesh.model)
+			{
+				mesh.model = Model::Create(mesh.MeshPath.string());
+			}
 			mesh.model->SetPosition(transform.position);
 			mesh.model->SetRotation(transform.rotation);
 			mesh.model->SetScale(transform.size);
+		});
+
+	m_Manager.Execute<NativeScriptComponent>([&](Snowflake::Entity entity, NativeScriptComponent& script)
+		{
+			if(!script.Instance)
+			{
+				script.InstantiateFunc();
+				script.Instance->m_Entity = { entity, this };
+				script.OnCreateFunc(script.Instance);
+			}
+			script.OnUpdateFunc(script.Instance);
 		});
 }
 

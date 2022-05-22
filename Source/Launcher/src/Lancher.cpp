@@ -11,12 +11,13 @@
 #include "Alpine/RenderSystem/Renderer.h"
 #include "Alpine/ImGui/ImGuiLayer.h"
 #include "Playground/Playground.h"
+#include "ToolBox/Utility/Chrono.h"
+
 
 int main()
 {
 	Input myKeyInput();
 	Alpine::Playground playground;
-	ToolBox::Utility::Timer myTimer;
 	if (!glfwInit())
 		return -1;
 	if (!Alpine::Application::CreateNewWindow("Alpine", 1280, 720))
@@ -32,12 +33,12 @@ int main()
 	int width, height;
 	glfwGetWindowSize(window, &width, &height);
 	playground.Init();
-	myTimer.Update();
+	ToolBox::Chrono::UpdateTimeData();
 	while (!glfwWindowShouldClose(window))
 	{
 		glfwPollEvents();
-		myTimer.Update();
-		playground.Update(myTimer.GetDeltaTime());
+		ToolBox::Chrono::UpdateTimeData();
+		playground.Update();
 
 		Alpine::Renderer::Begin();
 		Alpine::DX11::ClearView();

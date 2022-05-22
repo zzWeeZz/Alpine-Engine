@@ -8,7 +8,7 @@ namespace Alpine
 	{
 	public:
 		void Init();
-		void Update(float delta);
+		void Update();
 		void Render();
 		void ImGuiRender();
 

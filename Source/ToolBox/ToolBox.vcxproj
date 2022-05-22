@@ -144,11 +144,13 @@
     <ClInclude Include="src\ToolBox\Math\Vector\Vector2.hpp" />
     <ClInclude Include="src\ToolBox\Math\Vector\Vector3.hpp" />
     <ClInclude Include="src\ToolBox\Math\Vector\Vector4.hpp" />
+    <ClInclude Include="src\ToolBox\Utility\Chrono.h" />
     <ClInclude Include="src\ToolBox\Utility\Timer.h" />
     <ClInclude Include="src\ToolBox\Utility\UtilityFunctions.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ToolBox\Input\Input.cpp" />
+    <ClCompile Include="src\ToolBox\Utility\Chrono.cpp" />
     <ClCompile Include="src\ToolBox\Utility\Timer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

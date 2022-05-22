@@ -1,6 +1,5 @@
 #pragma once
 #include <map>
-
 #include "Alpine/Snowflake/Snowflake.hpp"
 
 namespace Alpine

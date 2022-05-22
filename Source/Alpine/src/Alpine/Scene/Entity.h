@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Scene.h"
 #include "Alpine/DX11/Utilities.h"
 #include "Alpine/Snowflake/Snowflake.hpp"
@@ -9,6 +10,7 @@ namespace Alpine
 	{
 		friend class Scene;
 	public:
+		Entity() = default;
 		Entity(Snowflake::Entity entity, Scene* scene);
 
 		template<typename T>
@@ -23,6 +25,12 @@ namespace Alpine
 			return m_Scene->m_Manager.AddComponent<T>(m_EntityId);
 		}
 
+		/*template<typename T>
+		void AddScript()
+		{
+			AddComponent<NativeScriptComponent>().Bind<T>();
+		}*/
+
 		template<typename T>
 		void RemoveComponent()
 		{
@@ -36,7 +44,7 @@ namespace Alpine
 		}
 
 	private:
-		Snowflake::Entity m_EntityId;
-		Scene* m_Scene;
+		Snowflake::Entity m_EntityId{ Snowflake::InvalidEntity };
+		Scene* m_Scene = nullptr;
 	};
 }

@@ -43,6 +43,9 @@
     <Filter Include="Alpine\RenderSystem\ShaderClasses">
       <UniqueIdentifier>{C683D5DF-32F2-2A5F-7BDB-E55EE78820FB}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Alpine\Scene">
+      <UniqueIdentifier>{5BA7EFEB-470A-7F90-F08F-B746DCD14A13}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Alpine\Shaders">
       <UniqueIdentifier>{97E6D2B1-83B4-C6B7-6C48-37DE58B5A21C}</UniqueIdentifier>
     </Filter>
@@ -147,6 +150,18 @@
     <ClInclude Include="src\Alpine\RenderSystem\Shaders.h">
       <Filter>Alpine\RenderSystem</Filter>
     </ClInclude>
+    <ClInclude Include="src\Alpine\Scene\DefaultComponents.h">
+      <Filter>Alpine\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Alpine\Scene\Entity.h">
+      <Filter>Alpine\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Alpine\Scene\Scene.h">
+      <Filter>Alpine\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Alpine\Scene\ScriptableEntity.h">
+      <Filter>Alpine\Scene</Filter>
+    </ClInclude>
     <ClInclude Include="src\Alpine\Snowflake\Snowflake.hpp">
       <Filter>Alpine\Snowflake</Filter>
     </ClInclude>
@@ -160,9 +175,6 @@
       <Filter>Application\Window</Filter>
     </ClInclude>
     <ClInclude Include="src\stb_image.h" />
-    <ClInclude Include="src\Alpine\Scene\Scene.h" />
-    <ClInclude Include="src\Alpine\Scene\Entity.h" />
-    <ClInclude Include="src\Alpine\Scene\DefaultComponents.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Alpine\Assets\Camera\PerspectiveCamera.cpp">
@@ -231,14 +243,18 @@
     <ClCompile Include="src\Alpine\RenderSystem\ShaderClasses\VertexShader.cpp">
       <Filter>Alpine\RenderSystem\ShaderClasses</Filter>
     </ClCompile>
+    <ClCompile Include="src\Alpine\Scene\Entity.cpp">
+      <Filter>Alpine\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Alpine\Scene\Scene.cpp">
+      <Filter>Alpine\Scene</Filter>
+    </ClCompile>
     <ClCompile Include="src\Application\Application.cpp">
       <Filter>Application</Filter>
     </ClCompile>
     <ClCompile Include="src\Application\Window\GlfwWindow.cpp">
       <Filter>Application\Window</Filter>
     </ClCompile>
-    <ClCompile Include="src\Alpine\Scene\Scene.cpp" />
-    <ClCompile Include="src\Alpine\Scene\Entity.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="src\Alpine\Shaders\Equirect2Cube_cs.hlsl">

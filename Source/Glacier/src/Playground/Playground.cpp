@@ -1,10 +1,37 @@
 #include "Playground.h"
 #include <imgui/imgui.h>
 #include "Alpine/Scene/DefaultComponents.h"
+#include "ToolBox/Utility/Chrono.h"
 
 void Alpine::Playground::Init()
 {
 	m_Camera.Init({ 0, 0, 0 });
+
+	class TestScript : public ScriptableEntity
+	{
+	public:
+		void OnCreate()
+		{
+			GetComponent<TransformComponent>().size = Vector3(0.5, 0.5, 0.5f);
+		}
+
+		void OnUpdate()
+		{
+			static float YValue = 0;
+			YValue += ToolBox::Chrono::Timestep() * 10;
+			if (HasComponent<TransformComponent>())
+			{
+				auto& tf = GetComponent<TransformComponent>();
+				tf.position.y = YValue;
+				tf.rotation.y += ToolBox::Chrono::Timestep() * 100;
+			}
+		}
+
+		void OnDestroy()
+		{
+
+		}
+	};
 
 	for (int i = 0; i < 2; ++i)
 	{
@@ -13,13 +40,20 @@ void Alpine::Playground::Init()
 			{
 				auto entity = m_Scene.CreateEntity();
 				entity.AddComponent<MeshComponent>().MeshPath = "Model/Sponza/sponzaForTGE.fbx";
-				entity.GetComponent<TransformComponent>().position.x = -50 * i;
-				entity.GetComponent<TransformComponent>().position.z = -50 * j;
+				auto& tf = entity.GetComponent<TransformComponent>();
+				tf.position.x = -50 * i;
+				tf.position.z = -50 * j;
+				tf.size = Vector3(2, 2, 2);
 			}
 		}
 	}
 
+	{
+		auto entity = m_Scene.CreateEntity();
+		entity.AddComponent<MeshComponent>().MeshPath = "Model/Sponza/sponzaForTGE.fbx";
+		entity.AddComponent<NativeScriptComponent>().Bind<TestScript>();
 
+	}
 
 	Renderer::SubmitCamera(std::make_shared<PerspectiveCamera>(m_Camera));
 
@@ -37,11 +71,11 @@ void Alpine::Playground::Init()
 	m_Scene.Start();
 }
 
-void Alpine::Playground::Update(float delta)
+void Alpine::Playground::Update()
 {
-	m_Camera.Update(delta);
+	m_Camera.Update(ToolBox::Chrono::Timestep());
 	static float angle = 0;
-	angle += delta * 90;
+	angle += ToolBox::Chrono::Timestep() * 90;
 	m_Scene.OnUpdate();
 }
 
