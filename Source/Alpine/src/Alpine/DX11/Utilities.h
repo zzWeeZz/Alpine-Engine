@@ -29,4 +29,7 @@ namespace Alpine
 	{
 		return std::make_shared<T>(std::forward<Args>(args)...);
 	}
+
+	template<typename T>
+	using Ptr = std::weak_ptr<T>;
 }

@@ -16,5 +16,6 @@ struct TransformComponent
 
 struct MeshComponent
 {
-	
+	std::filesystem::path MeshPath;
+	Alpine::Ref<Alpine::Model> model;
 };

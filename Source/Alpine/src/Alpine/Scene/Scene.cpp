@@ -10,7 +10,7 @@ Alpine::Entity Alpine::Scene::CreateEntity()
 {
 	auto CreatedEntity = m_Manager.CreateEntity();
 	m_SceneEntities[CreatedEntity] = CreatedEntity;
-	Entity entity = { CreatedEntity, this };
+	Entity entity = { CreatedEntity, std::enable_shared_from_this(this)};
 	entity.AddComponent<TransformComponent>();
 	return entity;
 }

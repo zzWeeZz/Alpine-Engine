@@ -14,6 +14,8 @@ namespace Alpine
 
 	private:
 		ImGuiLayer m_ImGuiLayer;
+		Scene m_Scene;
+		Ref<Entity> m_TestEntity;
 		Alpine::Ref<Alpine::Material> m_Metal;
 		PerspectiveCamera m_Camera;
 		Alpine::Ref<Alpine::Model> m_Model;
