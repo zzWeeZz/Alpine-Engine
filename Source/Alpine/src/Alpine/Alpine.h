@@ -1,6 +1,4 @@
 #pragma once
-#define NOMINMAX
-
 #include "DX11/DX11.h"
 #include "DX11/Utilities.h"
 

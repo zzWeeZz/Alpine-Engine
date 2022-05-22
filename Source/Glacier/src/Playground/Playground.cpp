@@ -4,6 +4,9 @@
 void Alpine::Playground::Init()
 {
 	m_Camera.Init({0, 0, 0});
+
+	auto entity = m_Scene.CreateEntity();
+
 	Renderer::SubmitCamera(std::make_shared<PerspectiveCamera>(m_Camera));
 	m_Metal = Material::Create("Metalic");
 	m_Model = Alpine::Model::Create("Model/Sponza/sponzaForTGE.fbx", m_Metal);
@@ -17,15 +20,14 @@ void Alpine::Playground::Init()
 	m_Ground->SetPosition({ 0, -5, 0 });
 
 	m_DirectonalLight = DirectionalLight::Create();
-	m_DirectonalLight->SetLightColor({ 1,1,0, 1 });
-	m_DirectonalLight->SetDirection({ -1,1, 0});
+	m_DirectonalLight->SetLightColor({ 1,1,1, 1 });
+	m_DirectonalLight->SetDirection({ 1,1, 0});
 	Renderer::SubmitDirLight(*m_DirectonalLight.get());
 	m_PointLight = PointLight::Create();
 	m_PointLight->SetLightColor({ 1,1,1, 50.f });
 	m_PointLight->SetPosition({ 0,5,-10 });
 	m_PointLight->SetRange(30);
-	m_PointLight->SetFallOff(0.9f);
-	Renderer::AddPointLight(*m_PointLight.get());
+	m_PointLight->SetFallOff(0.5f);
 	m_ImGuiLayer.OnAttach();
 }
 
@@ -134,8 +136,18 @@ void Alpine::Playground::ImGuiRender()
 	ImGui::Image(Renderer::GetFrameBuffer()->GetColorAttachment(), {ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y});
 	ImGui::End();
 	ImGui::PopStyleVar();
-	
-
+	ImGui::Begin("Light");
+	ImGui::Text("Light");
+	static float light_pos[3] = { 0.0f, 0.0f, 0.0f };
+	ImGui::DragFloat3("Position", light_pos, -10.0f, 10.0f);
+	m_PointLight->SetPosition({ light_pos[0], light_pos[1], light_pos[2] });
+	static float lightFallOff = m_PointLight->GetFallOff();
+	ImGui::SliderFloat("FallOff", &lightFallOff, 0.0f, 1.0f);
+	m_PointLight->SetFallOff(lightFallOff);
+	static float range = m_PointLight->GetRange();
+	ImGui::SliderFloat("Range", &range, 0.0f, 100.0f);
+	m_PointLight->SetRange(range);
+	ImGui::End();
 	ImGui::End();
 	m_ImGuiLayer.End();
 }

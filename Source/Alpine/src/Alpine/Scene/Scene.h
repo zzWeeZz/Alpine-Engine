@@ -6,6 +6,7 @@
 namespace Alpine
 {
 	class Entity;
+
 	class Scene
 	{
 		friend class Entity;

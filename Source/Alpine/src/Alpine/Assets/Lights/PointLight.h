@@ -15,7 +15,7 @@ namespace Alpine
 		float GetRange() const { return m_Range; }
 
 		void SetFallOff(const float& falloff) { m_Falloff = falloff; }
-		float GetFallOff() const { return m_Falloff; }
+		float GetFallOff() { return m_Falloff; }
 
 		static Ref<PointLight> Create();
 	private:

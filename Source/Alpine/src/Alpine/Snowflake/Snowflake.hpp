@@ -7,6 +7,7 @@
 #include <cassert>
 #include <unordered_map>
 #include <functional>
+#include <stdexcept>
 
 namespace Snowflake
 {
@@ -164,8 +165,8 @@ namespace Snowflake
 		{
 			return s_Instance;
 		}
-	private:
 
+	private:
 		template<class TComponent>
 		ComponentPool<TComponent>& MakeOrGetPool()
 		{
@@ -177,30 +178,25 @@ namespace Snowflake
 			}
 			return *static_cast<ComponentPool<TComponent>*>(m_ComponentPools[hash]);
 		}
+
 		template<class TComponent>
 		ComponentPool<TComponent>& GetPoolWithHash(size_t hash)
 		{
 			return *static_cast<ComponentPool*>(m_ComponentPools[hash]);
 		}
 
-		static Snowflake::Manager s_Instance;
+		static Manager s_Instance;
 		std::vector<Entity> m_Entities;
 		std::unordered_map<Entity, std::vector<size_t>> m_Registry;
 		std::unordered_map<size_t, void*> m_ComponentPools;
 
 	};
-	Snowflake::Manager Manager::s_Instance;
+	inline Manager Manager::s_Instance;
 
 	inline Manager& GetManager()
 	{
 		return Manager::GetManager();
 	}
-
-	class Registry
-	{
-	public:
-
-	};
 
 
 	template<class Component>
