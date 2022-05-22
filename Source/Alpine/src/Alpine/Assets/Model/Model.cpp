@@ -7,9 +7,8 @@
 #include "Alpine/RenderSystem/Renderer.h"
 #include "Alpine/RenderSystem/RenderCommands.h"
 
-Alpine::Model::Model(std::string aPath, Ref<Material> material)
+Alpine::Model::Model(std::string aPath)
 {
-	m_Material = material;
 	m_Mesh.SetMesh(aPath);
 	m_Position = DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f);
 	m_Rotation = DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f);
@@ -18,9 +17,8 @@ Alpine::Model::Model(std::string aPath, Ref<Material> material)
 
 void Alpine::Model::Draw(CullMode cullmode, DepthStencilMode depthMode)
 {
-		MeshCommand command(m_Material, m_Transform, m_Mesh, cullmode, depthMode);
-		Renderer::SubmitMesh(command);
-	
+	MeshCommand command(Material::Create("afdadf"), m_Transform, m_Mesh, cullmode, depthMode);
+	Renderer::SubmitMesh(command);
 }
 
 Matrix& Alpine::Model::GetTransform()
@@ -68,9 +66,9 @@ void Alpine::Model::SetScale(const Vector3& aScale)
 	CalculateTransform();
 }
 
-Alpine::Ref<Alpine::Model> Alpine::Model::Create(std::string aPath, Ref<Material> material)
+Alpine::Ref<Alpine::Model> Alpine::Model::Create(std::string aPath)
 {
-	return std::make_shared<Model>(aPath, material);
+	return std::make_shared<Model>(aPath);
 }
 
 void Alpine::Model::CalculateTransform()

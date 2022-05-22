@@ -13,6 +13,10 @@ namespace Alpine
 	public:
 		Scene();
 
+		void Start();
+		void OnUpdate();
+		void OnRender();
+
 		Entity CreateEntity();
 		void DestroyEntity(Entity entity);
 		

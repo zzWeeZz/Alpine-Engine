@@ -13,7 +13,7 @@ namespace Alpine
 	class Model
 	{
 	public:
-		Model(std::string aPath, Ref<Material> material);
+		Model(std::string aPath);
 		void Draw(CullMode cullmode = CullMode::Back, DepthStencilMode depthMode = DepthStencilMode::ReadWrite);
 
 		Matrix& GetTransform();
@@ -25,7 +25,7 @@ namespace Alpine
 		void Rotate(const Vector3& aRotation);
 		void SetScale(const Vector3& aScale);
 
-		static Ref<Model> Create(std::string aPath, Ref<Material> material);
+		static Ref<Model> Create(std::string aPath);
 
 	private:
 		void CalculateTransform();
@@ -34,7 +34,6 @@ namespace Alpine
 		Vector3 m_Rotation;
 		Vector3 m_Size;
 
-		Ref<Material> m_Material;
 
 		Mesh m_Mesh;
 		Matrix m_Transform;

@@ -1,27 +1,32 @@
 #include "Playground.h"
 #include <imgui/imgui.h>
+#include "Alpine/Scene/DefaultComponents.h"
 
 void Alpine::Playground::Init()
 {
-	m_Camera.Init({0, 0, 0});
+	m_Camera.Init({ 0, 0, 0 });
 
-	auto entity = m_Scene.CreateEntity();
+	for (int i = 0; i < 2; ++i)
+	{
+		for (int j = 0; j < 2; ++j)
+		{
+			{
+				auto entity = m_Scene.CreateEntity();
+				entity.AddComponent<MeshComponent>().MeshPath = "Model/Sponza/sponzaForTGE.fbx";
+				entity.GetComponent<TransformComponent>().position.x = -50 * i;
+				entity.GetComponent<TransformComponent>().position.z = -50 * j;
+			}
+		}
+	}
+
+
 
 	Renderer::SubmitCamera(std::make_shared<PerspectiveCamera>(m_Camera));
-	m_Metal = Material::Create("Metalic");
-	m_Model = Alpine::Model::Create("Model/Sponza/sponzaForTGE.fbx", m_Metal);
-	m_Model->SetRotation({ 0, 0, 0 });
-	m_Model->SetPosition({ 0,0.f, 0});
-	m_Model->SetScale({ 10.0f, 10.0f, 10.0f });
 
-
-	m_Ground = Model::Create("Cube", m_Metal);
-	m_Ground->SetScale({ 100, 10, 100 });
-	m_Ground->SetPosition({ 0, -5, 0 });
 
 	m_DirectonalLight = DirectionalLight::Create();
 	m_DirectonalLight->SetLightColor({ 1,1,1, 1 });
-	m_DirectonalLight->SetDirection({ 1,1, 0});
+	m_DirectonalLight->SetDirection({ 1,1, 0 });
 	Renderer::SubmitDirLight(*m_DirectonalLight.get());
 	m_PointLight = PointLight::Create();
 	m_PointLight->SetLightColor({ 1,1,1, 50.f });
@@ -29,6 +34,7 @@ void Alpine::Playground::Init()
 	m_PointLight->SetRange(30);
 	m_PointLight->SetFallOff(0.5f);
 	m_ImGuiLayer.OnAttach();
+	m_Scene.Start();
 }
 
 void Alpine::Playground::Update(float delta)
@@ -36,14 +42,14 @@ void Alpine::Playground::Update(float delta)
 	m_Camera.Update(delta);
 	static float angle = 0;
 	angle += delta * 90;
-	
+	m_Scene.OnUpdate();
 }
 
 void Alpine::Playground::Render()
 {
 	Renderer::SubmitCamera(std::make_shared<PerspectiveCamera>(m_Camera));
 	Renderer::AddPointLight(*m_PointLight.get());
-	m_Model->Draw();
+	m_Scene.OnRender();
 	//m_Ground->Draw();
 }
 
@@ -133,7 +139,7 @@ void Alpine::Playground::ImGuiRender()
 		Renderer::GetFrameBuffer()->Resize(ImGui::GetWindowWidth(), ImGui::GetWindowHeight());
 		m_Camera.SetAspectRatio(ImGui::GetWindowWidth() / ImGui::GetWindowHeight());
 	}
-	ImGui::Image(Renderer::GetFrameBuffer()->GetColorAttachment(), {ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y});
+	ImGui::Image(Renderer::GetFrameBuffer()->GetColorAttachment(), { ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y });
 	ImGui::End();
 	ImGui::PopStyleVar();
 	ImGui::Begin("Light");
@@ -148,6 +154,11 @@ void Alpine::Playground::ImGuiRender()
 	ImGui::SliderFloat("Range", &range, 0.0f, 100.0f);
 	m_PointLight->SetRange(range);
 	ImGui::End();
+
+	ImGui::Begin("Performance");
+	ImGui::Text("FPS: %.1f", ImGui::GetIO().Framerate);
+	ImGui::End();
+
 	ImGui::End();
 	m_ImGuiLayer.End();
 }

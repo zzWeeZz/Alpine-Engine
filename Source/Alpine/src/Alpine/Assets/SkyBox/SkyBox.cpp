@@ -15,7 +15,7 @@ Alpine::SkyBox::SkyBox(const std::filesystem::path& skyBoxTexturePath) : m_SpecB
 	GenerateSPBRDF();
 	Ref<Material> skyBoxMaterial = Material::Create("skybox");
 	skyBoxMaterial->AddTexture(m_CubeMap);
-	m_Model = Model::Create("Cube", skyBoxMaterial);
+	m_Model = Model::Create("Cube");
 }
 
 void Alpine::SkyBox::Bind()
