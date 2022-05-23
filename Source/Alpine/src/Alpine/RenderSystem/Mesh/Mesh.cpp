@@ -112,8 +112,8 @@ void Alpine::Mesh::ProcessMaterials(const aiScene* pScene, const std::filesystem
 		}
 		else
 		{
-			float Text[4] = {0.5, 0.5, 0.5, 0.5f};
-			tempMaterial->AddNormalTexture(Texture::Create(1, 1, DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM, 0, &Text));
+			float tex[4] = {0.5, 0.5, 0.5, 0.5f};
+			tempMaterial->AddNormalTexture(Texture::Create(1, 1, DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM, 0, &tex));
 		}
 		if(std::filesystem::exists(SpecularPath))
 		{

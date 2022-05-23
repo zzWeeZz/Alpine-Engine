@@ -85,6 +85,7 @@ Alpine::Texture::Texture(UINT width, UINT height, DXGI_FORMAT format, UINT level
 
 	D3D11_SUBRESOURCE_DATA subData{};
 	subData.pSysMem = data;
+	subData.SysMemPitch = width * 4;
 
 	if (data)
 	{

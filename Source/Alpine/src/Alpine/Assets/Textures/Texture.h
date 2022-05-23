@@ -22,7 +22,7 @@ namespace Alpine
 		void CreateTextureFromImageData(DXGI_FORMAT format);
 		void CreateTextureFromHdrData();
 		ComPtr<ID3D11Texture2D> m_Texture;
-		ComPtr< ID3D11Resource> m_Resource;
+		ComPtr<ID3D11Resource> m_Resource;
 		ComPtr<ID3D11UnorderedAccessView> m_UAV;
 		ComPtr<ID3D11ShaderResourceView> m_ShaderResourceView;
 		bool m_IsHDR = false;

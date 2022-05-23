@@ -22,8 +22,6 @@ void Alpine::Playground::Init()
 			if (HasComponent<TransformComponent>())
 			{
 				auto& tf = GetComponent<TransformComponent>();
-				tf.position.y = YValue;
-				tf.rotation.y += ToolBox::Chrono::Timestep() * 100;
 			}
 		}
 
@@ -33,24 +31,9 @@ void Alpine::Playground::Init()
 		}
 	};
 
-	for (int i = 0; i < 4; ++i)
-	{
-		for (int j = 0; j < 4; ++j)
-		{
-			{
-				auto entity = m_Scene.CreateEntity();
-				entity.AddComponent<MeshComponent>().MeshPath = "Model/Sponza/sponzaForTGE.fbx";
-				auto& tf = entity.GetComponent<TransformComponent>();
-				tf.position.x = -50 * i;
-				tf.position.z = -50 * j;
-				tf.size = Vector3(2, 2, 2);
-			}
-		}
-	}
-
 	{
 		auto entity = m_Scene.CreateEntity();
-		entity.AddComponent<MeshComponent>().MeshPath = "Model/Sponza/sponzaForTGE.fbx";
+		entity.AddComponent<MeshComponent>().MeshPath = "Model/gremlin_sk.fbx";
 		entity.AddComponent<NativeScriptComponent>().Bind<TestScript>();
 
 	}
