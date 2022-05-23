@@ -44,7 +44,7 @@ namespace Snowflake
 		}
 
 		// fix complexety to O(1)
-		bool DestroyEntity(Entity& entity)
+		bool DestroyEntity(Entity entity)
 		{
 			if (entity == InvalidEntity) return false;
 			auto it = std::find(m_Entities.begin(), m_Entities.end(), entity);

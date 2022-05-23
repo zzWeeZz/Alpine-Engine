@@ -46,8 +46,8 @@ void Alpine::Scene::OnRender()
 Alpine::Entity Alpine::Scene::CreateEntity()
 {
 	auto CreatedEntity = m_Manager.CreateEntity();
-	m_SceneEntities[CreatedEntity] = CreatedEntity;
 	Entity entity = { CreatedEntity, this };
+	m_SceneEntities[CreatedEntity] = &entity;
 	entity.AddComponent<TransformComponent>();
 	return entity;
 }
@@ -56,14 +56,14 @@ void Alpine::Scene::DestroyEntity(Entity entity)
 {
 	m_Manager.DestroyEntity(entity.m_EntityId);
 
-	m_SceneEntities[entity.m_EntityId] = Snowflake::InvalidEntity;
+	m_SceneEntities[entity.m_EntityId] = nullptr;
 }
 
 Alpine::Scene::~Scene()
 {
-	std::map<Snowflake::Entity, Snowflake::Entity>::iterator it;
+	std::map<Snowflake::Entity, Entity*>::iterator it;
 	for (it = m_SceneEntities.begin(); it != m_SceneEntities.end(); ++it)
 	{
-		m_Manager.DestroyEntity(it->second);
+		m_Manager.DestroyEntity(it->first);
 	}
 }

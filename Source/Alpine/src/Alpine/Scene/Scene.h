@@ -21,7 +21,7 @@ namespace Alpine
 		
 		~Scene();
 	private:
-		std::map<Snowflake::Entity, Snowflake::Entity> m_SceneEntities;
+		std::map<Snowflake::Entity, Entity*> m_SceneEntities;
 		Snowflake::Manager& m_Manager;
 	};
 }
