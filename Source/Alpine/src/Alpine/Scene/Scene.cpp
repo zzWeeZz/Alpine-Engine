@@ -49,6 +49,7 @@ Alpine::Entity Alpine::Scene::CreateEntity()
 	Entity entity = { CreatedEntity, this };
 	m_SceneEntities[CreatedEntity] = &entity;
 	entity.AddComponent<TransformComponent>();
+	entity.AddComponent<TagComponent>().Tag = "Entity";
 	return entity;
 }
 

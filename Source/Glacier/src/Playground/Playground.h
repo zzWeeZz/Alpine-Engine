@@ -1,5 +1,6 @@
 #pragma once
 #include "Alpine/Alpine.h"
+#include "Glacier/Panels/SceneHierarchyPanel.h"
 
 namespace Alpine
 {
@@ -13,6 +14,7 @@ namespace Alpine
 		void ImGuiRender();
 
 	private:
+		Ref<SceneHierarchyPanel> m_SceneHierarchyPanel;
 		ImGuiLayer m_ImGuiLayer;
 		Scene m_Scene;
 		Alpine::Ref<Alpine::Material> m_Metal;

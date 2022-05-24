@@ -216,6 +216,7 @@ project "Glacier"
         "Dependencies/include/imgui/",
         "Source/Alpine/src/",
         "Source/ToolBox/src/",
+        "Source/Glacier/src/",
     }
 
     links

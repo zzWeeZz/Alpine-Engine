@@ -35,6 +35,25 @@ void Alpine::Playground::Init()
 		auto entity = m_Scene.CreateEntity();
 		entity.AddComponent<MeshComponent>().MeshPath = "Model/gremlin_sk.fbx";
 		entity.AddComponent<NativeScriptComponent>().Bind<TestScript>();
+		entity.GetComponent<TagComponent>().Tag = "Gremlin";
+
+		entity.AddComponent<TransformComponent>().position = Vector3{ -50, 0, 0 };
+	}
+	{
+		auto entity = m_Scene.CreateEntity();
+		entity.AddComponent<MeshComponent>().MeshPath = "Model/gremlin_sk.fbx";
+		entity.AddComponent<NativeScriptComponent>().Bind<TestScript>();
+		entity.GetComponent<TagComponent>().Tag = "Gremlin happy";
+
+		entity.GetComponent<TransformComponent>().position = Vector3{ 0, 0, 0 };
+
+	}
+	{
+		auto entity = m_Scene.CreateEntity();
+		entity.AddComponent<MeshComponent>().MeshPath = "Model/gremlin_sk.fbx";
+		entity.AddComponent<NativeScriptComponent>().Bind<TestScript>();
+		entity.GetComponent<TagComponent>().Tag = "Glenn";
+		entity.GetComponent<TransformComponent>().position = Vector3{ 50, 0, 0 };
 
 	}
 
@@ -52,6 +71,7 @@ void Alpine::Playground::Init()
 	m_PointLight->SetFallOff(0.5f);
 	m_ImGuiLayer.OnAttach();
 	m_Scene.Start();
+	m_SceneHierarchyPanel = std::make_shared<SceneHierarchyPanel>(std::make_shared<Scene>(m_Scene));
 }
 
 void Alpine::Playground::Update()
@@ -171,7 +191,7 @@ void Alpine::Playground::ImGuiRender()
 	ImGui::SliderFloat("Range", &range, 0.0f, 100.0f);
 	m_PointLight->SetRange(range);
 	ImGui::End();
-
+	m_SceneHierarchyPanel->OnImGuiRender();
 	ImGui::Begin("Performance");
 	ImGui::Text("FPS: %.1f", ImGui::GetIO().Framerate);
 	ImGui::End();
