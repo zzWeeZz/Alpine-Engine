@@ -6,6 +6,7 @@
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_dx11.h"
 #include "imgui/imgui_impl_win32.h"
+#include "ImGuizmo.h"
 #include "Application/Application.h"
 #include "Alpine/DX11/DX11.h"
 void Alpine::ImGuiLayer::OnAttach()
@@ -97,6 +98,7 @@ void Alpine::ImGuiLayer::Begin()
 	ImGui_ImplDX11_NewFrame();
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
+	ImGuizmo::BeginFrame();
 }
 
 void Alpine::ImGuiLayer::RenderImGui()

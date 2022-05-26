@@ -12,6 +12,16 @@ struct TransformComponent
 	Vector3 position = {0,0,0};
 	Vector3 rotation = {0,0,0};
 	Vector3 size = {1,1,1};
+	Matrix GetTransfrom()
+	{
+		Matrix mat;
+		mat *= Matrix::CreateRotationX(rotation.x);
+		mat *= Matrix::CreateRotationZ(rotation.z);
+		mat *= Matrix::CreateRotationY(rotation.y);
+		mat *= Matrix::CreateScale(size.x, size.y, size.z);
+		mat *= Matrix::CreateTranslation(position.x, position.y, position.z);
+		return mat;
+	}
 };
 
 struct MeshComponent
@@ -20,17 +30,25 @@ struct MeshComponent
 	Alpine::Ref<Alpine::Model> model;
 };
 
-struct DirectionalLight
+struct DirectionalLightComponent
 {
-	Vector3 Direction = {-1, -1, -1};
 	Vector3 Color = {1, 1, 1};
+	float Intensity = 1.0f;
+	Alpine::Ref<Alpine::DirectionalLight> light;
 };
 
-struct PointLight
+struct CameraComponent
 {
-	Vector3 Color;
-	float Range;
-	float Falloff;
+	Alpine::Ref<Alpine::SceneCamera> camera;
+};
+
+struct PointLightComponent
+{
+	Vector3 Color = {1,1,1};
+	float Range = 10.0f;
+	float Falloff = 1.0f;
+	float Intensity = 1.0f;
+	Alpine::Ref<Alpine::PointLight> light;
 };
 
 struct NativeScriptComponent

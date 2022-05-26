@@ -3025,6 +3025,7 @@ inline namespace literals {
     fmt::print("Elapsed time: {s:.2f} seconds", "s"_a=1.23);
   \endrst
  */
+
 #  if FMT_USE_NONTYPE_TEMPLATE_PARAMETERS
 template <detail_exported::fixed_string Str>
 constexpr auto operator""_a()

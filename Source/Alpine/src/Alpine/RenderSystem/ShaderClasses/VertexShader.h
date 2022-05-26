@@ -20,14 +20,12 @@ namespace Alpine
 		FLOAT3X3 = FLOAT3,
 		UINT3X3 = UINT3,
 	};
-
 	struct InputElementSpec
 	{
 		LPCSTR name;
 		Value value;
 		uint32_t offset = 0;
 	};
-
 	struct InputLayout
 	{
 		InputLayout(std::initializer_list<InputElementSpec> elements)
@@ -43,16 +41,16 @@ namespace Alpine
 	class VertexShader : public Shader
 	{
 	public:
-		VertexShader(const std::filesystem::path& aShaderPath, D3D11_INPUT_ELEMENT_DESC* aDesc, UINT aElements);
+		VertexShader(const std::filesystem::path& aShaderPath);
 		
 		void Bind() override;
 
-		static Ref<VertexShader> Create(const std::filesystem::path& aShaderPath, InputLayout& aLayout);
-		static Ref<VertexShader> Create(const std::filesystem::path& aShaderPath, D3D11_INPUT_ELEMENT_DESC* aDesc, UINT aElements);
+		static Ref<VertexShader> Create(const std::filesystem::path& aShaderPath);
 
 	private:
 		ComPtr<ID3D11VertexShader> m_Shader;
-		ComPtr<ID3D10Blob> myBuffer;
-		ComPtr<ID3D11InputLayout> myInputLayout;
+		ComPtr<ID3D10Blob> m_Buffer;
+		ComPtr<ID3D11InputLayout> m_InputLayout;
+		static bool m_HasSetInputLayout;
 	};
 }

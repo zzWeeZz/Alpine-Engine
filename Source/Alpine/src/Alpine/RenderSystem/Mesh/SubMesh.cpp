@@ -1,4 +1,5 @@
 #include "SubMesh.h"
+#include "Alpine/RenderSystem/Renderer.h"
 
 Alpine::SubMesh::SubMesh(std::vector<Vertex>& aVertices, std::vector<DWORD>& aIndices)
 {
@@ -27,4 +28,5 @@ void Alpine::SubMesh::Draw()
 	DX11::Context()->IASetIndexBuffer(m_IndexBuffer.Get(), DXGI_FORMAT::DXGI_FORMAT_R32_UINT, 0);
 	DX11::Context()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	DX11::Context()->DrawIndexed(m_IndexBuffer.BufferSize(), 0, 0);
+	Renderer::LogDrawCall();
 }

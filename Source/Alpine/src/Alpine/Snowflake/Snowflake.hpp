@@ -11,7 +11,6 @@
 
 namespace Snowflake
 {
-
 	constexpr uint32_t InvalidEntity = ~0;
 
 	using Entity = uint32_t;

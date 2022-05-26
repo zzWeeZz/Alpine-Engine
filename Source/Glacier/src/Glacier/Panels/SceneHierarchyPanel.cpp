@@ -1,6 +1,7 @@
 #include "SceneHierarchyPanel.h"
 
 #include <imgui/imgui.h>
+#include "ImGuizmo.h"
 
 Alpine::SceneHierarchyPanel::SceneHierarchyPanel(const Ref<Scene>& context)
 {
@@ -24,6 +25,7 @@ void Alpine::SceneHierarchyPanel::OnImGuiRender()
 	}
 
 	ImGui::End();
+	if(m_SelectedEntity()) DrawImGizmo(m_SelectedEntity);
 
 	ImGui::Begin("Properties");
 	if (m_SelectedEntity())
@@ -51,7 +53,6 @@ void Alpine::SceneHierarchyPanel::DrawEntityNode(Entity entity)
 
 void Alpine::SceneHierarchyPanel::DrawComponents(Entity entity)
 {
-
 	if (entity.HasComponent<TagComponent>())
 	{
 		auto& tag = entity.GetComponent<TagComponent>();
@@ -63,7 +64,6 @@ void Alpine::SceneHierarchyPanel::DrawComponents(Entity entity)
 			tag.Tag = buffer;
 		}
 	}
-
 	if (entity.HasComponent<TransformComponent>())
 	{
 		auto& tf = entity.GetComponent<TransformComponent>();
@@ -90,4 +90,53 @@ void Alpine::SceneHierarchyPanel::DrawComponents(Entity entity)
 			ImGui::TreePop();
 		}
 	}
+	if (entity.HasComponent<PointLightComponent>())
+	{
+		auto& plc = entity.GetComponent<PointLightComponent>();
+		if (ImGui::TreeNodeEx((void*)typeid(PointLightComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Pointlight Component"))
+		{
+			float col[3] = { 0 };
+			memcpy(col, &plc.Color, sizeof(Vector3));
+			if(ImGui::ColorEdit3("Color", col))
+			{
+				memcpy(&plc.Color, col, sizeof(Vector3));
+			}
+
+			if (ImGui::DragFloat("Intensity", &plc.Intensity, 0.1f))
+			{
+				plc.Intensity = std::max(0.0f, plc.Intensity);
+			}
+
+			if (ImGui::DragFloat("Radius", &plc.Range, 0.1f))
+			{
+				plc.Range = std::max(0.0f, plc.Range);
+			}
+			ImGui::TreePop();
+		}
+	}
+	if (entity.HasComponent<DirectionalLightComponent>())
+	{
+		auto& plc = entity.GetComponent<DirectionalLightComponent>();
+		if (ImGui::TreeNodeEx((void*)typeid(DirectionalLightComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Directionlight Component"))
+		{
+			float col[3] = { 0 };
+			memcpy(col, &plc.Color, sizeof(Vector3));
+			if (ImGui::ColorEdit3("Color", col))
+			{
+				memcpy(&plc.Color, col, sizeof(Vector3));
+			}
+
+			if (ImGui::DragFloat("Intensity", &plc.Intensity, 0.1f))
+			{
+				plc.Intensity = std::max(0.0f, plc.Intensity);
+			}
+			ImGui::TreePop();
+		}
+	}
+}
+
+void Alpine::SceneHierarchyPanel::DrawImGizmo(Entity entity)
+{
+	
+	
 }

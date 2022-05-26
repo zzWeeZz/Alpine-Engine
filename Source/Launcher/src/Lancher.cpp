@@ -10,14 +10,14 @@
 #include "Application/Application.h"
 #include "Alpine/RenderSystem/Renderer.h"
 #include "Alpine/ImGui/ImGuiLayer.h"
-#include "Playground/Playground.h"
+#include "Glacier/Layer/EditorLayer.h"
 #include "ToolBox/Utility/Chrono.h"
 
 
 int main()
 {
 	Input myKeyInput();
-	Alpine::Playground playground;
+	Alpine::EditorLayer editorLayer;
 	if (!glfwInit())
 		return -1;
 	if (!Alpine::Application::CreateNewWindow("Alpine", 1280, 720))
@@ -25,28 +25,25 @@ int main()
 		return -1;
 	}
 	auto window = static_cast<GLFWwindow*>(Alpine::Application::GetWindow()->GetWindow());
-	Alpine::ImGuiLayer imguiLayer;
 	Input::GetInstance().SetupKeyInputs(window);
 	Alpine::DX11::Initialize(1280, 720, false);
 	Alpine::Renderer::Initalize();
 	glfwMakeContextCurrent(window);
 	int width, height;
 	glfwGetWindowSize(window, &width, &height);
-	playground.Init();
+	editorLayer.OnAttach();
 	ToolBox::Chrono::UpdateTimeData();
 	while (!glfwWindowShouldClose(window))
 	{
 		glfwPollEvents();
 		ToolBox::Chrono::UpdateTimeData();
-		playground.Update();
-
+		editorLayer.Begin();
 		Alpine::Renderer::Begin();
 		Alpine::DX11::ClearView();
 		Alpine::Renderer::DrawStash();
 		Alpine::DX11::Bind();
-		playground.Render();
+		editorLayer.RenderImGui();
 		Alpine::Renderer::End();
-		playground.ImGuiRender();
 		Alpine::DX11::Present(true);
 		
 	}
