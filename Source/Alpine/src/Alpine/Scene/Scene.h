@@ -17,6 +17,9 @@ namespace Alpine
 		void OnUpdate();
 		void OnRender();
 
+		void Serialize(const std::string& location);
+		void Deserialize(const std::string& location);
+
 		Entity CreateEntity();
 		void DestroyEntity(Entity entity);
 		

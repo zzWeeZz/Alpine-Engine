@@ -1,7 +1,11 @@
 #include "Scene.h"
+
+#include <fstream>
+
 #include "Entity.h"
 #include "DefaultComponents.h"
 #include "ToolBox/Utility/Chrono.h"
+#include "yaml-cpp/yaml.h"
 
 Alpine::Scene::Scene() : m_Manager(Snowflake::GetManager())
 {
@@ -85,6 +89,42 @@ void Alpine::Scene::OnRender()
 		{
 			Renderer::SubmitDirLight(*light.light);
 		});
+}
+
+void Alpine::Scene::Serialize(const std::string& location)
+{
+	YAML::Emitter out;
+	out << YAML::BeginMap;
+	out << YAML::Key << "Scene" << YAML::Value << "Test";
+	out << YAML::Key << "Entities" << YAML::Value << YAML::BeginSeq;
+	std::map<Snowflake::Entity, Entity*>::iterator it;
+	for(it = m_SceneEntities.begin(); it != m_SceneEntities.end(); it++)
+	{
+		Entity entity = {it->first, this};
+		out << YAML::BeginMap;
+		out << YAML::Key << "Entity" << YAML::Value << entity.GetComponent<TagComponent>().Tag;
+		auto& tf = entity.GetComponent<TransformComponent>();
+		out << YAML::BeginMap;
+		out << YAML::Key << "TransformComponent" << YAML::Value << YAML::BeginMap;
+		out << YAML::Key << "Position" << YAML::Value << YAML::Flow << YAML::BeginSeq << tf.position.x << tf.position.y << tf.position.z << YAML::EndSeq;
+		out << YAML::Key << "Rotation" << YAML::Value << YAML::Flow << YAML::BeginSeq << tf.rotation.x << tf.rotation.y << tf.rotation.z << YAML::EndSeq;
+		out << YAML::Key << "Size" << YAML::Value << YAML::Flow << YAML::BeginSeq << tf.size.x << tf.size.y << tf.size.z << YAML::EndSeq;
+		out << YAML::EndMap;
+		out << YAML::EndMap;
+		if (entity.HasComponent<MeshComponent>())
+		{
+			out << YAML::BeginMap;
+			out << YAML::Key << "Mesh component" << YAML::Value << YAML::BeginMap;
+			out << YAML::EndMap;
+			out << YAML::Key << "MeshPath" << YAML::Value << entity.GetComponent<MeshComponent>().MeshPath.string();
+			out << YAML::EndMap;
+		}
+		out << YAML::EndMap;
+	}
+	out << YAML::EndSeq;
+	out << YAML::EndMap;
+	std::ofstream fout(location);
+	fout << out.c_str();
 }
 
 Alpine::Entity Alpine::Scene::CreateEntity()

@@ -25,12 +25,6 @@ namespace Alpine
 			return m_Scene->m_Manager.AddComponent<T>(m_EntityId);
 		}
 
-		/*template<typename T>
-		void AddScript()
-		{
-			AddComponent<NativeScriptComponent>().Bind<T>();
-		}*/
-
 		template<typename T>
 		void RemoveComponent()
 		{

@@ -55,6 +55,7 @@ project "Launcher"
         "ToolBox",
         "ImGui",
         "Glacier",
+        "yaml-cpp",
     }
 
     defines {"_CONSOLE"}
@@ -120,13 +121,15 @@ project "Alpine"
         "Dependencies/include/",
         "Source/ToolBox/src/",
         "Dependencies/include/imgui/",
-        "Source/Alpine/src/"
+        "Source/Alpine/src/",
+        "Source/YAML/include/",
     }
 
     links
     {
         "ToolBox",
         "ImGui",
+        "yaml-cpp",
     }
 
     defines {"_CONSOLE"}
@@ -321,6 +324,50 @@ project "ToolBox"
 			"_LIB",
             "NOMINMAX",
 		}
+
+
+
+
+project "yaml-cpp"
+    kind "StaticLib"
+    language "C++"
+    location "Source/YAML"
+    targetdir ("Dependencies/lib/")
+    objdir ("Intermediates/%{cfg.architecture}")
+    
+        files
+        {
+            "Source/YAML/src/**.h",
+            "Source/YAML/src/**.cpp",
+            
+            "Source/YAML/include/**.h"
+        }
+    
+        includedirs
+        {
+            "Source/YAML/include"
+        }
+    
+        filter "system:windows"
+            systemversion "latest"
+            cppdialect "C++17"
+            staticruntime "off"
+    
+        filter "configurations:Debug"
+            defines {"DEBUG"}
+            runtime "Debug"
+            symbols "on"
+            
+        filter "configurations:Release"
+            defines "RELEASE"
+            runtime "Release"
+            optimize "on"
+    
+    
+        filter "configurations:Export"
+            defines "EXPORT"
+            runtime "Release"
+            optimize "on"
 
 
 

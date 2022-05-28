@@ -33,7 +33,7 @@ Vector3 Alpine::Model::GetPosition()
 
 Vector3 Alpine::Model::GetRotation()
 {
-	return m_Rotation * 180.0f / DirectX::XM_PI;
+	return m_Rotation;
 }
 
 Vector3 Alpine::Model::GetScale()
@@ -49,7 +49,7 @@ void Alpine::Model::SetPosition(const Vector3& aPosition)
 
 void Alpine::Model::SetRotation(const Vector3& aRotation)
 {
-	m_Rotation = aRotation / 180.0f * DirectX::XM_PI;
+	m_Rotation = aRotation;
 	CalculateTransform();
 }
 
@@ -74,10 +74,8 @@ Alpine::Ref<Alpine::Model> Alpine::Model::Create(std::string aPath)
 void Alpine::Model::CalculateTransform()
 {
 	Matrix transform;
-	transform *= Matrix::CreateRotationX(m_Rotation.x);
-	transform *= Matrix::CreateRotationZ(m_Rotation.z);
-	transform *= Matrix::CreateRotationY(m_Rotation.y);
 	transform *= Matrix::CreateScale(m_Size.x, m_Size.y, m_Size.z);
+	transform *= Matrix::CreateFromYawPitchRoll(m_Rotation.y, m_Rotation.x, m_Rotation.z);
 	transform *= Matrix::CreateTranslation(m_Position.x, m_Position.y, m_Position.z);
 	m_Transform = transform;
 }

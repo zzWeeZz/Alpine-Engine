@@ -63,7 +63,13 @@
     <ClInclude Include="src\Alpine\Alpine.h">
       <Filter>Alpine</Filter>
     </ClInclude>
-    <ClInclude Include="src\Alpine\Assets\Camera\PerspectiveCamera.h">
+    <ClInclude Include="src\Alpine\Assets\Camera\Camera.h">
+      <Filter>Alpine\Assets\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Alpine\Assets\Camera\EditorCamera.h">
+      <Filter>Alpine\Assets\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Alpine\Assets\Camera\SceneCamera.h">
       <Filter>Alpine\Assets\Camera</Filter>
     </ClInclude>
     <ClInclude Include="src\Alpine\Assets\Lights\DirectionalLight.h">
@@ -174,10 +180,14 @@
     <ClInclude Include="src\Application\Window\IWindow.h">
       <Filter>Application\Window</Filter>
     </ClInclude>
+    <ClInclude Include="src\ImGuizmo.h" />
     <ClInclude Include="src\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Alpine\Assets\Camera\PerspectiveCamera.cpp">
+    <ClCompile Include="src\Alpine\Assets\Camera\EditorCamera.cpp">
+      <Filter>Alpine\Assets\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Alpine\Assets\Camera\SceneCamera.cpp">
       <Filter>Alpine\Assets\Camera</Filter>
     </ClCompile>
     <ClCompile Include="src\Alpine\Assets\Lights\DirectionalLight.cpp">
@@ -255,6 +265,7 @@
     <ClCompile Include="src\Application\Window\GlfwWindow.cpp">
       <Filter>Application\Window</Filter>
     </ClCompile>
+    <ClCompile Include="src\ImGuizmo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="src\Alpine\Shaders\Equirect2Cube_cs.hlsl">

@@ -15,10 +15,8 @@ struct TransformComponent
 	Matrix GetTransfrom()
 	{
 		Matrix mat;
-		mat *= Matrix::CreateRotationX(rotation.x);
-		mat *= Matrix::CreateRotationZ(rotation.z);
-		mat *= Matrix::CreateRotationY(rotation.y);
 		mat *= Matrix::CreateScale(size.x, size.y, size.z);
+		mat *= Matrix::CreateFromYawPitchRoll(rotation.y, rotation.x, rotation.z);
 		mat *= Matrix::CreateTranslation(position.x, position.y, position.z);
 		return mat;
 	}

@@ -75,8 +75,9 @@ void Alpine::ViewportPanel::OnImGuiRender(Ref<EditorCamera> camera, Ref<SceneHie
 			mat.Decompose(scale, quaternion, position);
 			tf.position = position;
 			tf.size = scale;
-			Vector3 forward = Vector3(quaternion.ToEuler().y, quaternion.ToEuler().x, quaternion.ToEuler().z);
-			tf.rotation = forward;
+			Vector3 RotDelta = quaternion.ToEuler() - tf.rotation;
+			
+			tf.rotation += RotDelta;
 		}
 	}
 	ImGui::End();

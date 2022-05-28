@@ -111,6 +111,10 @@ void Alpine::SceneHierarchyPanel::DrawComponents(Entity entity)
 			{
 				plc.Range = std::max(0.0f, plc.Range);
 			}
+			if (ImGui::SliderFloat("Falloff", &plc.Falloff, 0.0f, 1.0f))
+			{
+				plc.Falloff = std::max(0.0f, plc.Falloff);
+			}
 			ImGui::TreePop();
 		}
 	}

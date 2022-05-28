@@ -12,12 +12,19 @@
 #include "Alpine/ImGui/ImGuiLayer.h"
 #include "Glacier/Layer/EditorLayer.h"
 #include "ToolBox/Utility/Chrono.h"
+Alpine::EditorLayer editorLayer;
+void DropCallback(GLFWwindow* window, int count, const char* paths[])
+{
+	for (int i = 0; i < count; i++)
+	{
+		editorLayer.ProccessPath(paths[i]);
+	}
+}
 
 
 int main()
 {
 	Input myKeyInput();
-	Alpine::EditorLayer editorLayer;
 	if (!glfwInit())
 		return -1;
 	if (!Alpine::Application::CreateNewWindow("Alpine", 1280, 720))
@@ -29,6 +36,8 @@ int main()
 	Alpine::DX11::Initialize(1280, 720, false);
 	Alpine::Renderer::Initalize();
 	glfwMakeContextCurrent(window);
+
+	glfwSetDropCallback(window, DropCallback);
 	int width, height;
 	glfwGetWindowSize(window, &width, &height);
 	editorLayer.OnAttach();

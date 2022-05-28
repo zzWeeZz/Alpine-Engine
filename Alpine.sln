@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ImGui", "Source\Imgui\ImGui
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ToolBox", "Source\ToolBox\ToolBox.vcxproj", "{EC2ADD50-580A-5CEC-6122-E7C2CD80C24D}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "yaml-cpp", "Source\YAML\yaml-cpp.vcxproj", "{88F1A057-74BE-FB62-9DD7-E90A890331F1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -48,6 +50,12 @@ Global
 		{EC2ADD50-580A-5CEC-6122-E7C2CD80C24D}.Export|x64.Build.0 = Export|x64
 		{EC2ADD50-580A-5CEC-6122-E7C2CD80C24D}.Release|x64.ActiveCfg = Release|x64
 		{EC2ADD50-580A-5CEC-6122-E7C2CD80C24D}.Release|x64.Build.0 = Release|x64
+		{88F1A057-74BE-FB62-9DD7-E90A890331F1}.Debug|x64.ActiveCfg = Debug|x64
+		{88F1A057-74BE-FB62-9DD7-E90A890331F1}.Debug|x64.Build.0 = Debug|x64
+		{88F1A057-74BE-FB62-9DD7-E90A890331F1}.Export|x64.ActiveCfg = Export|x64
+		{88F1A057-74BE-FB62-9DD7-E90A890331F1}.Export|x64.Build.0 = Export|x64
+		{88F1A057-74BE-FB62-9DD7-E90A890331F1}.Release|x64.ActiveCfg = Release|x64
+		{88F1A057-74BE-FB62-9DD7-E90A890331F1}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

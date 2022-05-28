@@ -13,6 +13,7 @@ namespace Alpine
 		void OnDetach();
 		void Begin();
 		void RenderImGui();
+		void ProccessPath(const std::filesystem::path& path);
 		void End();
 	private:
 		Ref<SceneHierarchyPanel> m_SceneHierarchyPanel;

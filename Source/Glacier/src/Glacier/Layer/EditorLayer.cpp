@@ -2,26 +2,13 @@
 
 #include "ImGuizmo.h"
 #include "ToolBox/Utility/Chrono.h"
+#include "Glacier/Utilities/Utilities.h"
 
 void Alpine::EditorLayer::OnAttach()
 {
 	m_ImGuiLayer.OnAttach();
 	m_ActiveScene = std::make_shared<Scene>();
-
-	/*{
-		auto entity = m_ActiveScene->CreateEntity();
-		entity.GetComponent<TagComponent>().Tag = "Camera";
-
-		entity.AddComponent<TransformComponent>().position = Vector3{ 0, 0, 0 };
-		entity.AddComponent<CameraComponent>();
-	}*/
-	{
-		auto entity = m_ActiveScene->CreateEntity();
-		entity.AddComponent<MeshComponent>().MeshPath = "Model/Sponza/SponzaForTGE.fbx";
-		entity.GetComponent<TagComponent>().Tag = "Sponza";
-
-		entity.AddComponent<TransformComponent>().position = Vector3{ 0, 0, 0 };
-	}
+	
 	{
 		auto entity = m_ActiveScene->CreateEntity();
 		entity.AddComponent<PointLightComponent>();
@@ -102,16 +89,21 @@ void Alpine::EditorLayer::RenderImGui()
 
 	if (ImGui::BeginMenuBar())
 	{
-		if (ImGui::BeginMenu("Options"))
+		if (ImGui::BeginMenu("File"))
 		{
 			// Disabling fullscreen would allow the window to be moved to the front of other windows,
 			// which we can't undo at the moment without finer window depth/z control.
-			ImGui::MenuItem("Fullscreen", NULL, &opt_fullscreen);
-			ImGui::MenuItem("Padding", NULL, &opt_padding);
-			ImGui::Separator();
+			
 
-			if (ImGui::MenuItem("Flag: NoSplit", "", (dockspace_flags & ImGuiDockNodeFlags_NoSplit) != 0)) { dockspace_flags ^= ImGuiDockNodeFlags_NoSplit; }
-			if (ImGui::MenuItem("Flag: NoResize", "", (dockspace_flags & ImGuiDockNodeFlags_NoResize) != 0)) { dockspace_flags ^= ImGuiDockNodeFlags_NoResize; }
+			if (ImGui::MenuItem("Save", "clr + s"))
+			{
+				std::string path = "Scenes/";
+				std::string name = "Scene";
+				std::string extension = ".frost";
+				std::string fullPath = path + name + extension;
+				m_ActiveScene->Serialize(fullPath);
+			}
+			if (ImGui::MenuItem("Load", "", (dockspace_flags & ImGuiDockNodeFlags_NoResize) != 0)) { dockspace_flags ^= ImGuiDockNodeFlags_NoResize; }
 			if (ImGui::MenuItem("Flag: NoDockingInCentralNode", "", (dockspace_flags & ImGuiDockNodeFlags_NoDockingInCentralNode) != 0)) { dockspace_flags ^= ImGuiDockNodeFlags_NoDockingInCentralNode; }
 			if (ImGui::MenuItem("Flag: AutoHideTabBar", "", (dockspace_flags & ImGuiDockNodeFlags_AutoHideTabBar) != 0)) { dockspace_flags ^= ImGuiDockNodeFlags_AutoHideTabBar; }
 			if (ImGui::MenuItem("Flag: PassthruCentralNode", "", (dockspace_flags & ImGuiDockNodeFlags_PassthruCentralNode) != 0, opt_fullscreen)) { dockspace_flags ^= ImGuiDockNodeFlags_PassthruCentralNode; }
@@ -126,13 +118,25 @@ void Alpine::EditorLayer::RenderImGui()
 	}
 	m_SceneHierarchyPanel->OnImGuiRender();
 	m_ViewportPanel->OnImGuiRender(m_EditorCamera, m_SceneHierarchyPanel);
-	
-	
+
+
 
 	ImGui::End();
-	
+
 	m_ImGuiLayer.End();
 
+}
+
+void Alpine::EditorLayer::ProccessPath(const std::filesystem::path& path)
+{
+	if (Glacier::GetFileType(path) == Glacier::FBX)
+	{
+		{
+			auto entity = m_ActiveScene->CreateEntity();
+			entity.AddComponent<MeshComponent>().MeshPath = path;
+			entity.GetComponent<TagComponent>().Tag = path.filename().string();
+		}
+	}
 }
 
 void Alpine::EditorLayer::End()

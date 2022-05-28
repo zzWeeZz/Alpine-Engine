@@ -76,7 +76,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CONSOLE;DEBUG;WIN32;_LIB;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\Dependencies\include;..\ToolBox\src;..\..\Dependencies\include\imgui;src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\Dependencies\include;..\ToolBox\src;..\..\Dependencies\include\imgui;src;..\YAML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -94,7 +94,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CONSOLE;RELEASE;WIN32;_LIB;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\Dependencies\include;..\ToolBox\src;..\..\Dependencies\include\imgui;src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\Dependencies\include;..\ToolBox\src;..\..\Dependencies\include\imgui;src;..\YAML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -117,7 +117,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CONSOLE;EXPORT;WIN32;_LIB;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\Dependencies\include;..\ToolBox\src;..\..\Dependencies\include\imgui;src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\Dependencies\include;..\ToolBox\src;..\..\Dependencies\include\imgui;src;..\YAML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -137,7 +137,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Alpine\Alpine.h" />
-    <ClInclude Include="src\Alpine\Assets\Camera\PerspectiveCamera.h" />
+    <ClInclude Include="src\Alpine\Assets\Camera\Camera.h" />
+    <ClInclude Include="src\Alpine\Assets\Camera\EditorCamera.h" />
+    <ClInclude Include="src\Alpine\Assets\Camera\SceneCamera.h" />
     <ClInclude Include="src\Alpine\Assets\Lights\DirectionalLight.h" />
     <ClInclude Include="src\Alpine\Assets\Lights\Light.h" />
     <ClInclude Include="src\Alpine\Assets\Lights\PointLight.h" />
@@ -174,10 +176,12 @@
     <ClInclude Include="src\Application\Application.h" />
     <ClInclude Include="src\Application\Window\GlfwWindow.h" />
     <ClInclude Include="src\Application\Window\IWindow.h" />
+    <ClInclude Include="src\ImGuizmo.h" />
     <ClInclude Include="src\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Alpine\Assets\Camera\PerspectiveCamera.cpp" />
+    <ClCompile Include="src\Alpine\Assets\Camera\EditorCamera.cpp" />
+    <ClCompile Include="src\Alpine\Assets\Camera\SceneCamera.cpp" />
     <ClCompile Include="src\Alpine\Assets\Lights\DirectionalLight.cpp" />
     <ClCompile Include="src\Alpine\Assets\Lights\PointLight.cpp" />
     <ClCompile Include="src\Alpine\Assets\Materials\Material.cpp" />
@@ -203,6 +207,7 @@
     <ClCompile Include="src\Alpine\Scene\Scene.cpp" />
     <ClCompile Include="src\Application\Application.cpp" />
     <ClCompile Include="src\Application\Window\GlfwWindow.cpp" />
+    <ClCompile Include="src\ImGuizmo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="src\Alpine\Shaders\Equirect2Cube_cs.hlsl">
@@ -255,6 +260,9 @@
     </ProjectReference>
     <ProjectReference Include="..\Imgui\ImGui.vcxproj">
       <Project>{C0FF640D-2C14-8DBE-F595-301E616989EF}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\YAML\yaml-cpp.vcxproj">
+      <Project>{88F1A057-74BE-FB62-9DD7-E90A890331F1}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
