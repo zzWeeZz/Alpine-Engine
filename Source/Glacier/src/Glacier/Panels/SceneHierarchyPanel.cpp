@@ -18,11 +18,24 @@ void Alpine::SceneHierarchyPanel::OnImGuiRender()
 {
 	ImGui::Begin("Hierarchy");
 
-	std::map<Snowflake::Entity, Entity*>::iterator it;
-	for (it = m_Context->m_SceneEntities.begin(); it != m_Context->m_SceneEntities.end(); it++)
+	for (auto it = m_Context->m_SceneEntities.begin(); it != m_Context->m_SceneEntities.end(); it++)
 	{
 		Entity entity = { it->first, m_Context.get() };
 		DrawEntityNode(entity);
+	}
+
+	if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
+	{
+		m_SelectedEntity = {};
+	}
+	bool destroy = false;
+	if (ImGui::BeginPopupContextWindow("one", ImGuiPopupFlags_MouseButtonRight | ImGuiPopupFlags_NoOpenOverItems))
+	{
+		if(ImGui::MenuItem("Create Empty Entity"))
+		{
+			m_Context->CreateEntity();
+		}
+		ImGui::EndPopup();
 	}
 
 	ImGui::End();
@@ -46,9 +59,26 @@ void Alpine::SceneHierarchyPanel::DrawEntityNode(Entity entity)
 		m_SelectedEntity = entity;
 	}
 
+	bool deleted = false;
+	if (ImGui::BeginPopupContextWindow("two", ImGuiPopupFlags_MouseButtonRight))
+	{
+		if (ImGui::MenuItem("destroy Entity"))
+		{
+			deleted = true;
+		}
+		ImGui::EndPopup();
+	}
 	if (isOpened)
 	{
 		ImGui::TreePop();
+	}
+	if (deleted)
+	{
+		m_Context->DestroyEntity(m_SelectedEntity);
+		if(m_SelectedEntity == entity)
+		{
+			m_SelectedEntity = {};
+		}
 	}
 }
 

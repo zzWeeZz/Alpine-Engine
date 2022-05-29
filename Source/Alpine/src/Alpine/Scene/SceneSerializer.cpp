@@ -92,8 +92,7 @@ bool Alpine::SceneSerializer::Serialize(const std::string& filePath)
 	out << YAML::BeginMap;
 	out << YAML::Key << "Scene" << YAML::Value << "Name";
 	out << YAML::Key << "Entities" << YAML::Value << YAML::BeginSeq;
-	std::map<Snowflake::Entity, Entity*>::iterator it;
-	for (it = m_Scene->m_SceneEntities.begin(); it != m_Scene->m_SceneEntities.end(); it++)
+	for (auto it = m_Scene->m_SceneEntities.begin(); it != m_Scene->m_SceneEntities.end(); it++)
 	{
 
 		Entity entity = { it->first, m_Scene.get() };
