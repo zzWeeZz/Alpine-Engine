@@ -152,11 +152,11 @@
     <ProjectReference Include="..\ToolBox\ToolBox.vcxproj">
       <Project>{EC2ADD50-580A-5CEC-6122-E7C2CD80C24D}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\Alpine\Alpine.vcxproj">
-      <Project>{BEE35FA7-AA85-8A7D-9340-9ED17F8111CE}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\Imgui\ImGui.vcxproj">
       <Project>{C0FF640D-2C14-8DBE-F595-301E616989EF}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Alpine\Alpine.vcxproj">
+      <Project>{BEE35FA7-AA85-8A7D-9340-9ED17F8111CE}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

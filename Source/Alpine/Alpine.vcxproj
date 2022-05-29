@@ -171,8 +171,10 @@
     <ClInclude Include="src\Alpine\Scene\DefaultComponents.h" />
     <ClInclude Include="src\Alpine\Scene\Entity.h" />
     <ClInclude Include="src\Alpine\Scene\Scene.h" />
+    <ClInclude Include="src\Alpine\Scene\SceneSerializer.h" />
     <ClInclude Include="src\Alpine\Scene\ScriptableEntity.h" />
     <ClInclude Include="src\Alpine\Snowflake\Snowflake.hpp" />
+    <ClInclude Include="src\Alpine\Utils\PlatformUtils.h" />
     <ClInclude Include="src\Application\Application.h" />
     <ClInclude Include="src\Application\Window\GlfwWindow.h" />
     <ClInclude Include="src\Application\Window\IWindow.h" />
@@ -205,6 +207,8 @@
     <ClCompile Include="src\Alpine\RenderSystem\ShaderClasses\VertexShader.cpp" />
     <ClCompile Include="src\Alpine\Scene\Entity.cpp" />
     <ClCompile Include="src\Alpine\Scene\Scene.cpp" />
+    <ClCompile Include="src\Alpine\Scene\SceneSerializer.cpp" />
+    <ClCompile Include="src\Alpine\Utils\PlatformUtils.cpp" />
     <ClCompile Include="src\Application\Application.cpp" />
     <ClCompile Include="src\Application\Window\GlfwWindow.cpp" />
     <ClCompile Include="src\ImGuizmo.cpp" />

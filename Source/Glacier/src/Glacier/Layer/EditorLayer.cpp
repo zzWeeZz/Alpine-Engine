@@ -1,8 +1,10 @@
 #include "EditorLayer.h"
 
 #include "ImGuizmo.h"
+#include "Alpine/Scene/SceneSerializer.h"
 #include "ToolBox/Utility/Chrono.h"
 #include "Glacier/Utilities/Utilities.h"
+#include "Alpine/Utils/PlatformUtils.h"
 
 void Alpine::EditorLayer::OnAttach()
 {
@@ -94,19 +96,35 @@ void Alpine::EditorLayer::RenderImGui()
 			// Disabling fullscreen would allow the window to be moved to the front of other windows,
 			// which we can't undo at the moment without finer window depth/z control.
 			
-
-			if (ImGui::MenuItem("Save", "clr + s"))
+			if (ImGui::MenuItem("New", "Ctrl+N"))
 			{
-				std::string path = "Scenes/";
-				std::string name = "Scene";
-				std::string extension = ".frost";
-				std::string fullPath = path + name + extension;
-				m_ActiveScene->Serialize(fullPath);
+				m_ActiveScene = CreateRef<Scene>();
+				m_SceneHierarchyPanel->SetContext(m_ActiveScene);
 			}
-			if (ImGui::MenuItem("Load", "", (dockspace_flags & ImGuiDockNodeFlags_NoResize) != 0)) { dockspace_flags ^= ImGuiDockNodeFlags_NoResize; }
-			if (ImGui::MenuItem("Flag: NoDockingInCentralNode", "", (dockspace_flags & ImGuiDockNodeFlags_NoDockingInCentralNode) != 0)) { dockspace_flags ^= ImGuiDockNodeFlags_NoDockingInCentralNode; }
-			if (ImGui::MenuItem("Flag: AutoHideTabBar", "", (dockspace_flags & ImGuiDockNodeFlags_AutoHideTabBar) != 0)) { dockspace_flags ^= ImGuiDockNodeFlags_AutoHideTabBar; }
-			if (ImGui::MenuItem("Flag: PassthruCentralNode", "", (dockspace_flags & ImGuiDockNodeFlags_PassthruCentralNode) != 0, opt_fullscreen)) { dockspace_flags ^= ImGuiDockNodeFlags_PassthruCentralNode; }
+		
+			if (ImGui::MenuItem("Open...", "Ctrl+O"))
+			{
+				std::string path = FileDialogs::OpenFile("Alpine Scene (*.frost)\0*.frost\0");
+				if (!path.empty())
+				{
+					m_ActiveScene = CreateRef<Scene>();
+					m_SceneHierarchyPanel->SetContext(m_ActiveScene);
+					SceneSerializer serializer(m_ActiveScene);
+					serializer.Deserialize(path);
+				}
+			}
+
+			if (ImGui::MenuItem("Save As...", "Ctrl+Shift+S"))
+			{
+				std::string path = FileDialogs::SaveFile("Alpine Scene (*.frost)\0*.frost\0");
+				if (!path.empty())
+				{
+					SceneSerializer serializer(m_ActiveScene);
+					serializer.Serialize(path);
+				}
+
+			}
+
 			ImGui::Separator();
 
 			if (ImGui::MenuItem("Close", NULL, false))

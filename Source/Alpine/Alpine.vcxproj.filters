@@ -165,6 +165,9 @@
     <ClInclude Include="src\Alpine\Scene\Scene.h">
       <Filter>Alpine\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="src\Alpine\Scene\SceneSerializer.h">
+      <Filter>Alpine\Scene</Filter>
+    </ClInclude>
     <ClInclude Include="src\Alpine\Scene\ScriptableEntity.h">
       <Filter>Alpine\Scene</Filter>
     </ClInclude>
@@ -182,6 +185,7 @@
     </ClInclude>
     <ClInclude Include="src\ImGuizmo.h" />
     <ClInclude Include="src\stb_image.h" />
+    <ClInclude Include="src\Alpine\Utils\PlatformUtils.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Alpine\Assets\Camera\EditorCamera.cpp">
@@ -259,6 +263,9 @@
     <ClCompile Include="src\Alpine\Scene\Scene.cpp">
       <Filter>Alpine\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="src\Alpine\Scene\SceneSerializer.cpp">
+      <Filter>Alpine\Scene</Filter>
+    </ClCompile>
     <ClCompile Include="src\Application\Application.cpp">
       <Filter>Application</Filter>
     </ClCompile>
@@ -266,6 +273,7 @@
       <Filter>Application\Window</Filter>
     </ClCompile>
     <ClCompile Include="src\ImGuizmo.cpp" />
+    <ClCompile Include="src\Alpine\Utils\PlatformUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="src\Alpine\Shaders\Equirect2Cube_cs.hlsl">

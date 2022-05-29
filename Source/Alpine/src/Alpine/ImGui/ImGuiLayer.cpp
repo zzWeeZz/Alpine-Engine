@@ -19,10 +19,10 @@ void Alpine::ImGuiLayer::OnAttach()
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 	io.ConfigWindowsMoveFromTitleBarOnly = true;
-	io.Fonts->AddFontFromFileTTF(("Fonts/Chakra_Petch/ChakraPetch-Bold.ttf"), 12 * 2);
-	io.Fonts->AddFontFromFileTTF(("Fonts/Chakra_Petch/ChakraPetch-Bold.ttf"), 10 * 2);
-	io.Fonts->AddFontFromFileTTF(("Fonts/Chakra_Petch/ChakraPetch-Bold.ttf"), 14 * 2);
-	io.Fonts->AddFontFromFileTTF(("Fonts/Chakra_Petch/ChakraPetch-Bold.ttf"), 18 * 2);
+	io.Fonts->AddFontFromFileTTF(("Fonts/Chakra_Petch/ChakraPetch-Bold.ttf"), 12 * 2.2);
+	io.Fonts->AddFontFromFileTTF(("Fonts/Chakra_Petch/ChakraPetch-Bold.ttf"), 10 * 2.2);
+	io.Fonts->AddFontFromFileTTF(("Fonts/Chakra_Petch/ChakraPetch-Bold.ttf"), 14 * 2.2);
+	io.Fonts->AddFontFromFileTTF(("Fonts/Chakra_Petch/ChakraPetch-Bold.ttf"), 18 * 2.2);
 	io.FontGlobalScale = 0.7f;
 	ImGui::StyleColorsDark();
 	ImGuiStyle* style = &ImGui::GetStyle();

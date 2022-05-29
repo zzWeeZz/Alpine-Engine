@@ -11,6 +11,7 @@ Alpine::SceneHierarchyPanel::SceneHierarchyPanel(const Ref<Scene>& context)
 void Alpine::SceneHierarchyPanel::SetContext(const Ref<Scene>& context)
 {
 	m_Context = context;
+	m_SelectedEntity = {};
 }
 
 void Alpine::SceneHierarchyPanel::OnImGuiRender()

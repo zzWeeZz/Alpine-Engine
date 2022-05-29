@@ -3,6 +3,10 @@
 #include "Scene.h"
 #include "Alpine/DX11/Utilities.h"
 #include "Alpine/Snowflake/Snowflake.hpp"
+namespace YAML
+{
+	class Emitter;
+}
 
 namespace Alpine
 {

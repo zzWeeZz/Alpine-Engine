@@ -151,11 +151,11 @@
     <ProjectReference Include="..\ToolBox\ToolBox.vcxproj">
       <Project>{EC2ADD50-580A-5CEC-6122-E7C2CD80C24D}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\Imgui\ImGui.vcxproj">
-      <Project>{C0FF640D-2C14-8DBE-F595-301E616989EF}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\Glacier\Glacier.vcxproj">
       <Project>{5CF92660-C8D8-A5FB-D1F0-30D23D4F0C5D}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Imgui\ImGui.vcxproj">
+      <Project>{C0FF640D-2C14-8DBE-F595-301E616989EF}</Project>
     </ProjectReference>
     <ProjectReference Include="..\YAML\yaml-cpp.vcxproj">
       <Project>{88F1A057-74BE-FB62-9DD7-E90A890331F1}</Project>

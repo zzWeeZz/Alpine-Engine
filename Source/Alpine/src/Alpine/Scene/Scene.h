@@ -1,4 +1,5 @@
 #pragma once
+#include <filesystem>
 #include <map>
 #include "Alpine/Snowflake/Snowflake.hpp"
 
@@ -6,19 +7,19 @@ namespace Alpine
 {
 	class Entity;
 
+
+
 	class Scene
 	{
 		friend class Entity;
 		friend class SceneHierarchyPanel;
+		friend class SceneSerializer;
 	public:
 		Scene();
 
 		void Start();
 		void OnUpdate();
 		void OnRender();
-
-		void Serialize(const std::string& location);
-		void Deserialize(const std::string& location);
 
 		Entity CreateEntity();
 		void DestroyEntity(Entity entity);

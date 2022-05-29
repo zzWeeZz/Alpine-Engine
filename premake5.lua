@@ -53,8 +53,8 @@ project "Launcher"
         "assimp-vc142-mt.lib",
 
         "ToolBox",
-        "ImGui",
         "Glacier",
+        "ImGui",
         "yaml-cpp",
     }
 
@@ -64,17 +64,29 @@ project "Launcher"
 		defines {"DEBUG"}
 		runtime "Debug"
 		symbols "on"
+		links
+		{
+			"freetyped.lib"
+        }
 		
 	filter "configurations:Release"
 		defines "RELEASE"
 		runtime "Release"
 		optimize "on"
+        links
+		{
+			"freetype.lib"
+        }
 
 
 	filter "configurations:Export"
 		defines "EXPORT"
 		runtime "Release"
 		optimize "on"
+        links
+		{
+			"freetype.lib"
+        }
 
 	systemversion "latest"
 	
@@ -225,8 +237,8 @@ project "Glacier"
     links
     {
         "ToolBox",
+        "ImGui",
         "Alpine",
-        "imGui",
     }
 
     defines {"_CONSOLE"}
@@ -328,6 +340,68 @@ project "ToolBox"
 
 
 
+
+		
+project "ImGui"
+    location "Source/imgui"
+    kind "Staticlib"
+    language "C++"
+    cppdialect "C++20"
+
+    targetdir ("Dependencies/lib/")
+    objdir ("Intermediates/%{cfg.architecture}")
+
+    files
+    {
+        "Source/imgui/**.h",
+        "Source/imgui/**.cpp",
+        "Source/imgui/**.hpp",
+    }
+
+    includedirs
+    {
+        "Dependencies/include/",
+    }
+
+    defines {"_CONSOLE"}
+	
+	filter "configurations:Debug"
+		defines {"DEBUG"}
+		runtime "Debug"
+		symbols "on"
+		
+	filter "configurations:Release"
+		defines "RELEASE"
+		runtime "Release"
+		optimize "on"
+
+
+	filter "configurations:Export"
+		defines "EXPORT"
+		runtime "Release"
+		optimize "on"
+
+	systemversion "latest"
+	
+	filter "system:windows"
+		symbols "On"		
+		systemversion "latest"
+
+		flags 
+        { 
+			"MultiProcessorCompile"
+		}
+		defines 
+        {
+			"WIN32",
+			"_LIB",
+            "NOMINMAX",
+		}
+		
+		
+		
+		
+		
 project "yaml-cpp"
     kind "StaticLib"
     language "C++"
