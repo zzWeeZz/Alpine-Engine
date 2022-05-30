@@ -1,0 +1,33 @@
+Scene: Name
+Entities:
+  - Entity: 9u12512512956125
+    TagComponent:
+      Tag: point light
+    TransformComponent:
+      Position: [-1.062637, 87.97906, -2.631042]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    PointLightComponent:
+      Color: [1, 1, 1]
+      Intensity: 1000
+      Range: 87
+      Falloff: 1
+  - Entity: 9u12512512956125
+    TagComponent:
+      Tag: Direction light
+    TransformComponent:
+      Position: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    DirectionalLightComponent:
+      Color: [1, 1, 1]
+      Intensity: 1
+  - Entity: 9u12512512956125
+    TagComponent:
+      Tag: SM_Particle_Chest.fbx
+    TransformComponent:
+      Position: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    MeshComponent:
+      Mesh: C:\Users\niklas.jakobsen\Documents\GitHub\Alpine-Engine\Export\Model\SM_Particle_Chest.fbx

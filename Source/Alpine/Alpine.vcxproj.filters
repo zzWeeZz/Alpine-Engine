@@ -52,6 +52,9 @@
     <Filter Include="Alpine\Snowflake">
       <UniqueIdentifier>{F7CBC15D-E3C4-E0AF-0CF7-C534F84EC0BB}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Alpine\Utils">
+      <UniqueIdentifier>{9E3B1DEC-8A9E-AC90-3324-E5461F667813}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Application">
       <UniqueIdentifier>{D9DE78AF-4594-F1A4-CE88-EB7B3A3DE8A8}</UniqueIdentifier>
     </Filter>
@@ -174,6 +177,9 @@
     <ClInclude Include="src\Alpine\Snowflake\Snowflake.hpp">
       <Filter>Alpine\Snowflake</Filter>
     </ClInclude>
+    <ClInclude Include="src\Alpine\Utils\PlatformUtils.h">
+      <Filter>Alpine\Utils</Filter>
+    </ClInclude>
     <ClInclude Include="src\Application\Application.h">
       <Filter>Application</Filter>
     </ClInclude>
@@ -185,7 +191,6 @@
     </ClInclude>
     <ClInclude Include="src\ImGuizmo.h" />
     <ClInclude Include="src\stb_image.h" />
-    <ClInclude Include="src\Alpine\Utils\PlatformUtils.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Alpine\Assets\Camera\EditorCamera.cpp">
@@ -266,6 +271,9 @@
     <ClCompile Include="src\Alpine\Scene\SceneSerializer.cpp">
       <Filter>Alpine\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="src\Alpine\Utils\PlatformUtils.cpp">
+      <Filter>Alpine\Utils</Filter>
+    </ClCompile>
     <ClCompile Include="src\Application\Application.cpp">
       <Filter>Application</Filter>
     </ClCompile>
@@ -273,7 +281,6 @@
       <Filter>Application\Window</Filter>
     </ClCompile>
     <ClCompile Include="src\ImGuizmo.cpp" />
-    <ClCompile Include="src\Alpine\Utils\PlatformUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="src\Alpine\Shaders\Equirect2Cube_cs.hlsl">

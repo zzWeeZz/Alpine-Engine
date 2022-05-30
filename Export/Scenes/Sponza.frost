@@ -2,10 +2,32 @@ Scene: Name
 Entities:
   - Entity: 9u12512512956125
     TagComponent:
+      Tag: point light
+    TransformComponent:
+      Position: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    PointLightComponent:
+      Color: [1, 1, 1]
+      Intensity: 1
+      Range: 10
+      Falloff: 1
+  - Entity: 9u12512512956125
+    TagComponent:
+      Tag: Direction light
+    TransformComponent:
+      Position: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    DirectionalLightComponent:
+      Color: [1, 1, 1]
+      Intensity: 1
+  - Entity: 9u12512512956125
+    TagComponent:
       Tag: sponzaForTGE.fbx
     TransformComponent:
       Position: [0, 0, 0]
       Rotation: [0, 0, 0]
       Scale: [20, 20, 20]
     MeshComponent:
-      Mesh: C:\Users\zzWee\source\repos\Z-Engine\Export\Model\Sponza\sponzaForTGE.fbx
+      Mesh: C:\Users\niklas.jakobsen\Documents\GitHub\Alpine-Engine\Export\Model\Sponza\sponzaForTGE.fbx
