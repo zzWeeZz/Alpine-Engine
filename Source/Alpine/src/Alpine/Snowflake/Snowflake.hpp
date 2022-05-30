@@ -148,6 +148,15 @@ namespace Snowflake
 			return (HasComponent<TComponents>(entity) && ...);
 		}
 
+		template<class TFunc>
+		void ForEach(TFunc&& func)
+		{
+			for (auto entity : m_Entities)
+			{
+				func(entity);
+			}
+		}
+
 		template<class ...TComponents, class TFunction>
 		void Execute(TFunction&& func)
 		{

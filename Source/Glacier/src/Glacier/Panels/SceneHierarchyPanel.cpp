@@ -18,12 +18,12 @@ void Alpine::SceneHierarchyPanel::OnImGuiRender()
 {
 	ImGui::Begin("Hierarchy");
 
-	for (auto it = m_Context->m_SceneEntities.begin(); it != m_Context->m_SceneEntities.end(); it++)
-	{
-		Entity entity = { it->first, m_Context.get() };
-		DrawEntityNode(entity);
-	}
+	m_Context->m_Manager.ForEach([&](Snowflake::Entity ent)
+		{
+			Entity entity = { ent, m_Context.get() };
+			DrawEntityNode(entity);
 
+		});
 	if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
 	{
 		m_SelectedEntity = {};
@@ -31,7 +31,7 @@ void Alpine::SceneHierarchyPanel::OnImGuiRender()
 	bool destroy = false;
 	if (ImGui::BeginPopupContextWindow("one", ImGuiPopupFlags_MouseButtonRight | ImGuiPopupFlags_NoOpenOverItems))
 	{
-		if(ImGui::MenuItem("Create Empty Entity"))
+		if (ImGui::MenuItem("Create Empty Entity"))
 		{
 			m_Context->CreateEntity();
 		}
@@ -39,7 +39,7 @@ void Alpine::SceneHierarchyPanel::OnImGuiRender()
 	}
 
 	ImGui::End();
-	if(m_SelectedEntity()) DrawImGizmo(m_SelectedEntity);
+	if (m_SelectedEntity()) DrawImGizmo(m_SelectedEntity);
 
 	ImGui::Begin("Properties");
 	if (m_SelectedEntity())
@@ -60,7 +60,7 @@ void Alpine::SceneHierarchyPanel::DrawEntityNode(Entity entity)
 	}
 
 	bool deleted = false;
-	if (ImGui::BeginPopupContextWindow("two", ImGuiPopupFlags_MouseButtonRight))
+	if (ImGui::BeginPopupContextWindow(std::to_string(entity.GetId()).c_str(), ImGuiPopupFlags_MouseButtonRight))
 	{
 		if (ImGui::MenuItem("destroy Entity"))
 		{
@@ -75,7 +75,7 @@ void Alpine::SceneHierarchyPanel::DrawEntityNode(Entity entity)
 	if (deleted)
 	{
 		m_Context->DestroyEntity(m_SelectedEntity);
-		if(m_SelectedEntity == entity)
+		if (m_SelectedEntity == entity)
 		{
 			m_SelectedEntity = {};
 		}
@@ -95,10 +95,30 @@ void Alpine::SceneHierarchyPanel::DrawComponents(Entity entity)
 			tag.Tag = buffer;
 		}
 	}
+
+
+	const ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap;
+
 	if (entity.HasComponent<TransformComponent>())
 	{
 		auto& tf = entity.GetComponent<TransformComponent>();
-		if (ImGui::TreeNodeEx((void*)typeid(TransformComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Transform Component"))
+		bool open = ImGui::TreeNodeEx((void*)typeid(TransformComponent).hash_code(), flags, "Transform Component");
+		ImGui::SameLine();
+		if(ImGui::Button("..."))
+		{
+			ImGui::OpenPopup("ComponentSettings");
+		}
+
+		bool removeComponent = false;
+		if (ImGui::BeginPopup("ComponentSettings"))
+		{
+			if (ImGui::MenuItem("Remove Component"))
+			{
+				removeComponent = true;
+			}
+			ImGui::EndPopup();
+		}
+		if (open)
 		{
 			float imPos[3] = { 0 };
 			memcpy(imPos, &tf.position, sizeof(Vector3));
@@ -120,15 +140,19 @@ void Alpine::SceneHierarchyPanel::DrawComponents(Entity entity)
 			}
 			ImGui::TreePop();
 		}
+		if (removeComponent)
+		{
+			entity.RemoveComponent<TransformComponent>();
+		}
 	}
 	if (entity.HasComponent<PointLightComponent>())
 	{
 		auto& plc = entity.GetComponent<PointLightComponent>();
-		if (ImGui::TreeNodeEx((void*)typeid(PointLightComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Pointlight Component"))
+		if (ImGui::TreeNodeEx((void*)typeid(PointLightComponent).hash_code(), flags, "Pointlight Component"))
 		{
 			float col[3] = { 0 };
 			memcpy(col, &plc.Color, sizeof(Vector3));
-			if(ImGui::ColorEdit3("Color", col))
+			if (ImGui::ColorEdit3("Color", col))
 			{
 				memcpy(&plc.Color, col, sizeof(Vector3));
 			}
@@ -152,7 +176,7 @@ void Alpine::SceneHierarchyPanel::DrawComponents(Entity entity)
 	if (entity.HasComponent<DirectionalLightComponent>())
 	{
 		auto& plc = entity.GetComponent<DirectionalLightComponent>();
-		if (ImGui::TreeNodeEx((void*)typeid(DirectionalLightComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Directionlight Component"))
+		if (ImGui::TreeNodeEx((void*)typeid(DirectionalLightComponent).hash_code(), flags, "Directionlight Component"))
 		{
 			float col[3] = { 0 };
 			memcpy(col, &plc.Color, sizeof(Vector3));
@@ -172,6 +196,6 @@ void Alpine::SceneHierarchyPanel::DrawComponents(Entity entity)
 
 void Alpine::SceneHierarchyPanel::DrawImGizmo(Entity entity)
 {
-	
-	
+
+
 }
