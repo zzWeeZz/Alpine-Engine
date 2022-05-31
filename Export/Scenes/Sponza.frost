@@ -4,23 +4,23 @@ Entities:
     TagComponent:
       Tag: point light
     TransformComponent:
-      Position: [0, 0, 0]
+      Position: [220.1505, 34.928, -90.01315]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
     PointLightComponent:
-      Color: [1, 1, 1]
-      Intensity: 1
-      Range: 10
+      Color: [0.3292041, 0, 1]
+      Intensity: 1000
+      Range: 150
       Falloff: 1
   - Entity: 9u12512512956125
     TagComponent:
       Tag: Direction light
     TransformComponent:
-      Position: [0, 0, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
+      Position: [-1.63991, 25.07214, -1.55993]
+      Rotation: [0.1806126, 3.003761, 3.067889]
+      Scale: [0.9999914, 0.999982, 0.9999764]
     DirectionalLightComponent:
-      Color: [1, 1, 1]
+      Color: [1, 0.05930418, 0]
       Intensity: 1
   - Entity: 9u12512512956125
     TagComponent:
@@ -30,4 +30,40 @@ Entities:
       Rotation: [0, 0, 0]
       Scale: [20, 20, 20]
     MeshComponent:
-      Mesh: C:\Users\niklas.jakobsen\Documents\GitHub\Alpine-Engine\Export\Model\Sponza\sponzaForTGE.fbx
+      Mesh: Model\Sponza\sponzaForTGE.fbx
+  - Entity: 9u12512512956125
+    TagComponent:
+      Tag: PointLight 2
+    TransformComponent:
+      Position: [225.7768, 31.30295, 80.77139]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    PointLightComponent:
+      Color: [1, 0.7709541, 0]
+      Intensity: 1000
+      Range: 150
+      Falloff: 0.5
+  - Entity: 9u12512512956125
+    TagComponent:
+      Tag: Pointlight 3
+    TransformComponent:
+      Position: [237.9844, 14.81876, -6.505002]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    PointLightComponent:
+      Color: [0, 0.1847656, 1]
+      Intensity: 1000
+      Range: 70.2
+      Falloff: 0.5
+  - Entity: 9u12512512956125
+    TagComponent:
+      Tag: Lantern
+    TransformComponent:
+      Position: [96.85244, 27.69503, 27.56985]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    PointLightComponent:
+      Color: [1, 0, 0]
+      Intensity: 500
+      Range: 54.6
+      Falloff: 0.5

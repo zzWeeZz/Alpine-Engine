@@ -84,27 +84,48 @@ void Alpine::SceneHierarchyPanel::DrawEntityNode(Entity entity)
 
 void Alpine::SceneHierarchyPanel::DrawComponents(Entity entity)
 {
+	const ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap;
 	if (entity.HasComponent<TagComponent>())
 	{
 		auto& tag = entity.GetComponent<TagComponent>();
 		char buffer[256];
 		memset(buffer, 0, sizeof(buffer));
 		strcpy(buffer, tag.Tag.c_str());
-		if (ImGui::InputText("Tag", buffer, sizeof(buffer)))
+		bool isEntering = ImGui::InputText("Tag", buffer, sizeof(buffer));
+		ImGui::SameLine();
+		if (ImGui::Button("Add Component"))
+		{
+			ImGui::OpenPopup("AddComponent");
+		}
+		if (ImGui::BeginPopup("AddComponent"))
+		{
+
+			if (ImGui::Button("MeshComponent"))
+			{
+				entity.AddComponent<MeshComponent>();
+			}
+			if (ImGui::Button("PointLightComponent"))
+			{
+				entity.AddComponent<PointLightComponent>();
+			}
+			if (ImGui::Button("DirectionalLightComponent"))
+			{
+				entity.AddComponent<DirectionalLightComponent>();
+			}
+			ImGui::EndPopup();
+		}
+
+		if (isEntering)
 		{
 			tag.Tag = buffer;
 		}
 	}
-
-
-	const ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap;
-
 	if (entity.HasComponent<TransformComponent>())
 	{
 		auto& tf = entity.GetComponent<TransformComponent>();
 		bool open = ImGui::TreeNodeEx((void*)typeid(TransformComponent).hash_code(), flags, "Transform Component");
 		ImGui::SameLine();
-		if(ImGui::Button("..."))
+		if (ImGui::Button("..."))
 		{
 			ImGui::OpenPopup("ComponentSettings");
 		}
@@ -148,7 +169,23 @@ void Alpine::SceneHierarchyPanel::DrawComponents(Entity entity)
 	if (entity.HasComponent<PointLightComponent>())
 	{
 		auto& plc = entity.GetComponent<PointLightComponent>();
-		if (ImGui::TreeNodeEx((void*)typeid(PointLightComponent).hash_code(), flags, "Pointlight Component"))
+		bool isOpened = ImGui::TreeNodeEx((void*)typeid(PointLightComponent).hash_code(), flags, "Pointlight Component");
+		ImGui::SameLine();
+		if (ImGui::Button("..."))
+		{
+			ImGui::OpenPopup("ComponentSettings");
+		}
+
+		bool removeComponent = false;
+		if (ImGui::BeginPopup("ComponentSettings"))
+		{
+			if (ImGui::MenuItem("Remove Component"))
+			{
+				removeComponent = true;
+			}
+			ImGui::EndPopup();
+		}
+		if (isOpened)
 		{
 			float col[3] = { 0 };
 			memcpy(col, &plc.Color, sizeof(Vector3));
@@ -171,6 +208,10 @@ void Alpine::SceneHierarchyPanel::DrawComponents(Entity entity)
 				plc.Falloff = std::max(0.0f, plc.Falloff);
 			}
 			ImGui::TreePop();
+		}
+		if (removeComponent)
+		{
+			entity.RemoveComponent<PointLightComponent>();
 		}
 	}
 	if (entity.HasComponent<DirectionalLightComponent>())

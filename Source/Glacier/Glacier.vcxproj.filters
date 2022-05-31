@@ -30,9 +30,6 @@
     <ClInclude Include="src\Glacier\Utilities\Utilities.h">
       <Filter>Glacier\Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="src\Playground\Playground.h">
-      <Filter>Playground</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Glacier\Layer\EditorLayer.cpp">
@@ -43,9 +40,6 @@
     </ClCompile>
     <ClCompile Include="src\Glacier\Panels\ViewportPanel.cpp">
       <Filter>Glacier\Panels</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Playground\Playground.cpp">
-      <Filter>Playground</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

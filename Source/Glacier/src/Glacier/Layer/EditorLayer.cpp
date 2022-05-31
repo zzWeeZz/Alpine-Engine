@@ -10,20 +10,6 @@ void Alpine::EditorLayer::OnAttach()
 {
 	m_ImGuiLayer.OnAttach();
 	m_ActiveScene = std::make_shared<Scene>();
-	
-	{
-		auto entity = m_ActiveScene->CreateEntity();
-		entity.AddComponent<PointLightComponent>();
-		entity.GetComponent<TagComponent>().Tag = "point light";
-		entity.GetComponent<TransformComponent>();
-	}
-	{
-		auto entity = m_ActiveScene->CreateEntity();
-		entity.AddComponent<DirectionalLightComponent>();
-		entity.GetComponent<TagComponent>().Tag = "Direction light";
-		entity.GetComponent<TransformComponent>();
-	}
-
 	m_ActiveScene->Start();
 	m_SceneHierarchyPanel = std::make_shared<SceneHierarchyPanel>(m_ActiveScene);
 	m_ViewportPanel = CreateRef<ViewportPanel>();
@@ -154,6 +140,13 @@ void Alpine::EditorLayer::ProccessPath(const std::filesystem::path& path)
 			entity.AddComponent<MeshComponent>().MeshPath = path;
 			entity.GetComponent<TagComponent>().Tag = path.filename().string();
 		}
+	}
+	else if(Glacier::GetFileType(path) == Glacier::Scene)
+	{
+		m_ActiveScene = CreateRef<Scene>();
+		m_SceneHierarchyPanel->SetContext(m_ActiveScene);
+		SceneSerializer serializer(m_ActiveScene);
+		serializer.Deserialize(path.string());
 	}
 }
 

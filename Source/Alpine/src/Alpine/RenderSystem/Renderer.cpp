@@ -75,6 +75,7 @@ namespace Alpine
 		return true;
 	}
 
+
 	void Renderer::SubmitDirLight(DirectionalLight& light)
 	{
 		if (s_Instance.m_DirLightCount == 4)
@@ -119,6 +120,9 @@ namespace Alpine
 		s_Instance.m_Skybox->BindForSky();
 		s_Instance.m_Skybox->Draw();
 		s_Instance.m_FrameBuffer->UnBind();
+		ShaderLibrary::Bind("PBR");
+
+		
 	}
 
 	void Renderer::LogDrawCall()

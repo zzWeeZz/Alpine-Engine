@@ -15,7 +15,7 @@ namespace Glacier
 		auto fileEnding = fileName.extension().string();
 		if(fileEnding == ".fbx") [[likely]]
 			return FBX;
-		else if(fileEnding == ".scene") [[unlikely]]
+		else if(fileEnding == ".frost") [[unlikely]]
 			return Scene;
 		else [[likely]]
 			return Unknown;

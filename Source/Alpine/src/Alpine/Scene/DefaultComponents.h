@@ -43,9 +43,9 @@ struct CameraComponent
 struct PointLightComponent
 {
 	Vector3 Color = {1,1,1};
-	float Range = 10.0f;
-	float Falloff = 1.0f;
-	float Intensity = 1.0f;
+	float Range = 50.0f;
+	float Falloff = 0.5f;
+	float Intensity = 1000.0f;
 	Alpine::Ref<Alpine::PointLight> light;
 };
 

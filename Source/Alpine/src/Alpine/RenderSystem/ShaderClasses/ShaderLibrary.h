@@ -14,5 +14,6 @@ public:
 	static void Bind(std::string key);
 private:
 	static std::unordered_map<std::string, std::vector<Ref<Shader>>> s_Library;
+	static std::string s_CurrentBoundKey;
 };
 }

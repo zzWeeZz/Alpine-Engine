@@ -92,7 +92,7 @@ float3 CalcDirectionalLight(float3 viewDirection, float3 normal, float3 albedo, 
     float3 specular = (dist * geoSmith * F0) / max(4.0 * NdotL * NdotV, Epsilon);
     float3 Diffuse = KD * albedo;
 
-    return ((Diffuse / PI + specular) * NdotL) * DirLightColor.rgb;
+    return ((Diffuse / PI + specular) * NdotL) * DirLightColor.rgb * 100;
 }
 
 float3 CalcPointLight(float3 viewDirection, float3 pos, float3 normal, float3 albedo, float roughness, float metallness, float3 fs)
