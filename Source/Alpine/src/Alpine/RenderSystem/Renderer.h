@@ -20,35 +20,16 @@ namespace Alpine
 {
 	class MeshCommand;
 	
-	struct Stash
+	struct Data
 	{
 		Ref<SceneCamera> camera;
 		Ref<EditorCamera> editorCamera;
-		std::vector<MeshCommand> meshes;
-
-		int drawCallCount = 0;
-	};
-
-	class Renderer
-	{
-	public:
-		Renderer();
-		static void Initalize();
-		static void SubmitCamera(Ref<SceneCamera> camera);
-		static void SubmitEditorCamera(Ref<EditorCamera> edCamera);
-		static bool SubmitMesh(MeshCommand& model);
-		static void SubmitDirLight(DirectionalLight& light);
-		static void AddPointLight(PointLight& light);
-		static void Begin();
-		static void LogDrawCall();
-		static float GetDrawCallCount();
-		static Ref<FrameBuffer> GetFrameBuffer();
-		static void DrawStash();
-		static void End();
-	private:
-		static Renderer s_Instance;
+		std::vector<Ref<Model>> meshes;
+		std::vector<Ref<Model>> QueuedModel;
 
 		Ref<SkyBox> m_Skybox;
+
+
 		Ref<VertexShader> m_PbrVertexShader;
 		Ref<PixelShader> m_PbrPixelShader;
 
@@ -61,13 +42,32 @@ namespace Alpine
 		CameraBuffer m_CameraBufferObject;
 		ConstantBuffer<CameraBuffer> m_CameraBuffer;
 
-		size_t m_DirLightCount = 0;
+		size_t m_DirLightCount;
 		DirLightBuffer m_DirLightBufferObject;
 		ConstantBuffer<DirLightBuffer> m_DirLightBuffer;
 
-		size_t m_PointLightCount = 0;
+		size_t m_PointLightCount;
 		PointLightBuffer m_PointLightBufferObject;
 		ConstantBuffer<PointLightBuffer> m_PointLightBuffer;
+
+		int drawCallCount = 0;
+	};
+
+	class Renderer
+	{
+	public:
+		static void Initalize();
+		static void SetActiveCamera(Ref<SceneCamera> camera);
+		static void SetEditorCamera(Ref<EditorCamera> edCamera);
+		static bool SubmitMesh(MeshCommand& model);
+		static void QueueDraw(Ref<Model> model);
+		static void SubmitDirLight(DirectionalLight& light);
+		static void AddPointLight(PointLight& light);
+		static void Begin();
+		static void LogDrawCall();
+		static int GetDrawCallCount();
+		static Ref<FrameBuffer> GetFrameBuffer();
+		static void Shutdown();
 	};
 }
 

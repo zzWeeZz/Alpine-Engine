@@ -10,6 +10,7 @@ namespace Alpine
 	class ConstantBuffer
 	{
 	public:
+		ConstantBuffer();
 		ConstantBuffer(uint32_t slot);
 		void Create();
 		void SetData(const T* data, uint32_t size);
@@ -56,8 +57,8 @@ namespace Alpine
 	{
 		if (!compute)
 		{
-			DX11::Context()->VSSetConstantBuffers(myBindSlot, 1, &m_Buffer);
-			DX11::Context()->PSSetConstantBuffers(myBindSlot, 1, &m_Buffer);
+			DX11::Context()->VSSetConstantBuffers(slot, 1, &m_Buffer);
+			DX11::Context()->PSSetConstantBuffers(slot, 1, &m_Buffer);
 		}
 		else
 		{

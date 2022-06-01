@@ -17,8 +17,7 @@ Alpine::Model::Model(std::string aPath)
 
 void Alpine::Model::Draw(CullMode cullmode, DepthStencilMode depthMode)
 {
-	MeshCommand command(Material::Create("afdadf"), m_Transform, m_Mesh, cullmode, depthMode);
-	Renderer::SubmitMesh(command);
+	m_Mesh.SubmitMesh();
 }
 
 Matrix& Alpine::Model::GetTransform()

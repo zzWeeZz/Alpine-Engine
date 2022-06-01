@@ -44,7 +44,7 @@ void Alpine::EditorLayer::Begin()
 void Alpine::EditorLayer::RenderImGui()
 {
 	m_ActiveScene->OnRender();
-	Renderer::SubmitEditorCamera(m_EditorCamera);
+	Renderer::SetEditorCamera(m_EditorCamera);
 	m_ImGuiLayer.Begin();
 	m_ImGuiLayer.RenderImGui();
 	static bool pOpen = true;

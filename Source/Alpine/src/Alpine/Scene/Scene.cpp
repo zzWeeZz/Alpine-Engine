@@ -75,11 +75,11 @@ void Alpine::Scene::OnRender()
 {
 	m_Manager.Execute<CameraComponent>([](Snowflake::Entity entity, CameraComponent& camera)
 		{
-			if (camera.camera) Renderer::SubmitCamera(camera.camera);
+			if (camera.camera) Renderer::SetActiveCamera(camera.camera);
 		});
 	m_Manager.Execute<MeshComponent>([](Snowflake::Entity entity, MeshComponent& mesh)
 		{
-			mesh.model->Draw();
+			Renderer::QueueDraw(mesh.model);
 		});
 	m_Manager.Execute<PointLightComponent>([](Snowflake::Entity entity, PointLightComponent& light)
 		{
