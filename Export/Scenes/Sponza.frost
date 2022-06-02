@@ -4,13 +4,13 @@ Entities:
     TagComponent:
       Tag: point light
     TransformComponent:
-      Position: [234.2128, 118.4319, 72.08996]
+      Position: [218.2502, 107.434, 72.13835]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
     PointLightComponent:
-      Color: [0.3094358, 0, 1]
+      Color: [0.9802319, 0.945656, 0.4925704]
       Intensity: 1000
-      Range: 43
+      Range: 41.5
       Falloff: 1
   - Entity: 9u12512512956125
     TagComponent:
@@ -30,7 +30,7 @@ Entities:
       Rotation: [0, 0, 0]
       Scale: [20, 20, 20]
     MeshComponent:
-      Mesh: C:\Users\niklas.jakobsen\Documents\GitHub\Alpine-Engine\Export\Model\Sponza\sponzaForTGE.fbx
+      Mesh: Model\Sponza\sponzaForTGE.fbx
   - Entity: 9u12512512956125
     TagComponent:
       Tag: gremlin_sk.fbx
@@ -39,7 +39,7 @@ Entities:
       Rotation: [0, -0.6262053, 0]
       Scale: [1, 1, 1]
     MeshComponent:
-      Mesh: C:\Users\niklas.jakobsen\Documents\GitHub\Alpine-Engine\Export\Model\gremlin_sk.fbx
+      Mesh: Model\gremlin_sk.fbx
   - Entity: 9u12512512956125
     TagComponent:
       Tag: SM_Particle_Chest.fbx
@@ -48,7 +48,7 @@ Entities:
       Rotation: [-2.458692e-07, -2.809231, -0.4073291]
       Scale: [0.08673042, 0.08672996, 0.08673048]
     MeshComponent:
-      Mesh: C:\Users\niklas.jakobsen\Documents\GitHub\Alpine-Engine\Export\Model\SM_Particle_Chest.fbx
+      Mesh: Model\SM_Particle_Chest.fbx
   - Entity: 9u12512512956125
     TagComponent:
       Tag: SM_Particle_Chest.fbx
@@ -57,7 +57,7 @@ Entities:
       Rotation: [-0.2979846, -0.4996623, 0.1324816]
       Scale: [0.06774418, 0.06774401, 0.06774423]
     MeshComponent:
-      Mesh: C:\Users\niklas.jakobsen\Documents\GitHub\Alpine-Engine\Export\Model\SM_Particle_Chest.fbx
+      Mesh: Model\SM_Particle_Chest.fbx
   - Entity: 9u12512512956125
     TagComponent:
       Tag: SM_Particle_Chest.fbx
@@ -66,4 +66,4 @@ Entities:
       Rotation: [0, -2.534276, 0]
       Scale: [0.2499879, 0.25, 0.2499879]
     MeshComponent:
-      Mesh: C:\Users\niklas.jakobsen\Documents\GitHub\Alpine-Engine\Export\Model\SM_Particle_Chest.fbx
+      Mesh: Model\SM_Particle_Chest.fbx

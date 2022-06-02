@@ -255,27 +255,26 @@ float4 main(VS_OUTPUT pin) : SV_Target
     float3 ambientLighting;
 	{
 		// Sample diffuse irradiance at normal direction.
-        float3 irradiance = irradianceTexture.SampleLevel(defaultSampler, N, 0).rgb;
+        float3 irradiance = irradianceTexture.Sample(defaultSampler, N).rgb;
 
 		// Calculate Fresnel term for ambient lighting.
-		//https://seblagarde.wordpress.com/2011/08/17/hello-world/
         float3 F = fresnelSchlick(F0, cosLo);
 		
 		// Get diffuse contribution factor (as with direct lighting).
-        float3 kd = lerp(1.0 - F, 0.0, metalness);
-
+        float3 kd = 1.0 - F;
+        kd *= 1.0 - metalness;
 		// Irradiance map contains exitant radiance assuming Lambertian BRDF, no need to scale by 1/PI here either.
         float3 diffuseIBL = kd * albedo * irradiance;
 
 		// Sample pre-filtered specular reflection environment at correct mipmap level.
         uint specularTextureLevels = querySpecularTextureLevels();
-        float3 specularIrradiance = specularTexture.SampleLevel(defaultSampler, Lr, roughness * specularTextureLevels).rgb;
+        float3 specularIrradiance = specularTexture.SampleLevel(defaultSampler, Lr, roughness * float(specularTextureLevels) * 4).rgb;
 
 		// Split-sum approximation factors for Cook-Torrance specular BRDF.
         float2 specularBRDF = specularBRDF_LUT.Sample(spBRDF_Sampler, float2(cosLo, roughness)).rg;
 
 		// Total specular IBL contribution.
-        float3 specularIBL = (F * specularBRDF.x + specularBRDF.y) * specularIrradiance;
+        float3 specularIBL = (F0 * specularBRDF.x + specularBRDF.y) * specularIrradiance;
 
 		// Total ambient lighting contribution.
         ambientLighting = diffuseIBL + specularIBL;

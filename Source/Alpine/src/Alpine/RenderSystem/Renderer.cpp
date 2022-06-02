@@ -13,7 +13,7 @@ namespace Alpine
 
 	void Renderer::Initalize()
 	{
-		s_Data->m_Skybox = SkyBox::Create("Textures/moonless_golf_4k.hdr");
+		s_Data->m_Skybox = SkyBox::Create("Textures/environment.hdr");
 		s_Data->m_ModelBuffer.Create();
 		s_Data->m_CameraBuffer.Create();
 		s_Data->m_DirLightBuffer.Create();

@@ -9,6 +9,7 @@ cbuffer SpecularMapFilterSettings : register(b0)
 {
 	// Roughness value to pre-filter for.
     float roughness;
+    float3 padd;
 };
 
 TextureCube inputTexture : register(t0);
