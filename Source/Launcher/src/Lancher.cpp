@@ -47,12 +47,10 @@ int main()
 		glfwPollEvents();
 		ToolBox::Chrono::UpdateTimeData();
 		editorLayer.Begin();
-		Alpine::Renderer::Begin();
 		Alpine::DX11::ClearView();
-		Alpine::Renderer::DrawStash();
 		Alpine::DX11::Bind();
 		editorLayer.RenderImGui();
-		Alpine::Renderer::End();
+		Alpine::Renderer::Begin();
 		Alpine::DX11::Present(true);
 		
 	}

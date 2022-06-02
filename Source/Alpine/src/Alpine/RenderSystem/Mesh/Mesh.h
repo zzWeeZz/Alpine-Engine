@@ -10,6 +10,8 @@ namespace Alpine
 {
 	class Mesh
 	{
+		friend class Model;
+
 	public:
 		void SetMesh(std::string aPath);
 		void SubmitMesh();

@@ -33,6 +33,7 @@
     <ClInclude Include="src\Playground\Playground.h">
       <Filter>Playground</Filter>
     </ClInclude>
+    <ClInclude Include="src\Glacier\Panels\PerformancePanel.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Glacier\Layer\EditorLayer.cpp">
@@ -47,5 +48,6 @@
     <ClCompile Include="src\Playground\Playground.cpp">
       <Filter>Playground</Filter>
     </ClCompile>
+    <ClCompile Include="src\Glacier\Panels\PerformancePanel.cpp" />
   </ItemGroup>
 </Project>

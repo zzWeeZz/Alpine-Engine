@@ -45,7 +45,7 @@ void Alpine::Material::Bind()
 	}
 	for (size_t i = 0; i < myTextures.size(); i++)
 	{
-		myTextures[i]->Bind(static_cast<int>(i));
+		if(myTextures[i]) myTextures[i]->Bind(static_cast<int>(i));
 	}
 }
 

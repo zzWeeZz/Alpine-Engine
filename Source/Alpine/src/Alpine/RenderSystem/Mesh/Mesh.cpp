@@ -31,7 +31,8 @@ void Alpine::Mesh::SetMesh(std::string aPath)
 		{
 			indices.push_back(indences[i]);
 		}
-		//m_SubMeshes.push_back(SubMesh(vertices, indices));
+		m_Materials.emplace_back(Material::Create("Default"));
+		m_SubMeshes.push_back(SubMesh(vertices, indices, m_Materials[0]));
 	}
 	else if (aPath == "Sphere")
 	{
@@ -52,7 +53,8 @@ void Alpine::Mesh::SetMesh(std::string aPath)
 		{
 			indices.push_back(indences[i]);
 		}
-		//m_SubMeshes.push_back(SubMesh(vertices, indices));
+		m_Materials.emplace_back(Material::Create("Default"));
+		m_SubMeshes.push_back(SubMesh(vertices, indices, m_Materials[0]));
 	}
 	else
 	{

@@ -24,7 +24,7 @@ namespace Alpine
 		void SetRotation(const Vector3& aRotation);
 		void Rotate(const Vector3& aRotation);
 		void SetScale(const Vector3& aScale);
-
+		std::vector<Ref<Material>>& GetMaterials() { return m_Materials; }
 		static Ref<Model> Create(std::string aPath);
 
 	private:
@@ -34,7 +34,7 @@ namespace Alpine
 		Vector3 m_Rotation;
 		Vector3 m_Size;
 
-
+		std::vector<Ref<Material>> m_Materials;
 		Mesh m_Mesh;
 		Matrix m_Transform;
 	};

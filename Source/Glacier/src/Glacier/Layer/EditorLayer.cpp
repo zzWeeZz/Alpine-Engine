@@ -132,7 +132,21 @@ void Alpine::EditorLayer::RenderImGui()
 			ImGui::EndMenu();
 		}
 
+		if(ImGui::BeginMenu("Tools"))
+		{
+			if(ImGui::MenuItem("Performace", NULL, false))
+			{
+				m_PerformancePanel = CreateRef<PerformancePanel>();
+			}
+
+			ImGui::EndMenu();
+		}
+
 		ImGui::EndMenuBar();
+	}
+	if(m_PerformancePanel)
+	{
+		m_PerformancePanel->OnRenderImGui();
 	}
 	m_SceneHierarchyPanel->OnImGuiRender();
 	m_ViewportPanel->OnImGuiRender(m_EditorCamera, m_SceneHierarchyPanel);

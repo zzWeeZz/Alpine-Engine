@@ -13,6 +13,7 @@ Alpine::Model::Model(std::string aPath)
 	m_Position = DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f);
 	m_Rotation = DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f);
 	m_Size = DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f);
+	m_Materials = m_Mesh.m_Materials;
 }
 
 void Alpine::Model::Draw(CullMode cullmode, DepthStencilMode depthMode)

@@ -1,6 +1,9 @@
 #pragma once
 #include <DirectXTK/SimpleMath.h>
 using namespace DirectX::SimpleMath;
+#define MAX_DIR_LIGHTS 4
+#define MAX_POINT_LIGHTS 8
+
 
 namespace Alpine
 {
@@ -14,8 +17,11 @@ namespace Alpine
 
 	struct DirLightBuffer
 	{
-		Vector4 lightDirection;
-		Vector4 lightColor;
+		struct DirLight
+		{
+			Vector4 lightDirection;
+			Vector4 lightColor;
+		} DirLightData[MAX_DIR_LIGHTS];
 	};
 
 	struct PointLightBuffer
@@ -27,7 +33,7 @@ namespace Alpine
 			float falloff;
 			float lightRange;
 			float padding[2];
-		} PointLightData[8];
+		} PointLightData[MAX_POINT_LIGHTS];
 	
 	};
 

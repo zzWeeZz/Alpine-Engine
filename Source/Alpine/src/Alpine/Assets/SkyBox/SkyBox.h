@@ -13,6 +13,7 @@ namespace Alpine
 {
 	class SkyBox
 	{
+		friend class Renderer;
 	public:
 		SkyBox(const std::filesystem::path& skyBoxTexturePath);
 

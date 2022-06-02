@@ -3,6 +3,7 @@
 #include "Alpine/Alpine.h"
 #include "Glacier/Panels/SceneHierarchyPanel.h"
 #include "Glacier/Panels/ViewportPanel.h"
+#include "Glacier/Panels/PerformancePanel.h"
 
 namespace Alpine
 {
@@ -17,6 +18,7 @@ namespace Alpine
 		void End();
 	private:
 		Ref<SceneHierarchyPanel> m_SceneHierarchyPanel;
+		Ref<PerformancePanel> m_PerformancePanel;
 		Ref<ViewportPanel> m_ViewportPanel;
 		Ref<EditorCamera> m_EditorCamera;
 		ImGuiLayer m_ImGuiLayer;

@@ -8,13 +8,13 @@ void Alpine::RenderStateManager::Initialize()
 	cmDesc.FillMode = D3D11_FILL_SOLID;
 	cmDesc.CullMode = D3D11_CULL_BACK;
 	cmDesc.FrontCounterClockwise = true;
-	DX11::Device()->CreateRasterizerState(&cmDesc, &m_RasterizerStates[CullMode::Back]);
+	DX11::Device()->CreateRasterizerState(&cmDesc, m_RasterizerStates[CullMode::Back].GetAddressOf());
 	cmDesc.CullMode = D3D11_CULL_FRONT;
-	DX11::Device()->CreateRasterizerState(&cmDesc, &m_RasterizerStates[CullMode::Front]);
+	DX11::Device()->CreateRasterizerState(&cmDesc, m_RasterizerStates[CullMode::Front].GetAddressOf());
 	cmDesc.CullMode = D3D11_CULL_NONE;
-	DX11::Device()->CreateRasterizerState(&cmDesc, &m_RasterizerStates[CullMode::None]);
+	DX11::Device()->CreateRasterizerState(&cmDesc, m_RasterizerStates[CullMode::None].GetAddressOf());
 	cmDesc.FillMode = D3D11_FILL_WIREFRAME;
-	DX11::Device()->CreateRasterizerState(&cmDesc, &m_RasterizerStates[CullMode::Wireframe]);
+	DX11::Device()->CreateRasterizerState(&cmDesc, m_RasterizerStates[CullMode::Wireframe].GetAddressOf());
 
 	// blend states
 	D3D11_BLEND_DESC blendDesc = {};
@@ -29,11 +29,11 @@ void Alpine::RenderStateManager::Initialize()
 	renderTargetBlendDesc.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 	blendDesc.AlphaToCoverageEnable = false;
 	blendDesc.RenderTarget[0] = renderTargetBlendDesc;
-	DX11::Device()->CreateBlendState(&blendDesc, &m_BlendStates[BlendMode::AlphaBlend]);
+	DX11::Device()->CreateBlendState(&blendDesc, m_BlendStates[BlendMode::AlphaBlend].GetAddressOf());
 
 	renderTargetBlendDesc.BlendEnable = false;
 	blendDesc.RenderTarget[0] = renderTargetBlendDesc;
-	DX11::Device()->CreateBlendState(&blendDesc, &m_BlendStates[BlendMode::Opaque]);
+	DX11::Device()->CreateBlendState(&blendDesc, m_BlendStates[BlendMode::Opaque].GetAddressOf());
 
 	// sampler states
 	D3D11_SAMPLER_DESC samplerDesc = {};
@@ -45,22 +45,22 @@ void Alpine::RenderStateManager::Initialize()
 	samplerDesc.MaxAnisotropy = D3D11_REQ_MAXANISOTROPY;
 	samplerDesc.MinLOD = 0;
 	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
-	DX11::Device()->CreateSamplerState(&samplerDesc, &m_SamplerStates[SamplerMode::Wrap]);
+	DX11::Device()->CreateSamplerState(&samplerDesc, m_SamplerStates[SamplerMode::Wrap].GetAddressOf());
 	samplerDesc.MaxAnisotropy = 1;
 	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
-	DX11::Device()->CreateSamplerState(&samplerDesc, &m_SamplerStates[SamplerMode::Point]);
+	DX11::Device()->CreateSamplerState(&samplerDesc, m_SamplerStates[SamplerMode::Point].GetAddressOf());
 
 	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
 	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
 	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
 	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
-	DX11::Device()->CreateSamplerState(&samplerDesc, &m_SamplerStates[SamplerMode::Clamp]);
+	DX11::Device()->CreateSamplerState(&samplerDesc, m_SamplerStates[SamplerMode::Clamp].GetAddressOf());
 
 	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
 	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_BORDER;
 	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_BORDER;
 	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_BORDER;
-	DX11::Device()->CreateSamplerState(&samplerDesc, &m_SamplerStates[SamplerMode::Border]);
+	DX11::Device()->CreateSamplerState(&samplerDesc, m_SamplerStates[SamplerMode::Border].GetAddressOf());
 
 	// depth stencil states
 	D3D11_DEPTH_STENCIL_DESC depthStencilDesc = {};
@@ -68,15 +68,15 @@ void Alpine::RenderStateManager::Initialize()
 	depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
 	depthStencilDesc.DepthFunc = D3D11_COMPARISON_LESS;
 	depthStencilDesc.StencilEnable = false;
-	DX11::Device()->CreateDepthStencilState(&depthStencilDesc, &m_DepthStencilStates[DepthStencilMode::ReadWrite]);
+	DX11::Device()->CreateDepthStencilState(&depthStencilDesc, m_DepthStencilStates[DepthStencilMode::ReadWrite].GetAddressOf());
 
 	depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
-	DX11::Device()->CreateDepthStencilState(&depthStencilDesc, &m_DepthStencilStates[DepthStencilMode::ReadOnly]);
+	DX11::Device()->CreateDepthStencilState(&depthStencilDesc, m_DepthStencilStates[DepthStencilMode::ReadOnly].GetAddressOf());
 
 	depthStencilDesc.DepthEnable = false;
 	depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
 	depthStencilDesc.DepthFunc = D3D11_COMPARISON_ALWAYS;
-	DX11::Device()->CreateDepthStencilState(&depthStencilDesc, &m_DepthStencilStates[DepthStencilMode::None]);
+	DX11::Device()->CreateDepthStencilState(&depthStencilDesc, m_DepthStencilStates[DepthStencilMode::None].GetAddressOf());
 }
 
 void Alpine::RenderStateManager::PushRasterizerState(CullMode cullMode)

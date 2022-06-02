@@ -10,7 +10,7 @@ namespace Alpine
 	class ConstantBuffer
 	{
 	public:
-		ConstantBuffer();
+		ConstantBuffer() = default;
 		ConstantBuffer(uint32_t slot);
 		void Create();
 		void SetData(const T* data, uint32_t size);

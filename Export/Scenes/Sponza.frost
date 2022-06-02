@@ -4,13 +4,13 @@ Entities:
     TagComponent:
       Tag: point light
     TransformComponent:
-      Position: [0, 0, 0]
+      Position: [234.2128, 118.4319, 72.08996]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
     PointLightComponent:
-      Color: [1, 1, 1]
-      Intensity: 1
-      Range: 10
+      Color: [0.3094358, 0, 1]
+      Intensity: 1000
+      Range: 43
       Falloff: 1
   - Entity: 9u12512512956125
     TagComponent:
@@ -31,3 +31,39 @@ Entities:
       Scale: [20, 20, 20]
     MeshComponent:
       Mesh: C:\Users\niklas.jakobsen\Documents\GitHub\Alpine-Engine\Export\Model\Sponza\sponzaForTGE.fbx
+  - Entity: 9u12512512956125
+    TagComponent:
+      Tag: gremlin_sk.fbx
+    TransformComponent:
+      Position: [-14.98102, 82.43402, -89.43553]
+      Rotation: [0, -0.6262053, 0]
+      Scale: [1, 1, 1]
+    MeshComponent:
+      Mesh: C:\Users\niklas.jakobsen\Documents\GitHub\Alpine-Engine\Export\Model\gremlin_sk.fbx
+  - Entity: 9u12512512956125
+    TagComponent:
+      Tag: SM_Particle_Chest.fbx
+    TransformComponent:
+      Position: [212.6978, 102.3031, 78.28179]
+      Rotation: [-2.458692e-07, -2.809231, -0.4073291]
+      Scale: [0.08673042, 0.08672996, 0.08673048]
+    MeshComponent:
+      Mesh: C:\Users\niklas.jakobsen\Documents\GitHub\Alpine-Engine\Export\Model\SM_Particle_Chest.fbx
+  - Entity: 9u12512512956125
+    TagComponent:
+      Tag: SM_Particle_Chest.fbx
+    TransformComponent:
+      Position: [222.3275, 101.5941, 67.07735]
+      Rotation: [-0.2979846, -0.4996623, 0.1324816]
+      Scale: [0.06774418, 0.06774401, 0.06774423]
+    MeshComponent:
+      Mesh: C:\Users\niklas.jakobsen\Documents\GitHub\Alpine-Engine\Export\Model\SM_Particle_Chest.fbx
+  - Entity: 9u12512512956125
+    TagComponent:
+      Tag: SM_Particle_Chest.fbx
+    TransformComponent:
+      Position: [218.3893, 84.54243, 74.19624]
+      Rotation: [0, -2.534276, 0]
+      Scale: [0.2499879, 0.25, 0.2499879]
+    MeshComponent:
+      Mesh: C:\Users\niklas.jakobsen\Documents\GitHub\Alpine-Engine\Export\Model\SM_Particle_Chest.fbx

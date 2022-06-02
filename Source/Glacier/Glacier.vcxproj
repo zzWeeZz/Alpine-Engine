@@ -136,6 +136,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Glacier\Panels\PerformancePanel.h" />
     <ClInclude Include="src\Glacier\Layer\EditorLayer.h" />
     <ClInclude Include="src\Glacier\Panels\SceneHierarchyPanel.h" />
     <ClInclude Include="src\Glacier\Panels\ViewportPanel.h" />
@@ -143,6 +144,7 @@
     <ClInclude Include="src\Playground\Playground.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Glacier\Panels\PerformancePanel.cpp" />
     <ClCompile Include="src\Glacier\Layer\EditorLayer.cpp" />
     <ClCompile Include="src\Glacier\Panels\SceneHierarchyPanel.cpp" />
     <ClCompile Include="src\Glacier\Panels\ViewportPanel.cpp" />

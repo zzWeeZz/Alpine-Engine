@@ -49,7 +49,7 @@ namespace Alpine
 		size_t m_PointLightCount;
 		PointLightBuffer m_PointLightBufferObject;
 		ConstantBuffer<PointLightBuffer> m_PointLightBuffer;
-
+		int LastDrawCallCount = 0;
 		int drawCallCount = 0;
 	};
 
@@ -59,7 +59,6 @@ namespace Alpine
 		static void Initalize();
 		static void SetActiveCamera(Ref<SceneCamera> camera);
 		static void SetEditorCamera(Ref<EditorCamera> edCamera);
-		static bool SubmitMesh(MeshCommand& model);
 		static void QueueDraw(Ref<Model> model);
 		static void SubmitDirLight(DirectionalLight& light);
 		static void AddPointLight(PointLight& light);
@@ -68,6 +67,7 @@ namespace Alpine
 		static int GetDrawCallCount();
 		static Ref<FrameBuffer> GetFrameBuffer();
 		static void Shutdown();
+	private:
 	};
 }
 
