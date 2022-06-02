@@ -6,6 +6,8 @@ void Alpine::PerformancePanel::OnRenderImGui()
 	ImGui::Begin("Performance");
 	ImGui::Text("Renderer");
 	ImGui::Text("Draw calls: %d.", Renderer::GetDrawCallCount());
+	ImGui::Text("Point lights: %d.", Renderer::GetPointLightCount());
+	ImGui::Text("Directional lights: %d.", Renderer::GetDirlightCount());
 	ImGui::Text("Response time %.3f", ImGui::GetIO().DeltaTime);
 	ImGui::Text("FPS: %.1f", ImGui::GetIO().Framerate);
 	ImGui::End();

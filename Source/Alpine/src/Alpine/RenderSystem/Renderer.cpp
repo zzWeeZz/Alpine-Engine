@@ -13,7 +13,7 @@ namespace Alpine
 
 	void Renderer::Initalize()
 	{
-		s_Data->m_Skybox = SkyBox::Create("Textures/environment.hdr");
+		s_Data->m_Skybox = SkyBox::Create("Textures/monbachtal_riverbank_4k.hdr");
 		s_Data->m_ModelBuffer.Create();
 		s_Data->m_CameraBuffer.Create();
 		s_Data->m_DirLightBuffer.Create();
@@ -27,7 +27,7 @@ namespace Alpine
 		FramebufferSpecification spec = {};
 		spec.width = Application::GetWindow()->GetWidth();
 		spec.height = Application::GetWindow()->GetHeight();
-		spec.colorFormat = { DXGI_FORMAT_R8G8B8A8_UNORM };
+		spec.colorFormat = { DXGI_FORMAT_R8G8B8A8_UNORM,  DXGI_FORMAT_D24_UNORM_S8_UINT };
 
 		s_Data->m_FrameBuffer = FrameBuffer::Create(spec);
 		auto topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
@@ -89,9 +89,11 @@ namespace Alpine
 
 	void ResetDataContainer(Scope<Data>& data)
 	{
-		data->LastDrawCallCount = data->drawCallCount;
+		data->debugData.LastDrawCallCount = data->drawCallCount;
 		data->drawCallCount = 0;
+		data->debugData.LastDirLightCount = data->m_DirLightCount;
 		data->m_DirLightCount = 0;
+		data->debugData.LastPointLightCount = data->m_PointLightCount;
 		data->m_PointLightCount = 0;
 		data->QueuedModel.clear();
 	}
@@ -151,6 +153,16 @@ namespace Alpine
 
 	int Renderer::GetDrawCallCount()
 	{
-		return s_Data->LastDrawCallCount;
+		return s_Data->debugData.LastDrawCallCount;
+	}
+
+	int Renderer::GetDirlightCount()
+	{
+		return s_Data->debugData.LastDirLightCount;
+	}
+
+	int Renderer::GetPointLightCount()
+	{
+		return s_Data->debugData.LastPointLightCount;
 	}
 }

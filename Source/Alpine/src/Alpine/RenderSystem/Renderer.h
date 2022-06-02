@@ -29,7 +29,6 @@ namespace Alpine
 
 		Ref<SkyBox> m_Skybox;
 
-
 		Ref<VertexShader> m_PbrVertexShader;
 		Ref<PixelShader> m_PbrPixelShader;
 
@@ -49,7 +48,12 @@ namespace Alpine
 		size_t m_PointLightCount;
 		PointLightBuffer m_PointLightBufferObject;
 		ConstantBuffer<PointLightBuffer> m_PointLightBuffer;
-		int LastDrawCallCount = 0;
+		struct DebugData
+		{
+			int LastDrawCallCount = 0;
+			int LastPointLightCount = 0;
+			int LastDirLightCount = 0;
+		} debugData;
 		int drawCallCount = 0;
 	};
 
@@ -65,6 +69,8 @@ namespace Alpine
 		static void Begin();
 		static void LogDrawCall();
 		static int GetDrawCallCount();
+		static int GetDirlightCount();
+		static int GetPointLightCount();
 		static Ref<FrameBuffer> GetFrameBuffer();
 		static void Shutdown();
 	private:

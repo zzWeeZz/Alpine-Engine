@@ -20,7 +20,7 @@ namespace Alpine
 		void Bind();
 		void UnBind();
 		void Resize(uint32_t width, uint32_t height);
-		ID3D11ShaderResourceView* GetColorAttachment() { return m_ShaderResourceView; };
+		ComPtr<ID3D11ShaderResourceView> GetColorAttachment() { return m_ShaderResourceViews[0].Get(); };
 		FramebufferSpecification& GetSpecification() { return m_Specification; };
 
 		~FrameBuffer();
@@ -29,11 +29,11 @@ namespace Alpine
 	private:
 		void Invalidate();
 
-		ID3D11Texture2D* m_ColorBuffer = nullptr;
-		ID3D11RenderTargetView* m_RenderTargetView;
-		ID3D11DepthStencilView* m_DepthStencilView;
-		ID3D11Texture2D* m_DepthStencilBuffer;
-		ID3D11ShaderResourceView* m_ShaderResourceView;
+		std::vector<ComPtr<ID3D11Texture2D>> m_ColorBuffers;
+		std::vector<ComPtr<ID3D11RenderTargetView>> m_RenderTargetViews;
+		std::vector<ComPtr<ID3D11ShaderResourceView>> m_ShaderResourceViews;
+		ComPtr<ID3D11DepthStencilView> m_DepthStencilView;
+		ComPtr<ID3D11Texture2D> m_DepthStencilBuffer;
 		D3D11_VIEWPORT m_Viewport = {};
 
 		FramebufferSpecification m_Specification;

@@ -29,7 +29,7 @@ void Alpine::ViewportPanel::OnImGuiRender(Ref<EditorCamera> camera, Ref<SceneHie
 		m_FrameBuffer->Resize(ImGui::GetWindowWidth(), ImGui::GetWindowHeight());
 		camera->SetAspectRatio((float)m_FrameBuffer->GetSpecification().width / (float)m_FrameBuffer->GetSpecification().height);
 	}
-	ImGui::Image(m_FrameBuffer->GetColorAttachment(), { ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y });
+	ImGui::Image(m_FrameBuffer->GetColorAttachment().Get(), { ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y });
 	
 
 	if (Input::GetInstance().GetKeyDown(Keys::W)) mode = 0;
@@ -54,15 +54,15 @@ void Alpine::ViewportPanel::OnImGuiRender(Ref<EditorCamera> camera, Ref<SceneHie
 		memcpy(trans, matrix.m, sizeof(float) * 16);
 		if(mode == 0)
 		{
-			ImGuizmo::Manipulate(&view[0], &proj[0], ImGuizmo::TRANSLATE, ImGuizmo::LOCAL, &trans[0]);
+			ImGuizmo::Manipulate(&view[0], &proj[0], ImGuizmo::TRANSLATE, ImGuizmo::WORLD, &trans[0]);
 		}
 		else if(mode == 1)
 		{
-			ImGuizmo::Manipulate(&view[0], &proj[0], ImGuizmo::ROTATE, ImGuizmo::LOCAL, &trans[0]);
+			ImGuizmo::Manipulate(&view[0], &proj[0], ImGuizmo::ROTATE, ImGuizmo::WORLD, &trans[0]);
 		}
 		else if (mode == 2)
 		{
-			ImGuizmo::Manipulate(&view[0], &proj[0], ImGuizmo::SCALE, ImGuizmo::LOCAL, &trans[0]);
+			ImGuizmo::Manipulate(&view[0], &proj[0], ImGuizmo::SCALE, ImGuizmo::WORLD, &trans[0]);
 		}
 
 		if(ImGuizmo::IsUsing())

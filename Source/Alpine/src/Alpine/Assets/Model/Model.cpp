@@ -7,6 +7,7 @@
 #include "Alpine/RenderSystem/Renderer.h"
 #include "Alpine/RenderSystem/RenderCommands.h"
 
+std::unordered_map<std::string, Alpine::Ref<Alpine::Model>> Alpine::Model::s_Registry;
 Alpine::Model::Model(std::string aPath)
 {
 	m_Mesh.SetMesh(aPath);
@@ -14,6 +15,15 @@ Alpine::Model::Model(std::string aPath)
 	m_Rotation = DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f);
 	m_Size = DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f);
 	m_Materials = m_Mesh.m_Materials;
+}
+
+Alpine::Model::Model(const Model& model)
+{
+	m_Mesh = model.m_Mesh;
+	m_Position = model.m_Position;
+	m_Rotation = model.m_Rotation;
+	m_Size = model.m_Size;
+	m_Materials = model.m_Materials;
 }
 
 void Alpine::Model::Draw(CullMode cullmode, DepthStencilMode depthMode)
@@ -66,9 +76,15 @@ void Alpine::Model::SetScale(const Vector3& aScale)
 	CalculateTransform();
 }
 
-Alpine::Ref<Alpine::Model> Alpine::Model::Create(std::string aPath)
+Alpine::Ref<Alpine::Model> Alpine::Model::Create(const std::filesystem::path& aPath)
 {
-	return std::make_shared<Model>(aPath);
+	if (s_Registry.contains(aPath.filename().string()))
+	{
+		spdlog::log(spdlog::level::info, "Model found in registry, copying {0}", aPath.filename().string());
+		return std::make_shared<Model>(*s_Registry[aPath.filename().string()].get());
+	}
+	s_Registry[aPath.filename().string()] = CreateRef<Model>(aPath.string());
+	return s_Registry[aPath.filename().string()];
 }
 
 void Alpine::Model::CalculateTransform()
