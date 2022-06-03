@@ -191,6 +191,7 @@
     </ClInclude>
     <ClInclude Include="src\ImGuizmo.h" />
     <ClInclude Include="src\stb_image.h" />
+    <ClInclude Include="src\Alpine\RenderSystem\RenderPass.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Alpine\Assets\Camera\EditorCamera.cpp">

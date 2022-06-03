@@ -225,9 +225,9 @@ float4 main(VS_OUTPUT pin) : SV_Target
     float roughness = Mat.g;
     float emissive = Mat.b;
     float emissiveIntensity = Mat.a;
-    if(alpha < 0.2f)
+    if (alpha < 0.2f)
     {
-	    discard;
+        discard;
     }
 	// Outgoing light direction (vector from world-space fragment position to the "eye").
     float3 Lo = normalize(cameraPosition.xyz - pin.WorldPosition.xyz);
@@ -280,6 +280,7 @@ float4 main(VS_OUTPUT pin) : SV_Target
         ambientLighting = diffuseIBL + specularIBL;
     }
     float4 finalColor = 0.0f;
+    
     finalColor = float4(directLighting + ambientLighting, alpha);
     finalColor.xyz = LinearToSRGB(finalColor.xyz);
     finalColor.xyz = ACESTonemap(finalColor.xyz);

@@ -162,6 +162,7 @@
     <ClInclude Include="src\Alpine\RenderSystem\Mesh\SubMesh.h" />
     <ClInclude Include="src\Alpine\RenderSystem\RenderCommands.h" />
     <ClInclude Include="src\Alpine\RenderSystem\Renderer.h" />
+    <ClInclude Include="src\Alpine\RenderSystem\RenderPass.h" />
     <ClInclude Include="src\Alpine\RenderSystem\ShaderClasses\ComputeShader.h" />
     <ClInclude Include="src\Alpine\RenderSystem\ShaderClasses\PixelShader.h" />
     <ClInclude Include="src\Alpine\RenderSystem\ShaderClasses\Shader.h" />

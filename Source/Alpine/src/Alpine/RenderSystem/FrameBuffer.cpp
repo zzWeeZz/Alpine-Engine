@@ -62,6 +62,7 @@ void Alpine::FrameBuffer::Invalidate()
 {
 	if (m_DepthStencilBuffer) m_DepthStencilBuffer->Release();
 	if (m_DepthStencilView) m_DepthStencilView->Release();
+	m_ColorBuffers.clear();
 	for (auto& rtv : m_RenderTargetViews)
 	{
 		if (rtv) rtv->Release();
