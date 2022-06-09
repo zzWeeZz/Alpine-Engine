@@ -64,11 +64,11 @@ void Alpine::Mesh::SetMesh(std::string aPath)
 	PrepareForRender();
 }
 
-void Alpine::Mesh::SubmitMesh()
+void Alpine::Mesh::SubmitMesh(bool bindMaterial)
 {
 	for (auto& subMesh : m_SubMeshes)
 	{
-		subMesh.Draw();
+		subMesh.Draw(bindMaterial);
 	}
 }
 

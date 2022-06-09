@@ -122,7 +122,7 @@ void Alpine::FrameBuffer::Invalidate()
 
 			AssertIfFailed(DX11::Device()->CreateDepthStencilView(m_DepthStencilBuffer.Get(), &desc, m_DepthStencilView.GetAddressOf()));
 			D3D11_SHADER_RESOURCE_VIEW_DESC srvDecs{};
-			srvDecs.Format = DXGI_FORMAT_D32_FLOAT;
+			srvDecs.Format = DXGI_FORMAT_R32_FLOAT;
 			srvDecs.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
 			srvDecs.Texture2D.MipLevels = 1;
 			srvDecs.Texture2D.MostDetailedMip = 0;

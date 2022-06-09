@@ -13,7 +13,7 @@ namespace Alpine
 
 	void Renderer::Initalize()
 	{
-		s_Data->m_Skybox = SkyBox::Create("Textures/monbachtal_riverbank_4k.hdr");
+		s_Data->m_Skybox = SkyBox::Create("Textures/moonless_golf_4k.hdr");
 		s_Data->m_ModelBuffer.Create();
 		s_Data->m_CameraBuffer.Create();
 		s_Data->m_DirLightBuffer.Create();
@@ -24,9 +24,9 @@ namespace Alpine
 		ShaderLibrary::Store("Shadow", {VertexShader::Create("Shaders/ShadowPass_vs.cso"), PixelShader::Create("Shaders/ShadowPass_ps.cso")});
 		{
 			FramebufferSpecification spec = {};
-			spec.width = 1024;
-			spec.height = 1024;
-			spec.colorFormat = { DXGI_FORMAT_R8_UNORM,  DXGI_FORMAT_R32_TYPELESS};
+			spec.width = 2048;
+			spec.height = 2048;
+			spec.colorFormat = { DXGI_FORMAT_R8_UNORM, DXGI_FORMAT_R32_TYPELESS};
 			s_Data->shadowPass.frameBuffer = FrameBuffer::Create(spec);
 			s_Data->shadowPass.ShaderKey = "Shadow";
 		}
@@ -34,12 +34,13 @@ namespace Alpine
 			FramebufferSpecification spec = {};
 			spec.width = Application::GetWindow()->GetWidth();
 			spec.height = Application::GetWindow()->GetHeight();
-			spec.colorFormat = { DXGI_FORMAT_R8G8B8A8_UNORM,  DXGI_FORMAT_R32_TYPELESS };
+			spec.colorFormat = { DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_FORMAT_R32_TYPELESS };
 
 			s_Data->m_FrameBuffer = FrameBuffer::Create(spec);
 		}
 		auto topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
-		DX11::Context()->IAGetPrimitiveTopology(&topology);
+		DX11::Context()->IASetPrimitiveTopology(topology);
+		
 	}
 
 	void Renderer::SetActiveCamera(Ref<SceneCamera> camera)
@@ -112,7 +113,7 @@ namespace Alpine
 		s_Data->m_FrameBuffer->ClearView({ 0,0,0,1 });
 		s_Data->m_FrameBuffer->ClearDepthStencil();
 		s_Data->shadowPass.frameBuffer->ClearDepthStencil();
-		s_Data->shadowPass.frameBuffer->ClearView({ 0,0,0,1 });
+		s_Data->shadowPass.frameBuffer->ClearView({ 1,1,1,1 });
 		// bind Lights:
 		// bind Direction light
 		s_Data->m_DirLightBuffer.SetData(&s_Data->m_DirLightBufferObject, sizeof(DirLightBuffer));
@@ -123,11 +124,12 @@ namespace Alpine
 		s_Data->m_PointLightBuffer.Bind(false, 3);
 		s_Data->shadowPass.frameBuffer->Bind();
 		ShaderLibrary::Bind(s_Data->shadowPass.ShaderKey);
+		DX11::GetRenderStateManager().PushRasterizerState(CullMode::Front);
 		for (auto model : s_Data->QueuedModel)
 		{
 			s_Data->m_ModelBuffer.SetData(&model->GetTransform(), sizeof(Matrix));
 			s_Data->m_ModelBuffer.Bind(false, 1);
-			model->Draw();
+			model->Draw(false);
 		}
 		s_Data->shadowPass.frameBuffer->UnBind();
 		s_Data->shadowPass.frameBuffer->BindForShader(3);
@@ -143,10 +145,11 @@ namespace Alpine
 		s_Data->m_CameraBuffer.Bind(false, 0);
 
 		ShaderLibrary::Bind("SkyBox");
+
 		s_Data->m_Skybox->BindForSky();
 		s_Data->m_ModelBuffer.SetData(&s_Data->m_Skybox->m_Model->GetTransform(), sizeof(Matrix));
 		s_Data->m_ModelBuffer.Bind(false, 1);
-		DX11::GetRenderStateManager().PushRasterizerState(CullMode::Front);
+		
 		DX11::GetRenderStateManager().PushDepthStencilState(DepthStencilMode::ReadOnly);
 		s_Data->m_Skybox->Draw();
 		DX11::GetRenderStateManager().PopRasterizerState();
@@ -156,7 +159,7 @@ namespace Alpine
 
 		ShaderLibrary::Bind("PBR");
 		DX11::GetRenderStateManager().SetSamplerState(SamplerMode::Wrap, ShaderType::Pixel, 0);
-		DX11::GetRenderStateManager().SetSamplerState(SamplerMode::Clamp, ShaderType::Pixel, 1);
+		DX11::GetRenderStateManager().SetSamplerState(SamplerMode::Point, ShaderType::Pixel, 1);
 		for (auto model : s_Data->QueuedModel)
 		{
 			s_Data->m_ModelBuffer.SetData(&model->GetTransform(), sizeof(Matrix));

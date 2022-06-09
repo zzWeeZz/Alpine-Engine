@@ -215,16 +215,39 @@ float3 ACESTonemap(float3 color)
     return clamp(mul((a / b), m2), 0.0, 1.0);
 }
 
-float ShadowCalc(float4 pixelPosLightSpace)
+float ShadowCalc(float4 pixelPosLightSpace, float3 normal)
 {
     float3 projCoords = pixelPosLightSpace.xyz / pixelPosLightSpace.w;
-    projCoords = projCoords * 0.5f + 0.5f;
+    projCoords.x = projCoords.x * 0.5f + 0.5f;
+    projCoords.y = -projCoords.y * 0.5f + 0.5f;
+    
+    if ((saturate(projCoords.x) == projCoords.x) && (saturate(projCoords.y) == projCoords.y))
+    {
+        float closetDepth = ShadowMap.Sample(spBRDF_Sampler, projCoords.xy).r;
+        float currentDepth = projCoords.z;
 
-    float closetDepth = ShadowMap.Sample(defaultSampler, projCoords.xy).r;
-    float currentDepth = projCoords.z;
-
-    float shadow = currentDepth > closetDepth ? 1.0 : 0.0;
-    return shadow;
+        float bias = max(0.000005f * (1.0 - dot(normal, DirLightDirection.xyz)), 0.00000005f);
+        float shadow = 0;
+        uint x = 0;
+        uint y = 0;
+        ShadowMap.GetDimensions(x, y);
+        float2 texelSize = 1.0f / float2(x, y);
+        for (int i = -1; i <= 1; i++)
+        {
+            for (int j = -1; j <= 1; ++j)
+            {
+                float pcfDepth = ShadowMap.Sample(spBRDF_Sampler, projCoords.xy + float2(i, j) * texelSize).r;
+                shadow += currentDepth - bias > pcfDepth ? 1.0 : 0.0;
+            }
+        }
+        shadow /= 9.0f;
+        if (projCoords.z > 100.0f)
+        {
+            shadow = 0.0;
+        }
+        return shadow;
+    }
+    return 0;
 }
 
 // Pixel shader
@@ -261,7 +284,8 @@ float4 main(VS_OUTPUT pin) : SV_Target
 
 	// Direct lighting calculation for analytical lights.
     float3 directLighting = 0.0f;
-    directLighting += CalcDirectionalLight(Lo, N, albedo, roughness, metalness, F0);
+    float shadow = 1 - ShadowCalc(pin.PosLightSpace, N);
+    directLighting += CalcDirectionalLight(Lo, N, albedo, roughness, metalness, F0) * shadow;
     directLighting += CalcPointLight(Lo, pin.WorldPosition.xyz, N, albedo, roughness, metalness, F0);
     //directLighting += CalcSpotLight(Lo, N, albedo, roughness);
 
@@ -294,8 +318,7 @@ float4 main(VS_OUTPUT pin) : SV_Target
         ambientLighting = diffuseIBL + specularIBL;
     }
     float4 finalColor = 0.0f;
-    float shadow = ShadowCalc(pin.PosLightSpace);
-    finalColor = float4((directLighting - shadow) + ambientLighting, alpha);
+    finalColor = float4((directLighting) + ambientLighting, alpha);
     finalColor.xyz = LinearToSRGB(finalColor.xyz);
     finalColor.xyz = ACESTonemap(finalColor.xyz);
 	// Final fragment color.

@@ -15,7 +15,7 @@ namespace Alpine
 	public:
 		Model(std::string aPath);
 		Model(const Model& model);
-		void Draw(CullMode cullmode = CullMode::Back, DepthStencilMode depthMode = DepthStencilMode::ReadWrite);
+		void Draw(bool bindMaterial = true);
 		Matrix& GetTransform();
 		Vector3 GetPosition();
 		Vector3 GetRotation();

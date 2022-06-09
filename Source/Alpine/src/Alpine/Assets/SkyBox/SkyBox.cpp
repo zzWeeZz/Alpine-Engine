@@ -35,7 +35,7 @@ void Alpine::SkyBox::BindForSky()
 void Alpine::SkyBox::Draw()
 {
 	m_CubeMap->Bind(0);
-	m_Model->Draw(CullMode::Front, DepthStencilMode::ReadOnly);
+	m_Model->Draw();
 }
 
 Alpine::Ref<Alpine::SkyBox> Alpine::SkyBox::Create(const std::filesystem::path& skyBoxTexturePath)

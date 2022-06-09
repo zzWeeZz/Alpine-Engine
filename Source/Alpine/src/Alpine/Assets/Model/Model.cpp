@@ -26,9 +26,9 @@ Alpine::Model::Model(const Model& model)
 	m_Materials = model.m_Materials;
 }
 
-void Alpine::Model::Draw(CullMode cullmode, DepthStencilMode depthMode)
+void Alpine::Model::Draw(bool bindMaterial)
 {
-	m_Mesh.SubmitMesh();
+	m_Mesh.SubmitMesh(bindMaterial);
 }
 
 Matrix& Alpine::Model::GetTransform()

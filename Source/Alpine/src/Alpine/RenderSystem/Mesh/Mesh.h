@@ -14,7 +14,7 @@ namespace Alpine
 
 	public:
 		void SetMesh(std::string aPath);
-		void SubmitMesh();
+		void SubmitMesh(bool bindMaterial);
 
 	private:
 		void PrepareForRender();

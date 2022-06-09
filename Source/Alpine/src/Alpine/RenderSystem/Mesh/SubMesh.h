@@ -21,7 +21,7 @@ namespace Alpine
 		SubMesh(std::vector<Vertex>& aVertices, std::vector<DWORD>& aIndices);
 		SubMesh(std::vector<Vertex>& aVertices, std::vector<DWORD>& aIndices, Ref<Material> material);
 		SubMesh(const SubMesh& aMesh);
-		void Draw();
+		void Draw(bool bindMaterial);
 	private:
 		Ref<Material> m_Material;
 		VertexBuffer<Vertex> m_VertexBuffer;

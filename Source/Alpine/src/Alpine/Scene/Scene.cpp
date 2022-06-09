@@ -47,6 +47,7 @@ void Alpine::Scene::OnUpdate()
 			}
 			light.light->SetDirection(transform.GetTransfrom().Forward());
 			light.light->SetLightColor(Vector4(light.Color.x, light.Color.y, light.Color.z, light.Intensity));
+			light.light->ValidateLightMatrix(transform.rotation);
 		});
 
 	m_Manager.Execute<NativeScriptComponent>([&](Snowflake::Entity entity, NativeScriptComponent& script)
