@@ -18,6 +18,7 @@ namespace Alpine
 		void ClearView(const Color& clearColor);
 		void ClearDepthStencil();
 		void Bind();
+		void BindForShader(uint32_t id);
 		void UnBind();
 		void Resize(uint32_t width, uint32_t height);
 		ComPtr<ID3D11ShaderResourceView> GetColorAttachment() { return m_ShaderResourceViews[0].Get(); };

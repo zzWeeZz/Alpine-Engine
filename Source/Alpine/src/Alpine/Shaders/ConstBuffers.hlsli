@@ -15,6 +15,7 @@ cbuffer DirectonalLight : register(b2)
 {
     float4 DirLightDirection;
     float4 DirLightColor;
+    float4x4 LightSpaceMatrix;
 };
 
 struct PointLight

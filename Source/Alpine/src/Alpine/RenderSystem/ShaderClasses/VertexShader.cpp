@@ -15,7 +15,8 @@ Alpine::VertexShader::VertexShader(const std::filesystem::path& aShaderPath)
 			{"TEXCOORD", Value::FLOAT2},
 			{"NORMAL", Value::FLOAT3},
 			{"TANGENT", Value::FLOAT3},
-			{"BITANGENT", Value::FLOAT3}
+			{"BITANGENT", Value::FLOAT3},
+			{"SHADOWPOS", Value::FLOAT3}
 		};
 		AssertIfFailed(DX11::Device()->CreateInputLayout(layoutnew.inputElements.data(), layoutnew.inputElements.size(), m_Buffer->GetBufferPointer(), m_Buffer->GetBufferSize(), &m_InputLayout));
 		DX11::Context()->IASetInputLayout(m_InputLayout.Get());

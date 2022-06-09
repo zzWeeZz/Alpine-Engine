@@ -151,8 +151,7 @@ void Alpine::EditorLayer::RenderImGui()
 	m_SceneHierarchyPanel->OnImGuiRender();
 	m_ViewportPanel->OnImGuiRender(m_EditorCamera, m_SceneHierarchyPanel);
 
-
-
+	ImGui::ShowDemoWindow(&pOpen);
 	ImGui::End();
 
 	m_ImGuiLayer.End();

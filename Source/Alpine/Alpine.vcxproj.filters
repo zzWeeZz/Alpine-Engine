@@ -138,6 +138,9 @@
     <ClInclude Include="src\Alpine\RenderSystem\RenderCommands.h">
       <Filter>Alpine\RenderSystem</Filter>
     </ClInclude>
+    <ClInclude Include="src\Alpine\RenderSystem\RenderPass.h">
+      <Filter>Alpine\RenderSystem</Filter>
+    </ClInclude>
     <ClInclude Include="src\Alpine\RenderSystem\Renderer.h">
       <Filter>Alpine\RenderSystem</Filter>
     </ClInclude>
@@ -191,7 +194,6 @@
     </ClInclude>
     <ClInclude Include="src\ImGuizmo.h" />
     <ClInclude Include="src\stb_image.h" />
-    <ClInclude Include="src\Alpine\RenderSystem\RenderPass.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Alpine\Assets\Camera\EditorCamera.cpp">
@@ -288,6 +290,12 @@
       <Filter>Alpine\Shaders</Filter>
     </FxCompile>
     <FxCompile Include="src\Alpine\Shaders\IrradianceMap_cs.hlsl">
+      <Filter>Alpine\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="src\Alpine\Shaders\ShadowPass_ps.hlsl">
+      <Filter>Alpine\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="src\Alpine\Shaders\ShadowPass_vs.hlsl">
       <Filter>Alpine\Shaders</Filter>
     </FxCompile>
     <FxCompile Include="src\Alpine\Shaders\SkyBox_ps.hlsl">

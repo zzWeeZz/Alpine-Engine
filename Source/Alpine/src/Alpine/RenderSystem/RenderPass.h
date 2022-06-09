@@ -1,6 +1,11 @@
 #pragma once
+#include "Alpine/RenderSystem/FrameBuffer.h"
 
-struct RenderPass
+namespace Alpine
 {
-	
-};
+	struct RenderPass
+	{
+		Ref<FrameBuffer> frameBuffer;
+		std::string ShaderKey;
+	};
+}

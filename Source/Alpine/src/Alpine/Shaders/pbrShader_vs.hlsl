@@ -6,6 +6,7 @@ struct VS_OUTPUT
     float4 WorldPosition : POSITION;
     float3 Normal : NORMAL;
     float2 TexCoord : TEXCOORD;
+    float4 PosLightSpace : SHADOWPOS;
     float3x3 tangentBasis : TBASIS;
 };
 
@@ -19,10 +20,14 @@ VS_OUTPUT main(float4 inPos : POSITION, float2 inTexCoord : TEXCOORD, float3 inN
     output.WorldPosition = mul(modelSpace, inPos);
     output.Normal = inNormal.xyz;
 
-
     float3x3 tangentBasis = float3x3(inTangent, inBitangent, inNormal);
     output.tangentBasis = mul((float3x3) modelSpace, transpose(tangentBasis));
     output.TexCoord = float2(inTexCoord.x, inTexCoord.y);
+
+    output.PosLightSpace = mul(LightSpaceMatrix, output.WorldPosition);
+
+
+
 
     return output;
 }

@@ -21,6 +21,7 @@ namespace Alpine
 		{
 			Vector4 lightDirection;
 			Vector4 lightColor;
+			Matrix lightSpaceMatrix;
 		} DirLightData[MAX_DIR_LIGHTS];
 	};
 

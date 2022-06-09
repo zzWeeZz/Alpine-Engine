@@ -161,8 +161,8 @@
     <ClInclude Include="src\Alpine\RenderSystem\Mesh\ModelData.hpp" />
     <ClInclude Include="src\Alpine\RenderSystem\Mesh\SubMesh.h" />
     <ClInclude Include="src\Alpine\RenderSystem\RenderCommands.h" />
-    <ClInclude Include="src\Alpine\RenderSystem\Renderer.h" />
     <ClInclude Include="src\Alpine\RenderSystem\RenderPass.h" />
+    <ClInclude Include="src\Alpine\RenderSystem\Renderer.h" />
     <ClInclude Include="src\Alpine\RenderSystem\ShaderClasses\ComputeShader.h" />
     <ClInclude Include="src\Alpine\RenderSystem\ShaderClasses\PixelShader.h" />
     <ClInclude Include="src\Alpine\RenderSystem\ShaderClasses\Shader.h" />
@@ -224,6 +224,16 @@
       <ShaderType>Compute</ShaderType>
       <ShaderModel>5.0</ShaderModel>
       <ObjectFileOutput>../../Export/Shaders/IrradianceMap_cs.cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="src\Alpine\Shaders\ShadowPass_ps.hlsl">
+      <ShaderType>Pixel</ShaderType>
+      <ShaderModel>5.0</ShaderModel>
+      <ObjectFileOutput>../../Export/Shaders/ShadowPass_ps.cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="src\Alpine\Shaders\ShadowPass_vs.hlsl">
+      <ShaderType>Vertex</ShaderType>
+      <ShaderModel>5.0</ShaderModel>
+      <ObjectFileOutput>../../Export/Shaders/ShadowPass_vs.cso</ObjectFileOutput>
     </FxCompile>
     <FxCompile Include="src\Alpine\Shaders\SkyBox_ps.hlsl">
       <ShaderType>Pixel</ShaderType>

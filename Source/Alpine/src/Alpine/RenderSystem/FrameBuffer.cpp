@@ -30,6 +30,11 @@ void Alpine::FrameBuffer::Bind()
 	DX11::Context()->RSSetViewports(1, &m_Viewport);
 }
 
+void Alpine::FrameBuffer::BindForShader(uint32_t id)
+{
+	DX11::Context()->PSSetShaderResources(id, 1, m_ShaderResourceViews[1].GetAddressOf());
+}
+
 void Alpine::FrameBuffer::UnBind()
 {
 	ID3D11RenderTargetView* nullViews[] = { nullptr };
@@ -74,7 +79,7 @@ void Alpine::FrameBuffer::Invalidate()
 
 	for (size_t i = 0; i < m_Specification.colorFormat.size(); i++)
 	{
-		if (m_Specification.colorFormat[i] != DXGI_FORMAT_D24_UNORM_S8_UINT)
+		if (m_Specification.colorFormat[i] != DXGI_FORMAT_D24_UNORM_S8_UINT && m_Specification.colorFormat[i] != DXGI_FORMAT_R32_TYPELESS)
 		{
 			ID3D11Texture2D* ptrSurface;
 			D3D11_TEXTURE2D_DESC desc = {};
@@ -103,14 +108,27 @@ void Alpine::FrameBuffer::Invalidate()
 			depthStencilDesc.Height = m_Specification.height;
 			depthStencilDesc.MipLevels = 1;
 			depthStencilDesc.ArraySize = 1;
-			depthStencilDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+			depthStencilDesc.Format = m_Specification.colorFormat[i];
 			depthStencilDesc.SampleDesc.Count = m_Specification.samples;
 			depthStencilDesc.SampleDesc.Quality = 0;
 			depthStencilDesc.Usage = D3D11_USAGE_DEFAULT;
-			depthStencilDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+			depthStencilDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL | D3D11_BIND_SHADER_RESOURCE;
 			depthStencilDesc.MiscFlags = 0;
 			AssertIfFailed(DX11::Device()->CreateTexture2D(&depthStencilDesc, nullptr, m_DepthStencilBuffer.GetAddressOf()));
-			AssertIfFailed(DX11::Device()->CreateDepthStencilView(m_DepthStencilBuffer.Get(), nullptr, m_DepthStencilView.GetAddressOf()));
+			D3D11_DEPTH_STENCIL_VIEW_DESC desc{};
+			desc.Format = DXGI_FORMAT_D32_FLOAT;
+			desc.Texture2D.MipSlice = 0;
+			desc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+
+			AssertIfFailed(DX11::Device()->CreateDepthStencilView(m_DepthStencilBuffer.Get(), &desc, m_DepthStencilView.GetAddressOf()));
+			D3D11_SHADER_RESOURCE_VIEW_DESC srvDecs{};
+			srvDecs.Format = DXGI_FORMAT_D32_FLOAT;
+			srvDecs.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+			srvDecs.Texture2D.MipLevels = 1;
+			srvDecs.Texture2D.MostDetailedMip = 0;
+
+
+			AssertIfFailed(DX11::Device()->CreateShaderResourceView(m_DepthStencilBuffer.Get(), &srvDecs, m_ShaderResourceViews[i].GetAddressOf()));
 		}
 	}
 

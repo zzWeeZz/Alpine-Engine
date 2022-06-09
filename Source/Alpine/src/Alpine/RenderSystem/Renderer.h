@@ -9,6 +9,7 @@
 #include "Alpine/RenderSystem/Shaders.h"
 #include "Alpine/RenderSystem/Buffers/BufferData.h"
 #include "Alpine/RenderSystem/Buffers/ConstantBuffer.hpp"
+#include "Alpine/RenderSystem/RenderPass.h"
 
 #include "Alpine/Assets/SkyBox/SkyBox.h"
 #include "Alpine/Assets/Lights/PointLight.h"
@@ -28,6 +29,8 @@ namespace Alpine
 		std::vector<Ref<Model>> QueuedModel;
 
 		Ref<SkyBox> m_Skybox;
+
+		RenderPass shadowPass;
 
 		Ref<VertexShader> m_PbrVertexShader;
 		Ref<PixelShader> m_PbrPixelShader;

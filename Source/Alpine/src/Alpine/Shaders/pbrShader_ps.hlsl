@@ -6,6 +6,7 @@ struct VS_OUTPUT
     float4 WorldPosition : POSITION;
     float3 Normal : NORMAL;
     float2 texcoord : TEXCOORD;
+    float4 PosLightSpace : SHADOWPOS;
     float3x3 tangentBasis : TBASIS;
 };
 
@@ -13,6 +14,7 @@ Texture2D albedoTexture : register(t0);
 Texture2D normalTexture : register(t1);
 Texture2D roughnessTexture : register(t2);
 
+Texture2D ShadowMap : register(t3);
 
 TextureCube specularTexture : register(t10);
 TextureCube irradianceTexture : register(t11);
@@ -213,6 +215,18 @@ float3 ACESTonemap(float3 color)
     return clamp(mul((a / b), m2), 0.0, 1.0);
 }
 
+float ShadowCalc(float4 pixelPosLightSpace)
+{
+    float3 projCoords = pixelPosLightSpace.xyz / pixelPosLightSpace.w;
+    projCoords = projCoords * 0.5f + 0.5f;
+
+    float closetDepth = ShadowMap.Sample(defaultSampler, projCoords.xy).r;
+    float currentDepth = projCoords.z;
+
+    float shadow = currentDepth > closetDepth ? 1.0 : 0.0;
+    return shadow;
+}
+
 // Pixel shader
 float4 main(VS_OUTPUT pin) : SV_Target
 {
@@ -280,8 +294,8 @@ float4 main(VS_OUTPUT pin) : SV_Target
         ambientLighting = diffuseIBL + specularIBL;
     }
     float4 finalColor = 0.0f;
-    
-    finalColor = float4(directLighting + ambientLighting, alpha);
+    float shadow = ShadowCalc(pin.PosLightSpace);
+    finalColor = float4((directLighting - shadow) + ambientLighting, alpha);
     finalColor.xyz = LinearToSRGB(finalColor.xyz);
     finalColor.xyz = ACESTonemap(finalColor.xyz);
 	// Final fragment color.
